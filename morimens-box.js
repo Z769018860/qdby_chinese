@@ -664,12 +664,13 @@
             const id=m.skeydbId||idByIngame.get(ingame)||null;
             // v2 用 potencyLevel 表示启灵（0-3 是 N 启，4-15 是 3 启之后的 +N）
             const en=m.potencyLevel!=null?enTier(m.potencyLevel):enTier(m.enlightenLevel??3);
+            const wl=(m.wheels||[]).filter(x=>x&&x.name).map(x=>({name:x.name,level:Number(x.level)||0}));
             return {
               id,ingameId:m.ingameId||null,name:m.canonicalName||m.name||'',
               lv:m.level??null,en,borrow:!!m.borrowed,
               // 人格深化 +N：+4 起解锁超限爆发，用来判「80 超限」这种 box 的差距
               pot:m.potencyLevel!=null?Number(m.potencyLevel):null,
-              wheels:(m.wheels||[]).map(x=>x.name).filter(Boolean)
+              wheels:wl.map(x=>x.name),wheelLv:wl.map(x=>x.level)
             };
           });
           if(members.length<4)continue;
@@ -761,8 +762,34 @@
     }
     return {total,owned:total-miss.length,miss};
   }
-  function assess(team,box){
-    // 只用来估「照这套抄下来大概能拿多少分」：练度够就不打折，不够才按缺口折。
+  /* 分数上限：按「练度相近的人实际打到过多少分」封顶，而不是把榜单上别人的分数原样抄给你。
+     记录里每支队伍有 4 人的平均 potencyLevel（0~15：3 启 = 3，3 启 +12 = 15）和得分；
+     BOX 里同一支队伍的平均练度越低，能达到的分数占该区满分的比例越低——取「练度不超过该水平的队伍」
+     得分比例的第 97 百分位（练度越高分位越接近 100%）。
+     例：全员 3 启（深化 +0）的 BOX，榜单里平均 ≤3 的队伍极少有人拿到 95 以上，所以它不可能推出 525。 */
+  const ownFull=own=>own.en>=3?3+clamp(own.pot==null||own.pot===''?DEFAULT_POT:own.pot,0,MAXPOT-3):clamp(own.en,0,MAXEN);
+  function buildCapTable(teams,caps,waves){
+    const capOf=new Map(waves.map((w,i)=>[w,caps[i]]));
+    const rows=[];
+    for(const t of teams){
+      const c=capOf.get(t.wave);if(!c||!t.members.length)continue;
+      const pot=t.members.reduce((a,m)=>a+(m.pot==null?m.en:m.pot),0)/t.members.length;
+      rows.push([pot,Math.min(1,t.score/c)]);
+    }
+    rows.sort((a,b)=>a[0]-b[0]);
+    const grid=[];
+    for(let g=0;g<=MAXPOT;g+=0.25){
+      let hi=0;while(hi<rows.length&&rows[hi][0]<=g+1e-9)hi++;
+      if(hi<30){grid.push(null);continue}                 // 样本太少：不下结论
+      const rs=rows.slice(0,hi).map(r=>r[1]).sort((a,b)=>a-b);
+      const q=0.97+0.03*g/MAXPOT;                         // 练度拉满时分位升到 100%：满练度 BOX 不该被封顶
+      grid.push(rs[Math.min(rs.length-1,Math.floor(rs.length*q))]);
+    }
+    let last=0;for(let k=0;k<grid.length;k++){if(grid[k]==null)grid[k]=last;else last=grid[k]=Math.max(last,grid[k])}   // 单调不减
+    return pot=>grid[Math.max(0,Math.min(grid.length-1,Math.round(pot/0.25)))];
+  }
+  function assess(team,box,cap){
+    // 只用来估「照这套抄下来大概能拿多少分」：练度够就不打折，不够才按缺口折，再按练度封顶。
     const fits=team.members.map(m=>({m,f:rawFit(m,box)}));
     let use=fitStats(fits.map(x=>x.f)),assistIdx=-1;
     let worst=0,wi=-1;
@@ -773,30 +800,45 @@
       const better=use.tier==null?(rest.tier!=null):(rest.tier&&TIER_RANK[rest.tier]>TIER_RANK[use.tier]);
       if(better){use=rest;assistIdx=wi}
     }
-    let gaps=0,missing=0;
+    let gaps=0,missing=0,potSum=0;
     fits.forEach((x,i)=>{
-      if(i===assistIdx)return;
+      const needPot=x.m.pot==null?x.m.en:x.m.pot;
+      if(i===assistIdx){potSum+=needPot;return}
       const f=x.f;
       if(!f.owned){
         // BOX 里没有、又不是被选中的助战位 → 真的缺一个人
-        missing++;
+        missing++;potSum+=needPot;
         gaps+=0.18;
         return;
       }
+      const own=box.chars[x.m.id],ownP=ownFull(own);
+      potSum+=ownP;
       gaps+=Math.max(0,f.lvGap-6)*0.010;
-      gaps+=Math.max(0,f.enGap-1)*0.06;
-      gaps+=potGap(box.chars[x.m.id]?.pot,x.m.pot)*0.008;
+      gaps+=f.enGap*0.05;                                   // 启灵每差一档约 5%（原来第一档免费，等于让 2 启号抄 3 启队）
+      gaps+=Math.max(0,needPot-ownP)*0.004;                 // 深化 +N 每差一档约 0.4%，大头由下面的练度封顶承担
     });
     if(assistIdx>=0)gaps+=0.03;   // 助战得找人借，按 3% 估
-    // 命轮不齐要打折：少一张按 2% 估，最多打 12%（命轮影响比练度小，但也不是没有）
+    // 命轮：不齐按 2%/张，叠位每差一档 0.4%，合计最多打 12%（命轮影响比练度小，但也不是没有）
     const wf=wheelFit(team);
-    gaps+=Math.min(0.12,wf.miss.length*0.02);
+    let wGap=wf.miss.length*0.02;
+    team.members.forEach((m,i)=>{
+      if(i===assistIdx)return;
+      (m.wheels||[]).forEach((w,k)=>{
+        const id=wheelIdByEn.get(w),own=id?box.wheels[id]:null;
+        if(own)wGap+=Math.max(0,Math.min(MAXSTACK,(m.wheelLv||[])[k]||0)-(Number(own.stack)||0))*0.004;
+      });
+    });
+    gaps+=Math.min(0.12,wGap);
     const penalty=Math.min(0.6,gaps);
+    let raw=Math.max(0,team.score*(1-penalty));
+    const boxPot=potSum/Math.max(1,team.members.length);
+    let capped=false;
+    if(cap&&cap.fn){const lim=cap.fn(boxPot)*cap.waveCap;if(raw>lim){raw=lim;capped=true}}
     return {
-      ...use,missing,penalty,wheelFit:wf,
+      ...use,missing,penalty,wheelFit:wf,boxPot,capped,
       assist:assistIdx>=0?fits[assistIdx].m:null,
       // 分数只有整五：按你的练度折算后再落回 5 的倍数（向下取，宁可少报）
-      pred:Math.max(0,Math.floor(team.score*(1-penalty)/5)*5)
+      pred:Math.max(0,Math.floor(raw/5)*5)
     };
   }
   // 融灾的分数只有 5 和 10 这种整五，所以分配也按「5 分一档」来，别算出 103、107 这种零头。
@@ -1008,6 +1050,7 @@
       const waves=[...new Set(inRange.map(t=>t.wave))].filter(Boolean).sort((a,b)=>a-b);
       const caps=waves.map(w=>Math.max(...inRange.filter(t=>t.wave===w).map(t=>t.score),1));
       const targets=allocate(target,caps);
+      const capFn=buildCapTable(inRange.filter(t=>t.members.length>=4),caps,waves);
       // 每区把候选队伍按「扣掉你的练度缺口后大概能打多少分」排好，再分低/中/高/超标四桶。
       // 缺口大到离谱（超 25 级 / 6 启）的直接不进候选，免得替代档捞到根本练不出来的队。
       const zones=waves.map((w,wi)=>{
@@ -1018,7 +1061,7 @@
           if(!old||t.score>old.score)dedup.set(k,t);
         }
         const evaluated=[...dedup.values()]
-          .map(t=>({team:t,...assess(t,boxData),load:teamLoad(t)}))
+          .map(t=>({team:t,...assess(t,boxData,{fn:capFn,waveCap:caps[wi]}),load:teamLoad(t)}))
           .filter(x=>x.missing<=1&&x.maxLvGap<=25&&x.maxEnGap<=6);
         const buckets={low:[],mid:[],high:[],over:[]};
         for(const x of evaluated)buckets[x.tier||'over'].push(x);
@@ -1157,7 +1200,7 @@
         同样的分数对不同人难度完全不同。抄之前先看卡片上的「造物 N 件」，造物差的队往往要多打很多遍。
       </div>
       <div class="boxNotice">
-        每区按<b>等级 + 启灵</b>（+ 命轮、深化缺口）给三套：<b style="color:#7fd8a5">低配</b>＝整队要求都在你练度之内（平均还富余 8 级等效以上）；<b style="color:#6ea8ff">中配</b>＝缺口 ≤ 6 级 / ≤ 1 启，或刚好持平；<b style="color:#d7a85b">高配</b>＝缺口 ≤ 15 级 / ≤ 3 启，练一练能上。启灵按 1 档 ≈ 8 级折算。「参考分」是记录里的实际得分，「预计」是按你的练度折算后的分数。
+        每区按<b>等级 + 启灵</b>（+ 命轮、深化缺口）给三套：<b style="color:#7fd8a5">低配</b>＝整队要求都在你练度之内（平均还富余 8 级等效以上）；<b style="color:#6ea8ff">中配</b>＝缺口 ≤ 6 级 / ≤ 1 启，或刚好持平；<b style="color:#d7a85b">高配</b>＝缺口 ≤ 15 级 / ≤ 3 启，练一练能上。启灵按 1 档 ≈ 8 级折算。「参考分」是记录里的实际得分，「预计」是按你的练度折算后的分数，并按「练度相近的玩家实际拿到过多少分」封顶（例如全员 3 启、深化 +0 的 BOX 几乎不可能到 525）；<b>深化 +N 请在「我的 BOX」里如实填写</b>。
       </div>
       <div class="boxNotice">
         <b>拼队</b>：一个区可以再上一支<b>额外队</b>，这个区固定 <b>+5 分</b>（所以「打两个 S」≈「一个 SS」），不是把两队分数相加。
