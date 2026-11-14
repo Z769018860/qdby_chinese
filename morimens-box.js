@@ -36,8 +36,10 @@
   let boxData={v:1,chars:{},wheels:{},updated:0};
   let chars=[],charsById=new Map(),idByIngame=new Map(),wheelCatalog=[],wheelZh=null,artMap=null;
   let dataReady=false,panel=null,planState={season:null,teams:null,target:525,rankCap:0,mode:'normal'};
+  let wheelIdByEn=new Map();   // 记录里的命轮英文名 → skeydbId
   const seasonCache=new Map();
   let manifestPromise=null;
+  let lastPlan=null;   // 最近一次生成的推荐结果（结构化，供自检 / 导出用）
 
   /* ---------------- 存储 ---------------- */
   function loadBox(){
@@ -97,12 +99,15 @@
     if(map.status==='fulfilled')artMap=map.value;
     if(cat.status==='fulfilled'){
       const rows=cat.value.records||[];
+      // 记录里的命轮只给英文名，要反查 id 才知道你 BOX 里有没有这张
+      wheelIdByEn=new Map();
       wheelCatalog=rows.map(w=>{
         const zh=md.wheelZhDb?.bySkeydbId?.[w.id]||md.wheelZhDb?.byEnglishName?.[w.name];
         const icon=artMap?.wheelIcon?.[w.id];
         return {id:w.id,name:zh?.name||w.name,en:w.name,realm:w.realm,rarity:w.rarity,owner:w.ownerAwakenerId,
           icon:icon?`assets/morimens/wheel-thumbs/${icon}.webp`:''};
       }).sort((a,b)=>String(a.name).localeCompare(String(b.name),'zh-CN'));
+      for(const w of wheelCatalog)if(w.en)wheelIdByEn.set(w.en,w.id);
     }
     renderAll();
   }
@@ -236,6 +241,12 @@
           <button type="button" class="boxBtn" id="boxExportCode">导出代码</button>
           <button type="button" class="boxBtn" id="boxImportCode">导入代码</button>
           <button type="button" class="boxBtn" id="boxPoster">导出长图</button>
+          <select class="boxBtn" id="boxDemoPick" title="没有自己的截图时，先用一套示例 BOX 看配队效果">
+            <option value="">载入示例 BOX…</option>
+            <option value="starter">新手 · Lv60 / 1 启 / 无命轮</option>
+            <option value="mid">中坚 · Lv70 / 3 启+4 / 命轮满叠</option>
+            <option value="full">满配 · Lv90 / 3 启+12 / 命轮满叠</option>
+          </select>
           <span class="boxChip" id="boxSummary" style="cursor:default">0 名唤醒体 · 0 张命轮</span>
         </div>
         <div class="boxChips" id="boxRealmFilter"></div>
@@ -262,7 +273,7 @@
         <div class="boxPlanCtl">
           <label class="boxField">赛季<select id="boxPlanSeason"></select></label>
           <label class="boxField">目标总分<input id="boxPlanTarget" type="number" min="0" max="525" step="5" value="525"></label>
-          <label class="boxField">参考榜单范围<select id="boxPlanRank"><option value="0">全部记录</option><option value="50">Top 50</option><option value="200">Top 200</option><option value="500">Top 500</option><option value="1000" selected>Top 1000</option></select></label>
+          <label class="boxField">参考榜单范围<select id="boxPlanRank"><option value="0">全部记录</option><option value="50">Top 50</option><option value="200">Top 200</option><option value="500">Top 500</option><option value="1000">Top 1000</option><option value="2000" selected>Top 2000</option></select></label>
         </div>
         <div class="boxToolbar"><button type="button" class="boxBtn primary" id="boxPlanRun">生成推荐</button><span class="boxChip" id="boxPlanStatus" style="cursor:default">等待生成</span></div>
         <div id="boxPlanResult"></div>
@@ -462,7 +473,7 @@
         .sort((a,b)=>String(a.name).localeCompare(String(b.name),'zh-CN'))}));
     const wgroups=groups.filter(g=>g.wheels.length);
     const nWheel=wgroups.reduce((n,g)=>n+g.wheels.length,0);
-    let h=H0;
+    let h=H0+12;
     for(const g of groups)if(g.chars.length)h+=P.LABEL+Math.ceil(g.chars.length/P.COLS)*P.CELLH+P.SEC;
     if(wgroups.length){h+=P.LABEL+P.SEC;for(const g of wgroups)h+=P.SUB+Math.ceil(g.wheels.length/P.WR)*P.WCELLH+8}
     h+=P.FOOT;
@@ -542,6 +553,7 @@
     }
     ctx.fillStyle='#6b7688';ctx.font='400 14px system-ui';
     ctx.fillText('忘忘看报 · 粉丝向免费工具 · 数据只存在本机浏览器 · 以游戏内实际数值为准',PAD,h-32);
+    ctx.fillText('配队推荐仅供参考，请按自己的练度、造物与操作习惯判断',PAD,h-12);
     return canvas;
   }
   function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
@@ -552,11 +564,14 @@
     if(!manifestPromise)manifestPromise=fetchJson('data/morimens/eremora/manifest.json','manifest').catch(e=>{manifestPromise=null;throw e});
     return manifestPromise;
   }
-  async function loadSeasonTeams(seasonId){
-    if(seasonCache.has(seasonId))return seasonCache.get(seasonId);
+  // 期次键：同一期可能有多个快照（第 69 期分 Bug 前/Bug 后），只按 seasonId 去重会漏掉
+  // 官方 Top 2000 的终榜，所以用 snapshotId 当键。
+  function snapshotKey(s){return String(s.snapshotId||s.seasonId)}
+  async function loadSeasonTeams(key){
+    if(seasonCache.has(key))return seasonCache.get(key);
     const manifest=await getManifest();
-    const entry=(manifest.availableSeasons||[]).find(s=>String(s.seasonId)===String(seasonId));
-    if(!entry)throw new Error(`第 ${seasonId} 期没有快照`);
+    const entry=(manifest.availableSeasons||[]).find(s=>snapshotKey(s)===String(key));
+    if(!entry)throw new Error(`没有这个期次的快照`);
     // 分块压缩快照（usage/<id>-local-gzip）体积小、格式统一，优先用它；
     // 早期几期只有整包 JSON，动辄几十上百 MB，浏览器带不动，留作兜底。
     const teams=[];
@@ -567,22 +582,22 @@
         const data=await loader.loadDataset(entry.path||`data/morimens/eremora/usage/${seasonId}-local-gzip/index.json`);
         extractTeams(data,teams);
         if(teams.length){
-          const hit={seasonId:Number(seasonId),teams,recordCount:teams.length};
-          seasonCache.set(seasonId,hit);
+          const hit=packSeason(entry,key,teams);
+          seasonCache.set(key,hit);
           if(seasonCache.size>2)seasonCache.delete([...seasonCache.keys()][0]);
           return hit;
         }
       }catch(e){console.warn('box: loader failed, fallback to v1',e)}
     }
     let idx=null;
-    const paths=[`data/morimens/eremora/usage/${seasonId}-local-gzip/index.json`,entry.path].filter(Boolean);
+    const paths=[`data/morimens/eremora/usage/${entry.seasonId}-local-gzip/index.json`,entry.path].filter(Boolean);
     for(const pth of paths){
       try{
         const j=await fetchJson(pth,'season index');
         if(j&&j.format==='gzip-base64-chunked-v1'&&Array.isArray(j.chunks)){idx=j;break}
       }catch(e){}
     }
-    if(!idx)throw new Error(`第 ${seasonId} 期没有可分块读取的快照`);
+    if(!idx)throw new Error('该期没有可分块读取的快照');
     if(idx.format==='gzip-base64-chunked-v1'){
       const parts=await Promise.all(idx.chunks.map(async p=>{
         const r=await fetch(p,{cache:'force-cache'});if(!r.ok)throw new Error(`${p}: HTTP ${r.status}`);
@@ -596,10 +611,21 @@
     }else{
       throw new Error('该期快照格式暂不支持');
     }
-    const result={seasonId:Number(seasonId),teams,recordCount:teams.length};
-    seasonCache.set(seasonId,result);
+    const result=packSeason(entry,key,teams);
+    seasonCache.set(key,result);
     if(seasonCache.size>2)seasonCache.delete([...seasonCache.keys()][0]);
     return result;
+  }
+  // 期次元信息 + 排名覆盖：界面上要能说清「这期参考的是前多少名」，
+  // 而不是让用户以为选 Top 2000 就真能统计到 2000 条（老期次只有 1000 条）。
+  function packSeason(entry,key,teams){
+    let maxRank=0;
+    for(const t of teams){const r=Number(t.rank)||0;if(r>maxRank)maxRank=r}
+    return {
+      key,seasonId:Number(entry.seasonId),
+      label:entry.labelZh||`第 ${entry.seasonId} 期`,
+      league:entry.coverageMode||'',recordCount:teams.length,maxRank,teams
+    };
   }
   function extractTeams(data,out){
     for(const rec of data.records||[]){
@@ -618,10 +644,16 @@
             };
           });
           if(members.length<4)continue;
+          // 0 分的队伍没有参考价值（记录里偶发：该区没打/数据缺失），留着只会被当成「替代」捞上来
+          if(!(Number(t.score)>0))continue;
           out.push({
             wave:Number(w.wave)||0,score:Number(t.score)||0,rank:Number(rec.rank)||null,player:rec.player||'',url:rec.url||'',
             difficulty:t.difficultyLabel||t.difficulty||(t.stageName||'').split(':').pop().trim(),clearType:t.clearType||'clear',
-            token:t.token?.name||'',members
+            token:t.token?.name||'',members,
+            // 造物（局内强化）和疯狂值：这两项直接决定「同样的分数有多难凹」。
+            // 只用来展示，不参与评分 —— 参考分本来就是别人带着特定造物打的。
+            creations:(t.creations||[]).map(c=>({name:c.name||'',quality:c.quality||''})),
+            madness:Number(w.madness)||0
           });
         }
       }
@@ -671,6 +703,19 @@
       ownLv:Math.round(sumOwnLv/n),ownEn:Math.round((sumOwnEn/n)*10)/10
     };
   }
+  // 这套队伍的命轮你有几张。记录只给英文名，不给叠位，所以只能判「有没有」。
+  function wheelFit(team){
+    const miss=[];let total=0;
+    for(const m of team.members){
+      if(m.borrow)continue;
+      for(const w of m.wheels||[]){
+        total++;
+        const id=wheelIdByEn.get(w);
+        if(!id||!boxData.wheels[id])miss.push(w);
+      }
+    }
+    return {total,owned:total-miss.length,miss};
+  }
   function evalTeam(team,box){
     // 只用来估“照这套抄下来大概能拿多少分”：练度够就不打折，不够才按缺口折。
     let gaps=0,missing=0;
@@ -685,9 +730,12 @@
       gaps+=Math.max(0,f.lvGap-6)*0.010;
       gaps+=Math.max(0,f.enGap-1)*0.06;
     }
+    // 命轮不齐要打折：少一张按 2% 估，最多打 12%（命轮影响比练度小，但也不是没有）
+    const wf=wheelFit(team);
+    gaps+=Math.min(0.12,wf.miss.length*0.02);
     const penalty=Math.min(0.6,gaps);
     const pred=Math.max(0,team.score*(1-penalty));
-    return {pred,penalty,missing};
+    return {pred,penalty,missing,wheelFit:wf};
   }
   function allocate(target,caps){
     const total=caps.reduce((a,b)=>a+b,0)||1;
@@ -698,56 +746,201 @@
     return out;
   }
   function signature(team){return team.members.map(m=>m.id||m.name).sort().join(',')}
+  /* 融灾五区是同一套库存：一个唤醒体只能上一次场，一张命轮也只能装在一个角色身上。
+     所以「同一档的五支队伍」之间不能出现重复角色、也不能出现重复命轮（钥令跟着命轮走，
+     同名命轮即同名钥令）。借用助战的格子是别人的号，连人带轮都不占自己库存，直接跳过。 */
+  function teamLoad(team){
+    const chars=new Set(),wheels=new Set();
+    for(const m of team.members){
+      if(m.borrow)continue;
+      const ck=m.id||m.ingameId||m.name;
+      if(ck)chars.add(ck);
+      for(const w of m.wheels||[])if(w)wheels.add(w);
+    }
+    return {chars,wheels};
+  }
+  function loadClash(a,b){
+    if(!a||!b)return null;
+    for(const k of a.chars)if(b.chars.has(k))return {kind:'char',key:k};
+    for(const k of a.wheels)if(b.wheels.has(k))return {kind:'wheel',key:k};
+    return null;
+  }
+  // 冲突「几个」而不是「有没有」：候选池里常常一支零冲突的都没有，
+  // 这时应该挑撞得最少的，别拿排序第一的那支硬撞（它可能跟三个区都重）。
+  function pickTrack(zones,tier,takenByZone){
+    // 一档 = 一条五区路线。挑选顺序按「这一区可选队伍最少」先来，
+    // 免得靠前的区把稀缺队伍吃光、后面的区只能硬撞。
+    const spec=TIER_SPEC[tier];
+    const lists=zones.map((z,zi)=>{
+      const taken=takenByZone.get(zi)||new Set();
+      const inBucket=z.buckets[tier].filter(x=>!taken.has(x));
+      const inSet=new Set(inBucket);
+      // 这一档没有正好落在区间里的队伍（比如 box 已经练满、记录里没有更高的）：
+      // 退到「练度最接近该档中心」的几支，卡片上标「替代」。
+      const pool=z.buckets.over.concat(z.buckets.high,z.buckets.mid,z.buckets.low)
+        .filter(x=>!taken.has(x)&&!inSet.has(x));
+      if(tier==='low'){
+        // 低配桶空了＝没有「整队都在你练度之内」的队，退到**最省练度**的那些
+        pool.sort((a,b)=>b.avgEq-a.avgEq||b.pred-a.pred);
+      }else{
+        // 中/高配桶空了（通常是你已经练满）＝直接给能打最高分的
+        pool.sort((a,b)=>b.pred-a.pred||Math.abs(a.avgEq-spec.center)-Math.abs(b.avgEq-spec.center));
+      }
+      // narrow＝只在本档桶内挑（档位纯正）。wide＝允许用隔壁档的队伍补位。
+      // 中配桶常常只有十几支（都是「刚好持平」的顶配队），凑不出五区不重复，
+      // 这时宁可拿一支低配队顶上，也不要把同一个角色排进两个区。
+      return {narrow:inBucket,wide:inBucket.concat(pool),narrowSet:inSet,alt:inBucket.length===0};
+    });
+    const order=zones.map((z,i)=>i).sort((a,b)=>lists[a].wide.length-lists[b].wide.length||a-b);
+    const picked=new Array(zones.length).fill(null);
+
+    /* 1) 先解「五区严格零重复」。
+       原来的做法是逐区取「第一个不撞的」——贪心经常走死：前面几区把热门辅助/热门命轮
+       吃掉，轮到第 5 区时池子里一条干净的都没有，只能硬撞然后标红。
+       改成带预算的 DFS：候选按分数从高到低试，找到第一条全程零冲突的路线就返回。
+       5 区 × 160 候选、12 万次尝试上界，实测十几毫秒。 */
+    const CAP=160,BUDGET=120000;
+    function fits(load,uc,uw){
+      for(const k of load.chars)if(uc.has(k))return false;
+      for(const k of load.wheels)if(uw.has(k))return false;
+      return true;
+    }
+    function solve(field){
+      let budget=BUDGET;
+      const seq=new Array(order.length).fill(null);
+      function dfs(i,uc,uw){
+        if(i===order.length)return true;
+        const cs=lists[order[i]][field],n=Math.min(cs.length,CAP);
+        for(let k=0;k<n;k++){
+          if(--budget<=0)return false;
+          const x=cs[k];
+          if(!fits(x.load,uc,uw))continue;
+          seq[i]=x;
+          const ac=new Set(uc),aw=new Set(uw);
+          for(const t of x.load.chars)ac.add(t);
+          for(const t of x.load.wheels)aw.add(t);
+          if(dfs(i+1,ac,aw))return true;
+          seq[i]=null;
+        }
+        return false;
+      }
+      return dfs(0,new Set(),new Set())?seq:null;
+    }
+    const narrow=solve('narrow'),wide=narrow?null:solve('wide');
+    const seq=narrow||wide;
+    if(seq){
+      for(let i=0;i<order.length;i++){
+        const zi=order[i],x=seq[i];
+        // 用了隔壁档的队伍补位 → 标「替代」，让用户知道这不是本档的纯正队伍
+        const off=!lists[zi].narrowSet.has(x);
+        picked[zi]={x,alt:lists[zi].alt||off,forced:null};
+        takenByZone.get(zi).add(x);
+      }
+      return picked;
+    }
+
+    /* 2) 确实凑不出零重复（记录池里就那几支热门队）：退回「撞得最少」，并标明跟谁撞了。
+       冲突按角色加权：一个人不能同时上两个区，命轮至少还能靠替换凑。 */
+    const used={chars:new Set(),wheels:new Set()};
+    function clashCount(load){
+      let c=0,w=0;
+      for(const k of load.chars)if(used.chars.has(k))c++;
+      for(const k of load.wheels)if(used.wheels.has(k))w++;
+      return c*3+w;
+    }
+    for(const zi of order){
+      const {wide,alt,narrowSet}=lists[zi];
+      const cands=wide;
+      let pick=null,least=Infinity;
+      for(const x of cands){
+        const n=clashCount(x.load);
+        if(n===0){pick=x;least=0;break}
+        if(n<least){least=n;pick=x}
+      }
+      let forced=null;
+      if(pick&&least>0){
+        // 确实没有零冲突的：挑撞得最少的，并在卡片上写清是跟哪个区撞了。
+        for(let k=0;k<picked.length;k++){
+          if(!picked[k])continue;
+          const c=loadClash(pick.load,picked[k].x.load);
+          if(c){forced={wave:zones[k].wave,kind:c.kind,key:c.key};break}
+        }
+      }
+      if(pick){
+        for(const k of pick.load.chars)used.chars.add(k);
+        for(const k of pick.load.wheels)used.wheels.add(k);
+        takenByZone.get(zi).add(pick);
+      }
+      picked[zi]=pick?{x:pick,alt:alt||!narrowSet.has(pick),forced}:null;
+    }
+    return picked;
+  }
+  // 自检：这一档五支队伍里有多少角色 / 命轮被重复使用了
+  function trackAudit(plans,tier){
+    const seenC=new Set(),seenW=new Set();
+    let charClash=0,wheelClash=0,n=0;
+    for(const p of plans){
+      const pick=p.picks[tier].pick;
+      if(!pick)continue;
+      n++;
+      for(const c of pick.load.chars){if(seenC.has(c))charClash++;else seenC.add(c)}
+      for(const w of pick.load.wheels){if(seenW.has(w))wheelClash++;else seenW.add(w)}
+    }
+    return {charClash,wheelClash,chars:seenC.size,wheels:seenW.size,n};
+  }
   async function runPlan(){
     const status=$('boxPlanStatus'),host=$('boxPlanResult');
     if(!dataReady){toast('角色数据还没载入完');return}
     if(!ownedCount()){host.innerHTML='<div class="boxEmpty">BOX 还是空的，先去「我的 BOX」录入，或用截图识别导入。</div>';return}
-    const season=Number($('boxPlanSeason').value||69);
+    const seasonKey=$('boxPlanSeason').value;
     const target=Math.max(0,Math.min(525,Number($('boxPlanTarget').value||525)));
     const rankCap=Number($('boxPlanRank').value||0);
     status.textContent='正在载入赛季记录…';
     try{
-      const data=await loadSeasonTeams(season);
-      status.textContent=`第 ${season} 期 · ${data.teams.length} 支队伍记录`;
-      const waves=[...new Set(data.teams.map(t=>t.wave))].filter(Boolean).sort((a,b)=>a-b);
-      const caps=waves.map(w=>Math.max(...data.teams.filter(t=>t.wave===w).map(t=>t.score),1));
+      const data=await loadSeasonTeams(seasonKey);
+      const inRange=rankCap?data.teams.filter(t=>!t.rank||t.rank<=rankCap):data.teams;
+      status.textContent=`${data.label} · ${inRange.length} 支队伍记录${rankCap?`（榜单前 ${rankCap}）`:''} · 正在分档…`;
+      const waves=[...new Set(inRange.map(t=>t.wave))].filter(Boolean).sort((a,b)=>a-b);
+      const caps=waves.map(w=>Math.max(...inRange.filter(t=>t.wave===w).map(t=>t.score),1));
       const targets=allocate(target,caps);
-      const plans=[];
-      for(const w of waves){
-        const rows=data.teams.filter(t=>t.wave===w&&(!rankCap||!t.rank||t.rank<=rankCap));
+      // 每区把候选队伍按「扣掉你的练度缺口后大概能打多少分」排好，再分低/中/高/超标四桶。
+      // 缺口大到离谱（超 25 级 / 6 启）的直接不进候选，免得替代档捞到根本练不出来的队。
+      const zones=waves.map((w,wi)=>{
+        const rows=inRange.filter(t=>t.wave===w);
         const dedup=new Map();
         for(const t of rows){
           const k=signature(t),old=dedup.get(k);
           if(!old||t.score>old.score)dedup.set(k,t);
         }
-        // 每支队伍两套指标：pred/penalty 估"照抄能打多少分"，tier 按等级+启灵缺口分低/中/高。
-        // 缺口大到离谱（超 25 级 / 6 启）的直接不进候选，免得替代档捞到根本练不出来的队。
         const evaluated=[...dedup.values()]
-          .map(t=>({team:t,...evalTeam(t,boxData),...tierOf(t,boxData)}))
+          .map(t=>({team:t,...evalTeam(t,boxData),...tierOf(t,boxData),load:teamLoad(t)}))
           .filter(x=>x.missing<=1&&x.maxLvGap<=25&&x.maxEnGap<=6);
         const buckets={low:[],mid:[],high:[],over:[]};
         for(const x of evaluated)buckets[x.tier||'over'].push(x);
         for(const k of Object.keys(buckets)){
           buckets[k].sort((a,b)=>b.pred-a.pred||b.team.score-a.team.score||(a.team.rank||9999)-(b.team.rank||9999));
         }
-        const idx=waves.indexOf(w);
-        const picks={},used=new Set();
+        return {wave:w,target:targets[wi],cap:caps[wi],buckets};
+      });
+      status.textContent=`${data.label} · ${inRange.length} 支记录 · 正在排重…`;
+      // 三档各自是一条独立路线：同一档的五支队伍之间不允许角色 / 命轮重复。
+      // 同一区的低中高三套是「三选一」，彼此之间不需要排重，但仍然尽量不让三个档位选中同一支队伍。
+      const takenByZone=new Map(zones.map((z,i)=>[i,new Set()]));
+      const picksByTier={};
+      for(const k of TIER_KEYS)picksByTier[k]=pickTrack(zones,k,takenByZone);
+      const plans=zones.map((z,zi)=>{
+        const picks={};
         for(const k of TIER_KEYS){
-          const spec=TIER_SPEC[k];
-          let pick=buckets[k][0]||null,alt=false;
-          if(!pick){
-            // 这一档没有正好落在区间里的队伍（比如 box 已经练满，记录里没有更高的）：
-            // 退到"练度最接近该档中心"的一支，卡片上标「替代」。
-            const pool=buckets.over.concat(buckets.high,buckets.mid,buckets.low).filter(x=>!used.has(x));
-            pool.sort((a,b)=>Math.abs(a.avgEq-spec.center)-Math.abs(b.avgEq-spec.center)||b.pred-a.pred);
-            pick=pool[0]||null;alt=!!pick;
-          }
-          if(pick)used.add(pick);
-          picks[k]={pick,alt,alts:buckets[k].filter(x=>x!==pick).slice(0,3)};
+          const rec=picksByTier[k][zi];
+          const pick=rec?rec.x:null;
+          picks[k]={pick,alt:rec?rec.alt:false,forced:rec?rec.forced:null,
+            alts:z.buckets[k].filter(x=>x!==pick).slice(0,3)};
         }
-        plans.push({wave:w,target:targets[idx],cap:caps[idx],picks});
-      }
-      renderPlan(plans,target,season);
+        return {wave:z.wave,target:z.target,cap:z.cap,picks};
+      });
+      status.textContent=`已生成 · ${data.label} · ${inRange.length} 支记录${rankCap?`（榜单前 ${rankCap}）`:''}`;
+      lastPlan={season:{key:data.key,label:data.label,maxRank:data.maxRank,recordCount:data.recordCount},target,rankCap,plans};
+      renderPlan(plans,target,data,rankCap);
     }catch(e){
       console.error(e);status.textContent='生成失败';host.innerHTML=`<div class="boxNotice bad">${esc(e.message||e)}</div>`;
     }
@@ -765,6 +958,13 @@
       <div style="min-width:0"><b>${esc(c?.name||m.name||m.id)}</b><small>${lvTxt}${enTxt?' · '+enTxt:''}</small>
       ${m.wheels?.length?`<small>${esc(m.wheels.slice(0,2).map(wheelNameByEn).join(' / '))}</small>`:''}${tag}</div></div>`;
   }
+  const QUALITY_ZH={Red:'红',Orange:'橙',Gold:'金',Purple:'紫',Blue:'蓝',Green:'绿',White:'白'};
+  function creationTxt(t){
+    const n=(t.creations||[]).length;
+    if(!n)return '无造物记录';
+    const best=(t.creations||[]).map(c=>QUALITY_ZH[c.quality]||c.quality).find(Boolean);
+    return `造物 ${n} 件${best?`（最高 ${best}）`:''}`;
+  }
   function tierCard(key,info,target){
     const spec=TIER_SPEC[key];
     const pick=info.pick;
@@ -777,6 +977,9 @@
     const gapTxt=(pick.maxLvGap||pick.maxEnGap)
       ? `最高差 ${pick.maxLvGap?`${pick.maxLvGap} 级`:''}${pick.maxLvGap&&pick.maxEnGap?' / ':''}${pick.maxEnGap?`${pick.maxEnGap} 启`:''}`
       : `整队都够（平均富余 ${Math.round(pick.avgEq)} 级等效）`;
+    const clashTxt=info.forced
+      ? `<span class="boxTierPred bad">与第 ${info.forced.wave} 区重复${info.forced.kind==='char'?'角色':'命轮'}${info.forced.kind==='wheel'?`（${esc(wheelNameByEn(info.forced.key))}）`:''}</span>`
+      : '';
     return `<div class="boxTier" style="--tier:${spec.color}">
       <div class="boxTierHead">
         <span class="boxTierTag">${spec.name}${info.alt?' · 替代':''}</span>
@@ -784,15 +987,27 @@
         <span class="boxTierPred ${ok?'':'bad'}">预计 ${Math.round(pick.pred)}${ok?' · 达标':` · 差 ${Math.max(0,Math.round(target-pick.pred))}`}</span>
       </div>
       <div class="boxTierMeta">队伍 Lv.${pick.needLv} / ${pick.needEn} 启 · 你 Lv.${pick.ownLv} / ${pick.ownEn} 启 · ${gapTxt}</div>
+      ${(()=>{const wf=pick.wheelFit||{total:0,owned:0,miss:[]};if(!wf.total)return '';
+        const bad=wf.miss.length;
+        return `<div class="boxTierMeta">命轮 <b style="color:${bad?'#e8a0a0':'#7fd8a5'}">${wf.owned}/${wf.total}</b> 齐${bad?`（缺 ${esc(wf.miss.slice(0,4).map(wheelNameByEn).join('、'))}${bad>4?'…':''}）`:''}</div>`})()}
+      ${clashTxt?`<div class="boxTierMeta">${clashTxt}</div>`:''}
       <div class="boxWaveMembers">${t.members.map(memberCard).join('')}</div>
-      <div class="boxAlt">命轮位：${esc(t.members.map(m=>m.wheels?.[0]?wheelNameByEn(m.wheels[0]):'—').join(' / '))}${t.rank?` · 原榜 #${t.rank}`:''}${t.url?` · <a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">通关记录</a>`:''}</div>
+      <div class="boxAlt">命轮：${esc(t.members.map(m=>m.wheels?.length?m.wheels.map(wheelNameByEn).join(' + '):'—').join(' / '))}</div>
+      <div class="boxAlt">${creationTxt(t)}${t.token?` · 信物 ${esc(t.token)}`:''}${t.rank?` · 原榜 #${t.rank}`:''}${t.url?` · <a href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">通关记录</a>`:''}</div>
       ${info.alts.length?`<div class="boxAlt">备选：${info.alts.map(a=>`<a href="${esc(a.team.url)}" target="_blank" rel="noopener noreferrer">${Math.round(a.pred)} 分${a.team.rank?` #${a.team.rank}`:''}</a>`).join(' · ')}</div>`:''}
     </div>`;
   }
-  function renderPlan(plans,target,season){
+  function renderPlan(plans,target,data,rankCap){
     const host=$('boxPlanResult');
     const sumOf=k=>Math.round(plans.reduce((s,p)=>s+(p.picks[k].pick?p.picks[k].pick.pred:0),0));
     const hits=k=>plans.filter(p=>p.picks[k].pick&&p.picks[k].pick.pred>=p.target).length;
+    const audits={};for(const k of TIER_KEYS)audits[k]=trackAudit(plans,k);
+    const auditTxt=k=>{const a=audits[k];
+      if(!a.n)return '没有可用队伍';
+      const bad=a.charClash||a.wheelClash;
+      return `<b style="color:${bad?'#e8a0a0':'#7fd8a5'}">${bad?'有冲突':'无重复'}</b> · 角色 ${a.chars} 名${a.charClash?`（重复 ${a.charClash} 次）`:''} · 命轮 ${a.wheels} 张${a.wheelClash?`（重复 ${a.wheelClash} 次）`:''}`;
+    };
+    const coverage=data.maxRank?`该期快照排名 #1–#${data.maxRank}`:'';
     host.innerHTML=`
       <div class="boxStatRow">
         <div class="boxStat"><small>目标总分</small><strong>${target}</strong></div>
@@ -800,16 +1015,31 @@
         <div class="boxStat"><small>中配合计 · ${hits('mid')}/${plans.length} 区达标</small><strong style="color:#6ea8ff">${sumOf('mid')}</strong></div>
         <div class="boxStat"><small>高配合计 · ${hits('high')}/${plans.length} 区达标</small><strong style="color:#d7a85b">${sumOf('high')}</strong></div>
       </div>
-      <div class="boxNotice">每区按<b>等级 + 启灵</b>给三套：<b style="color:#7fd8a5">低配</b>＝整队要求都在你练度之内（平均还富余 8 级等效以上）；<b style="color:#6ea8ff">中配</b>＝缺口 ≤ 6 级 / ≤ 1 启，或刚好持平；<b style="color:#d7a85b">高配</b>＝缺口 ≤ 15 级 / ≤ 3 启，练一练能上。启灵按 1 档 ≈ 8 级折算。「参考分」是记录里的实际得分，「预计」是按你的练度折算后的分数。</div>
+      <div class="boxNotice">
+        <b>先说清楚：以下只是参考，不是「照抄就能过」的答案。</b>请按自己的练度、命轮、造物和操作习惯判断。
+        通关记录的实际凹度差别很大 —— 有的队靠局内<b>造物</b>把伤害堆起来，有的靠<b>死扛</b>（坦克/护盾硬顶、反复重开凹暴击）拿分，
+        同样的分数对不同人难度完全不同。抄之前先看卡片上的「造物 N 件」，造物差的队往往要多打很多遍。
+      </div>
+      <div class="boxNotice">
+        每区按<b>等级 + 启灵</b>给三套：<b style="color:#7fd8a5">低配</b>＝整队要求都在你练度之内（平均还富余 8 级等效以上）；<b style="color:#6ea8ff">中配</b>＝缺口 ≤ 6 级 / ≤ 1 启，或刚好持平；<b style="color:#d7a85b">高配</b>＝缺口 ≤ 15 级 / ≤ 3 启，练一练能上。启灵按 1 档 ≈ 8 级折算。「参考分」是记录里的实际得分，「预计」是按你的练度折算后的分数。
+      </div>
+      <div class="boxNotice">
+        <b>阵容自检</b>（同一档的五区之间不能重复用人和命轮；钥令跟着命轮走，同名命轮＝同名钥令）：
+        低配 ${auditTxt('low')}；中配 ${auditTxt('mid')}；高配 ${auditTxt('high')}。
+        借用助战的格子连人带命轮都是别人的，不算占用你的库存。
+      </div>
+      ${TIER_KEYS.every(k=>hits(k)===0)?`<div class="boxNotice bad">按记录折算，这套 BOX 的低配大约 <b>${sumOf('low')}</b> 分、中配 ${sumOf('mid')}、高配 ${sumOf('high')}，离目标 ${target} 还有距离。
+        要么把目标调到 <b>${Math.round(sumOf('low')/5)*5}</b> 左右看每区差多少，要么先补练度 / 命轮再回来抄更高分的队。</div>`:''}
       ${plans.map(p=>`
         <div class="boxWave">
           <div class="boxWaveHead">
             <div><b>第 ${p.wave} 区</b> <span>目标 ${p.target} 分 · 该区上限 ${p.cap}</span></div>
-            <div><span>三档都能抄，越往上越吃练度</span></div>
+            <div><span>三档任选其一，越往上越吃练度</span></div>
           </div>
           <div class="boxTiers">${TIER_KEYS.map(k=>tierCard(k,p.picks[k],p.target)).join('')}</div>
         </div>`).join('')}
-      <div class="boxNotice">记录里标「可借用」的格子是别人的助战位，可以直接借，不算缺人。数据来自公开融灾通关记录（第 ${season} 期）。</div>
+      <div class="boxNotice">数据来自公开融灾通关记录（${esc(data.label)}${rankCap?` · 榜单前 ${rankCap}`:''}${coverage?` · ${esc(coverage)}`:''}，共 ${data.recordCount} 支队伍）。
+        记录里标「可借用」的格子是别人的助战位，可以直接借，不算缺人。</div>
     `;
   }
 
@@ -848,6 +1078,11 @@
       const wrow=e.target.closest('[data-wheel]');
       if(wrow&&e.target.dataset.wheelField){boxData.wheels[wrow.dataset.wheel]={stack:Number(e.target.value)};saveBox();return}
       if(e.target.id==='boxDrop'){return}
+      if(e.target.id==='boxDemoPick'){
+        const v=e.target.value;e.target.value='';
+        if(v)loadDemoBox(v);
+        return;
+      }
     });
     panel.addEventListener('input',e=>{
       const row=e.target.closest('[data-id]');
@@ -877,6 +1112,20 @@
     if(!ids.length){toast('没有可设置的角色');return}
     for(const id of ids)boxData.chars[id]={lv:MAXLV,en:Math.max(3,boxData.chars[id].en||0),po:MAXPO,sk:MAXSK};
     saveBox();renderAll();toast(`已把 ${ids.length} 名角色设为满级满灵塑满技能`);
+  }
+  /* 示例 BOX：很多人手里没有成套截图，又想先看看「配队推荐」长什么样。
+     直接按当前角色表生成，不硬编码 id，游戏更新也不会失效。
+     启灵按界面语义给总量：3 启 + N → 3+N。 */
+  function loadDemoBox(kind){
+    const preset={starter:{lv:60,en:1,stack:-1},mid:{lv:70,en:7,stack:12},full:{lv:90,en:15,stack:12}}[kind];
+    if(!preset)return;
+    if(ownedCount()&&!window.confirm('这会覆盖当前 BOX（可先导出代码备份）。继续？'))return;
+    const next={v:1,chars:{},wheels:{},updated:Date.now()};
+    for(const c of chars)next.chars[c.id]={lv:preset.lv,en:preset.en,po:10,sk:6};
+    if(preset.stack>=0)for(const w of wheelCatalog)next.wheels[w.id]={stack:preset.stack};
+    boxData=next;
+    saveBox();renderAll();
+    toast(`已载入示例：${chars.length} 名角色 / ${Object.keys(next.wheels).length} 张命轮`);
   }
   async function poster(){
     if(!ownedCount()){toast('BOX 还是空的');return}
@@ -1004,14 +1253,22 @@
   async function initPlanSeasons(){
     try{
       const m=await getManifest();
-      const seen=new Set();
-      const rows=(m.availableSeasons||[]).filter(x=>{
+      // 同一期可能有多个快照（第 69 期分 Bug 前 / Bug 后），选「完整且记录更多」的那个，
+      // 否则选 Top 2000 也只会拿到 1000 条 —— 参考面直接少一半。
+      const best=new Map();
+      for(const x of (m.availableSeasons||[])){
         const id=String(x.seasonId);
-        if(!/^\d+$/.test(id)||seen.has(id))return false;
-        seen.add(id);return true;
-      }).sort((a,b)=>Number(b.seasonId)-Number(a.seasonId));
-      $('boxPlanSeason').innerHTML=rows.map(x=>{const cur=Number(x.seasonId)===Number(m.currentSeason);
-        return `<option value="${x.seasonId}"${cur?' selected':''}>第 ${x.seasonId} 期 · ${x.recordCount??0} 条${cur?'（当前）':''}</option>`}).join('');
+        if(!/^\d+$/.test(id))continue;
+        const old=best.get(id);
+        const score=v=>(v&&v.complete?1:0)*1e6+(v?.recordCount||0);
+        if(!old||score(x)>score(old))best.set(id,x);
+      }
+      const rows=[...best.values()].sort((a,b)=>Number(b.seasonId)-Number(a.seasonId));
+      $('boxPlanSeason').innerHTML=rows.map(x=>{
+        const key=snapshotKey(x),cur=Number(x.seasonId)===Number(m.currentSeason);
+        const cnt=x.recordCount??0;
+        return `<option value="${esc(key)}"${cur?' selected':''}>${esc(x.labelZh||`第 ${x.seasonId} 期`)} · ${cnt} 条${cnt>=2000?'（Top 2000）':''}${cur?'（当前）':''}</option>`;
+      }).join('');
     }catch(e){$('boxPlanSeason').innerHTML='<option value="69">第 69 期</option>'}
   }
 
@@ -1028,7 +1285,10 @@
     renderAll();
     initData().catch(e=>console.warn('box data failed',e));
     if(location.hash==='#box')window.MorimensTabs.activate('box');
-    window.MorimensBox={get box(){return boxData},render:renderAll,recommend:runPlan};
+    // public：给页面脚本 / 自动化测试用的最小接口
+    window.MorimensBox={get box(){return boxData},render:renderAll,recommend:runPlan,
+      get plan(){return lastPlan},
+      poster:async()=>(await buildPoster()).toDataURL('image/png')};
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,0));else setTimeout(boot,0);
 })();
