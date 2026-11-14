@@ -824,17 +824,17 @@
     const W=pix.W;
     const sb=starRowBand(bandA,cardW);
     const yTop=Math.max(0,sb.top),yBot=Math.min(pix.H-1,sb.bot);
-    if(yBot<=yTop+4)return {lit:0,num:null,segs:[],band:sb};
+    if(yBot<=yTop+4)return {lit:0,num:null,segs:[],band:sb,cores:[],amb:true};
     const xa=Math.max(0,Math.round(left+cardW*0.02)),xb=Math.min(W-1,Math.round(left+cardW*0.94));
-    if(xb<=xa+6)return {lit:0,num:null,segs:[],band:sb};
+    if(xb<=xa+6)return {lit:0,num:null,segs:[],band:sb,cores:[],amb:true};
     const h=yBot-yTop+1;
     const blobGap=Math.max(1,Math.round(cardW*0.02));
     const minW=Math.max(4,Math.round(cardW*0.035)),maxW=Math.round(cardW*0.17);
-    const blobsAt=function(thr){
+    const blobsAt=function(test){
       const col=new Array(xb-xa+1);
       for(let x=xa;x<=xb;x++){
         let n=0;
-        for(let y=yTop;y<=yBot;y++)if(pix.L[y*W+x]>thr)n++;
+        for(let y=yTop;y<=yBot;y++)if(test(pix.L[y*W+x]))n++;
         col[x-xa]=n;
       }
       // runsOf 的第三个参数是"最大允许宽度"，给小了会把整颗菱形直接丢掉
@@ -842,10 +842,19 @@
         .map(function(r){return {a:r.a+xa,b:r.b+xa,c:(r.a+r.b)/2+xa,w:r.w}})
         .filter(function(r){return r.w>=minW&&r.w<=maxW});
     };
-    // 亮金底条 / 白色渐隐的行整体变暗，190 会一颗都切不出来 → 降一档再试
-    let blobs=blobsAt(190);
-    if(!blobs.length)blobs=blobsAt(158);
-    if(!blobs.length)return {lit:0,num:null,segs:[],band:sb};
+    /* 菱形有两种画法（box-1 / box-2 都逐格核对过）：
+       **亮槽＝纯白实心（L≈255）、空槽＝纯黑实心（L≈10~40）**。
+       所以候选必须同时收「亮块」和「暗块」——只收亮块时，0 启 / 1 启的格子
+       只剩数字那一块，链不成三颗，间距只能按经验值兜底，于是整行读成 0 启或 3 启。 */
+    let bright=blobsAt(function(v){return v>190});
+    if(!bright.length)bright=blobsAt(function(v){return v>158});
+    const dark=blobsAt(function(v){return v<95});
+    const blobs=[];
+    for(const b of bright.concat(dark)){
+      if(!blobs.some(function(q){return Math.abs(q.c-b.c)<cardW*0.03}))blobs.push(b);
+    }
+    blobs.sort(function(a,b){return a.c-b.c});
+    if(!blobs.length)return {lit:0,num:null,segs:[],band:sb,cores:[],amb:true};
     // 在候选里找"最长的等间距链"——菱形是等距的，数字不参与
     let chain=[];
     for(let i=0;i<blobs.length;i++){
@@ -878,31 +887,37 @@
       // 间距估不出来（只认出 1 颗）：按版式经验值兜底
       pitch=cardW*0.19;
     }
-    /* 亮菱形个数改按「槽位核心亮度」数，不再数连通块：
-       列表底部那几行会被白色渐隐压掉对比度，块状阈值 190 只认出 1 颗（实测塔薇那行
-       三颗里只有最左一颗过了 190，另外两颗峰值 172/168），于是 3 启被写成 1 启。
-       改成：在三个槽位中心各取峰值，如果三颗亮度接近（差距 <25）就按「同类」判
-       ——都够亮算三启、都不亮算 0 启；有明显差距时取中点做阈、只数左边连续的几颗
-       （界面上亮菱形一定是从左往右排的）。 */
-    const slotCore=function(k){
-      const cx=Math.round(d0+k*pitch);let mx=0;
-      for(let x=Math.round(cx-pitch*0.30);x<=Math.round(cx+pitch*0.30);x++){
+    /* 亮菱形个数＝启灵数（0~3）。判「亮/暗」只能看**槽位正中心的那几像素**：
+       空槽是纯黑实心（L≈10~40），亮槽是纯白实心（L≈255），而卡面插画、金色底条
+       本身就是 170~255 的亮底。原来在 ±0.3 间距的窗口里取**最大值**，等于永远
+       读到旁边的亮背景，于是「0 启 / 1 启」全被读成 3 启（box-1 逐格核对：12 格错 3 格，
+       全是读高）。改成小窗均值 + 绝对阈值，亮槽/空槽差着一个数量级，很好分。 */
+    const h2=yBot-yTop+1;
+    const yMid=(yTop+yBot)/2;
+    const halfY=Math.max(1,Math.round(h2*0.26));
+    /* 取「中心窄列带里的最亮值」而不是小窗均值：菱形中心那几列是纯粹的填充色
+       （亮槽 255 / 空槽 30 上下），均值会把菱形深色边框和卡面亮底平均进来，
+       n1 那张缩到 780px 的截图三颗都只剩 175~181，跟阈值贴在一起，
+       167 和 168 的差别就足以把 3 启判成 2 启。 */
+    const peakBox=function(cx,hx){
+      let mx=0;
+      const x0=Math.round(cx-hx),x1=Math.round(cx+hx);
+      const yy0=Math.round(yMid-halfY),yy1=Math.round(yMid+halfY);
+      for(let x=x0;x<=x1;x++){
         if(x<0||x>=W)continue;
-        for(let y=yTop;y<=yBot;y++){const v=pix.L[y*W+x];if(v>mx)mx=v}
+        for(let y=yy0;y<=yy1;y++){const v=pix.L[y*W+x];if(v>mx)mx=v}
       }
       return mx;
     };
-    const cores=[slotCore(0),slotCore(1),slotCore(2)];
-    const cmax=Math.max.apply(null,cores),cmin=Math.min.apply(null,cores);
-    // 连通块的读数留作「都偏暗」时的退路（白底/白色渐隐会让三颗槽位的峰值都差不多）
-    const blobLit=Math.min(3,blobs.filter(function(b){return b.c<=d0+2.5*pitch}).length);
-    let lit=0;
-    if(cmax>=165){
-      if(cmax-cmin<25)lit=cmin>=185?3:blobLit;   // 三颗都够亮才算三启，否则别硬判
-      else{
-        const thr=cmin+(cmax-cmin)*0.5;
-        for(let k=0;k<3;k++){if(cores[k]>=thr)lit++;else break}
-      }
+    const hx=Math.max(1,pitch*0.10);
+    const cores=[0,1,2].map(function(k){return peakBox(d0+k*pitch,hx)});
+    /* 亮槽一定是从左往右连续的，所以从左往右数到第一个暗槽就停。
+       168 / 92 两条线之间（浅灰）说明这格对比度被压平了，不算数、只标可疑。 */
+    let lit=0,amb=false;
+    for(let k=0;k<3;k++){
+      const v=cores[k];
+      if(v>=170){lit++}
+      else{if(v>=150)amb=true;break}   // 150~170 是灰带，判不准就标可疑
     }
     if(TRACE()){/* 诊断用：cores 在 dbg 里能看到 */}
     // 数字画在第 4 个槽位里，右对齐；框取槽位中心一带，别把菱形发光边圈进来
@@ -914,7 +929,7 @@
     if(slotC-bw/2>xa&&slotC+bw/2<W-1){
       num={x:Math.round(slotC-bw/2),y:Math.round(midY-bh/2),w:Math.round(bw),h:Math.round(bh)};
     }
-    return {lit:lit,num:num,segs:blobs,band:sb,chain:blobs.length,pitch:pitch,cores:cores};
+    return {lit:lit,num:num,segs:blobs,band:sb,chain:blobs.length,pitch:pitch,cores:cores,amb:amb};
   }
   // 「Lv.xx」是等级条里最亮的像素，但条底本身亮度差很大：深色条只有 70~90，
   // 有些卡是亮金渐变，底子就有 200+。原来写死 210 在亮条上会把整条都当字
@@ -1147,11 +1162,11 @@
         // 「薇薇安是三启」，而截图里那两格是 3 颗亮菱形＋写着 12／4，
         // 说明那个数字属于另一套成长（副属性档），**不能加进启灵**。
         // 仍然把它读出来存到 plus 里（只作参考、单独显示），但 en 只由亮菱形数决定。
-        let enLow=false,enPlus=null;
+        let enLow=false,enPlus=null,starDbg=null;
         rec.lvBox=loc;rec.lv=lv;
         try{
           const star=readStarRow(pix,leftAdj,cardW,bandA);
-          rec.star=star;rec.lit=star.lit;
+          rec.star=star;rec.lit=star.lit;starDbg=star;
           const base=Math.min(3,star.lit);
           // 数字在第 4 个槽位里，框差一两像素就会切歪，所以阈值和框位各给一组
           const variants=star.num?[
@@ -1186,13 +1201,12 @@
             if(bestN>=2||bestS>=EN_SOLO_CONF)enPlus=bestV;
           }
           en=base;
-          /* 亮菱形偏暗（峰值落在 165~200 之间）时可能是被白色渐隐压掉了一颗，
-             这种格子标成「请核对」，界面会给启灵加个问号。 */
-          const cmax=star.cores?Math.max.apply(null,star.cores):0;
-          enLow=!(cmax>=200||cmax<165);
+          /* 槽位中心落在「浅灰」区间（既不像实白也不像纯黑）时说明这格对比度被压平，
+             标成「请核对」，界面会给启灵加个问号，而不是硬给一个数。 */
+          enLow=!!star.amb;
         }catch(e){en=null;enLow=true;rec.err=String(e&&e.message||e)}
         rec.en=en;rec.plus=enPlus;
-        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,plus:enPlus,box:box});
+        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,plus:enPlus,lit:starDbg?starDbg.lit:null,cores:starDbg?starDbg.cores:null,box:box});
       }
     }
     return {rows:out,note:'识别到 '+out.length+' 张卡片',grid:grid,dbg:TRACE()?dbg:undefined};

@@ -1205,7 +1205,7 @@
           ${hit?.portrait?`<img src="${esc(hit.portrait)}" alt="">`:'<div style="width:42px;height:42px;border-radius:8px;background:#0b1220"></div>'}
           <select data-row-char="${i}">${opts.map(c=>`<option value="${c.id}"${c.id===r.id?' selected':''}>${esc(c.name)}${c.ingameId?' · '+esc(c.ingameId):''}</option>`).join('')}${hit&&!opts.some(o=>o.id===r.id)?`<option value="${r.id}" selected>${esc(hit.name)}</option>`:''}</select>
           <label class="boxField" style="font-size:9px">等级<input type="number" min="1" max="90" value="${r.lv||''}" data-row-lv="${i}" style="width:100%"></label>
-          <label class="boxField" style="font-size:9px"${r.enLow?' title="亮菱形没数准，先按 0 启，请核对"':''}>启灵${r.enLow?'?':''}<select data-row-en="${i}">${Array.from({length:MAXEN+1},(_,k)=>`<option value="${k}"${k===(r.en||0)?' selected':''}>${ENLIGHT_TEXT(k)}</option>`).join('')}</select></label>
+          <label class="boxField" style="font-size:9px"${r.enLow?' title="亮菱形没数准（对比度被压平），请核对这一格"':''}>启灵${r.enLow?'?':''}<select data-row-en="${i}">${Array.from({length:MAXEN+1},(_,k)=>`<option value="${k}"${k===(r.en||0)?' selected':''}>${ENLIGHT_TEXT(k)}</option>`).join('')}</select></label>
           <span class="boxScore ${r.score>0.62?'ok':r.score>0.5?'warn':'bad'}">${pct(r.score)}</span>
         </div>`;
       }).join('')+
