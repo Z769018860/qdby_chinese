@@ -1,16 +1,16 @@
 {
   "format": "gzip-base64-chunked-v2",
   "seasonId": 73,
-  "recordCount": 2000,
+  "recordCount": 1999,
   "battleCount": 0,
   "source": "local detailed __data.json import",
-  "revision": "167db62bda7bb7dbfd82301c2723cad17a95d61434601d864fbf627393e91cad",
-  "generatedAt": "2026-11-12T19:20:00+08:00",
+  "revision": "498e392f23cfa158558a242678ec3d27aecfef8709713d647a66dfa502f9040a",
+  "generatedAt": "2026-11-15T00:57:00+08:00",
   "chunks": [
     "data/morimens/eremora/usage/73-local-gzip/chunk-000.b64",
     "data/morimens/eremora/usage/73-local-gzip/chunk-001.b64"
   ],
   "chunkSize": 600000,
-  "compressedBytes": 823600,
-  "rawBytes": 3708138
+  "compressedBytes": 867587,
+  "rawBytes": 3903939
 }
