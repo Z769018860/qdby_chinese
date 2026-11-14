@@ -259,6 +259,7 @@
 
       <div id="boxTabOcr" hidden>
         <div class="boxNotice">支持一次最多 5 张截图，可以分多次补充。角色列表页识别「等级 + 启灵」，命轮页识别「叠位」。识别结果会先列出来给你核对，确认后才写进 BOX。</div>
+        <div class="boxNotice"><b>OCR 的准确度一般，请自行进行校对调整。</b>认错的角色点开下拉改、等级和启灵也能直接改，确认无误再导入；改过的卡面会被记住，同一个角色（包括换了皮肤的）下次就不用再改。</div>
         <div class="boxDrop" id="boxDrop"><b>点击选择截图，或把图片拖到这里</b><span id="boxDropHint">（也可以直接 Ctrl+V 粘贴）</span><input type="file" id="boxFiles" accept="image/*" multiple hidden></div>
         <div class="boxThumbs" id="boxThumbs"></div>
         <div class="boxToolbar">
@@ -1144,6 +1145,44 @@
   }
 
   /* ---------------- 截图识别 ---------------- */
+  /* ---------- 卡面指纹记忆（换装 / 皮肤兜底） ----------
+     立绘模板只覆盖原皮：同一个人换了皮肤，卡面就是另一张画，模板分能低到 0.4~0.7，
+     却照样会「像」地命中另一个人（实测「24」穿皮肤后被认成 Pickman，0.72 看着还挺可信）。
+     皮肤素材我们拿不到，所以改成**从校对里学**：用户在识别结果里把某一行的角色改对，
+     就把这一格的卡面指纹记下来；以后同卡面直接置顶。
+     指纹是卡面上部 86% 的 32×32 灰度归一化描述子——实测同一张卡缩放到 0.72 倍
+     仍能到 0.98，而不同角色之间最高只有 0.44，分得很开。 */
+  const FACE_KEY='morimens.box.faces.v1',FACE_PER_CHAR=3,FACE_TOTAL=260;
+  function faceToStr(v){
+    const a=new Int8Array(v.length);
+    for(let i=0;i<v.length;i++)a[i]=Math.max(-127,Math.min(127,Math.round(v[i]*127)));
+    let str='';for(let i=0;i<a.length;i++)str+=String.fromCharCode(a[i]&255);
+    return btoa(str);
+  }
+  function strToFace(str){
+    const bin=atob(str),v=new Float32Array(bin.length);
+    for(let i=0;i<bin.length;i++){const c=bin.charCodeAt(i);v[i]=(c>127?c-256:c)/127}
+    return v;
+  }
+  function readFaces(){
+    let raw=[];
+    try{raw=JSON.parse(localStorage.getItem(FACE_KEY)||'[]')}catch(e){raw=[]}
+    if(!Array.isArray(raw))return [];
+    return raw.map(function(x){try{return {id:x.id,v:strToFace(x.f)}}catch(e){return null}}).filter(function(x){return x&&x.id&&x.v.length});
+  }
+  function learnFace(id,face){
+    if(!id||!face||!face.length||!window.MorimensBoxOCR)return false;
+    let raw=[];
+    try{raw=JSON.parse(localStorage.getItem(FACE_KEY)||'[]')}catch(e){raw=[]}
+    if(!Array.isArray(raw))raw=[];
+    const f=faceToStr(face);
+    if(raw.some(function(x){return x.id===id&&x.f===f}))return false;
+    raw.push({id:id,f:f});
+    const others=raw.filter(function(x){return x.id!==id}).slice(-(FACE_TOTAL-FACE_PER_CHAR));
+    const mine=raw.filter(function(x){return x.id===id}).slice(-FACE_PER_CHAR);
+    try{localStorage.setItem(FACE_KEY,JSON.stringify(others.concat(mine)))}catch(e){return false}
+    return true;
+  }
   let ocrFiles=[],ocrRows=[];
   function addFiles(files){
     const imgs=files.filter(f=>f&&/^image\//.test(f.type||''));
@@ -1167,7 +1206,7 @@
     const status=$('boxOcrStatus'),mode=$('boxOcrMode').value;
     status.textContent='准备识别…';
     try{
-      const res=await ocr.analyzeFiles(ocrFiles,{mode,onProgress:t=>{status.textContent=t}});
+      const res=await ocr.analyzeFiles(ocrFiles,{mode,faceMem:readFaces(),onProgress:t=>{status.textContent=t}});
       ocrRows=res.rows||[];
       renderOcrResult(res);
       status.textContent=`识别完成：${ocrRows.length} 条`;
@@ -1212,7 +1251,15 @@
       `<div class="boxToolbar"><button type="button" class="boxBtn primary" id="boxOcrApply">导入到 BOX</button>
         <button type="button" class="boxBtn" data-row-del-all="1">全部丢弃</button>
         <span class="boxChip" style="cursor:default">低置信度的行会标灰，点开下拉可以改</span></div>`;
-    host.querySelectorAll('[data-row-char]').forEach(sel=>sel.addEventListener('change',()=>{ocrRows[Number(sel.dataset.rowChar)].id=sel.value}));
+    host.querySelectorAll('[data-row-char]').forEach(sel=>sel.addEventListener('change',()=>{
+      const row=ocrRows[Number(sel.dataset.rowChar)];
+      const changed=row&&row.id!==sel.value;
+      if(row)row.id=sel.value;
+      /* 用户手动改对了 → 记住这张卡面，下次（尤其是换装的角色）直接认出来 */
+      if(changed&&row&&row.face&&learnFace(row.id,row.face)){
+        const st=$('boxOcrStatus');if(st)st.textContent='已记住这张卡面，下次直接认';
+      }
+    }));
     host.querySelectorAll('[data-row-lv]').forEach(inp=>inp.addEventListener('input',()=>{ocrRows[Number(inp.dataset.rowLv)].lv=clamp(inp.value,1,90)}));
     host.querySelectorAll('[data-row-en]').forEach(sel=>sel.addEventListener('change',()=>{ocrRows[Number(sel.dataset.rowEn)].en=Number(sel.value)}));
     host.querySelectorAll('[data-row-stack]').forEach(sel=>sel.addEventListener('change',()=>{ocrRows[Number(sel.dataset.rowStack)].stack=Number(sel.value)}));
@@ -1276,20 +1323,34 @@
   }
 
   /* ---------------- 启动 ---------------- */
+  let boxBooted=false,boxBootTry=0;
   function boot(){
-    if(!window.MorimensTabs||$('morimensBoxPanel'))return;
+    if(boxBooted)return;
+    // dtide 的标签栏还没建好就稍等再来（以前是直接 return，什么都不做）
+    if(!window.MorimensTabs){if(boxBootTry++<50)setTimeout(boot,120);return}
+    const host=$('morimensBoxPanel');
+    if(host&&host.dataset.boxReady==='1'){boxBooted=true;return}
+    boxBooted=true;
     ensureStyle();
     loadBox();
-    panel=document.createElement('div');panel.id='morimensBoxPanel';panel.setAttribute('role','tabpanel');panel.hidden=true;
-    panel.innerHTML=panelHtml();
-    const ui=window.MorimensTabs.ui||(zh=>zh);
-    window.MorimensTabs.add({name:'box',label:ui('定制配队推荐','Custom Lineup'),panel});
+    panel=host||null;
+    if(panel){
+      /* 页签和面板由 morimens-dtide.js 静态建好（这样它跟其它页签一起出现，
+         不会「过一会才跳出来」），这里只把内容填进去、清掉占位提示。 */
+      panel.innerHTML=panelHtml();
+    }else{
+      panel=document.createElement('div');panel.id='morimensBoxPanel';panel.setAttribute('role','tabpanel');panel.hidden=true;
+      panel.innerHTML=panelHtml();
+      const ui=window.MorimensTabs.ui||(zh=>zh);
+      window.MorimensTabs.add({name:'box',label:ui('定制配队推荐','Custom Lineup'),panel});
+    }
+    try{panel.dataset.boxReady='1'}catch(e){}
     bindEvents();
     renderAll();
     initData().catch(e=>console.warn('box data failed',e));
     if(location.hash==='#box')window.MorimensTabs.activate('box');
     // public：给页面脚本 / 自动化测试用的最小接口
-    window.MorimensBox={get box(){return boxData},render:renderAll,recommend:runPlan,
+    window.MorimensBox={get box(){return boxData},render:renderAll,recommend:runPlan,ensure:boot,
       get plan(){return lastPlan},
       poster:async()=>(await buildPoster()).toDataURL('image/png')};
   }

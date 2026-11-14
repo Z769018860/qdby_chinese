@@ -21,6 +21,14 @@
   const EN_SOLO_CONF=88;
   // 叠位数字（命轮右下角）门槛：窄卡上字高只有 14~15px，比启灵框的噪声余地小
   const ST_MIN_CONF=72;
+  /* 卡面指纹命中阈值。实测同一张卡缩到 0.72 倍仍有 0.98，不同角色之间最高 0.44，
+     所以 0.86 留了很宽的余量；低于它的宁可继续按立绘猜，也不要乱改判。 */
+  const FACE_MEM_CONF=0.86;
+  /* 幻衣（皮肤）模板的「入场折扣」：皮肤图是从官方幻衣商店截图裁的，比 120×120 的
+     原皮头像干净得多，直接同台比会把一堆无关角色顶到前面（实测 Ryker 被认成 Doresain、
+     Wanda 抢了好几个格子）。所以皮肤模板的分数统一先扣 0.06 再比：
+     真·换装的格子差距远大于它（24 落枫如血 0.877 vs 认错的 Pickman 0.797）。 */
+  const SKIN_MARGIN=0.06;
 
   /* ---------- 基础图像工具 ---------- */
   function makeCanvas(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;return c}
@@ -187,6 +195,27 @@
       done++;
       if(onProgress&&done%10===0)onProgress(`载入头像 ${done}/${recs.length}`);
     }
+    /* 幻衣（皮肤）：换装后卡面跟原皮完全是两张画，原皮立绘模板必然认成别人
+       （实测「24」的落枫如血被认成 Pickman，0.72 还挺「可信」）。
+       data/morimens/skins.json 登记了官方幻衣卡面裁出的脸块，按 id 追加成额外模板；
+       matchSquare 对同一个 id 取最高分，所以多套卡面不会互相打架。 */
+    try{
+      const rs=await fetch('data/morimens/skins.json',{cache:'force-cache'});
+      if(rs.ok){
+        const man=await rs.json();
+        let n=0;
+        for(const sk of (man.skins||[])){
+          if(!sk.id||!sk.file)continue;
+          try{
+            const im=await loadImage(`assets/morimens/skins/${sk.file}.webp`);
+            const c=makeCanvas(48,48);const cc=ctxOf(c);cc.drawImage(im,0,0,48,48);
+            list.push({id:sk.id,name:sk.name,d:normPatch(cc,0,0,48,48,12),d3:normPatchRGB(cc,0,0,48,48,10),skin:true});
+            n++;
+          }catch(e){}
+        }
+        if(onProgress&&n)onProgress(`载入幻衣 ${n} 套`);
+      }
+    }catch(e){}
     charTpl=list;return list;
   }
   /* ---------- 卡面复核（肖像撞脸时用插画纠正） ----------
@@ -296,7 +325,7 @@
         for(let x=box.x;x<=maxX;x+=step){
           const d=color?normPatchRGB(ctx,x,y,w,h,n):normPatch(ctx,x,y,w,h,n);
           for(const t of tpls){
-            const v=dot(d,color?t.d3:t.d);
+            const v=dot(d,color?t.d3:t.d)-(t.skin?SKIN_MARGIN:0);
             if(v>best.get(t.id))best.set(t.id,v);
           }
         }
@@ -1048,7 +1077,8 @@
     // n = 数字由几个字形组成；OCR 读出来的位数和它对不上就说明读错了
     return {x:a-pad,y:t-pad,w:(b-a+1)+pad*2,h:(bt-t+1)+pad*2,n:digits.length};
   }
-  async function analyzeChar(img,onProgress){
+  async function analyzeChar(img,onProgress,opts){
+    const mem=(opts&&opts.faceMem)||null;
     const full=makeCanvas(img.naturalWidth,img.naturalHeight);
     const fctx=ctxOf(full);fctx.drawImage(img,0,0,full.width,full.height);
     const pix=pixelData(full);
@@ -1071,6 +1101,10 @@
         const artY=bandA-cardW*1.40;
         const box={x:left,y:artY,w:cardW,h:cardW*1.15};
         if(box.y<-cardW*0.2||box.y+box.h>full.height)continue;
+        /* 卡面指纹：换装/皮肤会让立绘模板整体失配（实测「24」穿皮肤后被认成 Pickman，
+           分数 0.72 看着还挺可信）。指纹只用于「用户校对过的卡面」，见 box.js 的 learnFace。 */
+        let faceDesc=null;
+        try{faceDesc=normPatch(fctx,box.x,box.y,box.w,Math.max(8,Math.round(box.h*0.86)),CARD_TS)}catch(e){}
         const tbox={x:box.x*tscale,y:box.y*tscale,w:box.w*tscale,h:box.h*tscale};
         const match=matchSquare(tctx,tbox,tpls,{color:true,scales:[0.5,0.6,0.7,0.8,0.9,1.0]});
         const top=match[0],second=match[1];
@@ -1101,6 +1135,18 @@
         let pick=top;
         if(pickId!==top.id){
           pick=match.find(function(o){return o.id===pickId})||{id:pickId,score:top.score};
+        }
+        /* 校对记忆优先：这张卡面用户亲手改过，就按记忆来（皮肤/换装的唯一出路）。 */
+        if(faceDesc&&mem&&mem.length){
+          let bestMem=null;
+          for(const it of mem){
+            const sc=dot(faceDesc,it.v);
+            if(!bestMem||sc>bestMem.s)bestMem={id:it.id,s:sc};
+          }
+          if(bestMem&&bestMem.s>=FACE_MEM_CONF){
+            pick={id:bestMem.id,score:Math.max(pick.score,bestMem.s),fromMem:true,memScore:bestMem.s};
+            rec.mem={id:bestMem.id,s:Number(bestMem.s.toFixed(3))};
+          }
         }
         if(taken.has(pick.id)){
           const alt=match.find(function(o){return !taken.has(o.id)&&o.score>=0.40});
@@ -1206,7 +1252,7 @@
           enLow=!!star.amb;
         }catch(e){en=null;enLow=true;rec.err=String(e&&e.message||e)}
         rec.en=en;rec.plus=enPlus;
-        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,plus:enPlus,lit:starDbg?starDbg.lit:null,cores:starDbg?starDbg.cores:null,box:box});
+        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,plus:enPlus,lit:starDbg?starDbg.lit:null,cores:starDbg?starDbg.cores:null,face:faceDesc,fromMem:!!(pick&&pick.fromMem),box:box});
       }
     }
     return {rows:out,note:'识别到 '+out.length+' 张卡片',grid:grid,dbg:TRACE()?dbg:undefined};
@@ -1484,7 +1530,7 @@
     }catch(e){}
     return 'char';
   }
-  async function analyzeFiles(files,{mode='auto',onProgress=()=>{}}={}){
+  async function analyzeFiles(files,{mode='auto',onProgress=()=>{},faceMem=null}={}){
     const results={rows:[],note:''};
     const all=[];
     for(let i=0;i<files.length;i++){
@@ -1494,7 +1540,7 @@
       if(mode==='auto'){kind=await guessMode(img);onProgress(`(${i+1}/${files.length}) 判定为${kind==='wheel'?'命轮页':'角色页'}`)}
       const fn=kind==='wheel'?analyzeWheel:analyzeChar;
       try{
-        const r=await fn(img,msg=>onProgress(`(${i+1}/${files.length}) ${msg}`));
+        const r=await fn(img,msg=>onProgress(`(${i+1}/${files.length}) ${msg}`),{faceMem:faceMem});
         for(const row of r.rows){row.file=i;row.kind=kind;all.push(row)}
         if(r.dbg)results.dbg=(results.dbg||[]).concat(r.dbg);
         if(r.dbgSkip)results.dbgSkip=(results.dbgSkip||[]).concat(r.dbgSkip);

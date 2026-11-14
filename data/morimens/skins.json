@@ -1,0 +1,78 @@
+{
+ "_note": "幻衣（皮肤）卡面模板：立绘模板只有原皮，换装后同一个角色会被认成别人（实测 24 的「落枫如血」被认成 Pickman，0.72）。这些是从游戏内幻衣商店截图裁出的脸部方块，构建角色模板时按 id 追加，与本体立绘模板取最高分。",
+ "source": "游戏内「银枢幻衣」商店截图（用户提供）+ morimens.huijiwiki.com 幻衣页对照",
+ "skins": [
+  {
+   "id": "awakener-0020",
+   "file": "ramona-timeworn-dreamy-vacation",
+   "name": "幻梦假日",
+   "star": 2
+  },
+  {
+   "id": "awakener-0014",
+   "file": "doresain-forget-me-not",
+   "name": "致勿忘我",
+   "star": 1
+  },
+  {
+   "id": "awakener-0001",
+   "file": "24-dissociative-symphony",
+   "name": "双相和鸣",
+   "star": 1
+  },
+  {
+   "id": "awakener-0034",
+   "file": "murphy-her-little-pastime",
+   "name": "淑女奇趣",
+   "star": 1
+  },
+  {
+   "id": "awakener-0044",
+   "file": "salvador-divine-benediction",
+   "name": "济世神言",
+   "star": 1
+  },
+  {
+   "id": "awakener-0030",
+   "file": "liz-spinning-marionette",
+   "name": "旋舞人偶",
+   "star": 1
+  },
+  {
+   "id": "awakener-0002",
+   "file": "agrippa-pallid-covenant",
+   "name": "苍白契约",
+   "star": 1
+  },
+  {
+   "id": "awakener-0051",
+   "file": "uvhash-bloodforged-diadem",
+   "name": "淬血荣冠",
+   "star": 1
+  },
+  {
+   "id": "awakener-0001",
+   "file": "24-crimson-kaede",
+   "name": "落枫如血",
+   "star": 3
+  },
+  {
+   "id": "awakener-0022",
+   "file": "hameln-ouvertuere-universell",
+   "name": "万籁序曲",
+   "star": 1
+  },
+  {
+   "id": "awakener-0052",
+   "file": "wanda-with-spikenard-and-myrrh",
+   "name": "钩葬盛",
+   "star": 1
+  },
+  {
+   "id": "awakener-0048",
+   "file": "thais-sinful-decadence",
+   "name": "孽宴狂欲",
+   "star": 1
+  }
+ ]
+}
