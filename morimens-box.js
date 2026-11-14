@@ -13,9 +13,13 @@
   const WHEEL_REALMS=REALM_ORDER.concat(['NEUTRAL']);
   const REALM_ZH={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维',NEUTRAL:'中立'};
   const realmZh=k=>REALM_ZH[k]||k||'';
-  const MAXLV=90,MAXEN=15,MAXPO=10,MAXSK=6,MAXSTACK=12;
-  // 练度换算：1 档启灵 ≈ 8 级等效。记录里的 potencyLevel 和 BOX 的 en 是同一套 0-15 刻度，可以直接相减。
+  const MAXLV=90,MAXEN=3,MAXPO=10,MAXSK=6,MAXSTACK=12;
+  // 练度换算：1 档启灵 ≈ 8 级等效。
+  // **启灵只有 0~3 档**（界面上亮几个菱形就是几启）：截图里第 4 个槽位那个 0~12 的数字
+  // 属于另一套成长，用户核对后明确「24 是二启」「薇薇安是三启」，所以不加进启灵。
+  // 记录里的 potencyLevel 是 0~15 的合并刻度，比较前要先折回 0~3（见 enTier）。
   const EN_EQ=8;
+  const enTier=pl=>{const n=Number(pl);return Number.isFinite(n)?(n<=2?n:3):3};
   // 三档的门槛（都只看等级 + 启灵）：
   //  low  整队要求全部落在 BOX 之内，且平均还富余 8 级等效以上
   //  mid  缺口 ≤ 6 级 / ≤ 1 启，或刚好压在你的练度上
@@ -26,11 +30,10 @@
     high:{name:'高配',hint:'比你略高一点',color:'#d7a85b',center:-12}
   };
   const TIER_KEYS=['low','mid','high'];
-  // 启灵显示：亮的菱形＝启灵数（0~3），菱形行末尾那个数字是「+N」加值（最高 +12）。
-  // 用户确认过：有数字不代表超限，所以界面上一律不写「超限」，只写「3 启 +12」。
+  // 启灵显示：亮的菱形数就是启灵数（0~3）。第 4 槽的数字不计入启灵，界面上不显示。
   const ENLIGHT_TEXT=en=>{
     const n=Math.max(0,Math.min(MAXEN,Number(en)||0));
-    return n<=3?`${n} 启`:`3 启 +${n-3}`;
+    return `${n} 启`;
   };
 
   let boxData={v:1,chars:{},wheels:{},updated:0};
@@ -55,7 +58,7 @@
   function ownedCount(){return Object.keys(boxData.chars).length}
   function wheelCount(){return Object.keys(boxData.wheels).length}
   function setChar(id,patch){
-    const cur=boxData.chars[id]||{lv:MAXLV,en:3,po:MAXPO,sk:MAXSK};
+    const cur=boxData.chars[id]||{lv:MAXLV,en:MAXEN,po:MAXPO,sk:MAXSK};
     boxData.chars[id]={...cur,...patch};
     saveBox();
   }
@@ -636,7 +639,7 @@
             const ingame=m.ingameId?String(m.ingameId):'';
             const id=m.skeydbId||idByIngame.get(ingame)||null;
             // v2 用 potencyLevel 表示启灵（0-3 是 N 启，4-15 是 3 启之后的 +N）
-            const en=m.potencyLevel!=null?clamp(m.potencyLevel,0,MAXEN):(m.enlightenLevel??3);
+            const en=m.potencyLevel!=null?enTier(m.potencyLevel):enTier(m.enlightenLevel??3);
             return {
               id,ingameId:m.ingameId||null,name:m.canonicalName||m.name||'',
               lv:m.level??null,en,borrow:!!m.borrowed,
@@ -1110,14 +1113,14 @@
   function fillMax(){
     const ids=Object.keys(boxData.chars).filter(id=>realmFilter==='all'||charsById.get(id)?.realm===realmFilter);
     if(!ids.length){toast('没有可设置的角色');return}
-    for(const id of ids)boxData.chars[id]={lv:MAXLV,en:Math.max(3,boxData.chars[id].en||0),po:MAXPO,sk:MAXSK};
+    for(const id of ids)boxData.chars[id]={lv:MAXLV,en:MAXEN,po:MAXPO,sk:MAXSK};
     saveBox();renderAll();toast(`已把 ${ids.length} 名角色设为满级满灵塑满技能`);
   }
   /* 示例 BOX：很多人手里没有成套截图，又想先看看「配队推荐」长什么样。
-     直接按当前角色表生成，不硬编码 id，游戏更新也不会失效。
-     启灵按界面语义给总量：3 启 + N → 3+N。 */
+     直接按当前角色表生成，不硬编码 id，游戏更新也不会失效。 */
   function loadDemoBox(kind){
-    const preset={starter:{lv:60,en:1,stack:-1},mid:{lv:70,en:7,stack:12},full:{lv:90,en:15,stack:12}}[kind];
+    // 启灵只有 0~3，三套示例只能靠等级拉开差距（以前用 en 7/15 是把它当 0~15 刻度）
+    const preset={starter:{lv:60,en:1,stack:-1},mid:{lv:72,en:2,stack:12},full:{lv:90,en:3,stack:12}}[kind];
     if(!preset)return;
     if(ownedCount()&&!window.confirm('这会覆盖当前 BOX（可先导出代码备份）。继续？'))return;
     const next={v:1,chars:{},wheels:{},updated:Date.now()};
@@ -1202,7 +1205,7 @@
           ${hit?.portrait?`<img src="${esc(hit.portrait)}" alt="">`:'<div style="width:42px;height:42px;border-radius:8px;background:#0b1220"></div>'}
           <select data-row-char="${i}">${opts.map(c=>`<option value="${c.id}"${c.id===r.id?' selected':''}>${esc(c.name)}${c.ingameId?' · '+esc(c.ingameId):''}</option>`).join('')}${hit&&!opts.some(o=>o.id===r.id)?`<option value="${r.id}" selected>${esc(hit.name)}</option>`:''}</select>
           <label class="boxField" style="font-size:9px">等级<input type="number" min="1" max="90" value="${r.lv||''}" data-row-lv="${i}" style="width:100%"></label>
-          <label class="boxField" style="font-size:9px"${r.enLow?' title="没读出启灵数字，先按 0 启，请核对"':''}>启灵${r.enLow?'?':''}<select data-row-en="${i}">${Array.from({length:MAXEN+1},(_,k)=>`<option value="${k}"${k===(r.en||0)?' selected':''}>${ENLIGHT_TEXT(k)}</option>`).join('')}</select></label>
+          <label class="boxField" style="font-size:9px"${r.enLow?' title="亮菱形没数准，先按 0 启，请核对"':''}>启灵${r.enLow?'?':''}<select data-row-en="${i}">${Array.from({length:MAXEN+1},(_,k)=>`<option value="${k}"${k===(r.en||0)?' selected':''}>${ENLIGHT_TEXT(k)}</option>`).join('')}</select></label>
           <span class="boxScore ${r.score>0.62?'ok':r.score>0.5?'warn':'bad'}">${pct(r.score)}</span>
         </div>`;
       }).join('')+
