@@ -10,11 +10,12 @@ import json, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 E = ROOT / 'data/morimens/eremora'
+MIN_SEASON = 70  # seasons before 70 (incl. the buggy season 69) are not counted
 MAX = int(sys.argv[sys.argv.index('--max') + 1]) if '--max' in sys.argv else 10
 
 def main():
     man = json.loads((E / 'manifest.json').read_text(encoding='utf-8'))
-    entries = [e for e in man['availableSeasons'] if e.get('lowspecPath')]
+    entries = [e for e in man['availableSeasons'] if e.get('lowspecPath') and e['seasonId'] >= MIN_SEASON]
     # one entry per season: the settled post-bug snapshot replaces the pre-bug board of season 69
     best = {}
     for e in entries:

@@ -148,4 +148,4 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
 
 ## 玩家近期排名 (recent players)
 
-`scripts/build_recent_players.py` 由 `sync_morimens_leaderboard.py` 在低配榜单之后自动运行，读取 manifest 中带 `lowspecPath` 的最近至多 10 期（第 69 期用 Bug 后的 `69-postbug`），写出 `data/morimens/eremora/recent/index.json`（玩家 UID、当前ID、每期排名/分数）。队伍详情不重复存放，页面展开时才读取对应期的 `lowspec/<期>.json`。新增期次后若要手动重建：`python3 scripts/build_recent_players.py`；第 69 期的低配文件用 `python3 scripts/build_lowspec_rank.py 69-postbug 70 71` 生成。
+`scripts/build_recent_players.py` 由 `sync_morimens_leaderboard.py` 在低配榜单之后自动运行，读取 manifest 中带 `lowspecPath` 的最近至多 10 期，且只统计第 70 期起（第 69 期及更早不计，脚本里 `MIN_SEASON`），写出 `data/morimens/eremora/recent/index.json`（玩家 UID、当前ID、每期排名/分数）。队伍详情不重复存放，页面展开时才读取对应期的 `lowspec/<期>.json`。新增期次后若要手动重建：`python3 scripts/build_recent_players.py`；第 69 期的低配文件用 `python3 scripts/build_lowspec_rank.py 69-postbug 70 71` 生成。

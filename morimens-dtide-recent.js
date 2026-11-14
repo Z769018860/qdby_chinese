@@ -75,8 +75,8 @@ function render(){
     return tr+detail;
   }).join('');
   const note=zh()
-    ?`汇总最近 ${S.length} 期的融灾 Top2000（目前只有 ${S.length} 期带队伍详情的榜单，满十期后只取最近十期）：显示每期排名与分数，平均分数 / 平均排名只统计该玩家上榜的期次（未上榜的期次不计入，所以建议配合“参与期数”筛选）。点击玩家行展开每一期出的队伍；点击表头可升序 / 降序。`
-    :`The latest ${S.length} seasons (up to ten) of the D-Zone Top 2000: rank and score per season. Average score / rank only count the seasons the player made the Top 2000 (use the seasons filter). Click a row for the lineups of every season; click a header to sort.`;
+    ?`汇总最近 ${S.length} 期的融灾 Top2000（仅统计第70期起，目前共 ${S.length} 期，满十期后只取最近十期）：显示每期排名与分数，平均分数 / 平均排名只统计该玩家上榜的期次（未上榜的期次不计入，所以建议配合“参与期数”筛选）。点击玩家行展开每一期出的队伍；点击表头可升序 / 降序。`
+    :`The latest ${S.length} seasons (up to ten, counted from Season 70 on) of the D-Zone Top 2000: rank and score per season. Average score / rank only count the seasons the player made the Top 2000 (use the seasons filter). Click a row for the lineups of every season; click a header to sort.`;
   host.innerHTML=`<div class="dtideLowspec dtideRecent">
     <div class="lsNote">${note}</div>
     <div class="lsBar"><label>${ui('参与期数','Seasons played')}<select data-rc-min>${minOpts}</select></label><label>${ui('搜索玩家 ID / UID','Search ID / UID')}<input type="search" class="rcInp" data-rc-q value="${esc(state.q)}" placeholder="${esc(ui('输入ID或UID','ID or UID'))}"></label></div>

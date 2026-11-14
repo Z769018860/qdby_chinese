@@ -152,8 +152,7 @@
       "communityVariant": "postbug",
       "communityTargetKey": "69-postbug",
       "noteZh": "第69期 Bug后终榜：官方 Top 2000 排名、分数与逐 UID 队伍详情完整（2000 名）。Bug前数据不会混入。",
-      "noteEn": "Season 69 post-bug final board: official Top 2,000 ranks, scores and per-UID team details are complete (2,000 players). Pre-bug data is not mixed in.",
-      "lowspecPath": "data/morimens/eremora/lowspec/69-postbug.json"
+      "noteEn": "Season 69 post-bug final board: official Top 2,000 ranks, scores and per-UID team details are complete (2,000 players). Pre-bug data is not mixed in."
     },
     {
       "seasonId": 68,
