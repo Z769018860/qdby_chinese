@@ -118,6 +118,9 @@ function lineupCard(r){
   const code=t[7]||'';
   return `<div class="lsCard"><div class="lsCardHd"><b>${ui('第'+t[1]+'禁区','Zone '+t[1])} · ${ui('危险等级','Threat ')}${esc(diffName(t[2]))}${t[3]?ui(' · 额外队',' · extra team'):''}</b><span>${ui('守密人 Lv ','Keeper Lv ')}${t[5]??'—'}${t[4]!=null?` · ${t[4]}${ui('分','pts')}`:''}</span><span class="btns">${code?`<button type="button" class="dtideReplayCopy" data-replay-code="${esc(code)}" title="${esc(ui('复制 battleUuid，用于游戏内录像回放','Copy battleUuid for in-game replay'))}">${ui('复制录像回放','Copy Replay')}</button>`:''}<a class="lsLink" href="https://eremora.com/u/${esc(p[0])}/challenges/dzone/${state.season}" target="_blank" rel="noopener noreferrer">${ui('Eremora 队伍','Eremora Teams')} ↗</a></span></div><div class="lsMems">${mem}</div></div>`;
 }
+// reused by the player recent-ranking tab (morimens-dtide-recent.js)
+window.MorimensLowspecCard=(d,seasonId,t,p)=>{const sd=state.data,ss=state.season;state.data=d;state.season=String(seasonId);try{return lineupCard({t,p})}finally{state.data=sd;state.season=ss}};
+window.MorimensLowspecStyle=()=>style();
 function render(){
   const host=$('dtideLowspec');if(!host||!state.active)return;
   apply();
@@ -254,6 +257,7 @@ function heal(){healQueued=false;if(mainTabs())mount()}
 new MutationObserver(()=>{if(healQueued)return;const t=mainTabs();if(t&&t.querySelector('[data-dtide-lowspec-tab]')&&$('dtideLowspec'))return;healQueued=true;requestAnimationFrame(heal)}).observe(document.documentElement,{childList:true,subtree:true});
 document.addEventListener('click',e=>{
   const lt=e.target.closest?.('[data-dtide-lowspec-tab]');if(lt){const mode=lt.dataset.dtideLowspecTab||'low';if(!state.active)activate(mode);else if(state.mode!==mode){state.mode=mode;state.limit=100;apply();render()}return}
+  if(state.active&&e.target.closest?.('[data-dtide-recent-tab]')){state.active=false;apply();return}
   if(state.active&&e.target.closest?.('[data-dtide-entity],[data-dtide-battle-tab]')){deactivate();return}
   const host=$('dtideLowspec');if(!host||!host.contains(e.target))return;
   const l=e.target.closest('[data-ls-sort]');if(l){const k=l.dataset.lsSort;if(state.list===k)state.dir=-state.dir;else{state.list=k;state.dir=k==='score'?-1:1}state.limit=100;render();return}
