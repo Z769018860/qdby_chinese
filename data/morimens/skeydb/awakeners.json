@@ -2,8 +2,8 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "9648ac2969c8fa217bd499de7755caa4830e6071",
-    "syncedAt": "2026-11-13T11:15:52.906Z",
+    "commit": "64479ca2bf29daec7c7bb75e208532a292f4befd",
+    "syncedAt": "2026-11-14T10:41:05.303Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "count": 62,
@@ -115,7 +115,7 @@
           {
             "id": "voice-6516",
             "title": "Awaken",
-            "content": "My name, uh, I can't remember. Oh, right,\"24,\" that's what they call me... No! Stop! Don't come out! You can't, not now..."
+            "content": "My name, uh, I can't remember. Oh, right, \"24,\" that's what they call me... No! Stop! Don't come out! You can't, not now..."
           },
           {
             "id": "voice-5751",
@@ -248,7 +248,7 @@
           {
             "id": "voice-6297",
             "title": "Investigation Begins",
-            "content": "Although I am a pacifist,\"they\" clearly think otherwise..."
+            "content": "Although I am a pacifist, \"they\" clearly think otherwise..."
           },
           {
             "id": "voice-6529",
@@ -1794,7 +1794,7 @@
             "id": "voice-6211",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "Thank you sincerely for your trust in training me to this level. You must also be someone who pursues justice; thus, I will continue to bring glory to our cause here."
+            "content": "I'm grateful for your trust, and for bringing me this far. I can tell you are a fellow upholder of justice. I will continue to bring glory to our cause here."
           },
           {
             "id": "voice-5064",
@@ -2313,7 +2313,7 @@
             "id": "voice-6027",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "It's my turn to be the ghost this time! You only have 5 seconds to hide! 5, 4—"
+            "content": "My turn to be \"it\"! You only get 5 seconds to hide! 5, 4—"
           },
           {
             "id": "voice-6026",
@@ -2462,7 +2462,7 @@
           {
             "id": "voice-5241",
             "title": "Rouse",
-            "content": "How can I help you?"
+            "content": "Can Aurita help?"
           },
           {
             "id": "voice-5596",
@@ -2940,7 +2940,7 @@
           {
             "id": "voice-6664",
             "title": "Chat: About Mythag",
-            "content": "A school where all is treated equal... I wonder what foolish dreams you harbor. Even if you haven't committed any wrongs, they will still trample you underfoot. I know that feeling."
+            "content": "A school where everyone is equal... I wonder what foolish dreams you harbor. Even if you haven't committed any wrongs, they will still trample you underfoot. I know that feeling."
           },
           {
             "id": "voice-5869",
@@ -3472,7 +3472,7 @@
           {
             "id": "voice-5947",
             "title": "Chat: About Dissolution",
-            "content": "A hollow? I often create similar stuff during telekinesis. The ones I make link to another dimension; would the Dissolution ones do the same?"
+            "content": "A hollow? I make hollows like that all the time when I pull things out of thin air! The ones Casiah makes link to another dimension. Do the Dissolution ones, too?"
           },
           {
             "id": "voice-6612",
@@ -3492,7 +3492,7 @@
           {
             "id": "voice-5957",
             "title": "Chat: About the Keeper",
-            "content": "I know, you're a special audience. I can't just zap you into another dimension; that would cause big trouble. Hey, have you ever done that to someone else? You mustn't ask, it is my secret!"
+            "content": "I know, you're a special audience member. I can't just zap you off to another dimension. That would get me into big trouble. Huh? Have I ever done it to anyone else? Ugh, don't ask! That's a secret!"
           },
           {
             "id": "voice-5151",
@@ -3890,7 +3890,7 @@
           {
             "id": "voice-90356",
             "title": "Upgrade: I",
-            "content": "These dark feathers grow heavier each day."
+            "content": "These dark feathers have grown darker still."
           },
           {
             "id": "voice-90340",
@@ -4959,7 +4959,7 @@
           {
             "id": "voice-81146",
             "title": "Upgrade: II",
-            "content": "Ah, I heard His voice... those murmurs, every syllable filled with the utmost agony."
+            "content": "Ah, I heard Its voice... those murmurs, every syllable filled with the utmost agony."
           },
           {
             "id": "voice-81147",
@@ -4988,7 +4988,7 @@
             "id": "voice-81152",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "Next is Philip Pinel's moral therapy. You must express your innermost desires and fears. It's a necessary procedure to unshackle the mind and restore dormant humanity."
+            "content": "Next is Philippe Pinel's moral therapy. You must express your innermost desires and fears. It's a necessary procedure to unshackle the mind and restore dormant humanity."
           },
           {
             "id": "voice-81149",
@@ -5060,7 +5060,7 @@
           {
             "id": "voice-81148",
             "title": "Chat: About the Keeper",
-            "content": "As a fragment of that existence, you carry Their scent... A beautiful scent, filled with pain. It makes any memory of yours taste incredibly delicious."
+            "content": "As a fragment of that existence, you carry Its scent... A beautiful scent, filled with pain. It makes any memory of yours taste incredibly delicious."
           },
           {
             "id": "voice-81140",
@@ -5102,7 +5102,7 @@
           {
             "id": "voice-81163",
             "title": "Strike: II",
-            "content": "Expose your pain."
+            "content": "Show me more of your pain!"
           },
           {
             "id": "voice-81176",
@@ -6012,7 +6012,7 @@
           {
             "id": "voice-5632",
             "title": "Upgrade: I",
-            "content": "So I will feed on this instead of Sepirot from now on?"
+            "content": "So I'm to feed on this now, instead of primordial essence?"
           },
           {
             "id": "voice-5633",
@@ -7072,7 +7072,7 @@
           {
             "id": "voice-96395",
             "title": "Upgrade: II",
-            "content": "Thank you so much for your enthusiasm. The honour is all mine."
+            "content": "Thank you so much for your enthusiasm. The honor is all mine."
           },
           {
             "id": "voice-96390",
@@ -7107,13 +7107,13 @@
             "id": "voice-96394",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "The pairing of dishes also holds great importance.\nThe juxtaposition of sour with sweet, crisp with tender, light with rich, and delicate with coarse, creates a layered flavour and a textural contrast that leads to different sensations upon entry, mastication, and when savouring the aftertaste.\nThis is the endless and wondrous pleasure a proper meal provides."
+            "content": "The pairing of dishes also holds great importance.\n The juxtaposition of sour with sweet, crisp with tender, light with rich, and delicate with coarse, creates a layered flavour and a textural contrast that leads to different sensations upon entry, mastication, and when savoring the aftertaste.\n This is the endless and wondrous pleasure a proper meal provides."
           },
           {
             "id": "voice-96364",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "Have I finally piqued your interest? Do come, my dear guest, join me at my table and partake in this grand banquet. Allow me to guide you as we savour the delicate afterglow of every spirit together."
+            "content": "Have I finally piqued your interest? Do come, my dear guest, join me at my table and partake in this grand banquet. Allow me to guide you as we savor the delicate afterglow of every spirit together."
           },
           {
             "id": "voice-96365",
@@ -7131,7 +7131,7 @@
             "id": "voice-96377",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "Before every meal, I converse with the departed. For them, being eaten and savoured with true sincerity is a continuation of life and their final, most glorious moment.\nLike how I long for them, they, too, long for me."
+            "content": "Before every meal, I converse with the departed. For them, being eaten and savored with true sincerity is a continuation of life and their final, most glorious moment.\n Like how I long for them, they, too, long for me."
           },
           {
             "id": "voice-96389",
@@ -7200,7 +7200,7 @@
           {
             "id": "voice-96374",
             "title": "Investigation Success",
-            "content": "I shall bestow upon you the honour of becoming tonight's feast."
+            "content": "I shall bestow upon you the honor of becoming tonight's feast."
           },
           {
             "id": "voice-96396",
@@ -7225,7 +7225,7 @@
           {
             "id": "voice-96385",
             "title": "Defense: II",
-            "content": "Watch your steps."
+            "content": "Watch your step."
           },
           {
             "id": "voice-96384",
@@ -7260,7 +7260,7 @@
           {
             "id": "voice-96391",
             "title": "Over-Exalt",
-            "content": "Please, entrust your body to me. I will savour you meticulously: every drop of blood, every piece of flesh, every single bone."
+            "content": "Please, entrust your body to me. I will savor you meticulously: every drop of blood, every piece of flesh, every single bone."
           },
           {
             "id": "traphase-99764",
@@ -7614,7 +7614,7 @@
           {
             "id": "voice-5186",
             "title": "Upgrade: III",
-            "content": "The mech's performance has been enhanced."
+            "content": "System performance enhanced."
           },
           {
             "id": "voice-5870",
@@ -7674,7 +7674,7 @@
             "id": "voice-4933",
             "title": "Affinity: IV",
             "unlockCondition": "Unlocks at Affinity Level 8",
-            "content": "Trust,\" \"Obedience,\" \"Slave,\" \"Affection,\" \"Respect\"... Reconstructing and learning language module. Please, Keeper, guide me."
+            "content": "\"Trust,\" \"Obedience,\" \"Slave,\" \"Affection,\" \"Respect\"... Reconstructing and learning language module. Please, Keeper, guide me."
           },
           {
             "id": "voice-4934",
@@ -7757,7 +7757,7 @@
           {
             "id": "voice-6282",
             "title": "Defense: I",
-            "content": "Alert."
+            "content": "On guard."
           },
           {
             "id": "voice-6283",
@@ -8729,7 +8729,7 @@
             "id": "voice-5334",
             "title": "Affinity: I",
             "unlockCondition": "Unlocks at Affinity Level 2",
-            "content": "Would you like heading out to sea with me? Let me check the current map... 47°9' S, 126°43' W, we'll be going right there."
+            "content": "Wouldn't you like to go out to sea? Let me check the current charts... 47°9' S, 126°43' W. That's where we're going."
           },
           {
             "id": "voice-5332",
@@ -8763,7 +8763,7 @@
           {
             "id": "voice-5290",
             "title": "Chat: About Eternal Kingdom",
-            "content": "My homeland worships our God. Correspondingly, the King I follow is naturally a \"divine communicator.\""
+            "content": "My homeland worshipped a \"god.\" And so, naturally, the king I followed was one who could \"speak with the divine.\""
           },
           {
             "id": "voice-6703",
@@ -9216,7 +9216,7 @@
           {
             "id": "voice-5830",
             "title": "Upgrade: II",
-            "content": "Still counting on me to be your backup,\"Savior\"?"
+            "content": "Still counting on me to be your backup, \"Savior\"?"
           },
           {
             "id": "voice-5829",
@@ -9292,7 +9292,7 @@
           {
             "id": "voice-6723",
             "title": "Chat: Touch",
-            "content": "Hmph. What is it this time? Ready to embrace your fate of anniliation now?"
+            "content": "Hmph. What is it this time? Ready to embrace your fate of annihilation now?"
           },
           {
             "id": "voice-5874",
@@ -9314,7 +9314,7 @@
           {
             "id": "voice-4979",
             "title": "Chat: About Dissolution",
-            "content": "Heh. That you are looking at is not death. Just your future. Mine. And everyone else's."
+            "content": "Heh. What you're looking at isn't death. It's just your future. Mine. Everyone's."
           },
           {
             "id": "voice-6712",
@@ -9907,7 +9907,7 @@
           {
             "id": "voice-5465",
             "title": "Hit: II",
-            "content": "Just as expected."
+            "content": "Is that all?"
           },
           {
             "id": "voice-6100",
@@ -10443,7 +10443,7 @@
           {
             "id": "voice-5442",
             "title": "Rouse",
-            "content": "Finally... There is it."
+            "content": "Finally... There it is."
           },
           {
             "id": "voice-6733",
@@ -10784,7 +10784,7 @@
           {
             "id": "voice-5067",
             "title": "Upgrade: II",
-            "content": "Time to give this a try. Hmph. How about cutting the throat of a few weaklings first?"
+            "content": "Time to test this on a few weaklings' throats."
           },
           {
             "id": "voice-5066",
@@ -10849,7 +10849,7 @@
             "id": "voice-5181",
             "title": "Affinity: IV",
             "unlockCondition": "Unlocks at Affinity Level 8",
-            "content": "Do you know the Albatross? They bravely confront the storms, but once banished to the ground, surrounded by mockery, those giant, drooping wings ironically become a pathetic hindrance. Anyway, this story means nothing... It just came to mind as I feel very relaxed to be with you—just casual chat."
+            "content": "You know the albatross? It never gives humans a second glance—it beats its great wings and meets the storm head-on. But cast it down to the ground, into a crowd of jeers, and those huge, drooping wings become a pitiful burden.\nThe story doesn't mean anything. I'm just at ease with you, so I'm talking."
           },
           {
             "id": "voice-5182",
@@ -10866,7 +10866,7 @@
             "id": "voice-5121",
             "title": "Chat: About Murphy",
             "unlockCondition": "Unlocks after acquiring Awakener \"Murphy\"",
-            "content": "Oh, our puppet princess is weeping again. Is the milk bottle not fitting, or is the lullaby not soothing enough?"
+            "content": "Oh, our puppet princess is weeping again. Is the bottle not to her liking, or is the lullaby not soothing enough?"
           },
           {
             "id": "voice-5629",
@@ -10897,12 +10897,12 @@
           {
             "id": "voice-5470",
             "title": "Chat: About the Keeper",
-            "content": "With such a frail body, it's too much to ask you to be my companion. You are simply too weak; you must intensify your training. Come, I'll take you to the academy's sports club and open your eyes."
+            "content": "With a body this frail, you're hardly fit to be my companion. Come—I'll take you to the academy's athletics club. Time you saw what real training looks like."
           },
           {
             "id": "voice-5046",
             "title": "Investigation Begins",
-            "content": "The dice is cast. Now, finish this swiftly!"
+            "content": "The die is cast. Let's make this quick!"
           },
           {
             "id": "voice-5524",
@@ -12497,7 +12497,7 @@
             "id": "voice-56329",
             "title": "Chat: About Liz",
             "unlockCondition": "Unlocks after acquiring Awakener \"Liz\"",
-            "content": "That beautiful ballerina lady... Her emerald-green flames are irresistible, even if they burn one to ashes..."
+            "content": "That beautiful dancer... Her emerald-green flames are irresistible, even if they burn one to ashes..."
           },
           {
             "id": "voice-56328",
@@ -12515,7 +12515,7 @@
             "id": "voice-56320",
             "title": "Chat: About Sorel",
             "unlockCondition": "Unlocks after acquiring Awakener \"Sorel\"",
-            "content": "Madam Sorel is truly beautiful. Her strength and confidence, her graceful smile in the face of fate, and her vibrant yet resolute life force—all make me envious."
+            "content": "The Madam in Red is truly beautiful. Her strength and confidence, her graceful smile in the face of fate, and her vibrant yet resolute life force—all make me envious."
           },
           {
             "id": "voice-56313",
@@ -12546,7 +12546,7 @@
           {
             "id": "voice-56326",
             "title": "Chat: About Dissolution",
-            "content": "My body was not affected by Dissolution; those black liquids are simply ink. But honestly, even without Dissolution, everything eventually turns into Illusion, does it not?"
+            "content": "My body was not affected by Dissolution; those black liquids are simply ink. But honestly, even without Dissolution, everything eventually turns to nothingness, does it not?"
           },
           {
             "id": "voice-56322",
@@ -15104,13 +15104,13 @@
             "kind": "introduction",
             "title": "Basic Information",
             "unlockCondition": "Awakener Level 1",
-            "content": "Yearning for an entity she calls \"Mommy\", this girl obediently follows the commands of her \"Master\".\n\nHer true name lost to the world, she is now known only by the form she inhabits: a delicate white filament, reminiscent of a lily, blooming at the center of a giant black eyeball made of sludge. Hence, they named her Lily."
+            "content": "A girl yearning for a \"Mommy\" and obedient to her \"master.\"\nHer true name was lost to the world. The one who came after hastily called her \"Lily\"—she's like a frail white flower blooming within a colossal, sludge-black eyeball."
           },
           {
             "kind": "story",
             "title": "Story: I",
             "unlockCondition": "Affinity Level 3",
-            "content": "When Erica tried to pull the records on Lily Oswood, she returned eighty-one error alerts. Lily was forgotten by the world once; her birth certificate and her medical files have all rotted into a handful of black silt.\nWe can still observe the shape of her Silvercore with specialized instruments: fine and curling, like several strands of hair twisted together—more precisely, like an infant's downy hair.\nOne point deserves particular attention. Lily always shows an unusual attachment to her Linker. Presenting yourself as her \"mother,\" rather than as a \"companion\" or a \"master,\" will likely bring you close to her much faster."
+            "content": "When Erica tried to pull the records on Lily Oswood, she returned 81 error alerts. Lily was forgotten by the world once; her birth certificate and her medical files have all rotted into a handful of black silt.\nWe can still observe the shape of her Silver Core with specialized instruments: fine and curling, like several strands of hair twisted together—more precisely, like an infant's downy hair.\nOf particular note is Lily's strong attachment to her Linker. Taking the role of her \"Mommy,\" rather than her \"companion\" or \"master,\" may be the quickest way to earn her trust."
           },
           {
             "kind": "story",
@@ -15128,13 +15128,13 @@
             "kind": "story",
             "title": "Story: IV",
             "unlockCondition": "Affinity Level 9",
-            "content": "Better if she had never woken at all. Those who have sunk into the abyss were never meant to open their eyes to the blazing sun.\nShe was supposed to be numb experimental material, someone the world had already buried—no capacity for pain, no hunger to be loved.\nHer mother could not let her go, and that made a tragedy of her entire life. Lily is still lost in the same question: whether she ought to submit to what the world has arranged for her.\nPerhaps one day someone who defies fate will give her the answer."
+            "content": "Better if she had never woken at all. Those who have sunk into the abyss were never meant to open their eyes to the blazing sun.\nShe was supposed to be an insensate test subject, someone the world had already buried—no capacity for pain, no hunger to be loved.\nHer Mommy's refusal to let go forged the tragedy of her entire life. Lily still does not know whether she should accept the fate the world has chosen for her.\nPerhaps one day she will find her answer in someone who refuses to accept their own."
           },
           {
             "kind": "story",
             "title": "Story: V",
             "unlockCondition": "Affinity Level 10",
-            "content": "The small soul, which should have been lost to the river of history, relied on her mother's wish, the abundant spiritual energy from establishing the magic circle with @1@2@1, and the fusion with the giant creature frozen beneath Elworth, resurrecting as the monster \"Lily\".\n\nDue to incomplete awakening, Lily at the beginning had no consciousness, merely a combat doll that obeyed orders.\n\nFrancis Oswood, a member of the Sculptors' Association, used Lily as a prototype to conduct illegal experiments lasting @2 years. From Francis's diary, it was known that Lily's state back then was extremely unstable, often going out of control and causing localized destruction, which forced Francis to frequently change residences.\n\nWith the intake of the gnosis elixir and the implantation of the silver chip, Lily regained her perception and some memories on an undocumented day. After some twists and turns, Francis took over the almost bankrupt Lai Hospital and transformed it into a testing ground.\n\nDuring the \"Hellhound\" incident in Lai Town No. L-776, her mother, Francis Oswood, was trapped in her self-created anomalous dimension and lost contact."
+            "content": "The tiny soul destined to be lost to oblivion was anchored by her mother's wish and the surge of energy from the ritual array established by @1@2@1. Fusing with the colossal entity slumbering beneath the ice of Elworth, she was resurrected as the monstrous maiden, \"Lily.\"\nDue to incomplete awakening, Lily at the beginning had no consciousness, merely a mindless puppet that obeyed orders.\nFrancis Oswood, a member of the Sculptors' Association, used Lily as a test subject to conduct illegal experiments lasting @2 years. From Francis's diary, it was known that Lily's state back then was extremely unstable, often going out of control and causing localized destruction, which forced Francis to frequently change residences.\nWith the intake of the Gnosis Elixir and the implantation of the Silver Core, Lily regained her perception and some memories on an undocumented day. After some twists and turns, Francis took over the almost bankrupt Rye Sanatorium and transformed it into a testing ground.\nDuring Incident L-776, the \"Hellhound\" incident in Rye Town, her Mommy, Francis Oswood, was trapped in an anomalous dimension of her own making and lost contact."
           }
         ],
         "voiceLines": [
@@ -16762,7 +16762,7 @@
           {
             "id": "voice-6667",
             "title": "Upgrade: II",
-            "content": "Closer... ever closer to my lord..."
+            "content": "Closer... ever closer to my Lord..."
           },
           {
             "id": "voice-5832",
@@ -16891,12 +16891,12 @@
           {
             "id": "voice-5571",
             "title": "Investigation Success",
-            "content": "May my prayers toll like morning bell, rousing the slumbering homeland..."
+            "content": "May my prayers toll like a morning bell, rousing the slumbering homeland..."
           },
           {
             "id": "voice-6668",
             "title": "Investigation Halted",
-            "content": "Why? My lord, why do you still... resist awakening?"
+            "content": "Why? My Lord, why do you still... resist awakening?"
           },
           {
             "id": "voice-6299",
@@ -16921,7 +16921,7 @@
           {
             "id": "voice-6673",
             "title": "Hit: III",
-            "content": "(Grunted groan)"
+            "content": "(Strained grunt)"
           },
           {
             "id": "voice-6672",
@@ -16956,7 +16956,7 @@
           {
             "id": "voice-5562",
             "title": "Exalt",
-            "content": "I must not falter before your arrival, my lord..."
+            "content": "I must not falter before your arrival, my Lord..."
           },
           {
             "id": "voice-54610",
@@ -17845,7 +17845,7 @@
           {
             "id": "voice-5214",
             "title": "Awaken",
-            "content": "Ugh, isn't this annoying? Stop pestering me about that! ...Fine, do what you want. It's just a way to kill time, after all."
+            "content": "Ugh, which part of \"stop pestering me about that\" do you not understand? ...Fine. This lady wouldn't mind a little pastime."
           },
           {
             "id": "voice-117825",
@@ -17910,7 +17910,7 @@
             "id": "voice-5321",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "The tables and chairs must have lace that suits my taste, and the potted plants must be red spider lilies... Now, hurry and get this prepared!"
+            "content": "The tables and chairs must be trimmed with lace that suits my taste, and the potted plants must be red spider plants... Now, hurry and get this prepared!"
           },
           {
             "id": "voice-117835",
@@ -18017,7 +18017,7 @@
           {
             "id": "voice-117814",
             "title": "Chat: Touch",
-            "content": "You want some of my candy? Hmph. I'm feeling generous, so I might bestow a piece upon you... if you beg nicely, that is."
+            "content": "You want some of my candy? Hmph. I'm feeling generous, so I might bestow a piece upon you... Go on, say \"Lady Witch\" nicely!"
           },
           {
             "id": "voice-117810",
@@ -18201,7 +18201,7 @@
           {
             "id": "voice-5131",
             "title": "Strike: I",
-            "content": "Be gone!"
+            "content": "Get away from me!"
           },
           {
             "id": "voice-117802",
@@ -18693,7 +18693,7 @@
             "id": "voice-5477",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "The Throne must be built from ancient blue stone mined from the ocean's abyss, and the altar should be coated with the blood of human sacrifices... Now go prepare!"
+            "content": "The Throne must be built from ancient bluestone mined from the abyss, and the altar coated with sacrificial blood... Now go and prepare it!"
           },
           {
             "id": "voice-5478",
@@ -18735,7 +18735,7 @@
             "id": "voice-5949",
             "title": "Affinity: IV",
             "unlockCondition": "Unlocks at Affinity Level 8",
-            "content": "Seeing how deferential you are, I shall grant you an answer. In the beginning, I was indeed reluctant. But I've come to understand: I am only living this extravagant life because of Him. Death is never the end. He will in turn rebirth me, and we shall gain eternal life through this morbid cycle..."
+            "content": "Seeing how deferential you are, I shall grant you an answer. In the beginning, I did struggle against it. But I have come to understand: everything I enjoy comes from Him. Death is not the end. He will give birth to me in turn, and through this morbid cycle we shall live forever..."
           },
           {
             "id": "voice-5948",
@@ -18764,7 +18764,7 @@
             "id": "voice-6369",
             "title": "Chat: About Tulu",
             "unlockCondition": "Unlocks after acquiring Awakener \"Tulu\"",
-            "content": "Is that boy the fragment of Him? Not bad. He certainly has a regal bearing."
+            "content": "So that boy is a fragment of Him? Not bad. He certainly has a regal bearing."
           },
           {
             "id": "voice-5492",
@@ -18809,7 +18809,7 @@
           {
             "id": "voice-5418",
             "title": "Strike: I",
-            "content": "Foolish!"
+            "content": "Fool!"
           },
           {
             "id": "voice-5415",
@@ -18973,7 +18973,7 @@
             "id": "traphase-120281",
             "title": "Fatal Blow",
             "unlockCondition": "Unlock after triggering this dialogue in Traphase",
-            "content": "Hmph. Insolent crudes."
+            "content": "Hmph. How insolent."
           },
           {
             "id": "traphase-120273",
@@ -19213,12 +19213,12 @@
           {
             "id": "voice-5668",
             "title": "Upgrade: II",
-            "content": "Good tools are half the success!"
+            "content": "Good tools are half the battle!"
           },
           {
             "id": "voice-5353",
             "title": "Upgrade: III",
-            "content": "Whether it's screws or nails, the more, the better!"
+            "content": "Screws? Nails? The more the better!"
           },
           {
             "id": "voice-5615",
@@ -19254,7 +19254,7 @@
             "id": "voice-6387",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "Reparation complete! An unknown adventure, a mysterious world, here I come!"
+            "content": "Repairs complete! Unknown adventures, mysterious worlds—here I come!"
           },
           {
             "id": "voice-5419",
@@ -19310,7 +19310,7 @@
           {
             "id": "voice-6645",
             "title": "Chat: About Dissolution",
-            "content": "Dissolution... Uh, My brain capacity is limited and I can't comprehend such complex diseases... If you need any machinery repaired, come find me!"
+            "content": "Dissolution... ugh, my brain’s way too small for complicated diseases like that. But if anything mechanical needs fixing, come find me!"
           },
           {
             "id": "voice-4986",
@@ -19320,7 +19320,7 @@
           {
             "id": "voice-5503",
             "title": "Chat: What I Like",
-            "content": "Wrench, adjustable wrench, box-end wrench, flathead screwdriver, Phillips screwdriver, countersunk screw, pan head screw... If it can fix broken things, I like it."
+            "content": "Open-end wrench, adjustable wrench, box-end wrench, flathead screwdriver, Phillips screwdriver, countersunk screw, pan head screw... If it can fix broken things, I like it."
           },
           {
             "id": "voice-4956",
@@ -19395,7 +19395,7 @@
           {
             "id": "voice-5071",
             "title": "Exalt",
-            "content": "Whether it's forgetfulness or loss, this time we will definitely return!"
+            "content": "We may forget. We may lose our way... but this time we'll make it back, no matter what!"
           },
           {
             "id": "voice-54629",
@@ -19855,7 +19855,7 @@
           {
             "id": "voice-6071",
             "title": "Chat: What I Like",
-            "content": "Do you like the sea? I love the sea no matter what. I still remember that day many years ago when the sea gently delivered long-awaited death to the unfortunate me."
+            "content": "Do you like the sea? I love the sea no matter what. I still remember that day many years ago when the sea so gently gave poor, unlucky me the death I had longed for."
           },
           {
             "id": "voice-5902",
@@ -20358,7 +20358,7 @@
             "id": "voice-5688",
             "title": "Chat: About Karen",
             "unlockCondition": "Unlocks after acquiring Awakener \"Karen\"",
-            "content": "I've said no to the maid's banquet invitations a few times. She seemed a bit sad... But compared to just having fun, your safety, my master, is far more important!"
+            "content": "I've turned down the maid's party invitations several times, and she seemed a little sad... But compared to having fun, your safety is far more important, my lord!"
           },
           {
             "id": "voice-5101",
@@ -20894,7 +20894,7 @@
             "id": "voice-6155",
             "title": "Chat: About \"N\"",
             "unlockCondition": "Clear Main Story Chapter 7",
-            "content": "Ah, was that Mr. N who just walked us by? No, never mind. The last time I greeted him, he didn't recognize me... I waited for him in prison, hoping he would take me away, but he never came, not even during the riot."
+            "content": "Ah, was that Mr. N who just walked past us? No, never mind. The last time I greeted Him, He didn't recognize me... I waited for Him in prison, hoping He would take me away, but He never came, not even during the riot."
           },
           {
             "id": "voice-5294",
@@ -20916,7 +20916,7 @@
           {
             "id": "voice-5622",
             "title": "Chat: About Mythag",
-            "content": "This place is much better than the filthy, stinky New Gate Prison! Whether lounging on the sofa or squeezed into a corner, it's all quite comfortable, isn't it?"
+            "content": "This place is much better than the filthy, stinky Newgate Prison! Whether lounging on the sofa or squeezed into a corner, it's all quite comfortable, isn't it?"
           },
           {
             "id": "voice-5347",
@@ -20971,7 +20971,7 @@
           {
             "id": "voice-5374",
             "title": "Hit: I",
-            "content": "(Moans)"
+            "content": "(Coquettish whine)"
           },
           {
             "id": "voice-5369",
@@ -21494,7 +21494,7 @@
           {
             "id": "voice-100344",
             "title": "Investigation Halted",
-            "content": "No, no, another terrible painting... Where can I find insight? A graveyard? Or a execution ground..."
+            "content": "No, no, another terrible painting... Where can I find insight? A graveyard? Or an execution ground..."
           },
           {
             "id": "voice-100376",
@@ -22081,7 +22081,7 @@
           {
             "id": "voice-95093",
             "title": "Skill: I",
-            "content": "Chanting Light!"
+            "content": "Sing of the Light!"
           },
           {
             "id": "voice-95062",
@@ -22091,7 +22091,7 @@
           {
             "id": "voice-116964",
             "title": "Special Skill: I",
-            "content": "Punishment！"
+            "content": "Punish the wicked!"
           },
           {
             "id": "voice-95057",
@@ -22476,7 +22476,7 @@
             "id": "voice-6390",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "Now, the line between me and the Awakener is even blurrier. Take good care of me, will you?"
+            "content": "Now the line between me and the Awakeners is even blurrier. Keep a close eye on me, will you?"
           },
           {
             "id": "voice-6391",
@@ -22564,7 +22564,7 @@
           {
             "id": "voice-6760",
             "title": "Investigation Begins",
-            "content": "Go! Issue the battle command!"
+            "content": "Let's go! Give the order!"
           },
           {
             "id": "voice-5128",
@@ -22579,7 +22579,7 @@
           {
             "id": "voice-6607",
             "title": "Strike: I",
-            "content": "It's now!"
+            "content": "Now!"
           },
           {
             "id": "voice-5961",
@@ -24087,7 +24087,7 @@
           {
             "id": "voice-5454",
             "title": "Upgrade: III",
-            "content": "Inspirations are endlessly flowing..."
+            "content": "Inspiration, flowing without end..."
           },
           {
             "id": "voice-6033",
@@ -24158,7 +24158,7 @@
           {
             "id": "voice-6174",
             "title": "Chat: Touch",
-            "content": "Ugh! Your temperature is a bit high for coral. But... it's warm and intense. I like it."
+            "content": "Mm! You run a little warm for coral. But... it's warm. Burning, even. I like it."
           },
           {
             "id": "voice-5412",
@@ -24655,7 +24655,7 @@
             "id": "voice-5515",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "Please allow outside guests. I need to host my salons. Tell them to make an exception for me, please?"
+            "content": "Couldn't an exception be made, so that my guests from outside may enter the academy?"
           },
           {
             "id": "voice-5512",
@@ -25299,7 +25299,7 @@
           {
             "id": "voice-67317",
             "title": "Investigation Halted",
-            "content": "I failed... to see it all...."
+            "content": "I failed... to see it all..."
           },
           {
             "id": "voice-67300",
@@ -25324,7 +25324,7 @@
           {
             "id": "voice-67307",
             "title": "Hit: I",
-            "content": "Ugh."
+            "content": "Hm."
           },
           {
             "id": "voice-67280",
@@ -26967,7 +26967,7 @@
             "id": "voice-5211",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "I see your resolve. Before returning to the void, This One shall bear witness to mankind's heir defying fate. But now... rest is required."
+            "content": "I see your resolve. Before returning to the void, This One shall bear witness to your fight against fate. But now... rest is required."
           },
           {
             "id": "voice-5955",
@@ -27007,7 +27007,7 @@
           {
             "id": "voice-6693",
             "title": "Chat: About Slumber",
-            "content": "My slumber spills dreams like poison. Approach not while I sleep—and wake me never without cause."
+            "content": "When I sleep, my dreams spill over and set spirits seething. So do not approach while I sleep—and never wake me without cause."
           },
           {
             "id": "voice-6145",
@@ -27613,7 +27613,7 @@
           {
             "id": "voice-6708",
             "title": "Strike: I",
-            "content": "Awesome！"
+            "content": "Glorious!"
           },
           {
             "id": "voice-5147",
@@ -28013,7 +28013,7 @@
           {
             "id": "voice-5439",
             "title": "Upgrade: II",
-            "content": "This level is hardly sufficient."
+            "content": "This is barely enough."
           },
           {
             "id": "voice-5440",
@@ -31195,7 +31195,7 @@
           {
             "id": "voice-143535",
             "title": "Upgrade: I",
-            "content": "Smart move, kid. The followers of that foreign monster are thick enough to always toss corpses into the sea. That's not an offering. That's littering."
+            "content": "Smart move, little one. The followers of that foreign monster are thick enough to always toss corpses into the sea. That's not an offering. That's littering."
           },
           {
             "id": "voice-143529",
@@ -31223,7 +31223,7 @@
             "id": "voice-143527",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "Spirituality gives rise to a new body, which is then filled with a trivial mind. Then those particularlt bright and lively ones will be gathered in one place, forever.\nRemember what I told you? The deepest part of the ocean holds everything... and keeps everything there."
+            "content": "Spirituality gives rise to a new body, which is then filled with a trivial mind. Then the bright and lively ones are gathered in one place, forever.\nRemember what I told you? The deepest part of the ocean holds everything... and keeps everything there."
           },
           {
             "id": "voice-143522",
@@ -31271,7 +31271,7 @@
             "id": "voice-143540",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "Hahahaha—alright, alright, don't look at me like that, kid.\nJust some traditions what you call the Elder Gods tend to follow. As for you—no price, no conditions. I'm always on your side."
+            "content": "Hahahaha—alright, alright, don't look at me like that, little one.\nJust some traditions the so-called Elder Gods tend to follow. As for you—no price, no conditions. I'm always on your side."
           },
           {
             "id": "voice-143506",
@@ -31323,7 +31323,7 @@
           {
             "id": "voice-143526",
             "title": "Investigation Begins",
-            "content": "Ready, little preys?"
+            "content": "Ready, my little prey?"
           },
           {
             "id": "voice-143519",
