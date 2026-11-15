@@ -19,6 +19,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 D = ROOT / 'data/morimens'
 DIFFS = ['C', 'B', 'A', 'S', 'SS', 'SSS', '▼']
+OLD_DIFFS = ['Normal', 'Hard', 'Nightmare', 'Madness']  # season 69 difficulty names
+OLD_DIFFS_ZH = ['普通', '困难', '噩梦', '癫狂']
 norm = lambda s: re.sub(r'[^a-z0-9]', '', str(s).lower().replace('+', ''))
 
 def raw_rows(season):
@@ -57,7 +59,7 @@ def infer_families(seasons):
     return forge, ambiguous
 
 def main():
-    seasons = [int(x) for x in sys.argv[1:]]
+    seasons = [x if '-' in x else int(x) for x in sys.argv[1:]]  # '69-postbug' = the settled post-bug board of season 69
     if not seasons: raise SystemExit(__doc__)
     season = seasons[0]
     forge_tid, amb = infer_families(seasons)
@@ -88,10 +90,13 @@ def main():
         return str_idx[key]
     perm = {x['ingameId'] for x in json.loads((D / 'skeydb/awakeners.json').read_text(encoding='utf-8'))['records']
             if x['availabilityType'] == 'PERMANENT' or (x['availabilityType'] == 'WELFARE' and x['rarity'] == 'SR')}  # permanent banner + welfare SR
-    stages = {}
+    stages = {}; old_style = False
     for sid, st in names['stages'].items():
         m = re.match(r'Zone (\d): (?:Threat Level (\w+)|▼)', st['name'])
         if m: stages[sid] = (int(m.group(1)), DIFFS.index(m.group(2) or '▼'))
+        else:  # season 69 and older: "D-Effect Zone: Wave N: <Difficulty>"
+            m = re.match(r'D-Effect Zone: Wave (\d): (\w+)', st['name'])
+            if m and m.group(2) in OLD_DIFFS: stages[sid] = (int(m.group(1)), OLD_DIFFS.index(m.group(2))); old_style = True
     aw_idx, aw = {}, []
     pl_idx, players = {}, []
     teams, seen = [], set()
@@ -138,7 +143,7 @@ def main():
                 players.append([str(uid), re.sub(r'<[^>]*>', '', r['name']), r['rank'], r['score']])
             uuid = (side.get('recordStageData') or {}).get('battleUuid')
             teams.append([pl_idx[uid], z[0], z[1], slot, row['response'].get('score') if slot == 0 else None, keeper.get(uuid), ms, uuid])
-    out = {'season': season, 'diffs': DIFFS, 'aw': aw, 'names': strings, 'players': players, 'teams': teams}
+    out = {'season': season, 'diffs': OLD_DIFFS_ZH if old_style else DIFFS, 'aw': aw, 'names': strings, 'players': players, 'teams': teams}
     dest = D / f'eremora/lowspec/{season}.json'
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
@@ -147,7 +152,8 @@ def main():
     raw = mp.read_bytes().decode('utf-8'); crlf = '\r\n' in raw
     man = json.loads(raw)
     for e in man['availableSeasons']:
-        if e.get('seasonId') == season and not e.get('snapshotId') and not e.get('aggregatePath'):
+        hit = (e.get('snapshotId') == season) if isinstance(season, str) else (e.get('seasonId') == season and not e.get('snapshotId') and not e.get('aggregatePath'))
+        if hit:
             e['lowspecPath'] = f'data/morimens/eremora/lowspec/{season}.json'
     txt = json.dumps(man, ensure_ascii=False, indent=2) + '\n'
     mp.write_bytes((txt.replace('\n', '\r\n') if crlf else txt).encode('utf-8'))

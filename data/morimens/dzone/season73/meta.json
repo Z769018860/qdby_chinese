@@ -3,22 +3,28 @@
   "activityTid": 83326,
   "name": "第73期 融灾 · 超维戒指",
   "date": "11.9-11.22",
-  "updatedAt": "2026-11-12 19:20",
+  "updatedAt": "2026-11-15 00:57",
   "source": "official live Rank.QueryRank response",
-  "sourceRetrievedAt": "2026-11-12T19:20:36.734675+08:00",
+  "sourceRetrievedAt": "2026-11-15T00:57:14.272680+08:00",
   "rankRange": [
     1,
     2000
   ],
   "teamRowsBySource": {
-    "teams_latest.jsonl": 9053,
-    "previous-capture": 2266
+    "teams_latest.jsonl": 9527,
+    "previous-capture": 4413
   },
   "skippedTailLines": 0,
-  "duplicateRankRowsDropped": [],
-  "recordCount": 2000,
-  "playersWithTeamDetail": 2000,
-  "teamRows": 11319,
+  "duplicateRankRowsDropped": [
+    {
+      "uid": 102101400,
+      "rank": 1661,
+      "score": 350
+    }
+  ],
+  "recordCount": 1999,
+  "playersWithTeamDetail": 1999,
+  "teamRows": 13940,
   "stageGroupIds": [
     83424,
     83425,
@@ -69,7 +75,15 @@
       },
       {
         "file": "raw-teams/teams-009.jsonl.gz",
-        "lines": 519
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-010.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-011.jsonl.gz",
+        "lines": 740
       }
     ],
     "uids": "uids.csv",

@@ -21,6 +21,14 @@
   const EN_SOLO_CONF=88;
   // 叠位数字（命轮右下角）门槛：窄卡上字高只有 14~15px，比启灵框的噪声余地小
   const ST_MIN_CONF=72;
+  /* 卡面指纹命中阈值。实测同一张卡缩到 0.72 倍仍有 0.98，不同角色之间最高 0.44，
+     所以 0.86 留了很宽的余量；低于它的宁可继续按立绘猜，也不要乱改判。 */
+  const FACE_MEM_CONF=0.86;
+  /* 幻衣（皮肤）模板的「入场折扣」：皮肤图是从官方幻衣商店截图裁的，比 120×120 的
+     原皮头像干净得多，直接同台比会把一堆无关角色顶到前面（实测 Ryker 被认成 Doresain、
+     Wanda 抢了好几个格子）。所以皮肤模板的分数统一先扣 0.06 再比：
+     真·换装的格子差距远大于它（24 落枫如血 0.877 vs 认错的 Pickman 0.797）。 */
+  const SKIN_MARGIN=0.06;
 
   /* ---------- 基础图像工具 ---------- */
   function makeCanvas(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;return c}
@@ -187,7 +195,77 @@
       done++;
       if(onProgress&&done%10===0)onProgress(`载入头像 ${done}/${recs.length}`);
     }
+    /* 幻衣（皮肤）：换装后卡面跟原皮完全是两张画，原皮立绘模板必然认成别人
+       （实测「24」的落枫如血被认成 Pickman，0.72 还挺「可信」）。
+       data/morimens/skins.json 登记了官方幻衣卡面裁出的脸块，按 id 追加成额外模板；
+       matchSquare 对同一个 id 取最高分，所以多套卡面不会互相打架。 */
+    try{
+      const rs=await fetch('data/morimens/skins.json',{cache:'force-cache'});
+      if(rs.ok){
+        const man=await rs.json();
+        let n=0;
+        for(const sk of (man.skins||[])){
+          if(!sk.id||!sk.file)continue;
+          try{
+            const im=await loadImage(`assets/morimens/skins/${sk.file}.webp`);
+            const c=makeCanvas(48,48);const cc=ctxOf(c);cc.drawImage(im,0,0,48,48);
+            list.push({id:sk.id,name:sk.name,d:normPatch(cc,0,0,48,48,12),d3:normPatchRGB(cc,0,0,48,48,10),skin:true});
+            n++;
+          }catch(e){}
+        }
+        if(onProgress&&n)onProgress(`载入幻衣 ${n} 套`);
+      }
+    }catch(e){}
     charTpl=list;return list;
+  }
+  /* ---------- 卡面复核（肖像撞脸时用插画纠正） ----------
+     肖像模板只有 120×120 的一小块脸，「同画风不同人」经常只差 0.003 分：
+     实测 u1 第一排第 4 格是个白胡子老者，肖像却以 0.553 命中了薇薇安（次名 0.550）。
+     列表里显示的其实是**卡面插画**，和 assets/morimens/cards/*.webp 是同一张画，
+     所以拿它在「肖像给出的前几名」里复核一遍，能把这类错配挡掉。
+     卡面是 240×600 的竖图，列表只露出上面一段，且各分辨率裁法不同，
+     所以对每张卡预先算一组「纵向上段窗口」的描述子，取最高分。 */
+  let cardTpl=null;
+  const CARD_TS=32;
+  async function buildCardTemplates(onProgress){
+    if(cardTpl)return cardTpl;
+    const md=window.MorimensData;
+    const recs=(md?.db?.records||[]).filter(r=>r.assets?.portrait);
+    const list=[];let done=0;
+    for(const rec of recs){
+      try{
+        const url=md.assetFor(rec,'card');
+        if(!url)throw new Error('no card');
+        const im=await loadImage(url);
+        const W=im.naturalWidth||im.width,H=im.naturalHeight||im.height;
+        if(!W||!H)throw new Error('bad card');
+        const cv=makeCanvas(W,H);ctxOf(cv).drawImage(im,0,0,W,H);
+        const cc=ctxOf(cv),wins=[];
+        for(let t=0;t<=0.301;t+=0.06){
+          for(let hf=0.34;hf<=0.781;hf+=0.06){
+            const y0=Math.round(H*t),hh=Math.round(H*hf);
+            if(y0+hh>H)continue;
+            wins.push(normPatch(cc,0,y0,W,hh,CARD_TS));
+          }
+        }
+        if(wins.length)list.push({id:rec.id,wins:wins});
+      }catch(e){}
+      done++;
+      if(onProgress&&done%10===0)onProgress(`载入卡面 ${done}/${recs.length}`);
+    }
+    cardTpl=list;return list;
+  }
+  // 只在前几名候选里比，避免卡面噪声把冷门角色顶上来
+  function cardScores(desc,tpls,allow){
+    const m=new Map();let best={id:'',score:-9};
+    for(const t of tpls){
+      if(allow&&!allow.has(t.id))continue;
+      let s=-9;
+      for(const w of t.wins){const v=dot(desc,w);if(v>s)s=v}
+      m.set(t.id,s);
+      if(s>best.score)best={id:t.id,score:s};
+    }
+    return {m:m,best:best};
   }
   // 卡面四边形（卡槽内归一化坐标）：左上 右上 右下 左下。游戏里卡是斜着摆的，
   // 直接拿直立模板比会认错人，所以先按这个四边形把插画透视校正成直立矩形。
@@ -247,7 +325,7 @@
         for(let x=box.x;x<=maxX;x+=step){
           const d=color?normPatchRGB(ctx,x,y,w,h,n):normPatch(ctx,x,y,w,h,n);
           for(const t of tpls){
-            const v=dot(d,color?t.d3:t.d);
+            const v=dot(d,color?t.d3:t.d)-(t.skin?SKIN_MARGIN:0);
             if(v>best.get(t.id))best.set(t.id,v);
           }
         }
@@ -767,30 +845,45 @@
     return {top:Math.round(mid-half),bot:Math.round(mid+half)};
   }
   function readStarRow(pix,left,cardW,bandA){
-    // 星标行版式（实测）：左边 3 颗菱形等间距排列（间距≈0.19 卡宽），第 4 个槽位里画的是
-    // 「+N」数字。亮菱形个数＝启灵数（0~3），数字是超限加值，两者相加才是完整启灵（最高 15=3启+12）。
+    // 星标行版式（实测）：左边 3 颗菱形等间距排列（间距≈0.19 卡宽），第 4 个槽位里
+    // 可能画着一个数字（0~12）。**亮菱形数＝启灵数（0~3）**，那个数字不计入启灵
+    // （用户核对过：「24 是二启」「薇薇安是三启」，而这两格截图上写着 12 / 4）。
     // 难点：数字和最后一颗菱形挨得很近，按"段"硬切会把菱形并进数字框里，所以改用
     // 「等间距链」找菱形，再把最后一个菱形右边到卡宽 0.9 之间的亮像素当数字框。
     const W=pix.W;
     const sb=starRowBand(bandA,cardW);
     const yTop=Math.max(0,sb.top),yBot=Math.min(pix.H-1,sb.bot);
-    if(yBot<=yTop+4)return {lit:0,num:null,segs:[],band:sb};
+    if(yBot<=yTop+4)return {lit:0,num:null,segs:[],band:sb,cores:[],amb:true};
     const xa=Math.max(0,Math.round(left+cardW*0.02)),xb=Math.min(W-1,Math.round(left+cardW*0.94));
-    if(xb<=xa+6)return {lit:0,num:null,segs:[],band:sb};
+    if(xb<=xa+6)return {lit:0,num:null,segs:[],band:sb,cores:[],amb:true};
     const h=yBot-yTop+1;
-    const col=new Array(xb-xa+1);
-    for(let x=xa;x<=xb;x++){
-      let n=0;
-      for(let y=yTop;y<=yBot;y++)if(pix.L[y*W+x]>190)n++;
-      col[x-xa]=n;
-    }
     const blobGap=Math.max(1,Math.round(cardW*0.02));
     const minW=Math.max(4,Math.round(cardW*0.035)),maxW=Math.round(cardW*0.17);
-    // runsOf 的第三个参数是"最大允许宽度"，给小了会把整颗菱形直接丢掉
-    const blobs=mergeRuns(runsOf(col.length,function(i){return col[i]>=3},Math.round(cardW*0.9)),blobGap)
-      .map(function(r){return {a:r.a+xa,b:r.b+xa,c:(r.a+r.b)/2+xa,w:r.w}})
-      .filter(function(r){return r.w>=minW&&r.w<=maxW});
-    if(!blobs.length)return {lit:0,num:null,segs:[],band:sb};
+    const blobsAt=function(test){
+      const col=new Array(xb-xa+1);
+      for(let x=xa;x<=xb;x++){
+        let n=0;
+        for(let y=yTop;y<=yBot;y++)if(test(pix.L[y*W+x]))n++;
+        col[x-xa]=n;
+      }
+      // runsOf 的第三个参数是"最大允许宽度"，给小了会把整颗菱形直接丢掉
+      return mergeRuns(runsOf(col.length,function(i){return col[i]>=3},Math.round(cardW*0.9)),blobGap)
+        .map(function(r){return {a:r.a+xa,b:r.b+xa,c:(r.a+r.b)/2+xa,w:r.w}})
+        .filter(function(r){return r.w>=minW&&r.w<=maxW});
+    };
+    /* 菱形有两种画法（box-1 / box-2 都逐格核对过）：
+       **亮槽＝纯白实心（L≈255）、空槽＝纯黑实心（L≈10~40）**。
+       所以候选必须同时收「亮块」和「暗块」——只收亮块时，0 启 / 1 启的格子
+       只剩数字那一块，链不成三颗，间距只能按经验值兜底，于是整行读成 0 启或 3 启。 */
+    let bright=blobsAt(function(v){return v>190});
+    if(!bright.length)bright=blobsAt(function(v){return v>158});
+    const dark=blobsAt(function(v){return v<95});
+    const blobs=[];
+    for(const b of bright.concat(dark)){
+      if(!blobs.some(function(q){return Math.abs(q.c-b.c)<cardW*0.03}))blobs.push(b);
+    }
+    blobs.sort(function(a,b){return a.c-b.c});
+    if(!blobs.length)return {lit:0,num:null,segs:[],band:sb,cores:[],amb:true};
     // 在候选里找"最长的等间距链"——菱形是等距的，数字不参与
     let chain=[];
     for(let i=0;i<blobs.length;i++){
@@ -823,8 +916,39 @@
       // 间距估不出来（只认出 1 颗）：按版式经验值兜底
       pitch=cardW*0.19;
     }
-    const dios=blobs.filter(function(b){return b.c<=d0+2.5*pitch});
-    const lit=Math.min(3,dios.length);
+    /* 亮菱形个数＝启灵数（0~3）。判「亮/暗」只能看**槽位正中心的那几像素**：
+       空槽是纯黑实心（L≈10~40），亮槽是纯白实心（L≈255），而卡面插画、金色底条
+       本身就是 170~255 的亮底。原来在 ±0.3 间距的窗口里取**最大值**，等于永远
+       读到旁边的亮背景，于是「0 启 / 1 启」全被读成 3 启（box-1 逐格核对：12 格错 3 格，
+       全是读高）。改成小窗均值 + 绝对阈值，亮槽/空槽差着一个数量级，很好分。 */
+    const h2=yBot-yTop+1;
+    const yMid=(yTop+yBot)/2;
+    const halfY=Math.max(1,Math.round(h2*0.26));
+    /* 取「中心窄列带里的最亮值」而不是小窗均值：菱形中心那几列是纯粹的填充色
+       （亮槽 255 / 空槽 30 上下），均值会把菱形深色边框和卡面亮底平均进来，
+       n1 那张缩到 780px 的截图三颗都只剩 175~181，跟阈值贴在一起，
+       167 和 168 的差别就足以把 3 启判成 2 启。 */
+    const peakBox=function(cx,hx){
+      let mx=0;
+      const x0=Math.round(cx-hx),x1=Math.round(cx+hx);
+      const yy0=Math.round(yMid-halfY),yy1=Math.round(yMid+halfY);
+      for(let x=x0;x<=x1;x++){
+        if(x<0||x>=W)continue;
+        for(let y=yy0;y<=yy1;y++){const v=pix.L[y*W+x];if(v>mx)mx=v}
+      }
+      return mx;
+    };
+    const hx=Math.max(1,pitch*0.10);
+    const cores=[0,1,2].map(function(k){return peakBox(d0+k*pitch,hx)});
+    /* 亮槽一定是从左往右连续的，所以从左往右数到第一个暗槽就停。
+       168 / 92 两条线之间（浅灰）说明这格对比度被压平了，不算数、只标可疑。 */
+    let lit=0,amb=false;
+    for(let k=0;k<3;k++){
+      const v=cores[k];
+      if(v>=170){lit++}
+      else{if(v>=150)amb=true;break}   // 150~170 是灰带，判不准就标可疑
+    }
+    if(TRACE()){/* 诊断用：cores 在 dbg 里能看到 */}
     // 数字画在第 4 个槽位里，右对齐；框取槽位中心一带，别把菱形发光边圈进来
     const slotC=d0+3*pitch;
     const yTop2=yTop,yBot2=yBot;
@@ -834,7 +958,7 @@
     if(slotC-bw/2>xa&&slotC+bw/2<W-1){
       num={x:Math.round(slotC-bw/2),y:Math.round(midY-bh/2),w:Math.round(bw),h:Math.round(bh)};
     }
-    return {lit:lit,num:num,segs:blobs,band:sb,chain:dios.length,pitch:pitch};
+    return {lit:lit,num:num,segs:blobs,band:sb,chain:blobs.length,pitch:pitch,cores:cores,amb:amb};
   }
   // 「Lv.xx」是等级条里最亮的像素，但条底本身亮度差很大：深色条只有 70~90，
   // 有些卡是亮金渐变，底子就有 200+。原来写死 210 在亮条上会把整条都当字
@@ -953,7 +1077,8 @@
     // n = 数字由几个字形组成；OCR 读出来的位数和它对不上就说明读错了
     return {x:a-pad,y:t-pad,w:(b-a+1)+pad*2,h:(bt-t+1)+pad*2,n:digits.length};
   }
-  async function analyzeChar(img,onProgress){
+  async function analyzeChar(img,onProgress,opts){
+    const mem=(opts&&opts.faceMem)||null;
     const full=makeCanvas(img.naturalWidth,img.naturalHeight);
     const fctx=ctxOf(full);fctx.drawImage(img,0,0,full.width,full.height);
     const pix=pixelData(full);
@@ -976,15 +1101,53 @@
         const artY=bandA-cardW*1.40;
         const box={x:left,y:artY,w:cardW,h:cardW*1.15};
         if(box.y<-cardW*0.2||box.y+box.h>full.height)continue;
+        /* 卡面指纹：换装/皮肤会让立绘模板整体失配（实测「24」穿皮肤后被认成 Pickman，
+           分数 0.72 看着还挺可信）。指纹只用于「用户校对过的卡面」，见 box.js 的 learnFace。 */
+        let faceDesc=null;
+        try{faceDesc=normPatch(fctx,box.x,box.y,box.w,Math.max(8,Math.round(box.h*0.86)),CARD_TS)}catch(e){}
         const tbox={x:box.x*tscale,y:box.y*tscale,w:box.w*tscale,h:box.h*tscale};
         const match=matchSquare(tctx,tbox,tpls,{color:true,scales:[0.5,0.6,0.7,0.8,0.9,1.0]});
         const top=match[0],second=match[1];
         const rec={cell:{r:bi,j:j},left:left,bandA:bandA,tops:match.slice(0,3).map(function(x){return {id:x.id,s:Number(x.score.toFixed(3))}})};
         dbg.push(rec);
         if(!top||top.score<0.42){rec.skip='match';continue}
+        /* 卡面复核：肖像模板只在 48×48 的脸部小块上比，「同画风不同人」常只差 0.003 分
+           （u1 第一排第 4 格是白胡子老者，肖像却报了薇薇安）。列表里显示的其实是卡面插画，
+           所以在前 6 名候选里用卡面再比一遍；**只有卡面分明显更高才改判**，
+           否则会把本来就对的匹配改坏。 */
+        let pickId=top.id,cardDbg=null;
+        try{
+          const ctpl=await buildCardTemplates();
+          if(ctpl.length){
+            const allow=new Set(match.slice(0,6).map(function(o){return o.id}));
+            const desc=normPatch(fctx,box.x,box.y,box.w,box.h,CARD_TS);
+            const cs=cardScores(desc,ctpl,allow);
+            const mine=cs.m.has(top.id)?cs.m.get(top.id):-1;
+            /* **只记录、不改判**：卡面 NCC 的绝对值在不同分辨率下漂得厉害
+               （同一格 0.28~0.47），拿它硬改判会把本来对的角色改错（实测把「24」改没了）。
+               等有可靠的真值集再启用改判；现在只在 trace 里留证据，方便以后标定。 */
+            cardDbg={best:cs.best.id,s:Number(cs.best.score.toFixed(3)),mine:Number(mine.toFixed(3)),picked:pickId,switchable:cs.best.id!==top.id&&cs.best.score-mine>0.06};
+          }
+        }catch(e){}
+        if(TRACE()&&cardDbg)rec.card=cardDbg;
         // 一张图里同一个角色只会出现一次。若最佳匹配已被别的卡占掉，说明至少有一边认错了，
         // 改用还没被占用的次优候选——比把两个不同的角色并成一条要合理得多。
         let pick=top;
+        if(pickId!==top.id){
+          pick=match.find(function(o){return o.id===pickId})||{id:pickId,score:top.score};
+        }
+        /* 校对记忆优先：这张卡面用户亲手改过，就按记忆来（皮肤/换装的唯一出路）。 */
+        if(faceDesc&&mem&&mem.length){
+          let bestMem=null;
+          for(const it of mem){
+            const sc=dot(faceDesc,it.v);
+            if(!bestMem||sc>bestMem.s)bestMem={id:it.id,s:sc};
+          }
+          if(bestMem&&bestMem.s>=FACE_MEM_CONF){
+            pick={id:bestMem.id,score:Math.max(pick.score,bestMem.s),fromMem:true,memScore:bestMem.s};
+            rec.mem={id:bestMem.id,s:Number(bestMem.s.toFixed(3))};
+          }
+        }
         if(taken.has(pick.id)){
           const alt=match.find(function(o){return !taken.has(o.id)&&o.score>=0.40});
           if(alt)pick=alt;
@@ -1040,14 +1203,16 @@
         }
         if(lvBest)lv=lvBest.v;
         rec.lvRaws=lvRaws;
-        // 启灵：星标行最右侧那颗深色菱形里的数字（0-3 是「N 启」，4 是超限，5-15 是超限 +N）
-        // 深色菱形直径只有十几像素，框差 1~2px 数字就糊了，所以几组阈值/偏移都试一遍。
-        let enLow=false;
+        // 启灵：**亮菱形数就是启灵数（0~3）**。
+        // 第 4 个槽位里那个数字（0~12）不是启灵 —— 用户两次核对后确认「24 是二启」
+        // 「薇薇安是三启」，而截图里那两格是 3 颗亮菱形＋写着 12／4，
+        // 说明那个数字属于另一套成长（副属性档），**不能加进启灵**。
+        // 仍然把它读出来存到 plus 里（只作参考、单独显示），但 en 只由亮菱形数决定。
+        let enLow=false,enPlus=null,starDbg=null;
         rec.lvBox=loc;rec.lv=lv;
         try{
           const star=readStarRow(pix,leftAdj,cardW,bandA);
-          rec.star=star;rec.lit=star.lit;
-          // 亮菱形数直接就是启灵数；数字只有「超限 +N」时才有
+          rec.star=star;rec.lit=star.lit;starDbg=star;
           const base=Math.min(3,star.lit);
           // 数字在第 4 个槽位里，框差一两像素就会切歪，所以阈值和框位各给一组
           const variants=star.num?[
@@ -1066,12 +1231,10 @@
             // +10/+11/+12 是两位，别只放一位进来。
             if(num.count<1||num.count>2||num.conf<EN_MIN_CONF)continue;
             const val=Number(num.text);
-            // 界面上不会出现「+0」
-            if(val>=1&&val<=15)votes.push({v:val,s:num.conf});
+            if(val>=1&&val<=12)votes.push({v:val,s:num.conf});
           }
           rec.enRaws=raws;rec.votes=votes.map(function(q){return q.v});rec.enPngs=pngs;
           if(votes.length){
-            // 多数票一致才算确定；只有一组读出来就采用但让用户核对
             let bestV=votes[0].v,bestN=0,bestS=0;
             for(const q of votes){
               const grp=votes.filter(function(x){return x.v===q.v});
@@ -1080,21 +1243,16 @@
                 bestS=Math.max.apply(null,grp.map(function(x){return x.s}));
               }
             }
-            /* **单票要高门槛**：4 组 variant 只有 1 组读出数字时，那个数字十有八九是
-               空槽位里菱形边角凑出来的（n1 r1c3 就是 3 颗亮星无数字，第 4 槽的空菱形
-               边角被读成「1」80% —— 刚好卡在 EN_MIN_CONF 上通过，把 3 启写成了 4 启）。
-               多票一致时 80 分已经够可信（框位/阈值各不相同还能读成同一个数），
-               单票则要求 88 分。 */
-            if(bestN>=2||bestS>=EN_SOLO_CONF){en=base+bestV;enLow=bestN<2}
-            else{en=base;enLow=true}
-          }else{
-            // 没有数字：纯启灵（0~3），亮几颗就是几启，这条是确定的
-            en=base;enLow=star.num?true:false;
+            /* 单票要高门槛：空槽位里菱形边角凑出来的数字通常只有 1 组读数、80 分左右。 */
+            if(bestN>=2||bestS>=EN_SOLO_CONF)enPlus=bestV;
           }
-          en=Math.min(en,15);
+          en=base;
+          /* 槽位中心落在「浅灰」区间（既不像实白也不像纯黑）时说明这格对比度被压平，
+             标成「请核对」，界面会给启灵加个问号，而不是硬给一个数。 */
+          enLow=!!star.amb;
         }catch(e){en=null;enLow=true;rec.err=String(e&&e.message||e)}
-        rec.en=en;
-        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,box:box});
+        rec.en=en;rec.plus=enPlus;
+        out.push({id:pick.id,score:pick.score,margin:pick.score-(second?second.score:0),options:match.slice(0,5),lv:lv,en:en,enLow:enLow,plus:enPlus,lit:starDbg?starDbg.lit:null,cores:starDbg?starDbg.cores:null,face:faceDesc,fromMem:!!(pick&&pick.fromMem),box:box});
       }
     }
     return {rows:out,note:'识别到 '+out.length+' 张卡片',grid:grid,dbg:TRACE()?dbg:undefined};
@@ -1372,7 +1530,7 @@
     }catch(e){}
     return 'char';
   }
-  async function analyzeFiles(files,{mode='auto',onProgress=()=>{}}={}){
+  async function analyzeFiles(files,{mode='auto',onProgress=()=>{},faceMem=null}={}){
     const results={rows:[],note:''};
     const all=[];
     for(let i=0;i<files.length;i++){
@@ -1382,7 +1540,7 @@
       if(mode==='auto'){kind=await guessMode(img);onProgress(`(${i+1}/${files.length}) 判定为${kind==='wheel'?'命轮页':'角色页'}`)}
       const fn=kind==='wheel'?analyzeWheel:analyzeChar;
       try{
-        const r=await fn(img,msg=>onProgress(`(${i+1}/${files.length}) ${msg}`));
+        const r=await fn(img,msg=>onProgress(`(${i+1}/${files.length}) ${msg}`),{faceMem:faceMem});
         for(const row of r.rows){row.file=i;row.kind=kind;all.push(row)}
         if(r.dbg)results.dbg=(results.dbg||[]).concat(r.dbg);
         if(r.dbgSkip)results.dbgSkip=(results.dbgSkip||[]).concat(r.dbgSkip);
@@ -1392,15 +1550,23 @@
         results.note=(results.note?results.note+'；':'')+`第 ${i+1} 张：${e.message}`;
       }
     }
-    // 同一角色多张图出现时保留置信度最高的
+    /* 同一角色在多张图里出现时保留哪一条？
+       以前留「匹配分最高」的那条，结果留下的是**旧截图**：
+       实测同一份 BOX 的截图跨越了不同时间点，同一个塔薇在旧图里是 Lv62 / 1 启、
+       在新图里是 Lv70 / 3 启。练度只会往上走，所以取「练度最高」的那条才是最接近现在的，
+       分数只用来兜底（同练度时优先更可信的那条）。 */
+    const prog=function(r){
+      if(r.kind==='wheel')return Number(r.stack)||0;
+      return (Number(r.lv)||0)*100+Math.min(3,Number(r.en)||0)*10;
+    };
     const merged=new Map();
     for(const row of all){
       const key=row.kind+':'+row.id;
       const old=merged.get(key);
-      if(!old||row.score>old.score)merged.set(key,row);
+      if(!old||prog(row)>prog(old)||(prog(row)===prog(old)&&row.score>old.score))merged.set(key,row);
     }
     results.rows=[...merged.values()].sort((a,b)=>b.score-a.score);
-    results.note=results.note||`共 ${results.rows.length} 条（同角色只保留最高置信度）`;
+    results.note=results.note||`共 ${results.rows.length} 条（同角色取练度最高的一条）`;
     return results;
   }
 
