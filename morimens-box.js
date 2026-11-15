@@ -13,14 +13,15 @@
   const WHEEL_REALMS=REALM_ORDER.concat(['NEUTRAL']);
   const REALM_ZH={CHAOS:'混沌',AEQUOR:'深海',CARO:'血肉',ULTRA:'超维',NEUTRAL:'中立'};
   const realmZh=k=>REALM_ZH[k]||k||'';
-  const MAXLV=90,MAXEN=3,MAXPO=10,MAXSK=6,MAXSTACK=12,MAXPOT=15;
-  // 深化＝人格深化那个 +N（截图第 4 槽的数字）。+4 起解锁超限爆发，+8 再抬一次等级上限。
-  // 新加的角色默认按 12 记（3 启角色的常见值），老数据没有这个字段就当「没填」，不参与比较。
+  const MAXLV=90,MAXEN=3,MAXPO=10,MAXSK=6,MAXSTACK=12,MAXPOT=12;
+  // 启灵 +N＝三启之后继续往上的 +N（启灵条后面的那个数字，0~12；榜单记录里 potencyLevel = 3 + N）。
+  // 它同时抬等级上限：三启 +0~+7 最高 Lv.80，+8~+11 最高 Lv.85，只有 +12 才能到 Lv.90（榜单数据实测）。
+  // 新加的角色默认按 12 记，老数据没有这个字段就当「没填」，不参与比较。
   const DEFAULT_POT=12;
+  const lvCapOf=(en,pot)=>{if(Number(en)<3)return 80;const n=(pot==null||pot==='')?DEFAULT_POT:Number(pot);return n>=12?90:n>=8?85:80};
   // 练度换算：1 档启灵 ≈ 8 级等效。
-  // **启灵只有 0~3 档**（界面上亮几个菱形就是几启）：截图里第 4 个槽位那个 0~12 的数字
-  // 属于另一套成长，用户核对后明确「24 是二启」「薇薇安是三启」，所以不加进启灵。
-  // 记录里的 potencyLevel 是 0~15 的合并刻度，比较前要先折回 0~3（见 enTier）。
+  // 启灵档 0~3（亮几个菱形就是几启），三启之后还有 +N（见上）。
+  // 记录里的 potencyLevel 是 0~15 的合并刻度：档位部分用 enTier 折回 0~3，+N 部分在练度封顶里单独比较。
   const EN_EQ=8;
   const enTier=pl=>{const n=Number(pl);return Number.isFinite(n)?(n<=2?n:3):3};
   // 三档的门槛（都只看等级 + 启灵）：
@@ -53,6 +54,7 @@
     try{const raw=localStorage.getItem(STORE);if(!raw)return;const j=JSON.parse(raw);if(j&&typeof j==='object'){boxData={v:1,chars:j.chars||{},wheels:j.wheels||{},updated:j.updated||0};}}catch(e){console.warn('box load failed',e)}
   }
   function saveBox(){
+    for(const v of Object.values(boxData.chars||{})){const cap=lvCapOf(v.en,v.pot);if(v.lv>cap)v.lv=cap}   // 等级受启灵 +N 限制：三启 +12 才能到 90
     boxData.updated=Date.now();
     try{localStorage.setItem(STORE,JSON.stringify(boxData))}catch(e){console.warn('box save failed',e);toast('本机存储写入失败，可能是浏览器隐私模式')}
     updateSummary();
@@ -328,11 +330,11 @@
         <img src="${esc(c.portrait)}" alt="" loading="lazy">
         <div class="bname">${esc(c.name)}<small>${esc(c.ingameId||'')} · ${esc(c.rarity||'')}</small></div>
         <div class="bfields">
-          <label>等级<input type="number" min="1" max="${MAXLV}" value="${v.lv}" data-field="lv"></label>
+          <label>等级<input type="number" min="1" max="${lvCapOf(v.en,v.pot)}" value="${v.lv}" data-field="lv" title="等级上限 ${lvCapOf(v.en,v.pot)}（三启 +12 才能到 90）"></label>
           <label>启灵<select data-field="en">${Array.from({length:MAXEN+1},(_,i)=>`<option value="${i}"${i===v.en?' selected':''}>${ENLIGHT_TEXT(i)}</option>`).join('')}</select></label>
           <label>灵塑<select data-field="po">${Array.from({length:MAXPO+1},(_,i)=>`<option value="${i}"${i===v.po?' selected':''}>${i}${i===MAXPO?'（满）':''}</option>`).join('')}</select></label>
           <label>技能<select data-field="sk">${Array.from({length:MAXSK+1},(_,i)=>`<option value="${i}"${i===v.sk?' selected':''}>${i}${i===MAXSK?'（满）':''}</option>`).join('')}</select></label>
-          <label title="人格深化那个 +N（截图第 4 槽）。+4 起超限爆发">深化<input type="number" min="0" max="${MAXPOT}" value="${v.pot??''}" placeholder="—" data-field="pot"></label>
+          <label title="三启之后的 +N（启灵条后面的数字，0~12）。+8 起等级上限 85，+12 才能到 90 级；没到三启时不生效">启灵+N<input type="number" min="0" max="${MAXPOT}" value="${v.pot??''}" placeholder="—" data-field="pot"></label>
         </div>
         <button type="button" class="boxDel" title="移除">×</button>
       </div>`);
@@ -407,7 +409,7 @@
   function wheelIdFromNum(n){return `wheel-${String(n).padStart(4,'0')}`}
   async function exportCode(){
     const payload={v:1,t:Math.round(Date.now()/1000),
-      // 第 6 位是「深化」（人格深化 +N）；老代码只有 5 位，读的时候按缺省处理
+      // 第 6 位是「启灵 +N」（三启之后的 +N）；老代码只有 5 位，读的时候按缺省处理
       c:Object.keys(boxData.chars).map(id=>{const v=boxData.chars[id];return [numId(id),v.lv,v.en,v.po,v.sk,v.pot??null]}),
       w:Object.keys(boxData.wheels).map(id=>[numId(id),boxData.wheels[id].stack||0])};
     const raw=new TextEncoder().encode(JSON.stringify(payload));
@@ -668,7 +670,7 @@
             return {
               id,ingameId:m.ingameId||null,name:m.canonicalName||m.name||'',
               lv:m.level??null,en,borrow:!!m.borrowed,
-              // 人格深化 +N：+4 起解锁超限爆发，用来判「80 超限」这种 box 的差距
+              // 启灵 +N（记录里的 potencyLevel = 3 + N）
               pot:m.potencyLevel!=null?Number(m.potencyLevel):null,
               wheels:wl.map(x=>x.name),wheelLv:wl.map(x=>x.level)
             };
@@ -742,7 +744,7 @@
       ownLv:n?Math.round(sumOwnLv/n):0,ownEn:n?Math.round((sumOwnEn/n)*10)/10:0
     };
   }
-  // 深化（人格深化 +N）：+4 起解锁超限爆发，没开的人少一大截输出，按 4 级等效估。
+  // 启灵 +N（粗略版，已被 assess 里的线性缺口和练度封顶取代）。
   // BOX 里没填（null / undefined）就当不知道，不扣分；老数据没有这个字段。
   function potGap(own,need){
     if(own==null||own==='')return 0;
@@ -766,8 +768,8 @@
      记录里每支队伍有 4 人的平均 potencyLevel（0~15：3 启 = 3，3 启 +12 = 15）和得分；
      BOX 里同一支队伍的平均练度越低，能达到的分数占该区满分的比例越低——取「练度不超过该水平的队伍」
      得分比例的第 97 百分位（练度越高分位越接近 100%）。
-     例：全员 3 启（深化 +0）的 BOX，榜单里平均 ≤3 的队伍极少有人拿到 95 以上，所以它不可能推出 525。 */
-  const ownFull=own=>own.en>=3?3+clamp(own.pot==null||own.pot===''?DEFAULT_POT:own.pot,0,MAXPOT-3):clamp(own.en,0,MAXEN);
+     例：全员 3 启（启灵 +0）的 BOX，榜单里平均 ≤3 的队伍极少有人拿到 95 以上，所以它不可能推出 525。 */
+  const ownFull=own=>own.en>=3?3+clamp(own.pot==null||own.pot===''?DEFAULT_POT:own.pot,0,MAXPOT):clamp(own.en,0,MAXEN);
   function buildCapTable(teams,caps,waves){
     const capOf=new Map(waves.map((w,i)=>[w,caps[i]]));
     const rows=[];
@@ -778,11 +780,11 @@
     }
     rows.sort((a,b)=>a[0]-b[0]);
     const grid=[];
-    for(let g=0;g<=MAXPOT;g+=0.25){
+    for(let g=0;g<=3+MAXPOT;g+=0.25){
       let hi=0;while(hi<rows.length&&rows[hi][0]<=g+1e-9)hi++;
       if(hi<30){grid.push(null);continue}                 // 样本太少：不下结论
       const rs=rows.slice(0,hi).map(r=>r[1]).sort((a,b)=>a-b);
-      const q=0.97+0.03*g/MAXPOT;                         // 练度拉满时分位升到 100%：满练度 BOX 不该被封顶
+      const q=0.97+0.03*g/(3+MAXPOT);                         // 练度拉满时分位升到 100%：满练度 BOX 不该被封顶
       grid.push(rs[Math.min(rs.length-1,Math.floor(rs.length*q))]);
     }
     let last=0;for(let k=0;k<grid.length;k++){if(grid[k]==null)grid[k]=last;else last=grid[k]=Math.max(last,grid[k])}   // 单调不减
@@ -815,7 +817,7 @@
       potSum+=ownP;
       gaps+=Math.max(0,f.lvGap-6)*0.010;
       gaps+=f.enGap*0.05;                                   // 启灵每差一档约 5%（原来第一档免费，等于让 2 启号抄 3 启队）
-      gaps+=Math.max(0,needPot-ownP)*0.004;                 // 深化 +N 每差一档约 0.4%，大头由下面的练度封顶承担
+      gaps+=Math.max(0,needPot-ownP)*0.004;                 // 启灵 +N 每差一档约 0.4%，大头由下面的练度封顶承担
     });
     if(assistIdx>=0)gaps+=0.03;   // 助战得找人借，按 3% 估
     // 命轮：不齐按 2%/张，叠位每差一档 0.4%，合计最多打 12%（命轮影响比练度小，但也不是没有）
@@ -1200,7 +1202,7 @@
         同样的分数对不同人难度完全不同。抄之前先看卡片上的「造物 N 件」，造物差的队往往要多打很多遍。
       </div>
       <div class="boxNotice">
-        每区按<b>等级 + 启灵</b>（+ 命轮、深化缺口）给三套：<b style="color:#7fd8a5">低配</b>＝整队要求都在你练度之内（平均还富余 8 级等效以上）；<b style="color:#6ea8ff">中配</b>＝缺口 ≤ 6 级 / ≤ 1 启，或刚好持平；<b style="color:#d7a85b">高配</b>＝缺口 ≤ 15 级 / ≤ 3 启，练一练能上。启灵按 1 档 ≈ 8 级折算。「参考分」是记录里的实际得分，「预计」是按你的练度折算后的分数，并按「练度相近的玩家实际拿到过多少分」封顶（例如全员 3 启、深化 +0 的 BOX 几乎不可能到 525）；<b>深化 +N 请在「我的 BOX」里如实填写</b>。
+        每区按<b>等级 + 启灵（含 +N）</b>（+ 命轮缺口）给三套：<b style="color:#7fd8a5">低配</b>＝整队要求都在你练度之内（平均还富余 8 级等效以上）；<b style="color:#6ea8ff">中配</b>＝缺口 ≤ 6 级 / ≤ 1 启，或刚好持平；<b style="color:#d7a85b">高配</b>＝缺口 ≤ 15 级 / ≤ 3 启，练一练能上。启灵按 1 档 ≈ 8 级折算。「参考分」是记录里的实际得分，「预计」是按你的练度折算后的分数，并按「练度相近的玩家实际拿到过多少分」封顶（例如全员 3 启、启灵 +0 的 BOX 几乎不可能到 525）；<b>启灵 +N 请在「我的 BOX」里如实填写</b>。
       </div>
       <div class="boxNotice">
         <b>拼队</b>：一个区可以再上一支<b>额外队</b>，这个区固定 <b>+5 分</b>（所以「打两个 S」≈「一个 SS」），不是把两队分数相加。
@@ -1261,7 +1263,7 @@
       const row=e.target.closest('[data-id]');
       if(row&&e.target.dataset.field){const id=row.dataset.id,f=e.target.dataset.field;
         const v=f==='lv'?clamp(e.target.value,1,MAXLV):f==='pot'?(e.target.value===''?null:clamp(e.target.value,0,MAXPOT)):Number(e.target.value);
-        setChar(id,{[f]:v});return}
+        setChar(id,{[f]:v});if(f==='en'||f==='pot'||f==='lv')renderCharList();return}
       const wrow=e.target.closest('[data-wheel]');
       if(wrow&&e.target.dataset.wheelField){boxData.wheels[wrow.dataset.wheel]={stack:Number(e.target.value)};saveBox();return}
       if(e.target.id==='boxDrop'){return}
@@ -1302,7 +1304,7 @@
   }
   /* 示例 BOX：很多人手里没有成套截图，又想先看看「配队推荐」长什么样。
      以前只有三档固定值，现在拆成「角色情况 + 命轮情况」两栏自己选：
-     角色＝等级 / 启灵 / 灵塑 / 技能 / 深化（人格深化 +N）；命轮＝收录范围 + 叠位。
+     角色＝等级 / 启灵 / 灵塑 / 技能 / 启灵 +N（三启之后）；命轮＝收录范围 + 叠位。
      上面一排快捷方案把常见的 box 直接填好，下面两栏可以再自己微调。
      按当前角色表生成，不硬编码 id，游戏更新也不会失效。 */
   const WHEEL_SCOPES={
@@ -1313,13 +1315,14 @@
   };
   const DEMO_PRESETS=[
     {key:'starter',name:'新手',note:'Lv.60 / 1 启 / 灵塑 0 / 没有命轮',lv:60,en:1,po:0,sk:3,pot:0,scope:'all',stack:-1},
-    {key:'mid',name:'中坚',note:'Lv.70 / 2 启 / 灵塑 5 / 常驻命轮满叠',lv:70,en:2,po:5,sk:6,pot:4,scope:'permanent',stack:12},
-    {key:'en3',name:'全三启',note:'全员 Lv.90 / 3 启 / 灵塑满 / 命轮满叠',lv:90,en:3,po:10,sk:6,pot:12,scope:'all',stack:12},
-    {key:'v80',name:'80 超限',note:'Lv.80 + 深化 +4（超限爆发已开）/ 3 启 / 灵塑满 / 命轮满叠',lv:80,en:3,po:10,sk:6,pot:4,scope:'all',stack:12},
-    {key:'full',name:'满配',note:'Lv.90 / 3 启 / 灵塑满 / 深化 +12 / 命轮满叠',lv:90,en:3,po:10,sk:6,pot:12,scope:'all',stack:12},
-    {key:'w3',name:'命轮全三叠',note:'角色按满配算，所有命轮只到三叠',lv:90,en:3,po:10,sk:6,pot:8,scope:'all',stack:3},
-    {key:'wperm',name:'常驻全满叠',note:'只收录常驻命轮，且全部满叠',lv:90,en:3,po:10,sk:6,pot:8,scope:'permanent',stack:12},
-    {key:'wlim3',name:'限定三叠',note:'只收录限定命轮，且都只到三叠',lv:90,en:3,po:10,sk:6,pot:8,scope:'limited',stack:3}
+    {key:'mid',name:'中坚',note:'Lv.70 / 2 启 / 灵塑 5 / 常驻命轮满叠',lv:70,en:2,po:5,sk:6,pot:0,scope:'permanent',stack:12},
+    {key:'en3',name:'全三启',note:'全员 Lv.80（三启 +0 最高 80 级）/ 3 启 / 灵塑满 / 命轮满叠',lv:80,en:3,po:10,sk:6,pot:0,scope:'all',stack:12},
+    {key:'v80',name:'三启 +4',note:'Lv.80 / 3 启 +4 / 灵塑满 / 命轮满叠',lv:80,en:3,po:10,sk:6,pot:4,scope:'all',stack:12},
+    {key:'v85',name:'三启 +8',note:'Lv.85（+8 起上限 85）/ 3 启 +8 / 灵塑满 / 命轮满叠',lv:85,en:3,po:10,sk:6,pot:8,scope:'all',stack:12},
+    {key:'full',name:'满配',note:'Lv.90 / 3 启 +12（只有 +12 才能 90 级）/ 灵塑满 / 命轮满叠',lv:90,en:3,po:10,sk:6,pot:12,scope:'all',stack:12},
+    {key:'w3',name:'命轮全三叠',note:'角色按满配算，所有命轮只到三叠',lv:90,en:3,po:10,sk:6,pot:12,scope:'all',stack:3},
+    {key:'wperm',name:'常驻全满叠',note:'只收录常驻命轮，且全部满叠',lv:90,en:3,po:10,sk:6,pot:12,scope:'permanent',stack:12},
+    {key:'wlim3',name:'限定三叠',note:'只收录限定命轮，且都只到三叠',lv:90,en:3,po:10,sk:6,pot:12,scope:'limited',stack:3}
   ];
   function demoSpecOf(p){const {key,name,note,...spec}=p;return spec}
   function applyDemo(spec){
@@ -1350,7 +1353,7 @@
         <label class="boxField">启灵<select id="boxDemoEn">${[0,1,2,3].map(v=>opt(v,ENLIGHT_TEXT(v),def.en)).join('')}</select></label>
         <label class="boxField">灵塑<select id="boxDemoPo">${[[10,'全满（10）'],[7,'全 7'],[5,'全 5'],[0,'全 0']].map(([v,l])=>opt(v,l,def.po)).join('')}</select></label>
         <label class="boxField">技能<select id="boxDemoSk">${[[6,'全满（6）'],[4,'全 4'],[1,'全 1'],[0,'全 0']].map(([v,l])=>opt(v,l,def.sk)).join('')}</select></label>
-        <label class="boxField" title="人格深化那个 +N，+4 起解锁超限爆发">深化<select id="boxDemoPot">${[[15,'+15'],[12,'+12'],[8,'+8'],[4,'+4（超限）'],[0,'+0']].map(([v,l])=>opt(v,l,def.pot)).join('')}</select></label>
+        <label class="boxField" title="三启之后的 +N。等级上限：+0~+7 为 80，+8~+11 为 85，+12 才能 90">启灵 +N<select id="boxDemoPot">${[[12,'+12（可到 90 级）'],[8,'+8（上限 85）'],[4,'+4'],[0,'+0（上限 80）']].map(([v,l])=>opt(v,l,def.pot)).join('')}</select></label>
         <label class="boxField">命轮范围<select id="boxDemoScope">${Object.entries(WHEEL_SCOPES).map(([k,v])=>opt(k,v.label,def.scope)).join('')}</select></label>
         <label class="boxField">命轮叠位<select id="boxDemoStack">${[[12,'满叠（12）'],[9,'9'],[6,'6'],[3,'三叠（3）'],[1,'1'],[-1,'不放命轮']].map(([v,l])=>opt(v,l,def.stack)).join('')}</select></label>
       </div>
@@ -1493,7 +1496,7 @@
           <select data-row-char="${i}">${opts.map(c=>`<option value="${c.id}"${c.id===r.id?' selected':''}>${esc(c.name)}${c.ingameId?' · '+esc(c.ingameId):''}</option>`).join('')}${hit&&!opts.some(o=>o.id===r.id)?`<option value="${r.id}" selected>${esc(hit.name)}</option>`:''}</select>
           <label class="boxField" style="font-size:9px">等级<input type="number" min="1" max="90" value="${r.lv||''}" data-row-lv="${i}" style="width:100%"></label>
           <label class="boxField" style="font-size:9px"${r.enLow?' title="亮菱形没数准（对比度被压平），请核对这一格"':''}>启灵${r.enLow?'?':''}<select data-row-en="${i}">${Array.from({length:MAXEN+1},(_,k)=>`<option value="${k}"${k===(r.en||0)?' selected':''}>${ENLIGHT_TEXT(k)}</option>`).join('')}</select></label>
-          <label class="boxField" style="font-size:9px" title="第 4 槽的 +N（人格深化），+4 起解锁超限爆发">深化<input type="number" min="0" max="${MAXPOT}" value="${r.plus??''}" placeholder="—" data-row-pot="${i}" style="width:100%"></label>
+          <label class="boxField" style="font-size:9px" title="三启之后的 +N（启灵条后面的数字，0~12）">启灵+N<input type="number" min="0" max="${MAXPOT}" value="${r.plus??''}" placeholder="—" data-row-pot="${i}" style="width:100%"></label>
           <span class="boxScore ${r.score>0.62?'ok':r.score>0.5?'warn':'bad'}">${pct(r.score)}</span>
         </div>`;
       }).join('')+
@@ -1537,7 +1540,7 @@
       }else{
         if(!r.id||!charsById.has(r.id))continue;
         const cur=boxData.chars[r.id];
-        // 第 4 槽那个 +N 顺手存成「深化」；没读出来（null）就不改动原来的值
+        // 启灵条后面那个 +N 存成「启灵 +N」；没读出来（null）就不改动原来的值
         const potPatch=r.plus==null?{}:{pot:clamp(r.plus,0,MAXPOT)};
         if(!cur){boxData.chars[r.id]={lv:r.lv||MAXLV,en:r.en??3,po:MAXPO,sk:MAXSK,pot:r.plus==null?DEFAULT_POT:potPatch.pot};n++}
         else{boxData.chars[r.id]={...cur,lv:r.lv||cur.lv,en:r.en??cur.en,...potPatch};n++}
