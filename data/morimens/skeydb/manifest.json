@@ -2,15 +2,15 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "64479ca2bf29daec7c7bb75e208532a292f4befd",
-    "syncedAt": "2026-11-15T11:14:44.353Z",
+    "commit": "d25d9826a449cb5b930c7eb9cb6bfad9df3945ee",
+    "syncedAt": "2026-11-16T11:45:26.550Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "counts": {
     "awakeners": 62,
     "portraits": 62,
     "cards": 62,
-    "publicV3Records": 2046
+    "publicV3Records": 2048
   },
   "scopes": {
     "awakeners": {
@@ -23,7 +23,7 @@
       "kind": "wheel",
       "catalog": "catalogs/wheels.json",
       "recordPattern": "records/wheels/{id}.json",
-      "count": 149
+      "count": 150
     },
     "relics": {
       "kind": "relic",
@@ -59,7 +59,7 @@
       "kind": "derivedSkill",
       "catalog": "catalogs/derived-skills.json",
       "recordPattern": "records/derived-skills/{id}.json",
-      "count": 217
+      "count": 218
     },
     "talents": {
       "kind": "talent",
