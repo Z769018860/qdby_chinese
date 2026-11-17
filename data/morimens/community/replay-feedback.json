@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-12T08:47:51Z",
-  "recordCount": 5,
+  "updatedAt": "2026-11-16T08:31:56Z",
+  "recordCount": 6,
   "summary": {
-    "replays": 5,
-    "good": 3,
+    "replays": 6,
+    "good": 4,
     "bad": 2,
     "problemOpen": 0,
     "problemResolved": 2
@@ -34,6 +34,19 @@
     }
   ],
   "records": [
+    {
+      "commentId": "131",
+      "submittedAt": "2026-11-13T08:51:34Z",
+      "replayId": "7227bb67-0a8d-3a4b-84f0-7aaf9d4da4d7",
+      "kind": "good",
+      "note": "",
+      "battleTid": 88399,
+      "stageId": 153520,
+      "player": "别梦依兮",
+      "lang": "zh",
+      "time": "2026-11-13T08:51:33.313Z",
+      "page": "/morimens-tools.html"
+    },
     {
       "commentId": "123",
       "submittedAt": "2026-11-08T15:08:33Z",
