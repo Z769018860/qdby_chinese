@@ -34,6 +34,7 @@ REPO = os.path.normpath(os.path.join(BASE, '..', '..'))
 WORK = os.path.normpath(os.path.join(REPO, '..'))
 sys.path.insert(0, BASE)
 import browser_cookies as bc  # noqa: E402
+import xunlei as XL  # noqa: E402  迅雷云盘（refresh_token 换发 + captcha 签名）
 
 LINKS = os.path.join(REPO, 'data', 'netdisk-links.json')
 INDEX = os.path.join(WORK, 'cloud-index.json')
@@ -329,6 +330,10 @@ def cmd_index():
     print('百度会话', 'OK' if bs else '不可用')
     if bs:
         idx['baidu'] = baidu_index(bs)
+    xs = XL.session()
+    print('迅雷会话', 'OK' if xs else '不可用')
+    if xs:
+        idx['xunlei'] = XL.build_index(xs)
     json.dump(idx, open(INDEX, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     for k, v in idx.items():
         print(f'{k}: {len(v)} 项 -> {INDEX}')
@@ -352,7 +357,7 @@ def cmd_plan():
             it, sc = pick(name, idx[plat], plat)
             if not it or sc < 0.72:
                 continue
-            key = (plat, it.get('fid') or it.get('fs_id'))
+            key = (plat, it.get('fid') or it.get('fs_id') or it.get('id'))
             if key in claims and claims[key][1] >= sc:
                 continue
             claims[key] = (name, sc)
@@ -368,7 +373,7 @@ def cmd_plan():
                 it, sc = pick(name, idx[plat2], plat2)
                 if not it or sc < 0.72:
                     continue
-                key = (plat2, it.get('fid') or it.get('fs_id'))
+                key = (plat2, it.get('fid') or it.get('fs_id') or it.get('id'))
                 if key in claims and claims[key][1] >= sc:
                     continue
                 claims[key] = (name, sc)
@@ -458,6 +463,10 @@ def verify(plat, url, pwd, sess=None):
                              params={'shorturl': sid, 'root': '1'},
                              headers={'Referer': 'https://pan.baidu.com/'}, timeout=25).json()
             return d.get('errno') in (0, -9), f"errno={d.get('errno')}"
+        if plat == 'xunlei' and sess is not None:
+            sid = url.rstrip('/').split('/')[-1].split('?')[0]
+            st, txt = XL.get_share(sess, sid, pwd or '')
+            return st == 'OK', f'share_status={st} {txt}'[:120]
     except Exception as e:
         return None, str(e)[:60]
     return None, '未支持'
@@ -466,6 +475,7 @@ def verify(plat, url, pwd, sess=None):
 def cmd_run(only='', dry=False, exact=False):
     plan = json.load(open(PLAN, encoding='utf-8'))
     qs, bs = quark_session(), baidu_session()
+    xs = XL.session()
     result = {'meta': {'generated_at': time.strftime('%Y-%m-%d %H:%M'),
                        'note': '重新分享得到的补档链接；平台的登录态来自本机客户端 cookie'},
               'games': {}}
@@ -499,18 +509,28 @@ def cmd_run(only='', dry=False, exact=False):
             if plat == 'baidu' and not bs:
                 print(f'  跳过 {name} [baidu]：无登录态')
                 continue
+            if plat == 'xunlei' and not xs:
+                print(f'  跳过 {name} [xunlei]：无登录态（跑 xunlei_login.py 扫码）')
+                continue
             if dry:
                 print(f'  [dry] {name} [{plat}] -> {v["path"]}')
                 continue
             if plat == 'quark':
                 got, err = quark_share(qs, v['id'], name)
+            elif plat == 'xunlei':
+                # XL.create_share 返回 dict（失败会抛异常），这里统一成 (got, err)
+                try:
+                    got, err = XL.create_share(xs, [v['id']], name), ''
+                except Exception as e:
+                    got, err = None, str(e)[:160]
             else:
                 got, err = baidu_share(bs, v['id'], name)
             if not got:
                 print(f'  ✗ {name} [{plat}] {err}')
                 result['games'].setdefault(name, {}).setdefault('links', {})[plat] = {'error': err}
                 continue
-            ok, vmsg = verify(plat, got['url'], got['pwd'], qs if plat == 'quark' else None)
+            ok, vmsg = verify(plat, got['url'], got['pwd'],
+                              qs if plat == 'quark' else (xs if plat == 'xunlei' else None))
             got.update({'platform': plat, 'verified': ok, 'check': vmsg,
                         'path': v['path'], 'created_at': time.strftime('%Y-%m-%d %H:%M'),
                         'bvid': row['bvid'], 'bili_url': row['bili_url']})

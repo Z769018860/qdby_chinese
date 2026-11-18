@@ -343,6 +343,38 @@ def auto_reshare(now, report_path=None):
     return {}
 
 
+def xunlei_backfill(now):
+    """给「压根没有迅雷链接」的作品补一条：云端有同名文件就建分享
+
+    和 auto_reshare 互补——那边补「失效」，这边补「缺失」。
+    迅雷登录态缺失时安静跳过，不影响巡检其余步骤。"""
+    script = os.path.join(REPO, 'scripts', 'netdisk', 'xunlei_backfill.py')
+    if not os.path.exists(script):
+        return {}
+    try:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        import xunlei as XL
+        if XL.session() is None:
+            print('  迅雷未登录，跳过「补缺失的迅雷链接」'
+                  '（扫码：python scripts/netdisk/xunlei_login.py）')
+            return {}
+    except Exception as e:
+        print('  ! 迅雷模块不可用：%s' % str(e)[:120])
+        return {}
+    try:
+        r = subprocess.run([sys.executable, script], cwd=REPO, timeout=1800,
+                           capture_output=True, text=True, encoding='utf-8', errors='replace')
+        for line in (r.stdout or '').strip().splitlines():
+            print('  ' + line)
+        if r.returncode != 0 and r.stderr:
+            print('  ! ' + r.stderr.strip().splitlines()[-1][:160])
+    except subprocess.TimeoutExpired:
+        print('  ! 迅雷补链接超时（30 分钟），跳过')
+        return {}
+    return {'ran': True}
+
+
 def git_push(now, sync_main=False):
     def run(*a):
         return subprocess.run(['git', *a], cwd=REPO, capture_output=True, text=True)
@@ -484,10 +516,13 @@ def main():
     # 先自己试着补：云端有同名资源就重新建分享，建好再发评论。
     # 补完重算一次全灭——能救回来的就不发信了。
     report = {}
+    xb = {}
     if not args.no_reshare:
         print('-- 自动补档 --')
         report = auto_reshare(now)
-        if report.get('reshared'):
+        print('-- 补缺失的迅雷链接 --')
+        xb = xunlei_backfill(now)
+        if report.get('reshared') or xb.get('ran'):
             rs = json.load(open(RESHARE, encoding='utf-8')) if os.path.exists(RESHARE) else rs
             extras = reshare_links(rs)
             by_name_rs = {}
