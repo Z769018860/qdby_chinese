@@ -514,6 +514,8 @@ def main():
     ap.add_argument('--force', action='store_true', help='已有迅雷链接也重做')
     ap.add_argument('--probe', action='store_true', help='只读遍历分享，列出候选文件名')
     ap.add_argument('--harvest', action='store_true', help='把所有分享的文件汇总成文件池')
+    ap.add_argument('--minutes', type=int, default=0,
+                    help='本轮最多跑多少分钟（0=不限）。每日巡检用它兜住时长。')
     args = ap.parse_args()
 
     if args.probe:
@@ -533,6 +535,7 @@ def main():
     local_map = (load(LOCALFILES, {}) or {}).get('map') or {}
 
     todo = []
+    n_no_source = 0
     for g in led.get('games') or []:
         name = g.get('name') or ''
         if not name or (args.only and args.only not in name):
@@ -546,6 +549,7 @@ def main():
                 todo.append((name, {'platform': 'pool', 'url': '', 'pwd': ''}, []))
             else:
                 st.setdefault('games', {}).setdefault(name, {})['state'] = 'no_alive_source'
+                n_no_source += 1
             continue
         # 百度优先：提取码校验 + 转存 + 直连下载这条链已经实测稳定
         order = {'baidu': 0, 'quark': 1, '123pan': 2, 'lanzou': 3, 'ctfile': 4, 'weiyun': 5}
@@ -576,7 +580,17 @@ def main():
             % (len(pool.get('shares') or {}), len(pool.get('files') or [])))
 
     ok = 0
+    stat = {'done': 0, 'failed': 0, 'unsupported': 0, 'need_pick': 0,
+            'no_source': n_no_source, 'timeout': 0}
+    t_start = time.time()
+    processed = 0
     for name, src, allsrc in todo:
+        if args.minutes and (time.time() - t_start) / 60.0 >= args.minutes:
+            stat['timeout'] = len(todo) - processed
+            log('\n到时间上限（%d 分钟），本轮剩余 %d 个作品留到下次'
+                % (args.minutes, stat['timeout']))
+            break
+        processed += 1
         log('\n=== %s（源 %s）' % (name, src.get('platform')))
         row = st.setdefault('games', {}).setdefault(name, {})
         row.update({'tried_at': time.strftime('%Y-%m-%d %H:%M'),
@@ -586,6 +600,7 @@ def main():
             row['note'] = ('当前只实现了百度源的取文件（该链接在 %s）'
                            '；也可在 data/netdisk-localfiles.json 登记本机成品包' % src.get('platform'))
             save_state(st)
+            stat['unsupported'] += 1
             log('  ! 暂不支持从 %s 取文件，跳过' % src.get('platform'))
             continue
         try:
@@ -600,12 +615,14 @@ def main():
             row['note'] = str(e)[:200]
             row['cands'] = e.cands
             save_state(st)
+            stat['need_pick'] += 1
             log('  ? 需要挑文件：%s' % row['note'])
             continue
         except Exception as e:
             row['state'] = 'fetch_failed'
             row['note'] = '%s: %s' % (type(e).__name__, str(e)[:180])
             save_state(st)
+            stat['failed'] += 1
             log('  ✗ 取文件失败：%s' % row['note'])
             continue
 
@@ -626,6 +643,7 @@ def main():
             row['note'] = '%s: %s' % (type(e).__name__, str(e)[:180])
             row['uploaded'] = uploaded
             save_state(st)
+            stat['failed'] += 1
             log('  ✗ 上传失败：%s' % row['note'])
             continue
 
@@ -636,6 +654,7 @@ def main():
             row['state'] = 'share_failed'
             row['note'] = '%s: %s' % (type(e).__name__, str(e)[:180])
             save_state(st)
+            stat['failed'] += 1
             log('  ✗ 建分享失败：%s' % row['note'])
             continue
 
@@ -663,6 +682,9 @@ def main():
             json.dump(rs, open(OUT, 'w', encoding='utf-8', newline='\n'),
                       ensure_ascii=False, indent=1)
             ok += 1
+            stat['done'] += 1
+        else:
+            stat['failed'] += 1
         log('  %s %s pwd=%s %s' % ('✓' if alive else '✗', url, got.get('pwd'), stt))
 
         if not args.keep_local:
@@ -675,6 +697,10 @@ def main():
 
     save_state(st)
     log('\n完成：补上 %d 条迅雷链接' % ok)
+    # 给 daily_check.py 解析用的一行：别改格式，正则在里面
+    log('汇总：补上 %d ／ 失败 %d ／ 源不支持 %d ／ 待挑 %d ／ 无源 %d ／ 超时跳过 %d'
+        % (stat['done'], stat['failed'], stat['unsupported'], stat['need_pick'],
+           stat['no_source'], stat['timeout']))
     return 0
 
 

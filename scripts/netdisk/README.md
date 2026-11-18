@@ -100,6 +100,29 @@ python scripts/netdisk/xunlei_fetchfill.py
 6. `POST /drive/v1/share` 建分享，`GET /drive/v1/share` 用 `share_status=OK` 判活；
 7. 写 `data/netdisk-reshare.json` 的 `links.xunlei`，核验失败的绝不落台账。
 
+### 已经挂进每日巡检
+
+`daily_check.py` 每天 0 点自动跑上面两条迅雷补档，顺序是「云端已有 → 秒级建分享」在前、
+「从原网盘取回 → 上传 → 建分享」在后：
+
+```
+python scripts/netdisk/daily_check.py --push --sync-main
+  ├─ 自动补档      auto_reshare.py
+  ├─ 迅雷补链接    xunlei_backfill.py      （云端已有同名文件）
+  └─ 迅雷取回补档  xunlei_fetchfill.py     （下载 → 上传 → 分享）
+```
+
+- 取回补档默认限时 **90 分钟**（`--fetch-minutes`）、不限制条数（`--fetch-limit`）；
+  跑到时间上限就停，脚本把自己跳过的作品留给下一轮（已完成的不会重做，判定靠
+  `alive_xunlei()`：台账里有非 dead 的迅雷链接、或 `netdisk-reshare.json` 里有核验通过的，都算完成）。
+- 结果写在 `work/xunlei-fetchfill.json`（每部作品的 state / note / 上传条目 / 链接），
+  **不进 git**；成功的链接落 `data/netdisk-reshare.json`，跟巡检一起 commit。
+- 巡检末尾会打印一行给定时任务解析：
+  `迅雷取回补档：补上 X ／ 失败 Y ／ 源不支持 Z ／ 待挑 W ／ 无源 V ／ 未跑完 U`。
+- 告警邮件正文里也会带上这一轮的补档结果（`work/netdisk-alert.json` 的 `backfill` 字段）。
+
+相关开关：`--no-fetchfill` 只补云端已有的、不下载不上传；`--no-reshare` 整个补档环节都跳过。
+
 ### 两个容易踩的坑
 
 - **UP 主的链接经常互相指错**（A 作品的链接指向 B 作品的分享），
@@ -143,10 +166,22 @@ python scripts/netdisk/apply_videofix.py         # 应用
 
 | 平台 | 状况 |
 | --- | --- |
-| 微云 | 「普通下载」弹微信扫码，必须登录；无 cookie 无法自动化 |
+| 微云 | 分享内容匿名可读，但**取下载直链必须登录**（匿名返 `ret=-3000 无登录态`）。`weiyun.py` 已把接口实现好了，只是登录态要从浏览器 Cookies 库读，而浏览器开着时那个库被独占锁住——关掉浏览器后 `python scripts/netdisk/weiyun.py cookie` 能读 |
 | 123 云盘 | 「浏览器下载」弹付费二维码；「保存至云盘」要登录 |
 | 城通 | 免费通道约 29 KB/s，100 MB 要 1 小时，且按钮是 SPA，选择器不稳 |
 | 夸克 | `/file/download` 对单文件 >50 MB 直接返 23018，文件在自己网盘里也一样 |
 | 蓝奏 | 有 acw_sc__v2 JS 挑战，但小补丁通常已在文件池里，用别名匹配即可 |
 
 360 / Edge 正在运行时，`Cookies`（SQLite）被主进程独占，复制 profile 也读不到登录态。
+
+## 微云分享下载（weiyun.py）
+
+```bash
+python scripts/netdisk/weiyun.py view 3sblmV9F            # 匿名看分享里有什么
+python scripts/netdisk/weiyun.py get  3sblmV9F --out xx.zip   # 下载（要登录态）
+```
+
+- 分享页把 `window.syncData` 直接 SSR 进 HTML，不带密码的分享不用请求接口就能拿到 `file_list`；
+  带密码的走 `weiyunShareNoLogin/WeiyunShareView`（传 `share_pwd`）。
+- 下载走 `weiyunShare/WeiyunShareBatchDownload`（cmd 12024），`g_tk` **必须是 cookie 里的 `wyctoken`**，
+  填 5381 会直接 403；拿到的 `https_download_url` 还要带响应给的 `FTN5K` cookie 才能下。

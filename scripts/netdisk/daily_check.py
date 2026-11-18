@@ -9,6 +9,11 @@
      否则一个作品的原链全死了、补档却活着，会误报成「全灭」。
   3. 自动补档（scripts/netdisk/auto_reshare.py）：有失效链接的作品，
      去云端找同名资源重新建分享 → 核验 → 把新链接发到视频置顶评论下。
+     紧接着两道迅雷补档：
+       a) xunlei_backfill.py  迅雷云端**已有**同名文件 → 直接建分享（秒级）；
+       b) xunlei_fetchfill.py 云端没有 → 从站上仍存活的链接把文件下回来
+          → 传进迅雷 `/汉化补丁补档` → 建分享（慢，用 --fetch-minutes 限时，
+          没跑完下一轮自动接着跑）。
      云端真没有的（全灭且补不回来）才留到最后告警。
   4. 把结果写回台账，并重新生成站点用的 netdisk-status.json /
      netdisk-links.html / netdisk-autofill.json —— 也就是「更新到网站上」。
@@ -29,6 +34,7 @@
   python scripts/netdisk/daily_check.py --push         # 巡检完顺手 commit & push
   python scripts/netdisk/daily_check.py --push --sync-main  # 再顺手把 main 快进到同一提交
   python scripts/netdisk/daily_check.py --no-reshare  # 只巡检，不做自动补档
+  python scripts/netdisk/daily_check.py --no-fetchfill  # 补档但不从原网盘下载/上传
   python scripts/netdisk/daily_check.py --test-mail    # 只测发信配置
 """
 from __future__ import annotations
@@ -228,7 +234,7 @@ def mail_cfg():
     return cfg
 
 
-def compose(dead, now):
+def compose(dead, now, backfill=None):
     day = now[:10]
     subj = '【青灯不弈汉化】%d 个作品的网盘已全部失效（%s）' % (len(dead), day)
     lines = ['巡检时间：%s' % now, '',
@@ -244,6 +250,21 @@ def compose(dead, now):
             lines.append('     - %s %s  %s' % (x['platform'], x['url'], x['why']))
         if d.get('auto'):
             lines.append('   自动补档：%s' % d['auto'])
+        lines.append('')
+    if backfill:
+        lines += ['本轮补档：']
+        rs_ = backfill.get('reshare') or {}
+        if rs_.get('reshared'):
+            lines.append('  · 重建分享：%s 条' % rs_['reshared'])
+        xb_ = backfill.get('xunlei_cloud') or {}
+        if xb_.get('ran'):
+            lines.append('  · 迅雷云端已有文件、直接建分享：新建 %s 条（有效 %s）／云端没货 %s 个'
+                         % (xb_.get('created', '?'), xb_.get('alive', '?'), xb_.get('nomatch', '?')))
+        xf_ = backfill.get('xunlei_fetch') or {}
+        if xf_.get('ran'):
+            lines.append('  · 从原网盘取回后传迅雷：补上 %s 条（失败 %s／源不支持 %s／待挑 %s／未跑完 %s）'
+                         % (xf_.get('done', 0), xf_.get('failed', 0), xf_.get('unsupported', 0),
+                            xf_.get('need_pick', 0), xf_.get('timeout', 0)))
         lines.append('')
     lines += ['——',
               '本信件由 scripts/netdisk/daily_check.py 每日 0 点自动发送。',
@@ -372,7 +393,61 @@ def xunlei_backfill(now):
     except subprocess.TimeoutExpired:
         print('  ! 迅雷补链接超时（30 分钟），跳过')
         return {}
-    return {'ran': True}
+    out = r.stdout or ''
+    # 脚本结尾那行：完成：新建 3 条（有效 3），云端没货 12 个
+    m = re.search(r'完成：新建 (\d+) 条（有效 (\d+)），云端没货 (\d+) 个', out)
+    res = {'ran': True}
+    if m:
+        res.update({'created': int(m.group(1)), 'alive': int(m.group(2)),
+                    'nomatch': int(m.group(3))})
+        print('  迅雷云端补链接：新建 %d 条（有效 %d）／云端没货 %d 个'
+              % (res['created'], res['alive'], res['nomatch']))
+    return res
+
+
+def xunlei_fetchfill(now, minutes=90, limit=0):
+    """站上还有存活链接、但迅雷云端没有文件的：下载回来 → 传迅雷 → 建分享
+
+    和 xunlei_backfill 的分工：那边直接用迅雷云端**已有**的文件建分享（秒级），
+    这边兜不住的才去原网盘把文件拖回来（可能要下几百 MB）。所以放在最后跑，
+    并且用 --minutes / --limit 兜住时长，没跑完的下一轮接着来（脚本自己会跳过已完成的）。"""
+    script = os.path.join(REPO, 'scripts', 'netdisk', 'xunlei_fetchfill.py')
+    if not os.path.exists(script):
+        return {}
+    try:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        import xunlei as XL
+        if XL.session() is None:
+            print('  迅雷未登录，跳过「从原网盘取回再上传」'
+                  '（扫码：python scripts/netdisk/xunlei_weblogin.py）')
+            return {}
+    except Exception as e:
+        print('  ! 迅雷模块不可用：%s' % str(e)[:120])
+        return {}
+    cmd = [sys.executable, script, '--minutes', str(minutes)]
+    if limit:
+        cmd += ['--limit', str(limit)]
+    try:
+        r = subprocess.run(cmd, cwd=REPO, timeout=max(minutes * 60 + 600, 1800),
+                           capture_output=True, text=True, encoding='utf-8', errors='replace')
+        for line in (r.stdout or '').strip().splitlines():
+            print('  ' + line)
+        if r.returncode != 0 and r.stderr:
+            print('  ! ' + r.stderr.strip().splitlines()[-1][:160])
+    except subprocess.TimeoutExpired:
+        print('  ! 取回补档超时，跳过（下一轮会接着跑）')
+        return {}
+    out = r.stdout or ''
+    stat = {}
+    m = re.search(r'汇总：补上 (\d+) ／ 失败 (\d+) ／ 源不支持 (\d+) ／ 待挑 (\d+) ／ 无源 (\d+) ／ 超时跳过 (\d+)', out)
+    if m:
+        stat = dict(zip(('done', 'failed', 'unsupported', 'need_pick', 'no_source', 'timeout'),
+                        (int(x) for x in m.groups())))
+        print('  迅雷取回补档：补上 %d ／ 失败 %d ／ 源不支持 %d ／ 待挑 %d ／ 无源 %d ／ 未跑完 %d'
+              % (stat['done'], stat['failed'], stat['unsupported'], stat['need_pick'],
+                 stat['no_source'], stat['timeout']))
+    return {'ran': True, **stat}
 
 
 def git_push(now, sync_main=False):
@@ -439,6 +514,12 @@ def main():
     ap.add_argument('--full-content', action='store_true',
                     help='内容同步走全量（微博 400 页、投稿 80 页），首次或补历史时用')
     ap.add_argument('--no-reshare', action='store_true', help='跳过失效资源的自动补档')
+    ap.add_argument('--no-fetchfill', action='store_true',
+                    help='跳过「从原网盘取回文件再传迅雷」这一步（只保留云端已有的补链接）')
+    ap.add_argument('--fetch-minutes', type=int, default=90,
+                    help='取回补档本轮最多跑多少分钟（默认 90，没跑完下一轮接着来）')
+    ap.add_argument('--fetch-limit', type=int, default=0,
+                    help='取回补档本轮最多处理几个作品（0=不限）')
     ap.add_argument('--recheck-dead', action='store_true',
                     help='已判失效的链接也重新核验（默认沿用旧判定，不反复请求）')
     ap.add_argument('--sync-main', action='store_true',
@@ -517,12 +598,16 @@ def main():
     # 补完重算一次全灭——能救回来的就不发信了。
     report = {}
     xb = {}
+    xf = {}
     if not args.no_reshare:
         print('-- 自动补档 --')
         report = auto_reshare(now)
         print('-- 补缺失的迅雷链接 --')
         xb = xunlei_backfill(now)
-        if report.get('reshared') or xb.get('ran'):
+        if not args.no_fetchfill:
+            print('-- 迅雷取回补档（原网盘下载 → 传迅雷 → 建分享）--')
+            xf = xunlei_fetchfill(now, minutes=args.fetch_minutes, limit=args.fetch_limit)
+        if report.get('reshared') or xb.get('ran') or xf.get('ran'):
             rs = json.load(open(RESHARE, encoding='utf-8')) if os.path.exists(RESHARE) else rs
             extras = reshare_links(rs)
             by_name_rs = {}
@@ -560,9 +645,10 @@ def main():
         print('-- 更新站点数据 --')
         refresh_site(games, now)
 
-    subj, body = compose(dead, now) if dead else ('', '')
+    backfill = {'reshare': report, 'xunlei_cloud': xb, 'xunlei_fetch': xf}
+    subj, body = compose(dead, now, backfill) if dead else ('', '')
     alert = {'at': now, 'count': len(dead), 'games': dead, 'subject': subj, 'body': body,
-             'summary': cnt, 'mailed': False, 'mail_error': ''}
+             'summary': cnt, 'backfill': backfill, 'mailed': False, 'mail_error': ''}
     if dead and not args.no_mail:
         cfg = mail_cfg()
         ok, msg = send_mail(subj, body, cfg)
