@@ -114,3 +114,39 @@ python scripts/netdisk/xunlei_fetchfill.py
 这几种来源的作品会记成 `unsupported_source`；`--harvest` 若在别人的合集分享里
 摸到了同名文件，仍可走文件池补齐。
 
+
+## 贴错行的链接怎么修
+
+`data.json` 的「汉化发布地址」是手工维护的，UP 主同期发的几个视频很容易串行：
+条目名是 A，bvid 却指向 B 的视频，desc 里那串网盘链接自然也是 B 的补丁。
+
+```bash
+python scripts/netdisk/apply_videofix.py --dry   # 先看会改什么
+python scripts/netdisk/apply_videofix.py         # 应用
+```
+
+- `data/netdisk-videofix.json`：整条视频贴错行（bvid/标题/简介/置顶一起换）
+- `data/netdisk-linkfix.json`：只是某一行链接指到别的作品（标 dead，站点不再展示为可用）
+- 两处都会同时改 `data.json` 与 `data/netdisk-links.json`，所以 `refresh.py` 重跑后依然是修好的。
+- `autofill.py` 每轮会重放一遍 linkfix，防止 refresh 重建 links 时把标记冲掉。
+
+## 本机已有成品包时
+
+```json
+// data/netdisk-localfiles.json
+{"map": {"HIKEBACK": "E:/renpy-8.0.3-sdk/HIKEBACK/HIKEBACK汉化完整版.zip"}}
+```
+
+`xunlei_fetchfill.py` 看到 `local` 源就直接上传，不再走网盘下载。
+
+## 取不到文件的几个平台（2026-11）
+
+| 平台 | 状况 |
+| --- | --- |
+| 微云 | 「普通下载」弹微信扫码，必须登录；无 cookie 无法自动化 |
+| 123 云盘 | 「浏览器下载」弹付费二维码；「保存至云盘」要登录 |
+| 城通 | 免费通道约 29 KB/s，100 MB 要 1 小时，且按钮是 SPA，选择器不稳 |
+| 夸克 | `/file/download` 对单文件 >50 MB 直接返 23018，文件在自己网盘里也一样 |
+| 蓝奏 | 有 acw_sc__v2 JS 挑战，但小补丁通常已在文件池里，用别名匹配即可 |
+
+360 / Edge 正在运行时，`Cookies`（SQLite）被主进程独占，复制 profile 也读不到登录态。
