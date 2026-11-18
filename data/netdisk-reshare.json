@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated_at": "2026-11-19 00:06",
+  "generated_at": "2026-11-19 05:48",
   "note": "重新分享得到的补档链接；平台的登录态来自本机客户端 cookie"
  },
  "games": {
@@ -18,7 +18,7 @@
      "bvid": "BV12uxqzwEY9",
      "bili_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 115339853563059,
@@ -54,7 +54,7 @@
       "at": "2026-10-24 23:22"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip"
     }
    }
@@ -73,7 +73,7 @@
      "bvid": "BV1bZUgBPEGz",
      "bili_url": "https://www.bilibili.com/video/BV1bZUgBPEGz",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜COLOR_COLLAR汉化补丁.zip",
      "comment": {
       "aid": 115601578133429,
@@ -83,24 +83,40 @@
       "pinned": "UP主置顶",
       "at": "2026-10-30 00:06"
      }
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kav9WfOOat5190yZobDlZA1?pwd=hmsd",
+     "pwd": "hmsd",
+     "platform": "xunlei",
+     "share_id": "VP6kav9WfOOat5190yZobDlZA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/COLOR_COLLAR汉化补丁.zip",
+     "created_at": "2026-11-19 05:41",
+     "checked": "ok",
+     "checked_at": "2026-11-19 05:42",
+     "note": "迅雷云盘补档（首次补链接）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜COLOR_COLLAR汉化补丁.zip 52.8MB 2025-12-03 15:57 "
     }
-   }
+   },
+   "bvid": "BV1bZUgBPEGz",
+   "bili_url": "https://www.bilibili.com/video/BV1bZUgBPEGz"
   },
   "不要抛下我!!": {
    "links": {
     "baidu": {
-     "url": "https://pan.baidu.com/s/1BeI_1AG8G1kQ7_CxBDd-4g",
+     "url": "https://pan.baidu.com/s/1WNe_m8aotyTPVN5NndgrkQ",
      "pwd": "qdby",
-     "share_id": "68559270875",
+     "share_id": "35064799249",
      "platform": "baidu",
      "verified": true,
      "check": "errno=-9",
      "path": "/不要抛下我",
-     "created_at": "2026-11-19 00:05",
+     "created_at": "2026-11-19 05:47",
      "bvid": "BV1u96wBxEak",
      "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
      "checked": "dead",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "来晚啦，该分享已被取消"
     },
     "quark": {
@@ -116,15 +132,15 @@
      "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
      "comment": {
       "aid": 115978260186304,
-      "rpid": "324417752240",
+      "rpid": "324430658880",
       "root": 290103459760,
       "where": "reply",
       "pinned": "UP主置顶",
       "short": true,
-      "at": "2026-11-19 00:06"
+      "at": "2026-11-19 05:48"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜不要抛下我 汉化补丁.zip"
     }
    }
@@ -152,7 +168,7 @@
       "at": "2026-10-24 23:23"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效（需提取码）"
     }
    }
@@ -180,7 +196,7 @@
       "at": "2026-10-24 23:23"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜meetherthere汉化补丁.zip"
     }
    }
@@ -199,7 +215,7 @@
      "bvid": "BV1fz4y1K7zW",
      "bili_url": "https://www.bilibili.com/video/BV1fz4y1K7zW",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜灰姑娘现象 机翻汉化补丁.zip",
      "comment": {
       "aid": 575548092,
@@ -209,8 +225,24 @@
       "pinned": "UP主置顶",
       "at": "2026-11-15 00:07"
      }
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kavXLNvUoOJTZ2r0C8CIoA1?pwd=agn3",
+     "pwd": "agn3",
+     "platform": "xunlei",
+     "share_id": "VP6kavXLNvUoOJTZ2r0C8CIoA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/灰姑娘现象FD机翻润色补丁.zip",
+     "created_at": "2026-11-19 05:41",
+     "checked": "ok",
+     "checked_at": "2026-11-19 05:42",
+     "note": "迅雷云盘补档（首次补链接）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜灰姑娘现象FD机翻润色补丁.zip 704MB 2026-03-18 07:04 "
     }
-   }
+   },
+   "bvid": "BV1fz4y1K7zW",
+   "bili_url": "https://www.bilibili.com/video/BV1fz4y1K7zW"
   },
   "灰姑娘现象FD永远": {
    "links": {
@@ -235,7 +267,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜灰姑娘现象FD机翻润色补丁.zip"
     }
    }
@@ -263,7 +295,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜人类保管库 汉化版.zip"
     }
    }
@@ -291,7 +323,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip"
     }
    }
@@ -319,7 +351,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜并非兄妹的热病 汉化补丁.zip"
     }
    }
@@ -345,7 +377,7 @@
       "at": "2026-10-28 03:39"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜舌头上的动物园 汉化补丁1.0.zip"
     },
     "baidu": {
@@ -376,7 +408,7 @@
       "at": "2026-10-24 23:25"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜深海的勿忘草 汉化补丁.zip"
     }
    }
@@ -404,7 +436,7 @@
       "at": "2026-10-24 23:25"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜水手服与命中注定之人 汉化补丁.zip"
     }
    }
@@ -423,7 +455,7 @@
      "bvid": "BV1PgShBDEsc",
      "bili_url": "https://www.bilibili.com/video/BV1PgShBDEsc",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效（需提取码）",
      "comment": {
       "aid": 115652094330194,
@@ -454,8 +486,22 @@
       "at": "2026-10-24 23:25"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜惩罚之吻 汉化补丁"
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kawIJGego2rPsLl68Y86PA1?pwd=a5mp",
+     "pwd": "a5mp",
+     "platform": "xunlei",
+     "share_id": "VP6kawIJGego2rPsLl68Y86PA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/惩罚之吻 汉化补丁.zip",
+     "created_at": "2026-11-19 05:41",
+     "checked": "ok",
+     "checked_at": "2026-11-19 05:42",
+     "note": "迅雷云盘补档（首次补链接）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜惩罚之吻 汉化补丁.zip 15.8MB 2025-12-03 15:58 "
     }
    },
    "bvid": "BV1PgShBDEsc",
@@ -475,7 +521,7 @@
      "bvid": "BV1nqpLzXEe9",
      "bili_url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效（需提取码）",
      "comment": {
       "aid": 115194999145805,
@@ -507,7 +553,7 @@
       "at": "2026-10-24 23:26"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜HIKEBACK汉化完整版.zip"
     }
    }
@@ -535,7 +581,7 @@
       "at": "2026-10-24 23:26"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜ciel机翻补丁.zip"
     }
    }
@@ -554,7 +600,7 @@
      "bvid": "BV16C4y1271r",
      "bili_url": "https://www.bilibili.com/video/BV16C4y1271r",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜冬鸦何处去 机翻补丁.zip",
      "comment": {
       "aid": 790890367,
@@ -590,7 +636,7 @@
       "at": "2026-10-24 23:26"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜MAMIYA 机翻润色补丁1.0.zip"
     }
    }
@@ -609,7 +655,7 @@
      "bvid": "BV1j94czJEkt",
      "bili_url": "https://www.bilibili.com/video/BV1j94czJEkt",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜别吃收银员！ 汉化补丁.zip",
      "comment": {
       "aid": 115354332299302,
@@ -639,7 +685,7 @@
      "bvid": "BV174wFzQEQy",
      "bili_url": "https://www.bilibili.com/video/BV174wFzQEQy",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
      "comment": {
       "aid": 116210876287752,
@@ -655,18 +701,18 @@
   "替身谎言~one night liar": {
    "links": {
     "baidu": {
-     "url": "https://pan.baidu.com/s/1BgJYd9lY1b7U1Nr_1znnKA",
+     "url": "https://pan.baidu.com/s/1eDu3NVYC8I0y6cu39oDCHA",
      "pwd": "qdby",
-     "share_id": "61770249182",
+     "share_id": "14333415613",
      "platform": "baidu",
      "verified": true,
      "check": "errno=-9",
      "path": "/替身谎言",
-     "created_at": "2026-11-19 00:06",
+     "created_at": "2026-11-19 05:48",
      "bvid": "BV1ziGw6zEsC",
      "bili_url": "https://www.bilibili.com/video/BV1ziGw6zEsC",
      "checked": "dead",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "来晚啦，该分享已被取消"
     }
    }
@@ -685,7 +731,7 @@
      "bvid": "BV1bEp16TErC",
      "bili_url": "https://www.bilibili.com/video/BV1bEp16TErC",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 117438985276217,
@@ -723,7 +769,7 @@
       "at": "2026-10-25 00:36"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜销魂罪人 机翻润色补丁.zip"
     }
    }
@@ -742,7 +788,7 @@
      "bvid": "BV1S5411v7Hm",
      "bili_url": "https://www.bilibili.com/video/BV1S5411v7Hm",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜爱情寄生虫 汉化完整版.zip",
      "comment": {
       "aid": 453511227,
@@ -769,7 +815,7 @@
      "bvid": null,
      "bili_url": null,
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜与死神的约会 本体完整汉化版.zip",
      "site_direct": true
     }
@@ -807,7 +853,7 @@
       "at": "2026-10-28 03:31"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜LF2汉化补丁.zip"
     }
    }
@@ -826,7 +872,7 @@
      "bvid": "BV1pTE66vEQ8",
      "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 116733520118898,
@@ -867,10 +913,26 @@
       "at": "2026-10-28 03:32"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜关于梦 汉化补丁.zip"
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kavumTy2AzwmL3mgNGzhHA1?pwd=q2zc",
+     "pwd": "q2zc",
+     "platform": "xunlei",
+     "share_id": "VP6kavumTy2AzwmL3mgNGzhHA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/关于梦 汉化补丁.zip",
+     "created_at": "2026-11-19 05:41",
+     "checked": "ok",
+     "checked_at": "2026-11-19 05:42",
+     "note": "迅雷云盘补档（首次补链接）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜关于梦 汉化补丁.zip 47.8MB 2025-12-03 15:57 "
     }
-   }
+   },
+   "bvid": "BV1SuS5BjEJN",
+   "bili_url": "https://www.bilibili.com/video/BV1SuS5BjEJN"
   },
   "暴走族怪谈大会 再归": {
    "links": {
@@ -897,7 +959,7 @@
       "at": "2026-10-28 03:32"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜暴走族夜怪 汉化补丁by青灯不弈.zip"
     }
    }
@@ -928,7 +990,7 @@
       "at": "2026-10-29 00:07"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜梦之门 汉化补丁v1.1by青灯不弈.zip"
     },
     "baidu": {
@@ -943,7 +1005,7 @@
      "bvid": "BV1UW5E6zEfy",
      "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效（需提取码）",
      "comment": {
       "aid": 116549423726986,
@@ -970,7 +1032,7 @@
      "bvid": "BV1LyJi6mEsh",
      "bili_url": "https://www.bilibili.com/video/BV1LyJi6mEsh",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜死刑前的心理咨询 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 117456064547441,
@@ -1020,7 +1082,7 @@
      "bvid": "BV1BsPczfENe",
      "bili_url": "https://www.bilibili.com/video/BV1BsPczfENe",
      "checked": "ok",
-     "checked_at": "2026-11-19 00:01",
+     "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜邻人 汉化补丁.zip",
      "comment": {
       "aid": 116166316003236,
