@@ -277,6 +277,88 @@ def create_share(s, file_ids, title, expiration_days='-1'):
     return {'url': url, 'pwd': pwd, 'share_id': sid}
 
 
+def _oss_put(params, path):
+    """把本地文件 PUT 到迅雷给的阿里云 OSS 临时位（STS 签名，OSS V1）"""
+    import base64
+    import datetime
+    import hmac
+
+    bucket, endpoint = params['bucket'], params['endpoint']
+    key = params['key']
+    ct = 'application/octet-stream'
+    date = datetime.datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')
+    sts = params['security_token']
+    s2s = ('PUT\n\n%s\n%s\nx-oss-security-token:%s\n/%s/%s'
+           % (ct, date, sts, bucket, key))
+    sig = base64.b64encode(
+        hmac.new(params['access_key_secret'].encode('utf-8'), s2s.encode('utf-8'),
+                 hashlib.sha1).digest()).decode()
+    h = {'Date': date, 'x-oss-security-token': sts, 'Content-Type': ct,
+         'Authorization': 'OSS %s:%s' % (params['access_key_id'], sig)}
+    size = os.path.getsize(path)
+    with open(path, 'rb') as f:
+        r = requests.put('https://%s.%s/%s' % (bucket, endpoint, key),
+                         data=f, headers=h, timeout=(30, 900))
+    if r.status_code not in (200, 201):
+        raise RuntimeError('OSS 上传失败 HTTP %d：%s' % (r.status_code, r.text[:200]))
+    return size
+
+
+def upload_file(s, path, parent_id='', name=''):
+    """上传本地文件到迅雷云盘，返回 {id,name,size}
+
+    走网页版同一条路：POST /drive/v1/files 拿 STS + OSS key，
+    直接 PUT 到 vip-lixian-*.up.xdrive.xunlei.com，传完条目自动变 PHASE_TYPE_COMPLETE。
+    """
+    size = os.path.getsize(path)
+    h = hashlib.sha1()
+    with open(path, 'rb') as f:
+        for b in iter(lambda: f.read(1 << 20), b''):
+            h.update(b)
+    body = {
+        'kind': 'drive#file', 'name': name or os.path.basename(path),
+        'size': size, 'hash': h.hexdigest(), 'parent_id': parent_id,
+        'upload_type': 'UPLOAD_TYPE_RESUMABLE',
+        'obj_type': 'OBJECT_TYPE_OTHER', 'space': '',
+    }
+    j = s.api('POST', '/drive/v1/files', body=body, action='post:/drive/v1/files')
+    res = j.get('resumable') or {}
+    params = res.get('params') or {}
+    fid = ((j.get('file') or {}).get('id')
+           or (j.get('data') or {}).get('file', {}).get('id') or '')
+    if not params.get('key') or not fid:
+        raise RuntimeError('迅雷未返回上传凭据：%s' % str(j)[:200])
+    _oss_put(params, path)
+    return {'id': fid, 'name': name or os.path.basename(path), 'size': size}
+
+
+def wait_ready(s, fid, timeout=120):
+    """等条目从上传中变成 PHASE_TYPE_COMPLETE"""
+    t0 = time.time()
+    while time.time() - t0 < timeout:
+        try:
+            f = s.api('GET', '/drive/v1/files/' + fid, action='get:/drive/v1/files')
+            phase = f.get('phase') or ''
+            if phase == 'PHASE_TYPE_COMPLETE':
+                return True
+        except Exception:
+            pass
+        time.sleep(2)
+    return False
+
+
+def delete_file(s, fid):
+    """删云端条目（进回收站）"""
+    import requests as _rq
+    h = {'Authorization': 'Bearer ' + s.access_token(),
+         'x-captcha-token': s.captcha_token('delete:/drive/v1/files'),
+         'x-client-id': CLIENT_ID, 'x-device-id': s.dev,
+         'Origin': 'https://pan.xunlei.com', 'Referer': 'https://pan.xunlei.com/',
+         'User-Agent': UA, 'Content-Type': 'application/json'}
+    r = _rq.delete(API + '/drive/v1/files/' + fid, headers=h, timeout=30)
+    return r.status_code in (200, 204)
+
+
 def get_share(s, share_id, pass_code=''):
     j = s.api('GET', '/drive/v1/share', query={
         'share_id': share_id, 'pass_code': pass_code, 'limit': '100',

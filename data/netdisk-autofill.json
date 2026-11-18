@@ -1,13 +1,13 @@
 {
  "meta": {
-  "generated_at": "2026-11-19 05:50",
+  "generated_at": "2026-11-19 06:57",
   "source_checked_at": "2026-11-19 05:50",
   "games": 64,
   "summary": {
-   "ok": 27,
-   "failover": 5,
+   "ok": 1,
+   "failover": 4,
    "recovered": 0,
-   "reshared": 32,
+   "reshared": 59,
    "pending": 0,
    "none": 0
   },
@@ -56,7 +56,7 @@
    "candidates": []
   },
   "可怕的怪物": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Eh41177ud",
     "url": "https://www.bilibili.com/video/BV1Eh41177ud",
@@ -64,20 +64,52 @@
     "pubdate": "2023-04-25"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "p8t5",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "18_vZS2bHoN0O826qfGC9QQ"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "wb4d",
+    "detail": "/汉化补丁补档/可怕的怪物 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:01",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:01",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "p8t5",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "18_vZS2bHoN0O826qfGC9QQ"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "wb4d",
+     "detail": "/汉化补丁补档/可怕的怪物 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:01",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:01"
+    }
+   ]
   },
   "缝缝补补的幸福": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV11V4y1U7a5",
     "url": "https://www.bilibili.com/video/BV11V4y1U7a5",
@@ -85,15 +117,31 @@
     "pubdate": "2023-06-04"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "zc13",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "16hLO_2-CAY1TxffTHKCTFA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "2mqp",
+    "detail": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:12",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:12",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "zc13",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "16hLO_2-CAY1TxffTHKCTFA"
+    }
+   ],
    "dead": [
     {
      "platform": "quark",
@@ -105,10 +153,26 @@
      "share_id": "302f48898702"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "2mqp",
+     "detail": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:12",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:12"
+    }
+   ]
   },
   "Dear Virgin": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "",
     "url": "https://weibo.com/5082872852/4960705235126295",
@@ -116,20 +180,56 @@
     "pubdate": ""
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "rb79",
-    "detail": "分享有效（需提取码）",
-    "source": "weibo",
-    "where": "微博原文",
-    "share_id": "1dHBk-i3-2BHtzXoW3OzSPA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "az3g",
+    "detail": "/汉化补丁补档/Dear Virgin 汉化补丁.zip",
+    "source": "comment",
+    "where": "本站补档",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:13",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:13",
+    "url": "https://pan.xunlei.com/s/VP6kiBPGoAHgWltpTFRcHAhwA1?pwd=az3g",
+    "no_video": true,
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "rb79",
+     "detail": "分享有效（需提取码）",
+     "source": "weibo",
+     "where": "微博原文",
+     "share_id": "1dHBk-i3-2BHtzXoW3OzSPA"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "az3g",
+     "detail": "/汉化补丁补档/Dear Virgin 汉化补丁.zip",
+     "source": "comment",
+     "where": "本站补档",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:13",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:13",
+     "url": "https://pan.xunlei.com/s/VP6kiBPGoAHgWltpTFRcHAhwA1?pwd=az3g",
+     "no_video": true
+    }
+   ]
   },
   "強伽羅学園": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1em421j7t9",
     "url": "https://www.bilibili.com/video/BV1em421j7t9",
@@ -137,17 +237,49 @@
     "pubdate": "2024-04-13"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "74yn",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1-zAzOqqi0LivWXifOSfgTg"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "5ikc",
+    "detail": "/汉化补丁补档/強伽羅学園 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:16",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:16",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "74yn",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1-zAzOqqi0LivWXifOSfgTg"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "5ikc",
+     "detail": "/汉化补丁补档/強伽羅学園 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:16",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:16"
+    }
+   ]
   },
   "戏剧之爱·安乐死": {
    "state": "reshared",
@@ -222,7 +354,7 @@
    ]
   },
   "十二条船全抛": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Ci421f7WD",
     "url": "https://www.bilibili.com/video/BV1Ci421f7WD",
@@ -230,20 +362,52 @@
     "pubdate": "2024-04-15"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "uxyr",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1fQZ2kDw5u9Zr-yAYeK2r8A"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "2f5v",
+    "detail": "/汉化补丁补档/十二条船全抛 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:17",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:17",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "uxyr",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1fQZ2kDw5u9Zr-yAYeK2r8A"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "2f5v",
+     "detail": "/汉化补丁补档/十二条船全抛 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:17",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:17"
+    }
+   ]
   },
   "对鲸号的记录": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1hp421D7ht",
     "url": "https://www.bilibili.com/video/BV1hp421D7ht",
@@ -251,20 +415,52 @@
     "pubdate": "2024-04-19"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "43ql",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "ajv2",
+    "detail": "/汉化补丁补档/对鲸号的记录 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:17",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:17",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "43ql",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "ajv2",
+     "detail": "/汉化补丁补档/对鲸号的记录 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:17",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:17"
+    }
+   ]
   },
   "人格修理师": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1hp421D7ht",
     "url": "https://www.bilibili.com/video/BV1hp421D7ht",
@@ -272,20 +468,52 @@
     "pubdate": "2024-04-19"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "43ql",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "eezt",
+    "detail": "/汉化补丁补档/人格修理师 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:18",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:18",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "43ql",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "eezt",
+     "detail": "/汉化补丁补档/人格修理师 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:18",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:18"
+    }
+   ]
   },
   "对AI的审问": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1hp421D7ht",
     "url": "https://www.bilibili.com/video/BV1hp421D7ht",
@@ -293,20 +521,52 @@
     "pubdate": "2024-04-19"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "43ql",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "8ksu",
+    "detail": "/汉化补丁补档/对AI的审问 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:18",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:18",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "43ql",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1uZmUHqGLzb-JVv55dTQPQw"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "8ksu",
+     "detail": "/汉化补丁补档/对AI的审问 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:18",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:18"
+    }
+   ]
   },
   "NENE": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV17F4m1577Z",
     "url": "https://www.bilibili.com/video/BV17F4m1577Z",
@@ -314,15 +574,30 @@
     "pubdate": "2024-02-26"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "s0h1",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1XzRFQu1K1LVxGCaoAjWHNA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "4xjn",
+    "detail": "/汉化补丁补档/NENE 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:19",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:19",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "s0h1",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1XzRFQu1K1LVxGCaoAjWHNA"
+    },
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
@@ -334,7 +609,23 @@
     }
    ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "4xjn",
+     "detail": "/汉化补丁补档/NENE 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:19",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:19"
+    }
+   ]
   },
   "自恋囚笼": {
    "state": "reshared",
@@ -839,7 +1130,7 @@
    ]
   },
   "trapped with jester": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV15v4y1a7og",
     "url": "https://www.bilibili.com/video/BV15v4y1a7og",
@@ -847,15 +1138,30 @@
     "pubdate": "2023-03-05"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "8q4g",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "19FD-cPbWPnP2F2rmRmXE3A"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "xc25",
+    "detail": "/汉化补丁补档/trapped with jester 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:19",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:19",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "8q4g",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "19FD-cPbWPnP2F2rmRmXE3A"
+    },
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
@@ -867,10 +1173,26 @@
     }
    ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "xc25",
+     "detail": "/汉化补丁补档/trapped with jester 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:19",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:19"
+    }
+   ]
   },
   "sweetest Valentine": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1nb411Z7Tr",
     "url": "https://www.bilibili.com/video/BV1nb411Z7Tr",
@@ -878,20 +1200,52 @@
     "pubdate": "2023-03-15"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "3k5c",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "18bBSp5Fqbtwmw0rnhyOJ6A"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "vs6d",
+    "detail": "/汉化补丁补档/sweetest Valentine 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:20",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:20",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "3k5c",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "18bBSp5Fqbtwmw0rnhyOJ6A"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "vs6d",
+     "detail": "/汉化补丁补档/sweetest Valentine 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:20",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:20"
+    }
+   ]
   },
   "魔王是我的": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Co4y1n7gb",
     "url": "https://www.bilibili.com/video/BV1Co4y1n7gb",
@@ -899,20 +1253,52 @@
     "pubdate": "2023-04-11"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "b8py",
-    "detail": "分享有效（需提取码）",
-    "source": "pinned",
-    "where": "置顶评论",
-    "share_id": "1r9NmWjUbmNpOPx4hxSItmA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "4hcc",
+    "detail": "/汉化补丁补档/魔王是我的 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:20",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:20",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "b8py",
+     "detail": "分享有效（需提取码）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1r9NmWjUbmNpOPx4hxSItmA"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "4hcc",
+     "detail": "/汉化补丁补档/魔王是我的 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:20",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:20"
+    }
+   ]
   },
   "我此生已逝": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Co4y1n7gb",
     "url": "https://www.bilibili.com/video/BV1Co4y1n7gb",
@@ -920,20 +1306,52 @@
     "pubdate": "2023-04-11"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "b8py",
-    "detail": "分享有效（需提取码）",
-    "source": "pinned",
-    "where": "置顶评论",
-    "share_id": "1r9NmWjUbmNpOPx4hxSItmA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "42ry",
+    "detail": "/汉化补丁补档/我此生已逝 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:21",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:21",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "b8py",
+     "detail": "分享有效（需提取码）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "1r9NmWjUbmNpOPx4hxSItmA"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "42ry",
+     "detail": "/汉化补丁补档/我此生已逝 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:21",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:21"
+    }
+   ]
   },
   "CLASSMATES": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV17z4y1h7yR",
     "url": "https://www.bilibili.com/video/BV17z4y1h7yR",
@@ -941,20 +1359,52 @@
     "pubdate": "2023-05-17"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "u27l",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1sAr8GBa52408_B-Nam11Kg"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "2pkp",
+    "detail": "/汉化补丁补档/CLASSMATES 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:22",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:22",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "u27l",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1sAr8GBa52408_B-Nam11Kg"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "2pkp",
+     "detail": "/汉化补丁补档/CLASSMATES 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:22",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:22"
+    }
+   ]
   },
   "Dark Nights": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1F24y1E7DM",
     "url": "https://www.bilibili.com/video/BV1F24y1E7DM",
@@ -962,15 +1412,30 @@
     "pubdate": "2023-03-27"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "ha53",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "10xiK7-eFbOKTi28mzV6oEA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "ehre",
+    "detail": "/汉化补丁补档/Dark Nights 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:23",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:23",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "ha53",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "10xiK7-eFbOKTi28mzV6oEA"
+    },
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
@@ -982,10 +1447,26 @@
     }
    ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "ehre",
+     "detail": "/汉化补丁补档/Dark Nights 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:23",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:23"
+    }
+   ]
   },
   "dead plate": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1iK411Y7Mn",
     "url": "https://www.bilibili.com/video/BV1iK411Y7Mn",
@@ -993,20 +1474,52 @@
     "pubdate": "2024-01-15"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "13ia",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1g0OcC9z5V6wYpO4qTjdXxw"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "mu5p",
+    "detail": "/汉化补丁补档/dead plate 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:26",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:26",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "13ia",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1g0OcC9z5V6wYpO4qTjdXxw"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "mu5p",
+     "detail": "/汉化补丁补档/dead plate 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:26",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:26"
+    }
+   ]
   },
   "Elevator Hitch": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1tk4y1Q7eC",
     "url": "https://www.bilibili.com/video/BV1tk4y1Q7eC",
@@ -1014,20 +1527,52 @@
     "pubdate": "2024-01-13"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "9qlg",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1gCA439uRQxD9DJHiSa1LaA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "tc96",
+    "detail": "/汉化补丁补档/Elevator Hitch 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:29",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:29",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "9qlg",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1gCA439uRQxD9DJHiSa1LaA"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "tc96",
+     "detail": "/汉化补丁补档/Elevator Hitch 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:29",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:29"
+    }
+   ]
   },
   "Cold Front": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1iK411Y7Mn",
     "url": "https://www.bilibili.com/video/BV1iK411Y7Mn",
@@ -1035,20 +1580,52 @@
     "pubdate": "2024-01-15"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "13ia",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1g0OcC9z5V6wYpO4qTjdXxw"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "6w2i",
+    "detail": "/汉化补丁补档/Cold Front 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:31",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:31",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "13ia",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1g0OcC9z5V6wYpO4qTjdXxw"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "6w2i",
+     "detail": "/汉化补丁补档/Cold Front 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:31",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:31"
+    }
+   ]
   },
   "Eloquent Countenance": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1tk4y1Q7eC",
     "url": "https://www.bilibili.com/video/BV1tk4y1Q7eC",
@@ -1056,17 +1633,49 @@
     "pubdate": "2024-01-13"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "9qlg",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1gCA439uRQxD9DJHiSa1LaA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "q4m9",
+    "detail": "/汉化补丁补档/Eloquent Countenance 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:35",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:35",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "9qlg",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1gCA439uRQxD9DJHiSa1LaA"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "q4m9",
+     "detail": "/汉化补丁补档/Eloquent Countenance 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:35",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:35"
+    }
+   ]
   },
   "meet her there": {
    "state": "reshared",
@@ -1100,6 +1709,21 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "1rpXbddHBDgcVd1FDJfol9Q"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "bwhu",
+     "detail": "/汉化补丁补档/meet her there 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:35",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:35",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -1128,11 +1752,25 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "bwhu",
+     "detail": "/汉化补丁补档/meet her there 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:35",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:35"
     }
    ]
   },
   "Line 88": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1X84y1c7ZE",
     "url": "https://www.bilibili.com/video/BV1X84y1c7ZE",
@@ -1140,17 +1778,49 @@
     "pubdate": "2023-03-19"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "aubg",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "15FKjLbpsV5OYvw8XxRw-4g"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "zt29",
+    "detail": "/汉化补丁补档/Line 88 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:35",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:35",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "aubg",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "15FKjLbpsV5OYvw8XxRw-4g"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "zt29",
+     "detail": "/汉化补丁补档/Line 88 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:35",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:35"
+    }
+   ]
   },
   "灰姑娘现象": {
    "state": "reshared",
@@ -1886,7 +2556,7 @@
    ]
   },
   "Lost Friends1-DisappeardName-": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV11o4y147bM",
     "url": "https://www.bilibili.com/video/BV11o4y147bM",
@@ -1894,17 +2564,49 @@
     "pubdate": "2023-04-25"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "kigm",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1Ir-6HhhRwC2d3D7ixAzJkg"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "4x5d",
+    "detail": "/汉化补丁补档/Lost Friends1-DisappeardName- 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:56",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:56",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "kigm",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1Ir-6HhhRwC2d3D7ixAzJkg"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "4x5d",
+     "detail": "/汉化补丁补档/Lost Friends1-DisappeardName- 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:56",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:56"
+    }
+   ]
   },
   "Lost Friends 2": {
    "state": "reshared",
@@ -1938,6 +2640,21 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "1GoE1Tph2N41YvO6-jkMEww"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "qsrz",
+     "detail": "/汉化补丁补档/Lost Friends 2 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:36",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:36",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -1979,11 +2696,25 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "qsrz",
+     "detail": "/汉化补丁补档/Lost Friends 2 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:36",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:36"
     }
    ]
   },
   "相反的理想主义": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "",
     "url": "",
@@ -1991,17 +2722,53 @@
     "pubdate": ""
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "",
-    "detail": "分享有效（需提取码）",
-    "source": "site",
-    "where": "发布页",
-    "share_id": "1Uu5W_AXNMs4-NkH_dcqoRw"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "478d",
+    "detail": "/汉化补丁补档/相反的理想主义 汉化补丁.zip",
+    "source": "comment",
+    "where": "本站补档",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:37",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:37",
+    "url": "https://pan.xunlei.com/s/VP6knb8h1-TDTop6qxSxYfmPA1?pwd=478d",
+    "no_video": true,
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "",
+     "detail": "分享有效（需提取码）",
+     "source": "site",
+     "where": "发布页",
+     "share_id": "1Uu5W_AXNMs4-NkH_dcqoRw"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "478d",
+     "detail": "/汉化补丁补档/相反的理想主义 汉化补丁.zip",
+     "source": "comment",
+     "where": "本站补档",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:37",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:37",
+     "url": "https://pan.xunlei.com/s/VP6knb8h1-TDTop6qxSxYfmPA1?pwd=478d",
+     "no_video": true
+    }
+   ]
   },
   "深海的勿忘草": {
    "state": "reshared",
@@ -2035,6 +2802,21 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "1HnPY270U8_ZEegiTRs81vg"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "phzr",
+     "detail": "/汉化补丁补档/深海的勿忘草 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:37",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:37",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -2063,6 +2845,20 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "phzr",
+     "detail": "/汉化补丁补档/深海的勿忘草 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:37",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:37"
     }
    ]
   },
@@ -2098,6 +2894,21 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "1PiwRqSKWBEBbL5OgVEsLbA"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "ncb6",
+     "detail": "/汉化补丁补档/水手服与命中注定之人 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:37",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:37",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -2126,6 +2937,20 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "ncb6",
+     "detail": "/汉化补丁补档/水手服与命中注定之人 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:37",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:37"
     }
    ]
   },
@@ -2451,7 +3276,7 @@
    ]
   },
   "seekL": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1JZ421x711",
     "url": "https://www.bilibili.com/video/BV1JZ421x711",
@@ -2459,17 +3284,49 @@
     "pubdate": "2024-05-22"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "6ykb",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "152oM9nCQYXStjTPmBQRY9Q"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "jqfa",
+    "detail": "/汉化补丁补档/seekL 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:38",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:38",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "6ykb",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "152oM9nCQYXStjTPmBQRY9Q"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "jqfa",
+     "detail": "/汉化补丁补档/seekL 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:38",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:38"
+    }
+   ]
   },
   "恶魔之心": {
    "state": "failover",
@@ -2534,7 +3391,7 @@
    "candidates": []
   },
   "不速之死": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1o2421T7uk",
     "url": "https://www.bilibili.com/video/BV1o2421T7uk",
@@ -2542,17 +3399,49 @@
     "pubdate": "2024-02-24"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "jheq",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "15Ue7BwgYQIPQofbJvdxk-w"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "dfhm",
+    "detail": "/汉化补丁补档/不速之死 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:41",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:41",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "jheq",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "15Ue7BwgYQIPQofbJvdxk-w"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "dfhm",
+     "detail": "/汉化补丁补档/不速之死 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:41",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:41"
+    }
+   ]
   },
   "Magical Otoge Ciel": {
    "state": "reshared",
@@ -2595,6 +3484,21 @@
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "1VfM569bIXc88XNqNWkPOPw"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "4u2f",
+     "detail": "/汉化补丁补档/Magical Otoge Ciel 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:41",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:41",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -2623,11 +3527,25 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "4u2f",
+     "detail": "/汉化补丁补档/Magical Otoge Ciel 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:41",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:41"
     }
    ]
   },
   "Birla_NNN": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Ts4y1i7vh",
     "url": "https://www.bilibili.com/video/BV1Ts4y1i7vh",
@@ -2635,17 +3553,49 @@
     "pubdate": "2023-05-28"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "ggkq",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1UMJcgPvGPQDY495uszRV4w"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "rngx",
+    "detail": "/汉化补丁补档/Birla_NNN 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:41",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:41",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "ggkq",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1UMJcgPvGPQDY495uszRV4w"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "rngx",
+     "detail": "/汉化补丁补档/Birla_NNN 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:41",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:41"
+    }
+   ]
   },
   "与死神的约会": {
    "state": "reshared",
@@ -2755,7 +3705,23 @@
     "checked_at": "2026-11-19 05:42",
     "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "qec4",
+     "detail": "/汉化补丁补档/冬鸦何处去 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:43",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:43",
+     "from_reshare": true
+    }
+   ],
    "dead": [
     {
      "platform": "baidu",
@@ -2800,11 +3766,25 @@
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "qec4",
+     "detail": "/汉化补丁补档/冬鸦何处去 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:43",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:43"
     }
    ]
   },
   "杀死公主": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Gv411c7Js",
     "url": "https://www.bilibili.com/video/BV1Gv411c7Js",
@@ -2812,17 +3792,49 @@
     "pubdate": "2023-11-16"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "yant",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "19OOSaHaJkL5M90wfn3_olA"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "hgrg",
+    "detail": "/汉化补丁补档/杀死公主 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:44",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:44",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "yant",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "19OOSaHaJkL5M90wfn3_olA"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "hgrg",
+     "detail": "/汉化补丁补档/杀死公主 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:44",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:44"
+    }
+   ]
   },
   "销魂罪人": {
    "state": "reshared",
@@ -2847,7 +3859,23 @@
     "checked_at": "2026-11-19 05:42",
     "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "68eu",
+     "detail": "/汉化补丁补档/销魂罪人 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:48",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:48",
+     "from_reshare": true
+    }
+   ],
    "dead": [
     {
      "platform": "baidu",
@@ -2874,6 +3902,20 @@
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "68eu",
+     "detail": "/汉化补丁补档/销魂罪人 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:48",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:48"
     }
    ]
   },
@@ -2909,6 +3951,21 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "1s3e_j513Xw7TzBIldQAUdw"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "wgxv",
+     "detail": "/汉化补丁补档/MAMIYA 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:52",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:52",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -2937,6 +3994,20 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "wgxv",
+     "detail": "/汉化补丁补档/MAMIYA 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:52",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:52"
     }
    ]
   },
@@ -3040,7 +4111,7 @@
    ]
   },
   "BUSTAFELLOWS": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "",
     "url": "https://www.bilibili.com/read/cv22831035/?spm_id_from=333.1387.0.0&opus_fallback=1",
@@ -3048,17 +4119,53 @@
     "pubdate": ""
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "vhih",
-    "detail": "分享有效（需提取码）",
-    "source": "article",
-    "where": "专栏",
-    "share_id": "1yoCMe5l7VKUgLIRZHZezRQ"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "ngbe",
+    "detail": "/汉化补丁补档/BUSTAFELLOWS 汉化补丁.zip",
+    "source": "comment",
+    "where": "本站补档",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:52",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:52",
+    "url": "https://pan.xunlei.com/s/VP6krEf7wTijfDrdwlPcLUBxA1?pwd=ngbe",
+    "no_video": true,
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "vhih",
+     "detail": "分享有效（需提取码）",
+     "source": "article",
+     "where": "专栏",
+     "share_id": "1yoCMe5l7VKUgLIRZHZezRQ"
+    }
+   ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "ngbe",
+     "detail": "/汉化补丁补档/BUSTAFELLOWS 汉化补丁.zip",
+     "source": "comment",
+     "where": "本站补档",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:52",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:52",
+     "url": "https://pan.xunlei.com/s/VP6krEf7wTijfDrdwlPcLUBxA1?pwd=ngbe",
+     "no_video": true
+    }
+   ]
   },
   "汝，当爱休息区的他": {
    "state": "reshared",
