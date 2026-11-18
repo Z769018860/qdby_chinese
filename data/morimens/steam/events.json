@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-11-17T12:06:45.938Z",
+ "fetchedAt": "2026-11-18T11:57:32.303Z",
  "posts": [
+  {
+   "title": "🎬 V2.7 PV - Advent of the Divine Realm (VA: Seki Tomokazu & Miyazono Miumi)",
+   "date": "2026-11-18",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1849827110423774"
+  },
   {
    "title": "V2.7.0 New Awakener✦Tulu: Godking",
    "date": "2026-11-16",
