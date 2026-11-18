@@ -1,0 +1,12 @@
+{
+  "_note": "逐条纠正的网盘链接（不是整条视频贴错行，而是某一行的链接指到了别的作品）。用 apply_videofix.py 应用，可重复执行。",
+  "bad": [
+    {
+      "game": "人类保管库",
+      "url": "https://www.123865.com/s/ootDVv-t8jov?pwd=nJnu",
+      "status": "dead",
+      "detail": "UP 主贴错：该 123 分享实为《细思极恐的恐怖游戏 汉化版.zip》，不是本作（本作的微云/城通链接正常）",
+      "verified_at": "2026-11-19 07:20"
+    }
+  ]
+}

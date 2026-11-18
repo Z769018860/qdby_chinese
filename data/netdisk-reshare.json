@@ -606,8 +606,25 @@
      "checked": "ok",
      "checked_at": "2026-11-19 05:42",
      "checked_detail": "分享有效｜HIKEBACK汉化完整版.zip"
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kz8P76nXgaDyh23rn8wOgA1?pwd=up7r",
+     "pwd": "up7r",
+     "platform": "xunlei",
+     "share_id": "VP6kz8P76nXgaDyh23rn8wOgA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/汉化补丁补档/HIKEBACK 汉化补丁.zip",
+     "created_at": "2026-11-19 07:27",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:27",
+     "via": "fetchfill",
+     "size": 75840203,
+     "note": "从现存链接取回后上传迅雷（local）"
     }
-   }
+   },
+   "bvid": "",
+   "bili_url": ""
   },
   "Magical Otoge Ciel": {
    "links": {
@@ -767,8 +784,25 @@
       "pinned": "UP主置顶",
       "at": "2026-11-16 00:07"
      }
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kz2wBu8Pw1iu_ExolzdD5A1?pwd=eedv",
+     "pwd": "eedv",
+     "platform": "xunlei",
+     "share_id": "VP6kz2wBu8Pw1iu_ExolzdD5A1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/汉化补丁补档/别吃收银员！ 汉化补丁.zip",
+     "created_at": "2026-11-19 07:27",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:27",
+     "via": "fetchfill",
+     "size": 219331274,
+     "note": "从现存链接取回后上传迅雷（local）"
     }
-   }
+   },
+   "bvid": "",
+   "bili_url": ""
   },
   "恶魔之心：被诅咒的试炼": {
    "links": {
@@ -944,8 +978,25 @@
    "links": {
     "baidu": {
      "error": "errno=109 文件违规，无法分享"
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kvkQEYd2VFZ8yH6ghsNcZA1?pwd=e32u",
+     "pwd": "e32u",
+     "platform": "xunlei",
+     "share_id": "VP6kvkQEYd2VFZ8yH6ghsNcZA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/汉化补丁补档/恶魔之心 汉化补丁.zip",
+     "created_at": "2026-11-19 07:12",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:12",
+     "via": "fetchfill",
+     "size": 2766360,
+     "note": "从现存链接取回后上传迅雷（pool）"
     }
-   }
+   },
+   "bvid": "",
+   "bili_url": ""
   },
   "Lost Friends 2": {
    "links": {
@@ -1237,18 +1288,18 @@
    "bili_url": "",
    "links": {
     "xunlei": {
-     "url": "https://pan.xunlei.com/s/VP6kfPLYfOOat5190yZocvDkA1?pwd=wb4d",
-     "pwd": "wb4d",
+     "url": "https://pan.xunlei.com/s/VP6khxo3pfRjMdwVdHco2IasA1?pwd=2mqp",
+     "pwd": "2mqp",
      "platform": "xunlei",
-     "share_id": "VP6kfPLYfOOat5190yZocvDkA1",
+     "share_id": "VP6khxo3pfRjMdwVdHco2IasA1",
      "verified": true,
      "check": "share_status=OK ",
      "path": "/汉化补丁补档/可怕的怪物 汉化补丁.zip",
-     "created_at": "2026-11-19 06:01",
+     "created_at": "2026-11-19 06:12",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:01",
+     "checked_at": "2026-11-19 06:12",
      "via": "fetchfill",
-     "size": 57894347,
+     "size": 66089904,
      "note": "从现存链接取回后上传迅雷（baidu）"
     }
    }
@@ -1258,18 +1309,18 @@
    "bili_url": "",
    "links": {
     "xunlei": {
-     "url": "https://pan.xunlei.com/s/VP6khxo3pfRjMdwVdHco2IasA1?pwd=2mqp",
-     "pwd": "2mqp",
+     "url": "https://pan.xunlei.com/s/VP6kfPLYfOOat5190yZocvDkA1?pwd=wb4d",
+     "pwd": "wb4d",
      "platform": "xunlei",
-     "share_id": "VP6khxo3pfRjMdwVdHco2IasA1",
+     "share_id": "VP6kfPLYfOOat5190yZocvDkA1",
      "verified": true,
      "check": "share_status=OK ",
      "path": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
-     "created_at": "2026-11-19 06:12",
+     "created_at": "2026-11-19 06:01",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:12",
+     "checked_at": "2026-11-19 06:01",
      "via": "fetchfill",
-     "size": 66089904,
+     "size": 57894347,
      "note": "从现存链接取回后上传迅雷（baidu）"
     }
    }
@@ -1796,6 +1847,48 @@
      "via": "fetchfill",
      "size": 47740684,
      "note": "从现存链接取回后上传迅雷（baidu）"
+    }
+   }
+  },
+  "純正優男Sweet&Bitter": {
+   "bvid": "",
+   "bili_url": "",
+   "links": {
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kvMxFTfw5MTbUH1hqGgvvA1?pwd=8p4m",
+     "pwd": "8p4m",
+     "platform": "xunlei",
+     "share_id": "VP6kvMxFTfw5MTbUH1hqGgvvA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/汉化补丁补档/純正優男Sweet&Bitter 汉化补丁.zip",
+     "created_at": "2026-11-19 07:10",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:10",
+     "via": "fetchfill",
+     "size": 193281506,
+     "note": "从现存链接取回后上传迅雷（baidu）"
+    }
+   }
+  },
+  "恶魔之心：猎人": {
+   "bvid": "",
+   "bili_url": "",
+   "links": {
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6kvmwcCYrLU32UX5O4HEuhA1?pwd=u8bq",
+     "pwd": "u8bq",
+     "platform": "xunlei",
+     "share_id": "VP6kvmwcCYrLU32UX5O4HEuhA1",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/汉化补丁补档/恶魔之心：猎人 汉化补丁.zip",
+     "created_at": "2026-11-19 07:12",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:12",
+     "via": "fetchfill",
+     "size": 1150053,
+     "note": "从现存链接取回后上传迅雷（pool）"
     }
    }
   }

@@ -33,23 +33,6 @@
    "checked_at": "2026-11-19 05:50"
   },
   "可怕的怪物": {
-   "total": 1,
-   "ok": 1,
-   "dead": 0,
-   "unknown": 0,
-   "platforms": [
-    {
-     "key": "baidu",
-     "name": "百度网盘",
-     "ok": 1,
-     "dead": 0,
-     "unknown": 0,
-     "total": 1
-    }
-   ],
-   "checked_at": "2026-11-19 05:50"
-  },
-  "缝缝补补的幸福": {
    "total": 2,
    "ok": 1,
    "dead": 1,
@@ -68,6 +51,23 @@
      "name": "夸克网盘",
      "ok": 0,
      "dead": 1,
+     "unknown": 0,
+     "total": 1
+    }
+   ],
+   "checked_at": "2026-11-19 05:50"
+  },
+  "缝缝补补的幸福": {
+   "total": 1,
+   "ok": 1,
+   "dead": 0,
+   "unknown": 0,
+   "platforms": [
+    {
+     "key": "baidu",
+     "name": "百度网盘",
+     "ok": 1,
+     "dead": 0,
      "unknown": 0,
      "total": 1
     }
@@ -719,8 +719,8 @@
   },
   "人类保管库": {
    "total": 4,
-   "ok": 3,
-   "dead": 1,
+   "ok": 2,
+   "dead": 2,
    "unknown": 0,
    "platforms": [
     {
@@ -750,8 +750,8 @@
     {
      "key": "123pan",
      "name": "123云盘",
-     "ok": 1,
-     "dead": 0,
+     "ok": 0,
+     "dead": 1,
      "unknown": 0,
      "total": 1
     }

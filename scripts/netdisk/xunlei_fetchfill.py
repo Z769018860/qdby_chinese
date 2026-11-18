@@ -50,6 +50,8 @@ OUT = R.OUT
 STATE = os.path.join(WORK, 'xunlei-fetchfill.json')
 POOL = os.path.join(WORK, 'fetchfill-pool.json')
 CACHE = os.path.join(WORK, 'fetchfill-cache')
+# 人工登记的本地文件（作品名 -> 绝对路径）。网盘都下不动时，本机有副本就直接传。
+LOCALFILES = os.path.join(REPO, 'data', 'netdisk-localfiles.json')
 BILI_UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
            '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36')
 BD_DIR = '/汉化补丁补档'
@@ -528,6 +530,7 @@ def main():
     rs = load(OUT, {'meta': {}, 'games': {}})
     st = load(STATE, {'games': {}})
     pool = load(POOL, None)
+    local_map = (load(LOCALFILES, {}) or {}).get('map') or {}
 
     todo = []
     for g in led.get('games') or []:
@@ -547,7 +550,16 @@ def main():
         # 百度优先：提取码校验 + 转存 + 直连下载这条链已经实测稳定
         order = {'baidu': 0, 'quark': 1, '123pan': 2, 'lanzou': 3, 'ctfile': 4, 'weiyun': 5}
         srcs.sort(key=lambda x: order.get(x.get('platform'), 9))
-        todo.append((name, srcs[0], srcs))
+        src = srcs[0]
+        # 本机已有成品包 → 直接用，不必跟各网盘的反爬/限速较劲
+        lf = (local_map or {}).get(name)
+        if lf and os.path.isfile(lf):
+            src = {'platform': 'local', 'url': lf, 'pwd': ''}
+        # 没有百度源、而文件池里已经躺着这部作品的文件时，直接拿池里的。
+        # 对蓝奏/城通这类限速严重的盘没必要为了「同源」去硬下载。
+        elif src.get('platform') != 'baidu' and pool and pool_pick(name, pool)[0]:
+            src = {'platform': 'pool', 'url': '', 'pwd': ''}
+        todo.append((name, src, srcs))
 
     log('待补 %d 个（有存活来源）' % len(todo))
     for name, src, _ in todo:
@@ -569,14 +581,20 @@ def main():
         row = st.setdefault('games', {}).setdefault(name, {})
         row.update({'tried_at': time.strftime('%Y-%m-%d %H:%M'),
                     'source': {k: src.get(k) for k in ('platform', 'url', 'pwd')}})
-        if src.get('platform') not in ('baidu', 'pool'):
+        if src.get('platform') not in ('baidu', 'pool', 'local'):
             row['state'] = 'unsupported_source'
-            row['note'] = '当前只实现了百度源的取文件（该链接在 %s）' % src.get('platform')
+            row['note'] = ('当前只实现了百度源的取文件（该链接在 %s）'
+                           '；也可在 data/netdisk-localfiles.json 登记本机成品包' % src.get('platform'))
             save_state(st)
             log('  ! 暂不支持从 %s 取文件，跳过' % src.get('platform'))
             continue
         try:
-            local = bd_pick_links(name, src.get('url'), src.get('pwd'), pool)
+            if src.get('platform') == 'local':
+                p = src['url']
+                local = [(p, os.path.basename(p))]
+                log('    · 用本机文件 %s（%s）' % (os.path.basename(p), fmt(os.path.getsize(p))))
+            else:
+                local = bd_pick_links(name, src.get('url'), src.get('pwd'), pool)
         except NeedPick as e:
             row['state'] = 'need_pick'
             row['note'] = str(e)[:200]
