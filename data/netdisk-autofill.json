@@ -1,13 +1,13 @@
 {
  "meta": {
-  "generated_at": "2026-11-19 06:57",
+  "generated_at": "2026-11-19 07:30",
   "source_checked_at": "2026-11-19 05:50",
   "games": 64,
   "summary": {
-   "ok": 1,
-   "failover": 4,
+   "ok": 0,
+   "failover": 2,
    "recovered": 0,
-   "reshared": 59,
+   "reshared": 62,
    "pending": 0,
    "none": 0
   },
@@ -16,7 +16,7 @@
  },
  "games": {
   "純正優男Sweet&Bitter": {
-   "state": "ok",
+   "state": "reshared",
    "video": {
     "bvid": "BV15Y411z7MY",
     "url": "https://www.bilibili.com/video/BV15Y411z7MY",
@@ -24,15 +24,30 @@
     "pubdate": "2023-03-12"
    },
    "active": {
-    "platform": "baidu",
-    "platform_name": "百度网盘",
-    "pwd": "v8n7",
-    "detail": "分享有效（需提取码）",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "1EA28Mr_fmBIivqWoJM7Aww"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "8p4m",
+    "detail": "/汉化补丁补档/純正優男Sweet&Bitter 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 07:10",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 07:10",
+    "from_reshare": true
    },
    "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "v8n7",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "1EA28Mr_fmBIivqWoJM7Aww"
+    },
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
@@ -53,21 +68,100 @@
     }
    ],
    "dead": [],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "8p4m",
+     "detail": "/汉化补丁补档/純正優男Sweet&Bitter 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:10",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:10"
+    }
+   ]
   },
   "可怕的怪物": {
    "state": "reshared",
    "video": {
-    "bvid": "BV1Eh41177ud",
-    "url": "https://www.bilibili.com/video/BV1Eh41177ud",
-    "title": "【自汉化短篇日乙】偏执病娇强制爱，全是BE！——《缝缝补补的幸福》汉化发布+实况",
+    "bvid": "BV11V4y1U7a5",
+    "url": "https://www.bilibili.com/video/BV11V4y1U7a5/",
+    "title": "【自汉化短篇日乙】男主们是可怕怪物？温柔但带感！——《可怕的怪物》 汉化发布+实况",
     "pubdate": "2023-04-25"
    },
    "active": {
     "platform": "xunlei",
     "platform_name": "迅雷云盘",
-    "pwd": "wb4d",
+    "pwd": "2mqp",
     "detail": "/汉化补丁补档/可怕的怪物 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 06:12",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 06:12",
+    "from_reshare": true
+   },
+   "alt": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "zc13",
+     "detail": "分享有效（需提取码）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "16hLO_2-CAY1TxffTHKCTFA"
+    }
+   ],
+   "dead": [
+    {
+     "platform": "quark",
+     "platform_name": "夸克网盘",
+     "pwd": "AmMd",
+     "detail": "分享已被封禁（文件涉及违规内容）",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "302f48898702"
+    }
+   ],
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "2mqp",
+     "detail": "/汉化补丁补档/可怕的怪物 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 06:12",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 06:12"
+    }
+   ]
+  },
+  "缝缝补补的幸福": {
+   "state": "reshared",
+   "video": {
+    "bvid": "BV1Eh41177ud",
+    "url": "https://www.bilibili.com/video/BV1Eh41177ud/",
+    "title": "【自汉化短篇日乙】偏执病娇强制爱，全是BE！——《缝缝补补的幸福》汉化发布+实况",
+    "pubdate": "2023-06-04"
+   },
+   "active": {
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "wb4d",
+    "detail": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
     "source": "comment",
     "where": "视频置顶评论（补档）",
     "share_id": "",
@@ -96,7 +190,7 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "wb4d",
-     "detail": "/汉化补丁补档/可怕的怪物 汉化补丁.zip",
+     "detail": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
      "source": "comment",
      "where": "评论区",
      "share_id": "",
@@ -105,69 +199,6 @@
      "check": "share_status=OK ",
      "checked": "ok",
      "checked_at": "2026-11-19 06:01"
-    }
-   ]
-  },
-  "缝缝补补的幸福": {
-   "state": "reshared",
-   "video": {
-    "bvid": "BV11V4y1U7a5",
-    "url": "https://www.bilibili.com/video/BV11V4y1U7a5",
-    "title": "【自汉化短篇日乙】男主们是可怕怪物？温柔但带感！——《可怕的怪物》 汉化发布+实况",
-    "pubdate": "2023-06-04"
-   },
-   "active": {
-    "platform": "xunlei",
-    "platform_name": "迅雷云盘",
-    "pwd": "2mqp",
-    "detail": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
-    "source": "comment",
-    "where": "视频置顶评论（补档）",
-    "share_id": "",
-    "verified": true,
-    "at": "2026-11-19 06:12",
-    "check": "share_status=OK ",
-    "checked": "ok",
-    "checked_at": "2026-11-19 06:12",
-    "from_reshare": true
-   },
-   "alt": [
-    {
-     "platform": "baidu",
-     "platform_name": "百度网盘",
-     "pwd": "zc13",
-     "detail": "分享有效（需提取码）",
-     "source": "desc",
-     "where": "视频简介",
-     "share_id": "16hLO_2-CAY1TxffTHKCTFA"
-    }
-   ],
-   "dead": [
-    {
-     "platform": "quark",
-     "platform_name": "夸克网盘",
-     "pwd": "AmMd",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
-     "source": "pinned",
-     "where": "置顶评论",
-     "share_id": "302f48898702"
-    }
-   ],
-   "candidates": [],
-   "reshare": [
-    {
-     "platform": "xunlei",
-     "platform_name": "迅雷云盘",
-     "pwd": "2mqp",
-     "detail": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
-     "source": "comment",
-     "where": "评论区",
-     "share_id": "",
-     "verified": true,
-     "at": "2026-11-19 06:12",
-     "check": "share_status=OK ",
-     "checked": "ok",
-     "checked_at": "2026-11-19 06:12"
     }
    ]
   },
@@ -1574,9 +1605,9 @@
   "Cold Front": {
    "state": "reshared",
    "video": {
-    "bvid": "BV1iK411Y7Mn",
-    "url": "https://www.bilibili.com/video/BV1iK411Y7Mn",
-    "title": "【自汉化微恐解谜】谁知盘中餐，粒粒皆亲属——《死盘子》（dead plate）汉化发布+全结局实况",
+    "bvid": "BV1Tg4y1U7PQ",
+    "url": "https://www.bilibili.com/video/BV1Tg4y1U7PQ/",
+    "title": "【自汉化微恐RPG】两人友情进入冰河时代如何起死回生？——《冷锋》（cold front）汉化发布+实况",
     "pubdate": "2024-01-15"
    },
    "active": {
@@ -1598,11 +1629,11 @@
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "13ia",
+     "pwd": "lcn0",
      "detail": "分享有效（需提取码）",
      "source": "desc",
      "where": "视频简介",
-     "share_id": "1g0OcC9z5V6wYpO4qTjdXxw"
+     "share_id": "1rFD3CtX0mvWtfBka6saNzw"
     }
    ],
    "dead": [],
@@ -1627,9 +1658,9 @@
   "Eloquent Countenance": {
    "state": "reshared",
    "video": {
-    "bvid": "BV1tk4y1Q7eC",
-    "url": "https://www.bilibili.com/video/BV1tk4y1Q7eC",
-    "title": "【自汉化恐怖解密】准社畜被困电梯体验各种死法？——《电梯怪谈》（Elevator Hitch）汉化发布+全结局实况",
+    "bvid": "BV1PN4y1i7dM",
+    "url": "https://www.bilibili.com/video/BV1PN4y1i7dM/",
+    "title": "【自汉化短篇恐解】天然修女遇上话痨大叔天使？——《话痨天使》（Eloquent Countenance）汉化发布+全结局实况",
     "pubdate": "2024-01-13"
    },
    "active": {
@@ -1651,11 +1682,11 @@
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
-     "pwd": "9qlg",
+     "pwd": "or1t",
      "detail": "分享有效（需提取码）",
      "source": "desc",
      "where": "视频简介",
-     "share_id": "1gCA439uRQxD9DJHiSa1LaA"
+     "share_id": "1t_y1usWrcgXoHN6QYTGEjA"
     }
    ],
    "dead": [],
@@ -2011,15 +2042,6 @@
    },
    "alt": [
     {
-     "platform": "123pan",
-     "platform_name": "123云盘",
-     "pwd": "nJnu",
-     "detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip｜到期 2099-12-12",
-     "source": "desc",
-     "where": "视频简介",
-     "share_id": "ootDVv-t8jov"
-    },
-    {
      "platform": "ctfile",
      "platform_name": "城通网盘",
      "pwd": "1528",
@@ -2047,6 +2069,15 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "00dffb67943b"
+    },
+    {
+     "platform": "123pan",
+     "platform_name": "123云盘",
+     "pwd": "nJnu",
+     "detail": "UP 主贴错：该 123 分享实为《细思极恐的恐怖游戏 汉化版.zip》，不是本作（本作的微云/城通链接正常）",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "ootDVv-t8jov"
     }
    ],
    "candidates": [],
@@ -3221,6 +3252,21 @@
      "checked": "ok",
      "checked_at": "2026-11-19 05:42",
      "from_reshare": true
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "up7r",
+     "detail": "/汉化补丁补档/HIKEBACK 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:27",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:27",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -3272,6 +3318,20 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "up7r",
+     "detail": "/汉化补丁补档/HIKEBACK 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:27",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:27"
     }
    ]
   },
@@ -3329,7 +3389,7 @@
    ]
   },
   "恶魔之心": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Pz421971k",
     "url": "https://www.bilibili.com/video/BV1Pz421971k",
@@ -3337,15 +3397,31 @@
     "pubdate": "2024-03-03"
    },
    "active": {
-    "platform": "lanzou",
-    "platform_name": "蓝奏云",
-    "pwd": "0nnn",
-    "detail": "分享有效｜demonheart 机翻润色补丁.zip",
-    "source": "pinned",
-    "where": "置顶评论",
-    "share_id": "iW0Ug1q78fcf"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "e32u",
+    "detail": "/汉化补丁补档/恶魔之心 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 07:12",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 07:12",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "lanzou",
+     "platform_name": "蓝奏云",
+     "pwd": "0nnn",
+     "detail": "分享有效｜demonheart 机翻润色补丁.zip",
+     "source": "pinned",
+     "where": "置顶评论",
+     "share_id": "iW0Ug1q78fcf"
+    }
+   ],
    "dead": [
     {
      "platform": "baidu",
@@ -3357,10 +3433,26 @@
      "share_id": "1Bu3lcAQK7pdPbSMvhIWoqg"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "e32u",
+     "detail": "/汉化补丁补档/恶魔之心 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:12",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:12"
+    }
+   ]
   },
   "恶魔之心：猎人": {
-   "state": "failover",
+   "state": "reshared",
    "video": {
     "bvid": "BV1Sx4y1m7tp",
     "url": "https://www.bilibili.com/video/BV1Sx4y1m7tp",
@@ -3368,15 +3460,31 @@
     "pubdate": "2024-03-18"
    },
    "active": {
-    "platform": "lanzou",
-    "platform_name": "蓝奏云",
-    "pwd": "gkln",
-    "detail": "分享有效｜恶魔之心：猎人 机翻汉化补丁.zip",
-    "source": "desc",
-    "where": "视频简介",
-    "share_id": "idF3k1ru6cif"
+    "platform": "xunlei",
+    "platform_name": "迅雷云盘",
+    "pwd": "u8bq",
+    "detail": "/汉化补丁补档/恶魔之心：猎人 汉化补丁.zip",
+    "source": "comment",
+    "where": "视频置顶评论（补档）",
+    "share_id": "",
+    "verified": true,
+    "at": "2026-11-19 07:12",
+    "check": "share_status=OK ",
+    "checked": "ok",
+    "checked_at": "2026-11-19 07:12",
+    "from_reshare": true
    },
-   "alt": [],
+   "alt": [
+    {
+     "platform": "lanzou",
+     "platform_name": "蓝奏云",
+     "pwd": "gkln",
+     "detail": "分享有效｜恶魔之心：猎人 机翻汉化补丁.zip",
+     "source": "desc",
+     "where": "视频简介",
+     "share_id": "idF3k1ru6cif"
+    }
+   ],
    "dead": [
     {
      "platform": "baidu",
@@ -3388,7 +3496,23 @@
      "share_id": "1A_tJhr1VxYqKGUdREKgr5g"
     }
    ],
-   "candidates": []
+   "candidates": [],
+   "reshare": [
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "u8bq",
+     "detail": "/汉化补丁补档/恶魔之心：猎人 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:12",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:12"
+    }
+   ]
   },
   "不速之死": {
    "state": "reshared",
@@ -4070,6 +4194,21 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": ""
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "eedv",
+     "detail": "/汉化补丁补档/别吃收银员！ 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:27",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:27",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -4107,6 +4246,20 @@
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
      "checked_at": "2026-11-19 05:42"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "eedv",
+     "detail": "/汉化补丁补档/别吃收银员！ 汉化补丁.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:27",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-19 07:27"
     }
    ]
   },

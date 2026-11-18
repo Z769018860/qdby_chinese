@@ -359,6 +359,24 @@ def delete_file(s, fid):
     return r.status_code in (200, 204)
 
 
+def rename_file(s, fid, name):
+    """给云端文件改名（PATCH /drive/v1/files/<id>）
+
+    分享是按 file_id 建的，改名后分享内容跟着变，不用重建分享。
+    补档时发现「文件内容与作品名反了」可以直接对调名字。
+    """
+    import requests as _rq
+    h = {'Authorization': 'Bearer ' + s.access_token(),
+         'x-captcha-token': s.captcha_token('patch:/drive/v1/files'),
+         'x-client-id': CLIENT_ID, 'x-device-id': s.dev,
+         'Origin': 'https://pan.xunlei.com', 'Referer': 'https://pan.xunlei.com/',
+         'User-Agent': UA, 'Content-Type': 'application/json'}
+    r = _rq.patch(API + '/drive/v1/files/' + fid, json={'name': name}, headers=h, timeout=40)
+    if r.status_code not in (200, 201):
+        raise RuntimeError('改名失败 HTTP %d：%s' % (r.status_code, r.text[:160]))
+    return (r.json() or {}).get('name')
+
+
 def get_share(s, share_id, pass_code=''):
     j = s.api('GET', '/drive/v1/share', query={
         'share_id': share_id, 'pass_code': pass_code, 'limit': '100',
