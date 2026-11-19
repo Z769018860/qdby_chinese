@@ -182,8 +182,8 @@
 
     sub.textContent = state.err && !total
       ? ui('数据暂时读取失败，请稍后重试。', 'Could not load data. Please retry shortly.')
-      : ui('来自校猫 Discord 公开公告，随同步自动更新；过期的码会自动消失。',
-           'From official Discord announcements, kept in sync automatically. Expired codes drop off by themselves.');
+      : ui('来自 Discord「礼包码」频道的官方公告，随每日同步自动更新；过期的码会自动消失。',
+           'From the official Discord gift-codes channel, kept in sync daily. Expired codes drop off by themselves.');
 
     if (!list.length) {
       body.innerHTML = `<div class="mcodeEmpty"><strong>${ui('当前没有有效期内的兑换码', 'No active codes right now')}</strong>${ui(
