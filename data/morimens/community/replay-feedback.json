@@ -1,15 +1,39 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-16T08:31:56Z",
-  "recordCount": 6,
+  "updatedAt": "2026-11-19T09:23:37Z",
+  "recordCount": 9,
   "summary": {
-    "replays": 6,
+    "replays": 8,
     "good": 4,
-    "bad": 2,
-    "problemOpen": 0,
+    "bad": 4,
+    "problemOpen": 2,
     "problemResolved": 2
   },
   "problemReplays": [
+    {
+      "replayId": "169004c1-76b8-38ce-813e-78734e43cb29",
+      "bad": 1,
+      "good": 0,
+      "notes": [],
+      "lastAt": "2026-11-17T05:17:45Z",
+      "status": "open",
+      "resolvedAt": null,
+      "resolvedBy": null,
+      "resolvedNote": null
+    },
+    {
+      "replayId": "f01f2a53-69a9-3df2-a31e-24141a2c0262",
+      "bad": 1,
+      "good": 0,
+      "notes": [
+        "幸运那错了，超维戒指下的维度影像"
+      ],
+      "lastAt": "2026-11-17T05:15:54Z",
+      "status": "open",
+      "resolvedAt": null,
+      "resolvedBy": null,
+      "resolvedNote": null
+    },
     {
       "replayId": "06928b48-73a5-36f3-98ba-12af76943c71",
       "bad": 1,
@@ -34,6 +58,45 @@
     }
   ],
   "records": [
+    {
+      "commentId": "143",
+      "submittedAt": "2026-11-17T05:17:45Z",
+      "replayId": "169004c1-76b8-38ce-813e-78734e43cb29",
+      "kind": "bad",
+      "note": "",
+      "battleTid": 88399,
+      "stageId": 153520,
+      "player": "月华往来",
+      "lang": "zh",
+      "time": "2026-11-17T05:17:46.266Z",
+      "page": "/morimens-tools.html"
+    },
+    {
+      "commentId": "142",
+      "submittedAt": "2026-11-17T05:15:54Z",
+      "replayId": "f01f2a53-69a9-3df2-a31e-24141a2c0262",
+      "kind": "note",
+      "note": "幸运那错了，超维戒指下的维度影像",
+      "battleTid": 87879,
+      "stageId": 82782,
+      "player": "月华往来",
+      "lang": "zh",
+      "time": "2026-11-17T05:15:55.667Z",
+      "page": "/morimens-tools.html"
+    },
+    {
+      "commentId": "141",
+      "submittedAt": "2026-11-17T05:14:47Z",
+      "replayId": "f01f2a53-69a9-3df2-a31e-24141a2c0262",
+      "kind": "bad",
+      "note": "",
+      "battleTid": 87879,
+      "stageId": 82782,
+      "player": "月华往来",
+      "lang": "zh",
+      "time": "2026-11-17T05:14:47.863Z",
+      "page": "/morimens-tools.html"
+    },
     {
       "commentId": "131",
       "submittedAt": "2026-11-13T08:51:34Z",

@@ -1,8 +1,50 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-16T08:31:56Z",
-  "recordCount": 58,
+  "updatedAt": "2026-11-19T09:23:37Z",
+  "recordCount": 61,
   "records": [
+    {
+      "commentId": "144",
+      "type": "dzone",
+      "uid": "100722449",
+      "submittedBy": "幻灭",
+      "submittedAt": "2026-11-19T00:36:23.385Z",
+      "summary": "第 73 期 · 495 分 · 9 支队伍",
+      "summaryZh": "第 73 期 · 495 分 · 9 支队伍",
+      "summaryEn": "Season 73 · 495 pts · 9 teams",
+      "score": 495,
+      "teams": 9,
+      "seasonId": 73,
+      "communityVariant": "default"
+    },
+    {
+      "commentId": "140",
+      "type": "dzone",
+      "uid": "101079783",
+      "submittedBy": "匿名",
+      "submittedAt": "2026-11-17T05:09:14.551Z",
+      "summary": "第 73 期 · 485 分 · 9 支队伍",
+      "summaryZh": "第 73 期 · 485 分 · 9 支队伍",
+      "summaryEn": "Season 73 · 485 pts · 9 teams",
+      "score": 485,
+      "teams": 9,
+      "seasonId": 73,
+      "communityVariant": "default"
+    },
+    {
+      "commentId": "139",
+      "type": "dzone",
+      "uid": "101946975",
+      "submittedBy": "匿名",
+      "submittedAt": "2026-11-16T09:30:21.935Z",
+      "summary": "第 73 期 · 460 分 · 5 支队伍",
+      "summaryZh": "第 73 期 · 460 分 · 5 支队伍",
+      "summaryEn": "Season 73 · 460 pts · 5 teams",
+      "score": 460,
+      "teams": 5,
+      "seasonId": 73,
+      "communityVariant": "default"
+    },
     {
       "commentId": "138",
       "type": "dzone",
