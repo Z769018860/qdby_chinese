@@ -64,3 +64,124 @@ node scripts/netdisk/check_spa.mjs input.json output.json
 - 提取码有时写在链接附近的正文里，脚本按「链接后 80 字」匹配，个别条目可能取到相邻链接的提取码，已用浏览器自动填码复核微云/城通；
 - 视频被删除或改私密的，只能拿到 404 提示，无法补链接；
 - 网盘状态随时会变（尤其夸克的违规封禁），建议每周重跑一次。
+
+## 补档：链接失效 / 缺平台时重新挂一条
+
+三个脚本分工明确，别混着用：
+
+| 脚本 | 处理什么 | 会不会下载文件 |
+| --- | --- | --- |
+| `reshare.py` | 已有链接失效，但**自己网盘里还留着**同名文件 → 重新建分享 | 不下载 |
+| `xunlei_backfill.py` | 缺迅雷链接，且**迅雷云端已有**同名文件 → 直接建分享 | 不下载 |
+| `xunlei_fetchfill.py` | 缺迅雷链接，且**迅雷云端没有** → 从站上登记的存活链接取回文件，传上去再分享 | 下载 + 上传 |
+
+### 取文件 → 传迅雷 的完整链路
+
+```bash
+# 1) 先摸清所有分享里有什么（只读，不转存、不占空间）
+python scripts/netdisk/xunlei_fetchfill.py --harvest
+
+# 2) 看起来要补哪些、各自从哪个盘取
+python scripts/netdisk/xunlei_fetchfill.py --dry
+
+# 3) 先跑一个验证，再全量
+python scripts/netdisk/xunlei_fetchfill.py --only 某作品名
+python scripts/netdisk/xunlei_fetchfill.py
+```
+
+内部步骤（百度源）：
+
+1. `share/verify` 用提取码换 `randsk`，**后续 `share/list` 必须带 `sekey`**，否则一律 `errno=-9`；
+2. `share/list` 递归遍历分享（`dir` 翻子目录，根目录要带 `root=1`）；
+3. 挑文件 → `share/transfer` 转存到自己的 `/汉化补丁补档/_tmp/<作品名>/`；
+4. `api/filemetas` 拿 `dlink`，用 `User-Agent: pan.baidu.com` 直连下载（实测 20 MB/s 级）；
+5. 上传迅雷：`POST /drive/v1/files` 拿阿里云 STS + OSS key，
+   自己签 OSS V1 头 `PUT` 到 `vip-lixian-*.up.xdrive.xunlei.com`，传完条目自动 `PHASE_TYPE_COMPLETE`；
+6. `POST /drive/v1/share` 建分享，`GET /drive/v1/share` 用 `share_status=OK` 判活；
+7. 写 `data/netdisk-reshare.json` 的 `links.xunlei`，核验失败的绝不落台账。
+
+### 已经挂进每日巡检
+
+`daily_check.py` 每天 0 点自动跑上面两条迅雷补档，顺序是「云端已有 → 秒级建分享」在前、
+「从原网盘取回 → 上传 → 建分享」在后：
+
+```
+python scripts/netdisk/daily_check.py --push --sync-main
+  ├─ 自动补档      auto_reshare.py
+  ├─ 迅雷补链接    xunlei_backfill.py      （云端已有同名文件）
+  └─ 迅雷取回补档  xunlei_fetchfill.py     （下载 → 上传 → 分享）
+```
+
+- 取回补档默认限时 **90 分钟**（`--fetch-minutes`）、不限制条数（`--fetch-limit`）；
+  跑到时间上限就停，脚本把自己跳过的作品留给下一轮（已完成的不会重做，判定靠
+  `alive_xunlei()`：台账里有非 dead 的迅雷链接、或 `netdisk-reshare.json` 里有核验通过的，都算完成）。
+- 结果写在 `work/xunlei-fetchfill.json`（每部作品的 state / note / 上传条目 / 链接），
+  **不进 git**；成功的链接落 `data/netdisk-reshare.json`，跟巡检一起 commit。
+- 巡检末尾会打印一行给定时任务解析：
+  `迅雷取回补档：补上 X ／ 失败 Y ／ 源不支持 Z ／ 待挑 W ／ 无源 V ／ 未跑完 U`。
+- 告警邮件正文里也会带上这一轮的补档结果（`work/netdisk-alert.json` 的 `backfill` 字段）。
+
+相关开关：`--no-fetchfill` 只补云端已有的、不下载不上传；`--no-reshare` 整个补档环节都跳过。
+
+### 两个容易踩的坑
+
+- **UP 主的链接经常互相指错**（A 作品的链接指向 B 作品的分享），
+  所以 `--harvest` 会把所有分享的文件汇成 `work/fetchfill-pool.json`，
+  挑文件时优先用池，而不是只信这一条链接指向的分享。
+- **文件名未必是中文作品名**（`ツギハギの幸福` → `tsugihagi1.03`、`可怕的怪物` → `SpookyMonster`），
+  纯相似度对不上时写进 `data/netdisk-fetchalias.json`（归一化后子串匹配，命中多个取最大）。
+
+### 目前还取不了的源
+
+`ctfile`（城通）、`123pan`、`lanzou`（蓝奏）、`quark` 的直链解析还没做，
+这几种来源的作品会记成 `unsupported_source`；`--harvest` 若在别人的合集分享里
+摸到了同名文件，仍可走文件池补齐。
+
+
+## 贴错行的链接怎么修
+
+`data.json` 的「汉化发布地址」是手工维护的，UP 主同期发的几个视频很容易串行：
+条目名是 A，bvid 却指向 B 的视频，desc 里那串网盘链接自然也是 B 的补丁。
+
+```bash
+python scripts/netdisk/apply_videofix.py --dry   # 先看会改什么
+python scripts/netdisk/apply_videofix.py         # 应用
+```
+
+- `data/netdisk-videofix.json`：整条视频贴错行（bvid/标题/简介/置顶一起换）
+- `data/netdisk-linkfix.json`：只是某一行链接指到别的作品（标 dead，站点不再展示为可用）
+- 两处都会同时改 `data.json` 与 `data/netdisk-links.json`，所以 `refresh.py` 重跑后依然是修好的。
+- `autofill.py` 每轮会重放一遍 linkfix，防止 refresh 重建 links 时把标记冲掉。
+
+## 本机已有成品包时
+
+```json
+// data/netdisk-localfiles.json
+{"map": {"HIKEBACK": "E:/renpy-8.0.3-sdk/HIKEBACK/HIKEBACK汉化完整版.zip"}}
+```
+
+`xunlei_fetchfill.py` 看到 `local` 源就直接上传，不再走网盘下载。
+
+## 取不到文件的几个平台（2026-11）
+
+| 平台 | 状况 |
+| --- | --- |
+| 微云 | 分享内容匿名可读，但**取下载直链必须登录**（匿名返 `ret=-3000 无登录态`）。`weiyun.py` 已把接口实现好了，只是登录态要从浏览器 Cookies 库读，而浏览器开着时那个库被独占锁住——关掉浏览器后 `python scripts/netdisk/weiyun.py cookie` 能读 |
+| 123 云盘 | 「浏览器下载」弹付费二维码；「保存至云盘」要登录 |
+| 城通 | 免费通道约 29 KB/s，100 MB 要 1 小时，且按钮是 SPA，选择器不稳 |
+| 夸克 | `/file/download` 对单文件 >50 MB 直接返 23018，文件在自己网盘里也一样 |
+| 蓝奏 | 有 acw_sc__v2 JS 挑战，但小补丁通常已在文件池里，用别名匹配即可 |
+
+360 / Edge 正在运行时，`Cookies`（SQLite）被主进程独占，复制 profile 也读不到登录态。
+
+## 微云分享下载（weiyun.py）
+
+```bash
+python scripts/netdisk/weiyun.py view 3sblmV9F            # 匿名看分享里有什么
+python scripts/netdisk/weiyun.py get  3sblmV9F --out xx.zip   # 下载（要登录态）
+```
+
+- 分享页把 `window.syncData` 直接 SSR 进 HTML，不带密码的分享不用请求接口就能拿到 `file_list`；
+  带密码的走 `weiyunShareNoLogin/WeiyunShareView`（传 `share_pwd`）。
+- 下载走 `weiyunShare/WeiyunShareBatchDownload`（cmd 12024），`g_tk` **必须是 cookie 里的 `wyctoken`**，
+  填 5381 会直接 403；拿到的 `https_download_url` 还要带响应给的 `FTN5K` cookie 才能下。

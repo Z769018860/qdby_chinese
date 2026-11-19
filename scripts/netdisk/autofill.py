@@ -203,6 +203,15 @@ def main():
           % (len(hunt), sum(len(v.get('comments') or []) for v in hunt.values())))
 
     games = led['games']
+    # 人工登记的「指错行」链接（内容其实是别的作品）在这里落地，
+    # 每次 re-filter 重跑都补一遍，免得 refresh 重建 links 时把标记冲掉。
+    try:
+        from apply_videofix import apply_linkfix
+        if apply_linkfix(led):
+            json.dump(led, open(os.path.join(REPO, 'data', 'netdisk-links.json'), 'w',
+                                encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
+    except Exception as e:
+        print('  ! 链接指错修正跳过：%s' % str(e)[:120])
     print('作品 %d 个，链接 %d 条' % (len(games), sum(len(g.get('links') or []) for g in games)))
 
     out = {'meta': {}, 'games': {}}
