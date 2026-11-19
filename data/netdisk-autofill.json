@@ -1,7 +1,7 @@
 {
  "meta": {
-  "generated_at": "2026-11-19 07:30",
-  "source_checked_at": "2026-11-19 05:50",
+  "generated_at": "2026-11-20 00:16",
+  "source_checked_at": "2026-11-20 00:16",
   "games": 64,
   "summary": {
    "ok": 0,
@@ -35,7 +35,7 @@
     "at": "2026-11-19 07:10",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 07:10",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -82,7 +82,7 @@
      "at": "2026-11-19 07:10",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:10"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -106,7 +106,7 @@
     "at": "2026-11-19 06:12",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:12",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -125,7 +125,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "AmMd",
-     "detail": "分享已被封禁（文件涉及违规内容）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "302f48898702"
@@ -145,7 +145,7 @@
      "at": "2026-11-19 06:12",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:12"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -169,7 +169,7 @@
     "at": "2026-11-19 06:01",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:01",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -198,7 +198,7 @@
      "at": "2026-11-19 06:01",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:01"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -222,7 +222,7 @@
     "at": "2026-11-19 06:13",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:13",
+    "checked_at": "2026-11-20 00:01",
     "url": "https://pan.xunlei.com/s/VP6kiBPGoAHgWltpTFRcHAhwA1?pwd=az3g",
     "no_video": true,
     "from_reshare": true
@@ -253,7 +253,7 @@
      "at": "2026-11-19 06:13",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:13",
+     "checked_at": "2026-11-20 00:01",
      "url": "https://pan.xunlei.com/s/VP6kiBPGoAHgWltpTFRcHAhwA1?pwd=az3g",
      "no_video": true
     }
@@ -279,7 +279,7 @@
     "at": "2026-11-19 06:16",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:16",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -308,7 +308,7 @@
      "at": "2026-11-19 06:16",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:16"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -332,7 +332,7 @@
     "at": "2026-10-24 22:11",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -351,7 +351,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "wMiR",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "b7b1e6055406"
@@ -360,7 +360,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "wMiR",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "5cfc2ad79a6d"
@@ -380,7 +380,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -404,7 +404,7 @@
     "at": "2026-11-19 06:17",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:17",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -433,7 +433,7 @@
      "at": "2026-11-19 06:17",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:17"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -457,7 +457,7 @@
     "at": "2026-11-19 06:17",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:17",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -486,7 +486,7 @@
      "at": "2026-11-19 06:17",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:17"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -510,7 +510,7 @@
     "at": "2026-11-19 06:18",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:18",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -539,7 +539,7 @@
      "at": "2026-11-19 06:18",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:18"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -563,7 +563,7 @@
     "at": "2026-11-19 06:18",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:18",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -592,7 +592,7 @@
      "at": "2026-11-19 06:18",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:18"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -616,7 +616,7 @@
     "at": "2026-11-19 06:19",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:19",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -654,7 +654,7 @@
      "at": "2026-11-19 06:19",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:19"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -678,7 +678,7 @@
     "at": "2026-10-24 22:09",
     "check": "status=1",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -733,7 +733,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "U44Z",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "fb7d7e01f866"
@@ -742,7 +742,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "Uurz",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "8364570fa481"
@@ -762,7 +762,7 @@
      "at": "2026-10-24 22:09",
      "check": "status=1",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -817,7 +817,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "ejm6",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1DAqNIhnDWAcQNWf00j1H_w"
@@ -826,7 +826,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "FLd5",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "ef0f6ffdb1e1"
@@ -835,7 +835,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "Vp15",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "ff13dece379d"
@@ -863,7 +863,7 @@
     "at": "2026-10-30 00:04",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -914,8 +914,8 @@
      "verified": true,
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
-     "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked": "unknown",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -924,7 +924,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "eX6G",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "e6baf1abb1d3"
@@ -944,7 +944,7 @@
      "at": "2026-10-30 00:04",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -957,8 +957,8 @@
      "verified": true,
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
-     "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked": "unknown",
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -982,7 +982,7 @@
     "at": "2026-10-24 22:11",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1010,7 +1010,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "2gcy",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1OF25L4HEX00_JHZaXZdq_A"
@@ -1019,7 +1019,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "bwyd",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "a227dde020c2"
@@ -1028,7 +1028,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "6u1V",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "e445d3ad3c0f"
@@ -1037,7 +1037,7 @@
      "platform": "uc",
      "platform_name": "UC网盘",
      "pwd": "bXRu",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "7a1ca4a8e4804"
@@ -1057,7 +1057,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1081,7 +1081,7 @@
     "at": "2026-10-24 22:11",
     "check": "errno=-9",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1127,7 +1127,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "3w4c",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "10aV7oN1zITo4Q5g4LJP9GA"
@@ -1136,7 +1136,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "RGSm",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "e477f65feaa8"
@@ -1156,7 +1156,7 @@
      "at": "2026-10-24 22:11",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1180,7 +1180,7 @@
     "at": "2026-11-19 06:19",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:19",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1218,7 +1218,7 @@
      "at": "2026-11-19 06:19",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:19"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1242,7 +1242,7 @@
     "at": "2026-11-19 06:20",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:20",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1271,7 +1271,7 @@
      "at": "2026-11-19 06:20",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:20"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1295,7 +1295,7 @@
     "at": "2026-11-19 06:20",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:20",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1324,7 +1324,7 @@
      "at": "2026-11-19 06:20",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:20"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1348,7 +1348,7 @@
     "at": "2026-11-19 06:21",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:21",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1377,7 +1377,7 @@
      "at": "2026-11-19 06:21",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:21"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1401,7 +1401,7 @@
     "at": "2026-11-19 06:22",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:22",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1430,7 +1430,7 @@
      "at": "2026-11-19 06:22",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:22"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1454,7 +1454,7 @@
     "at": "2026-11-19 06:23",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:23",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1492,7 +1492,7 @@
      "at": "2026-11-19 06:23",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:23"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1516,7 +1516,7 @@
     "at": "2026-11-19 06:26",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:26",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1545,7 +1545,7 @@
      "at": "2026-11-19 06:26",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:26"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1569,7 +1569,7 @@
     "at": "2026-11-19 06:29",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:29",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1598,7 +1598,7 @@
      "at": "2026-11-19 06:29",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:29"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1622,7 +1622,7 @@
     "at": "2026-11-19 06:31",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:31",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1651,7 +1651,7 @@
      "at": "2026-11-19 06:31",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:31"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1675,7 +1675,7 @@
     "at": "2026-11-19 06:35",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:35",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1704,7 +1704,7 @@
      "at": "2026-11-19 06:35",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:35"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1728,7 +1728,7 @@
     "at": "2026-10-24 22:11",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1753,7 +1753,7 @@
      "at": "2026-11-19 06:35",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:35",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -1762,7 +1762,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "AkUR",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "4d8a94a454f3"
@@ -1782,7 +1782,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -1796,7 +1796,7 @@
      "at": "2026-11-19 06:35",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:35"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1820,7 +1820,7 @@
     "at": "2026-11-19 06:35",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:35",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1849,7 +1849,7 @@
      "at": "2026-11-19 06:35",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:35"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1873,7 +1873,7 @@
     "at": "2026-11-15 00:05",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1898,7 +1898,7 @@
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -1907,7 +1907,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "9zQg",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "9b7b131baf30"
@@ -1927,7 +1927,7 @@
      "at": "2026-11-15 00:05",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -1941,7 +1941,7 @@
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -1965,7 +1965,7 @@
     "at": "2026-10-24 22:11",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -1993,7 +1993,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "uZEx",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "531bc6015b3f"
@@ -2013,7 +2013,7 @@
      "at": "2026-10-24 22:11",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2037,7 +2037,7 @@
     "at": "2026-10-24 22:12",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2065,7 +2065,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "NjAj",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "00dffb67943b"
@@ -2094,7 +2094,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2118,7 +2118,7 @@
     "at": "2026-10-24 22:12",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2155,7 +2155,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "38iF",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "d707fbc6e074"
@@ -2175,7 +2175,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2199,7 +2199,7 @@
     "at": "2026-10-24 22:12",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2236,7 +2236,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "1WkS",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "aacaa363282f"
@@ -2256,7 +2256,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2280,7 +2280,7 @@
     "at": "2026-10-28 03:08",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2314,7 +2314,7 @@
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -2323,7 +2323,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "qKNp",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "849df8014b17"
@@ -2332,7 +2332,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "d8vs",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "0a1e3c67c472"
@@ -2341,7 +2341,7 @@
      "platform": "ctfile",
      "platform_name": "城通网盘",
      "pwd": "gk4sj4",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": ""
@@ -2361,7 +2361,7 @@
      "at": "2026-10-28 03:08",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -2375,7 +2375,7 @@
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2399,26 +2399,16 @@
     "at": "2026-10-28 02:08",
     "check": "",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
-   "alt": [
-    {
-     "platform": "xunlei",
-     "platform_name": "迅雷云盘",
-     "pwd": "cejm",
-     "detail": "分享有效（需提取码）｜永久有效｜舌头上的动物园 汉化补丁1.0.zip 15.9MB 2026-01-06 21:23 ",
-     "source": "desc",
-     "where": "视频简介",
-     "share_id": "VOiITcGJud8b9aFLSLFdI1nRA1"
-    }
-   ],
+   "alt": [],
    "dead": [
     {
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "tjck",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "19hK8KkVXFLy3IfY70pw_eg"
@@ -2427,7 +2417,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "5mkx",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "1oDNRBPmxr_KjnppmdGX4Og"
@@ -2436,7 +2426,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "3umf",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "up_comment",
      "where": "UP 主评论",
      "share_id": "1VHUrWgoOHfDzyMnP9uTlFw"
@@ -2445,7 +2435,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "XiEz",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "246f4d295926"
@@ -2454,7 +2444,7 @@
      "platform": "uc",
      "platform_name": "UC网盘",
      "pwd": "4xEq",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "d05786e3dbc84"
@@ -2474,7 +2464,7 @@
      "at": "2026-10-28 02:08",
      "check": "",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2498,7 +2488,7 @@
     "at": "2026-10-28 03:08",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2553,7 +2543,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "aeTt",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "b1670df90436"
@@ -2562,7 +2552,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "d6pz",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "up_comment",
      "where": "UP 主评论",
      "share_id": "980575fd2e8e"
@@ -2582,7 +2572,7 @@
      "at": "2026-10-28 03:08",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2606,7 +2596,7 @@
     "at": "2026-11-19 06:56",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:56",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2635,7 +2625,7 @@
      "at": "2026-11-19 06:56",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:56"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2659,7 +2649,7 @@
     "at": "2026-10-28 03:08",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2684,7 +2674,7 @@
      "at": "2026-11-19 06:36",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:36",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -2693,7 +2683,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "Xr9D",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "0cc65915c309"
@@ -2726,7 +2716,7 @@
      "at": "2026-10-28 03:08",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -2740,7 +2730,7 @@
      "at": "2026-11-19 06:36",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:36"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2764,7 +2754,7 @@
     "at": "2026-11-19 06:37",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:37",
+    "checked_at": "2026-11-20 00:01",
     "url": "https://pan.xunlei.com/s/VP6knb8h1-TDTop6qxSxYfmPA1?pwd=478d",
     "no_video": true,
     "from_reshare": true
@@ -2795,7 +2785,7 @@
      "at": "2026-11-19 06:37",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37",
+     "checked_at": "2026-11-20 00:01",
      "url": "https://pan.xunlei.com/s/VP6knb8h1-TDTop6qxSxYfmPA1?pwd=478d",
      "no_video": true
     }
@@ -2821,7 +2811,7 @@
     "at": "2026-10-24 22:12",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2846,7 +2836,7 @@
      "at": "2026-11-19 06:37",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -2855,7 +2845,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "VPSs",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "ea843c28afe4"
@@ -2875,7 +2865,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -2889,7 +2879,7 @@
      "at": "2026-11-19 06:37",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -2913,7 +2903,7 @@
     "at": "2026-10-24 22:12",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -2938,7 +2928,7 @@
      "at": "2026-11-19 06:37",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -2947,7 +2937,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "HgjG",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "93069786f079"
@@ -2967,7 +2957,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -2981,7 +2971,7 @@
      "at": "2026-11-19 06:37",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3005,7 +2995,7 @@
     "at": "2026-10-29 00:06",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3017,6 +3007,21 @@
      "source": "up_comment",
      "where": "UP 主评论",
      "share_id": "VOmFlnMQuNyWGoD8c6c6jjzxA1"
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/个人汉化/个人汉化/爱情寄生虫 汉化完整版.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:09",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -3024,7 +3029,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "l5zo",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1jAimzdUD4aCQIRvsZZnXeQ"
@@ -3044,7 +3049,21 @@
      "at": "2026-10-29 00:06",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/个人汉化/个人汉化/爱情寄生虫 汉化完整版.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:09",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3068,7 +3087,7 @@
     "at": "2026-10-24 23:21",
     "check": "errno=-9",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3102,7 +3121,7 @@
      "at": "2026-10-24 22:41",
      "check": "status=1",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     },
     {
@@ -3117,7 +3136,7 @@
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -3126,7 +3145,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "p0ag",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1_Tnf_8MG-0_1yZL0Zpy3kw"
@@ -3135,7 +3154,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "hEf2",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "4045e8716360"
@@ -3144,7 +3163,7 @@
      "platform": "ctfile",
      "platform_name": "城通网盘",
      "pwd": "1528",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": ""
@@ -3153,7 +3172,7 @@
      "platform": "ctfile",
      "platform_name": "城通网盘",
      "pwd": "gibybv",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": ""
@@ -3173,7 +3192,7 @@
      "at": "2026-10-24 23:21",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "quark",
@@ -3187,7 +3206,7 @@
      "at": "2026-10-24 22:41",
      "check": "status=1",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -3201,7 +3220,7 @@
      "at": "2026-11-19 05:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3225,7 +3244,7 @@
     "at": "2026-10-24 23:20",
     "check": "errno=-9",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3250,7 +3269,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     },
     {
@@ -3265,7 +3284,7 @@
      "at": "2026-11-19 07:27",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:27",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -3274,7 +3293,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "6ydw",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1HYbELL2mt7A9AbfY8BYKtg"
@@ -3283,7 +3302,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "2nY6",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "c3635ad46422"
@@ -3303,7 +3322,7 @@
      "at": "2026-10-24 23:20",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "quark",
@@ -3317,7 +3336,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -3331,7 +3350,7 @@
      "at": "2026-11-19 07:27",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:27"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3355,7 +3374,7 @@
     "at": "2026-11-19 06:38",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:38",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3384,7 +3403,7 @@
      "at": "2026-11-19 06:38",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:38"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3397,18 +3416,18 @@
     "pubdate": "2024-03-03"
    },
    "active": {
-    "platform": "xunlei",
-    "platform_name": "迅雷云盘",
-    "pwd": "e32u",
-    "detail": "/汉化补丁补档/恶魔之心 汉化补丁.zip",
+    "platform": "baidu",
+    "platform_name": "百度网盘",
+    "pwd": "qdby",
+    "detail": "/汉化补丁补档/_tmp/恶魔之心",
     "source": "comment",
     "where": "视频置顶评论（补档）",
     "share_id": "",
     "verified": true,
-    "at": "2026-11-19 07:12",
-    "check": "share_status=OK ",
+    "at": "2026-11-20 00:07",
+    "check": "errno=-9",
     "checked": "ok",
-    "checked_at": "2026-11-19 07:12",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3420,6 +3439,21 @@
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "iW0Ug1q78fcf"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "e32u",
+     "detail": "/汉化补丁补档/恶魔之心 汉化补丁.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-19 07:12",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -3427,7 +3461,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "0nnn",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "1Bu3lcAQK7pdPbSMvhIWoqg"
@@ -3435,6 +3469,20 @@
    ],
    "candidates": [],
    "reshare": [
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/恶魔之心",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:07",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01"
+    },
     {
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
@@ -3447,7 +3495,7 @@
      "at": "2026-11-19 07:12",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:12"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3471,7 +3519,7 @@
     "at": "2026-11-19 07:12",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 07:12",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3483,6 +3531,21 @@
      "source": "desc",
      "where": "视频简介",
      "share_id": "idF3k1ru6cif"
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/恶魔之心：猎人",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:07",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -3490,7 +3553,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "gkln",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1A_tJhr1VxYqKGUdREKgr5g"
@@ -3510,7 +3573,21 @@
      "at": "2026-11-19 07:12",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:12"
+     "checked_at": "2026-11-20 00:01"
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/恶魔之心：猎人",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:07",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3534,7 +3611,7 @@
     "at": "2026-11-19 06:41",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:41",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3563,7 +3640,7 @@
      "at": "2026-11-19 06:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:41"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3587,7 +3664,7 @@
     "at": "2026-10-24 22:12",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3621,7 +3698,7 @@
      "at": "2026-11-19 06:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:41",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -3630,7 +3707,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "PTRp",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "03c50cd0bb46"
@@ -3650,7 +3727,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -3664,7 +3741,7 @@
      "at": "2026-11-19 06:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:41"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3688,7 +3765,7 @@
     "at": "2026-11-19 06:41",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:41",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3717,7 +3794,7 @@
      "at": "2026-11-19 06:41",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:41"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3738,11 +3815,11 @@
     "where": "本站补档",
     "share_id": "",
     "verified": true,
-    "at": "2026-11-17 00:05",
+    "at": "2026-11-20 00:07",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
-    "url": "https://pan.quark.cn/s/332efde8c5bd",
+    "checked_at": "2026-11-20 00:01",
+    "url": "https://pan.quark.cn/s/52b800780030",
     "no_video": true,
     "from_reshare": true
    },
@@ -3771,7 +3848,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "Tfnr",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "weibo",
      "where": "微博原文",
      "share_id": "7592f83e7545"
@@ -3780,7 +3857,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "thfd",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "weibo",
      "where": "微博原文",
      "share_id": "c7a6308b4f59"
@@ -3797,11 +3874,11 @@
      "where": "本站补档",
      "share_id": "",
      "verified": true,
-     "at": "2026-11-17 00:05",
+     "at": "2026-11-20 00:07",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
-     "url": "https://pan.quark.cn/s/332efde8c5bd",
+     "checked_at": "2026-11-20 00:01",
+     "url": "https://pan.quark.cn/s/52b800780030",
      "no_video": true
     }
    ]
@@ -3826,7 +3903,7 @@
     "at": "2026-11-02 00:05",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3842,7 +3919,22 @@
      "at": "2026-11-19 06:43",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:43",
+     "checked_at": "2026-11-20 00:01",
+     "from_reshare": true
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/冬鸦何处去",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:07",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -3851,7 +3943,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "rajl",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1Gfv3o5OrV-Y_cjm217TyUQ"
@@ -3860,7 +3952,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "BgmE",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "625a66c341d1"
@@ -3869,7 +3961,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "1ukP",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "up_comment",
      "where": "UP 主评论",
      "share_id": "8e9e4cff4611"
@@ -3889,7 +3981,7 @@
      "at": "2026-11-02 00:05",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -3903,7 +3995,21 @@
      "at": "2026-11-19 06:43",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:43"
+     "checked_at": "2026-11-20 00:01"
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/冬鸦何处去",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:07",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3927,7 +4033,7 @@
     "at": "2026-11-19 06:44",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:44",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3956,7 +4062,7 @@
      "at": "2026-11-19 06:44",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:44"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -3980,7 +4086,7 @@
     "at": "2026-10-25 00:35",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -3996,7 +4102,22 @@
      "at": "2026-11-19 06:48",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:48",
+     "checked_at": "2026-11-20 00:01",
+     "from_reshare": true
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/销魂罪人",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:09",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -4005,7 +4126,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "c3xi",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "15udWdc7EQcXUfmkO6QekJA"
@@ -4025,7 +4146,7 @@
      "at": "2026-10-25 00:35",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -4039,7 +4160,21 @@
      "at": "2026-11-19 06:48",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:48"
+     "checked_at": "2026-11-20 00:01"
+    },
+    {
+     "platform": "baidu",
+     "platform_name": "百度网盘",
+     "pwd": "qdby",
+     "detail": "/汉化补丁补档/_tmp/销魂罪人",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:09",
+     "check": "errno=-9",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4063,7 +4198,7 @@
     "at": "2026-10-24 22:12",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4088,7 +4223,7 @@
      "at": "2026-11-19 06:52",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:52",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -4097,7 +4232,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "gZP3",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "d2a976a8cf14"
@@ -4117,7 +4252,7 @@
      "at": "2026-10-24 22:12",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -4131,7 +4266,7 @@
      "at": "2026-11-19 06:52",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:52"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4155,7 +4290,7 @@
     "at": "2026-11-16 00:05",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4207,7 +4342,7 @@
      "at": "2026-11-19 07:27",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:27",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -4216,7 +4351,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "KdJV",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "e84b113d573c"
@@ -4225,7 +4360,7 @@
      "platform": "ctfile",
      "platform_name": "城通网盘",
      "pwd": "1528",
-     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "文件不存在或已被删除｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": ""
@@ -4245,7 +4380,7 @@
      "at": "2026-11-16 00:05",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "xunlei",
@@ -4259,7 +4394,7 @@
      "at": "2026-11-19 07:27",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:27"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4283,7 +4418,7 @@
     "at": "2026-11-19 06:52",
     "check": "share_status=OK ",
     "checked": "ok",
-    "checked_at": "2026-11-19 06:52",
+    "checked_at": "2026-11-20 00:01",
     "url": "https://pan.xunlei.com/s/VP6krEf7wTijfDrdwlPcLUBxA1?pwd=ngbe",
     "no_video": true,
     "from_reshare": true
@@ -4314,7 +4449,7 @@
      "at": "2026-11-19 06:52",
      "check": "share_status=OK ",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:52",
+     "checked_at": "2026-11-20 00:01",
      "url": "https://pan.xunlei.com/s/VP6krEf7wTijfDrdwlPcLUBxA1?pwd=ngbe",
      "no_video": true
     }
@@ -4340,7 +4475,7 @@
     "at": "2026-10-31 00:15",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4359,7 +4494,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "a1s3",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1V3DaknVe_YzqV3zY4HsQWg"
@@ -4368,7 +4503,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "h79D",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "9780b9de1b7c"
@@ -4388,7 +4523,7 @@
      "at": "2026-10-31 00:15",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4412,7 +4547,7 @@
     "at": "2026-11-19 00:05",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4431,7 +4566,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "72mq",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1q21Upm-P4cM_y8xWEnsNHA"
@@ -4440,7 +4575,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "tm89",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "d891ae5de524"
@@ -4449,7 +4584,7 @@
      "platform": "uc",
      "platform_name": "UC网盘",
      "pwd": "Xx9z",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "e2f43ca43b8b4"
@@ -4469,7 +4604,7 @@
      "at": "2026-11-19 00:05",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4493,7 +4628,7 @@
     "at": "2026-10-28 03:08",
     "check": "status=1 audit=0 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4519,7 +4654,7 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "ypz5",
-     "detail": "分享有效（需提取码）｜永久有效｜梦之门 汉化补丁v1.1by青灯不弈.zip 43.9MB 2026-07-06 15:50 ",
+     "detail": "分享有效（需提取码）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "VOwqPQU1hyfxAii1mCw0LVNTA1"
@@ -4528,7 +4663,7 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "pdu5",
-     "detail": "分享有效（需提取码）",
+     "detail": "分享有效（需提取码）｜永久有效｜梦之门（冬弥雪） 汉化补丁by青灯不弈.zip 43.9MB 2026-05-10 16:50 ",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "VOsG4aIEXvegNNo9MQgXuNthA1"
@@ -4537,7 +4672,7 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "upat",
-     "detail": "分享有效（需提取码）｜永久有效｜梦之门 汉化备份.zip 340.9MB 2026-05-10 16:45 ",
+     "detail": "分享有效（需提取码）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "VOsG37JWLGwjOcLEBy26L1yHA1"
@@ -4554,7 +4689,7 @@
      "at": "2026-10-29 00:06",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "from_reshare": true
     }
    ],
@@ -4563,7 +4698,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "vu7q",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "1viVsipJI6GcrsUR_kb6jvQ"
@@ -4572,7 +4707,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "4jJg",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "ebf194eb099f"
@@ -4581,7 +4716,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "RSW6",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "d727e34ead20"
@@ -4590,7 +4725,7 @@
      "platform": "uc",
      "platform_name": "UC网盘",
      "pwd": "CC5B",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "pinned",
      "where": "置顶评论",
      "share_id": "874242a1ffa44"
@@ -4610,7 +4745,7 @@
      "at": "2026-10-28 03:08",
      "check": "status=1 audit=0 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     },
     {
      "platform": "baidu",
@@ -4624,7 +4759,7 @@
      "at": "2026-10-29 00:06",
      "check": "errno=-9",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4648,7 +4783,7 @@
     "at": "2026-11-01 00:05",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4674,10 +4809,25 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "43u2",
-     "detail": "分享有效（需提取码）",
+     "detail": "分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05 ",
      "source": "desc",
      "where": "视频简介",
      "share_id": "VOusVbmPXRqKqPVGD4QF6Jw"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "sgdn",
+     "detail": "/情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+     "source": "comment",
+     "where": "视频置顶评论（补档）",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:07",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "from_reshare": true
     }
    ],
    "dead": [
@@ -4685,7 +4835,7 @@
      "platform": "uc",
      "platform_name": "UC网盘",
      "pwd": "GpRv",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "a15712f77ccf4"
@@ -4705,7 +4855,21 @@
      "at": "2026-11-01 00:05",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
+    },
+    {
+     "platform": "xunlei",
+     "platform_name": "迅雷云盘",
+     "pwd": "sgdn",
+     "detail": "/情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+     "source": "comment",
+     "where": "评论区",
+     "share_id": "",
+     "verified": true,
+     "at": "2026-11-20 00:07",
+     "check": "share_status=OK ",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4731,7 +4895,7 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "kpvq",
-     "detail": "分享有效（需提取码）｜永久有效｜替身谎言 3项 2026-07-31 18:29 ",
+     "detail": "分享有效（需提取码）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "VOyriyR9yyRk8XQqXaSHwtK1A1"
@@ -4751,7 +4915,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "mwix",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1DYCaJZQl-aUs2063qBxm4w"
@@ -4779,7 +4943,7 @@
     "at": "2026-10-30 00:05",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4787,7 +4951,7 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "skdr",
-     "detail": "分享有效（需提取码）",
+     "detail": "分享有效（需提取码）｜永久有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip 10MB 2026-10-16 20:03 ",
      "source": "desc",
      "where": "视频简介",
      "share_id": "VP43aDVHIUFIXuga6fe"
@@ -4807,7 +4971,7 @@
      "platform": "baidu",
      "platform_name": "百度网盘",
      "pwd": "ur5j",
-     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "来晚啦，该分享已被取消｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "1KBjc7WT1ya1ptOmWS0l2SA"
@@ -4816,7 +4980,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "jiyj",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "14e3bebe2f45"
@@ -4825,7 +4989,7 @@
      "platform": "uc",
      "platform_name": "UC网盘",
      "pwd": "aePj",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "d890c62374494"
@@ -4845,7 +5009,7 @@
      "at": "2026-10-30 00:05",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   },
@@ -4869,7 +5033,7 @@
     "at": "2026-10-31 00:05",
     "check": "status=1 audit=4 viol=0",
     "checked": "ok",
-    "checked_at": "2026-11-19 05:42",
+    "checked_at": "2026-11-20 00:01",
     "from_reshare": true
    },
    "alt": [
@@ -4886,7 +5050,7 @@
      "platform": "xunlei",
      "platform_name": "迅雷云盘",
      "pwd": "estz",
-     "detail": "分享有效（需提取码）",
+     "detail": "分享有效（需提取码）｜永久有效｜死刑前的心理咨询 汉化补丁v1.01.zip 81.7MB 2026-10-18 19:58 ",
      "source": "desc",
      "where": "视频简介",
      "share_id": "VP4Ds50puFl"
@@ -4906,7 +5070,7 @@
      "platform": "quark",
      "platform_name": "夸克网盘",
      "pwd": "K3rm",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "499e10eefe3d"
@@ -4915,7 +5079,7 @@
      "platform": "uc",
      "platform_name": "UC网盘",
      "pwd": "s6Uh",
-     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
+     "detail": "分享已被封禁（文件涉及违规内容）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）｜已失效，不再重复核验（--recheck-dead 可强制复检）",
      "source": "desc",
      "where": "视频简介",
      "share_id": "6a8f0cac8f604"
@@ -4935,7 +5099,7 @@
      "at": "2026-10-31 00:05",
      "check": "status=1 audit=4 viol=0",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42"
+     "checked_at": "2026-11-20 00:01"
     }
    ]
   }
