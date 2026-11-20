@@ -224,6 +224,27 @@
           "fid": 131564499023509,
           "size": 32006416,
           "score": 1.0
+        },
+        {
+          "plat": "baidu",
+          "name": "恶魔之心",
+          "fid": 344386886455148,
+          "size": 0,
+          "score": 0.845
+        },
+        {
+          "plat": "baidu",
+          "name": "恶魔之心：猎人",
+          "fid": 1078007216793929,
+          "size": 0,
+          "score": 0.559
+        },
+        {
+          "plat": "baidu",
+          "name": "恶魔之心：猎人 机翻汉化补丁.zip",
+          "fid": 400237375888132,
+          "size": 1150053,
+          "score": 0.475
         }
       ]
     },
@@ -416,5 +437,5 @@
       "note": "RuntimeError: node C:\\Users\\Administrator\\WorkBuddy\\2026-10-24-17-17-43\\work\\clone\\scripts\\netdisk\\web_download.mjs --quark 失败：Warning: Detected unsettled top-level await at "
     }
   },
-  "ran_at": "2026-11-19 05:48"
+  "ran_at": "2026-11-20 00:09"
 }

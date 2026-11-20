@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated_at": "2026-11-19 05:48",
+  "generated_at": "2026-11-20 00:09",
   "note": "重新分享得到的补档链接；平台的登录态来自本机客户端 cookie"
  },
  "games": {
@@ -18,7 +18,7 @@
      "bvid": "BV12uxqzwEY9",
      "bili_url": "https://www.bilibili.com/video/BV12uxqzwEY9",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜自恋囚笼 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 115339853563059,
@@ -54,7 +54,7 @@
       "at": "2026-10-24 23:22"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜戏剧之爱 机翻汉化补丁by青灯不弈.zip"
     }
    }
@@ -73,7 +73,7 @@
      "bvid": "BV1bZUgBPEGz",
      "bili_url": "https://www.bilibili.com/video/BV1bZUgBPEGz",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜COLOR_COLLAR汉化补丁.zip",
      "comment": {
       "aid": 115601578133429,
@@ -93,10 +93,10 @@
      "check": "share_status=OK ",
      "path": "/COLOR_COLLAR汉化补丁.zip",
      "created_at": "2026-11-19 05:41",
-     "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked": "unknown",
+     "checked_at": "2026-11-20 00:01",
      "note": "迅雷云盘补档（首次补链接）",
-     "checked_detail": "分享有效（需提取码）｜永久有效｜COLOR_COLLAR汉化补丁.zip 52.8MB 2025-12-03 15:57 "
+     "checked_detail": "页面状态无法判定"
     }
    },
    "bvid": "BV1bZUgBPEGz",
@@ -105,18 +105,18 @@
   "不要抛下我!!": {
    "links": {
     "baidu": {
-     "url": "https://pan.baidu.com/s/1WNe_m8aotyTPVN5NndgrkQ",
+     "url": "https://pan.baidu.com/s/1jkaoQ89w02uJoIB6-G1jwg",
      "pwd": "qdby",
-     "share_id": "35064799249",
+     "share_id": "1040819303",
      "platform": "baidu",
      "verified": true,
      "check": "errno=-9",
      "path": "/不要抛下我",
-     "created_at": "2026-11-19 05:47",
+     "created_at": "2026-11-20 00:07",
      "bvid": "BV1u96wBxEak",
      "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
      "checked": "dead",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "来晚啦，该分享已被取消"
     },
     "quark": {
@@ -132,15 +132,15 @@
      "bili_url": "https://www.bilibili.com/video/BV1u96wBxEak",
      "comment": {
       "aid": 115978260186304,
-      "rpid": "324430658880",
+      "rpid": "324515990800",
       "root": 290103459760,
       "where": "reply",
       "pinned": "UP主置顶",
       "short": true,
-      "at": "2026-11-19 05:48"
+      "at": "2026-11-20 00:10"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜不要抛下我 汉化补丁.zip"
     }
    }
@@ -168,7 +168,7 @@
       "at": "2026-10-24 23:23"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效（需提取码）"
     }
    }
@@ -196,7 +196,7 @@
       "at": "2026-10-24 23:23"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜meetherthere汉化补丁.zip"
     },
     "xunlei": {
@@ -209,10 +209,11 @@
      "path": "/汉化补丁补档/meet her there 汉化补丁.zip",
      "created_at": "2026-11-19 06:35",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:35",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 14894153,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜meet her there 汉化补丁.zip 14.2MB 2026-11-19 06:35 "
     }
    },
    "bvid": "",
@@ -232,7 +233,7 @@
      "bvid": "BV1fz4y1K7zW",
      "bili_url": "https://www.bilibili.com/video/BV1fz4y1K7zW",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜灰姑娘现象 机翻汉化补丁.zip",
      "comment": {
       "aid": 575548092,
@@ -253,7 +254,7 @@
      "path": "/灰姑娘现象FD机翻润色补丁.zip",
      "created_at": "2026-11-19 05:41",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "note": "迅雷云盘补档（首次补链接）",
      "checked_detail": "分享有效（需提取码）｜永久有效｜灰姑娘现象FD机翻润色补丁.zip 704MB 2026-03-18 07:04 "
     }
@@ -284,7 +285,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜灰姑娘现象FD机翻润色补丁.zip"
     }
    }
@@ -312,7 +313,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜人类保管库 汉化版.zip"
     }
    }
@@ -340,7 +341,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜细思极恐的恐怖游戏 汉化版.zip"
     }
    }
@@ -368,7 +369,7 @@
       "at": "2026-10-24 23:24"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜并非兄妹的热病 汉化补丁.zip"
     }
    }
@@ -394,7 +395,7 @@
       "at": "2026-10-28 03:39"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜舌头上的动物园 汉化补丁1.0.zip"
     },
     "baidu": {
@@ -425,7 +426,7 @@
       "at": "2026-10-24 23:25"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜深海的勿忘草 汉化补丁.zip"
     },
     "xunlei": {
@@ -438,10 +439,11 @@
      "path": "/汉化补丁补档/深海的勿忘草 汉化补丁.zip",
      "created_at": "2026-11-19 06:37",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 34623702,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜深海的勿忘草 汉化补丁.zip 33MB 2026-11-19 06:37 "
     }
    },
    "bvid": "",
@@ -470,7 +472,7 @@
       "at": "2026-10-24 23:25"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜水手服与命中注定之人 汉化补丁.zip"
     },
     "xunlei": {
@@ -483,10 +485,11 @@
      "path": "/汉化补丁补档/水手服与命中注定之人 汉化补丁.zip",
      "created_at": "2026-11-19 06:37",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 37923993,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    },
    "bvid": "",
@@ -506,7 +509,7 @@
      "bvid": "BV1PgShBDEsc",
      "bili_url": "https://www.bilibili.com/video/BV1PgShBDEsc",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效（需提取码）",
      "comment": {
       "aid": 115652094330194,
@@ -537,7 +540,7 @@
       "at": "2026-10-24 23:25"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜惩罚之吻 汉化补丁"
     },
     "xunlei": {
@@ -550,7 +553,7 @@
      "path": "/惩罚之吻 汉化补丁.zip",
      "created_at": "2026-11-19 05:41",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "note": "迅雷云盘补档（首次补链接）",
      "checked_detail": "分享有效（需提取码）｜永久有效｜惩罚之吻 汉化补丁.zip 15.8MB 2025-12-03 15:58 "
     }
@@ -572,7 +575,7 @@
      "bvid": "BV1nqpLzXEe9",
      "bili_url": "https://www.bilibili.com/video/BV1nqpLzXEe9",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效（需提取码）",
      "comment": {
       "aid": 115194999145805,
@@ -604,7 +607,7 @@
       "at": "2026-10-24 23:26"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜HIKEBACK汉化完整版.zip"
     },
     "xunlei": {
@@ -617,10 +620,11 @@
      "path": "/汉化补丁补档/HIKEBACK 汉化补丁.zip",
      "created_at": "2026-11-19 07:27",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:27",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 75840203,
-     "note": "从现存链接取回后上传迅雷（local）"
+     "note": "从现存链接取回后上传迅雷（local）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜HIKEBACK 汉化补丁.zip 72.3MB 2026-11-19 07:27 "
     }
    },
    "bvid": "",
@@ -649,7 +653,7 @@
       "at": "2026-10-24 23:26"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜ciel机翻补丁.zip"
     },
     "xunlei": {
@@ -662,10 +666,11 @@
      "path": "/汉化补丁补档/Magical Otoge Ciel 汉化补丁.zip",
      "created_at": "2026-11-19 06:41",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:41",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 125312912,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    },
    "bvid": "",
@@ -685,15 +690,16 @@
      "bvid": "BV16C4y1271r",
      "bili_url": "https://www.bilibili.com/video/BV16C4y1271r",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜冬鸦何处去 机翻补丁.zip",
      "comment": {
       "aid": 790890367,
-      "rpid": "322642941152",
+      "rpid": "324515901888",
       "root": 194445555040,
       "where": "reply",
       "pinned": "UP主置顶",
-      "at": "2026-11-02 00:07"
+      "short": true,
+      "at": "2026-11-20 00:10"
      }
     },
     "xunlei": {
@@ -706,10 +712,42 @@
      "path": "/汉化补丁补档/冬鸦何处去 汉化补丁.zip",
      "created_at": "2026-11-19 06:43",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:43",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 412744261,
-     "note": "从现存链接取回后上传迅雷（pool）"
+     "note": "从现存链接取回后上传迅雷（pool）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜冬鸦何处去 汉化补丁.zip 393.6MB 2026-11-19 06:43 ",
+     "comment": {
+      "aid": 790890367,
+      "rpid": "324516099488",
+      "root": 194445555040,
+      "where": "reply",
+      "pinned": "UP主置顶",
+      "at": "2026-11-20 00:11"
+     }
+    },
+    "baidu": {
+     "url": "https://pan.baidu.com/s/1rS6oV5qpFynOcnuv-ObAqA",
+     "pwd": "qdby",
+     "share_id": "18176320957",
+     "platform": "baidu",
+     "verified": true,
+     "check": "errno=-9",
+     "path": "/汉化补丁补档/_tmp/冬鸦何处去",
+     "created_at": "2026-11-20 00:07",
+     "bvid": "BV16C4y1271r",
+     "bili_url": "https://www.bilibili.com/video/BV16C4y1271r",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "checked_detail": "分享有效（需提取码）",
+     "comment": {
+      "aid": 790890367,
+      "rpid": "324516099488",
+      "root": 194445555040,
+      "where": "reply",
+      "pinned": "UP主置顶",
+      "at": "2026-11-20 00:11"
+     }
     }
    },
    "bvid": "",
@@ -738,7 +776,7 @@
       "at": "2026-10-24 23:26"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜MAMIYA 机翻润色补丁1.0.zip"
     },
     "xunlei": {
@@ -751,10 +789,11 @@
      "path": "/汉化补丁补档/MAMIYA 汉化补丁.zip",
      "created_at": "2026-11-19 06:52",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:52",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 962899256,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    },
    "bvid": "",
@@ -774,7 +813,7 @@
      "bvid": "BV1j94czJEkt",
      "bili_url": "https://www.bilibili.com/video/BV1j94czJEkt",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜别吃收银员！ 汉化补丁.zip",
      "comment": {
       "aid": 115354332299302,
@@ -795,10 +834,11 @@
      "path": "/汉化补丁补档/别吃收银员！ 汉化补丁.zip",
      "created_at": "2026-11-19 07:27",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:27",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 219331274,
-     "note": "从现存链接取回后上传迅雷（local）"
+     "note": "从现存链接取回后上传迅雷（local）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜别吃收银员！ 汉化补丁.zip 209.2MB 2026-11-19 07:27 "
     }
    },
    "bvid": "",
@@ -821,7 +861,7 @@
      "bvid": "BV174wFzQEQy",
      "bili_url": "https://www.bilibili.com/video/BV174wFzQEQy",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜恶魔之心 被诅咒的试炼 汉化魔改补丁.zip",
      "comment": {
       "aid": 116210876287752,
@@ -837,18 +877,18 @@
   "替身谎言~one night liar": {
    "links": {
     "baidu": {
-     "url": "https://pan.baidu.com/s/1eDu3NVYC8I0y6cu39oDCHA",
+     "url": "https://pan.baidu.com/s/1Mv-D_UJCYmS6PCwY56TwVg",
      "pwd": "qdby",
-     "share_id": "14333415613",
+     "share_id": "47933528272",
      "platform": "baidu",
      "verified": true,
      "check": "errno=-9",
      "path": "/替身谎言",
-     "created_at": "2026-11-19 05:48",
+     "created_at": "2026-11-20 00:09",
      "bvid": "BV1ziGw6zEsC",
      "bili_url": "https://www.bilibili.com/video/BV1ziGw6zEsC",
      "checked": "dead",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "来晚啦，该分享已被取消"
     }
    }
@@ -867,7 +907,7 @@
      "bvid": "BV1bEp16TErC",
      "bili_url": "https://www.bilibili.com/video/BV1bEp16TErC",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜拍卖开始的五分钟后 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 117438985276217,
@@ -898,14 +938,15 @@
      "bili_url": "https://www.bilibili.com/video/BV1yz421m7Dp",
      "comment": {
       "aid": 1354464951,
-      "rpid": "321768466928",
+      "rpid": "324516157376",
       "root": 220712094416,
       "where": "reply",
       "pinned": "UP主置顶",
-      "at": "2026-10-25 00:36"
+      "short": true,
+      "at": "2026-11-20 00:12"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜销魂罪人 机翻润色补丁.zip"
     },
     "xunlei": {
@@ -918,10 +959,42 @@
      "path": "/汉化补丁补档/销魂罪人 汉化补丁.zip",
      "created_at": "2026-11-19 06:48",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:48",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 1443974405,
-     "note": "从现存链接取回后上传迅雷（pool）"
+     "note": "从现存链接取回后上传迅雷（pool）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜销魂罪人 汉化补丁.zip 1.3GB 2026-11-19 06:49 ",
+     "comment": {
+      "aid": 1354464951,
+      "rpid": "324516202032",
+      "root": 220712094416,
+      "where": "reply",
+      "pinned": "UP主置顶",
+      "at": "2026-11-20 00:13"
+     }
+    },
+    "baidu": {
+     "url": "https://pan.baidu.com/s/1aslDpS3ze00cYqwXodn99A",
+     "pwd": "qdby",
+     "share_id": "16713454368",
+     "platform": "baidu",
+     "verified": true,
+     "check": "errno=-9",
+     "path": "/汉化补丁补档/_tmp/销魂罪人",
+     "created_at": "2026-11-20 00:09",
+     "bvid": "BV1yz421m7Dp",
+     "bili_url": "https://www.bilibili.com/video/BV1yz421m7Dp",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "checked_detail": "分享有效（需提取码）",
+     "comment": {
+      "aid": 1354464951,
+      "rpid": "324516202032",
+      "root": 220712094416,
+      "where": "reply",
+      "pinned": "UP主置顶",
+      "at": "2026-11-20 00:13"
+     }
     }
    },
    "bvid": "",
@@ -941,15 +1014,39 @@
      "bvid": "BV1S5411v7Hm",
      "bili_url": "https://www.bilibili.com/video/BV1S5411v7Hm",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜爱情寄生虫 汉化完整版.zip",
      "comment": {
       "aid": 453511227,
-      "rpid": "322193240320",
+      "rpid": "324516144480",
       "root": 202454366624,
       "where": "reply",
       "pinned": "UP主置顶",
-      "at": "2026-10-29 00:07"
+      "short": true,
+      "at": "2026-11-20 00:12"
+     }
+    },
+    "baidu": {
+     "url": "https://pan.baidu.com/s/1XqTfi_MlQWPh8RkCpFdufQ",
+     "pwd": "qdby",
+     "share_id": "58808799426",
+     "platform": "baidu",
+     "verified": true,
+     "check": "errno=-9",
+     "path": "/汉化补丁补档/_tmp/个人汉化/个人汉化/爱情寄生虫 汉化完整版.zip",
+     "created_at": "2026-11-20 00:09",
+     "bvid": "BV1S5411v7Hm",
+     "bili_url": "https://www.bilibili.com/video/BV1S5411v7Hm",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "checked_detail": "分享有效（需提取码）",
+     "comment": {
+      "aid": 453511227,
+      "rpid": "324516150976",
+      "root": 202454366624,
+      "where": "reply",
+      "pinned": "UP主置顶",
+      "at": "2026-11-20 00:12"
      }
     }
    }
@@ -957,18 +1054,18 @@
   "与死神的约会": {
    "links": {
     "quark": {
-     "url": "https://pan.quark.cn/s/332efde8c5bd",
+     "url": "https://pan.quark.cn/s/52b800780030",
      "pwd": "qdby",
-     "share_id": "48be9970e0164b90a8dfa345528f0a4a",
+     "share_id": "8c1831c1211240f1a56941fce5eb5b46",
      "platform": "quark",
      "verified": true,
      "check": "status=1 audit=4 viol=0",
      "path": "/汉化补丁补档/与死神的约会 本体完整汉化版.zip",
-     "created_at": "2026-11-17 00:05",
+     "created_at": "2026-11-20 00:07",
      "bvid": null,
      "bili_url": null,
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜与死神的约会 本体完整汉化版.zip",
      "site_direct": true
     }
@@ -977,7 +1074,27 @@
   "恶魔之心": {
    "links": {
     "baidu": {
-     "error": "errno=109 文件违规，无法分享"
+     "url": "https://pan.baidu.com/s/1F6KMTCe-22jqST6XOJodAw",
+     "pwd": "qdby",
+     "share_id": "56952136880",
+     "platform": "baidu",
+     "verified": true,
+     "check": "errno=-9",
+     "path": "/汉化补丁补档/_tmp/恶魔之心",
+     "created_at": "2026-11-20 00:07",
+     "bvid": "BV1Pz421971k",
+     "bili_url": "https://www.bilibili.com/video/BV1Pz421971k",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "checked_detail": "分享有效（需提取码）",
+     "comment": {
+      "aid": 1351303434,
+      "rpid": "324515914896",
+      "root": 210848454160,
+      "where": "reply",
+      "pinned": "UP主置顶",
+      "at": "2026-11-20 00:11"
+     }
     },
     "xunlei": {
      "url": "https://pan.xunlei.com/s/VP6kvkQEYd2VFZ8yH6ghsNcZA1?pwd=e32u",
@@ -989,10 +1106,19 @@
      "path": "/汉化补丁补档/恶魔之心 汉化补丁.zip",
      "created_at": "2026-11-19 07:12",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:12",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 2766360,
-     "note": "从现存链接取回后上传迅雷（pool）"
+     "note": "从现存链接取回后上传迅雷（pool）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜恶魔之心 汉化补丁.zip 2.6MB 2026-11-19 07:12 ",
+     "comment": {
+      "aid": 1351303434,
+      "rpid": "324515914896",
+      "root": 210848454160,
+      "where": "reply",
+      "pinned": "UP主置顶",
+      "at": "2026-11-20 00:11"
+     }
     }
    },
    "bvid": "",
@@ -1023,7 +1149,7 @@
       "at": "2026-10-28 03:31"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜LF2汉化补丁.zip"
     },
     "xunlei": {
@@ -1036,10 +1162,11 @@
      "path": "/汉化补丁补档/Lost Friends 2 汉化补丁.zip",
      "created_at": "2026-11-19 06:36",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:36",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 26305845,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    },
    "bvid": "",
@@ -1059,19 +1186,35 @@
      "bvid": "BV1pTE66vEQ8",
      "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 116733520118898,
-      "rpid": "322521974224",
+      "rpid": "324515881008",
       "root": 322102072432,
       "where": "reply",
       "pinned": "自己热评",
-      "at": "2026-11-01 00:07"
+      "short": true,
+      "at": "2026-11-20 00:09"
      }
     },
     "baidu": {
      "error": "errno=109 文件违规，无法分享"
+    },
+    "xunlei": {
+     "url": "https://pan.xunlei.com/s/VP6oZ0VrSfxkUAIHFM9QcjHPA1",
+     "pwd": "sgdn",
+     "share_id": "VP6oZ0VrSfxkUAIHFM9QcjHPA1",
+     "platform": "xunlei",
+     "verified": true,
+     "check": "share_status=OK ",
+     "path": "/情人节巧克力短篇 汉化补丁by青灯不弈.zip",
+     "created_at": "2026-11-20 00:07",
+     "bvid": "BV1pTE66vEQ8",
+     "bili_url": "https://www.bilibili.com/video/BV1pTE66vEQ8",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜情人节巧克力短篇 汉化补丁by青灯不弈.zip 119.9MB 2026-06-12 05:05 "
     }
    }
   },
@@ -1100,7 +1243,7 @@
       "at": "2026-10-28 03:32"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜关于梦 汉化补丁.zip"
     },
     "xunlei": {
@@ -1113,7 +1256,7 @@
      "path": "/关于梦 汉化补丁.zip",
      "created_at": "2026-11-19 05:41",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "note": "迅雷云盘补档（首次补链接）",
      "checked_detail": "分享有效（需提取码）｜永久有效｜关于梦 汉化补丁.zip 47.8MB 2025-12-03 15:57 "
     }
@@ -1146,7 +1289,7 @@
       "at": "2026-10-28 03:32"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜暴走族夜怪 汉化补丁by青灯不弈.zip"
     }
    }
@@ -1177,7 +1320,7 @@
       "at": "2026-10-29 00:07"
      },
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜梦之门 汉化补丁v1.1by青灯不弈.zip"
     },
     "baidu": {
@@ -1192,7 +1335,7 @@
      "bvid": "BV1UW5E6zEfy",
      "bili_url": "https://www.bilibili.com/video/BV1UW5E6zEfy",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效（需提取码）",
      "comment": {
       "aid": 116549423726986,
@@ -1219,7 +1362,7 @@
      "bvid": "BV1LyJi6mEsh",
      "bili_url": "https://www.bilibili.com/video/BV1LyJi6mEsh",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜死刑前的心理咨询 汉化补丁by青灯不弈.zip",
      "comment": {
       "aid": 117456064547441,
@@ -1269,7 +1412,7 @@
      "bvid": "BV1BsPczfENe",
      "bili_url": "https://www.bilibili.com/video/BV1BsPczfENe",
      "checked": "ok",
-     "checked_at": "2026-11-19 05:42",
+     "checked_at": "2026-11-20 00:01",
      "checked_detail": "分享有效｜邻人 汉化补丁.zip",
      "comment": {
       "aid": 116166316003236,
@@ -1297,10 +1440,11 @@
      "path": "/汉化补丁补档/可怕的怪物 汉化补丁.zip",
      "created_at": "2026-11-19 06:12",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:12",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 66089904,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1318,10 +1462,11 @@
      "path": "/汉化补丁补档/缝缝补补的幸福 汉化补丁.zip",
      "created_at": "2026-11-19 06:01",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:01",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 57894347,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜缝缝补补的幸福 汉化补丁.zip 55.2MB 2026-11-19 07:09 "
     }
    }
   },
@@ -1339,10 +1484,11 @@
      "path": "/汉化补丁补档/Dear Virgin 汉化补丁.zip",
      "created_at": "2026-11-19 06:13",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:13",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 255434344,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1360,10 +1506,11 @@
      "path": "/汉化补丁补档/強伽羅学園 汉化补丁.zip",
      "created_at": "2026-11-19 06:16",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:16",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 1048936723,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜強伽羅学園 汉化补丁.zip 1000.3MB 2026-11-19 06:17 "
     }
    }
   },
@@ -1381,10 +1528,11 @@
      "path": "/汉化补丁补档/十二条船全抛 汉化补丁.zip",
      "created_at": "2026-11-19 06:17",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:17",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 194453046,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1402,10 +1550,11 @@
      "path": "/汉化补丁补档/对鲸号的记录 汉化补丁.zip",
      "created_at": "2026-11-19 06:17",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:17",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 19624397,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜对鲸号的记录 汉化补丁.zip 18.7MB 2026-11-19 06:17 "
     }
    }
   },
@@ -1423,10 +1572,11 @@
      "path": "/汉化补丁补档/人格修理师 汉化补丁.zip",
      "created_at": "2026-11-19 06:18",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:18",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 56428029,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜人格修理师 汉化补丁.zip 53.8MB 2026-11-19 06:18 "
     }
    }
   },
@@ -1444,10 +1594,11 @@
      "path": "/汉化补丁补档/对AI的审问 汉化补丁.zip",
      "created_at": "2026-11-19 06:18",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:18",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 29254272,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1465,10 +1616,11 @@
      "path": "/汉化补丁补档/NENE 汉化补丁.zip",
      "created_at": "2026-11-19 06:19",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:19",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 197940187,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜NENE 汉化补丁.zip 188.8MB 2026-11-19 06:19 "
     }
    }
   },
@@ -1486,10 +1638,11 @@
      "path": "/汉化补丁补档/trapped with jester 汉化补丁.zip",
      "created_at": "2026-11-19 06:19",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:19",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 23528062,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜trapped with jester 汉化补丁.zip 22.4MB 2026-11-19 06:19 "
     }
    }
   },
@@ -1507,10 +1660,11 @@
      "path": "/汉化补丁补档/sweetest Valentine 汉化补丁.zip",
      "created_at": "2026-11-19 06:20",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:20",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 138750601,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1528,10 +1682,11 @@
      "path": "/汉化补丁补档/魔王是我的 汉化补丁.zip",
      "created_at": "2026-11-19 06:20",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:20",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 24866217,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜魔王是我的 汉化补丁.zip 23.7MB 2026-11-19 06:20 "
     }
    }
   },
@@ -1549,10 +1704,11 @@
      "path": "/汉化补丁补档/我此生已逝 汉化补丁.zip",
      "created_at": "2026-11-19 06:21",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:21",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 96734065,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜我此生已逝 汉化补丁.zip 92.3MB 2026-11-19 06:21 "
     }
    }
   },
@@ -1570,10 +1726,11 @@
      "path": "/汉化补丁补档/CLASSMATES 汉化补丁.zip",
      "created_at": "2026-11-19 06:22",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:22",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 225615422,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1591,10 +1748,11 @@
      "path": "/汉化补丁补档/Dark Nights 汉化补丁.zip",
      "created_at": "2026-11-19 06:23",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:23",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 262418846,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜Dark Nights 汉化补丁.zip 250.3MB 2026-11-19 06:23 "
     }
    }
   },
@@ -1612,10 +1770,11 @@
      "path": "/汉化补丁补档/dead plate 汉化补丁.zip",
      "created_at": "2026-11-19 06:26",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:26",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 1012448136,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜dead plate 汉化补丁.zip 965.5MB 2026-11-19 06:26 "
     }
    }
   },
@@ -1633,10 +1792,11 @@
      "path": "/汉化补丁补档/Elevator Hitch 汉化补丁.zip",
      "created_at": "2026-11-19 06:29",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:29",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 636969160,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜Elevator Hitch 汉化补丁.zip 607.5MB 2026-11-19 06:31 "
     }
    }
   },
@@ -1654,10 +1814,11 @@
      "path": "/汉化补丁补档/Cold Front 汉化补丁.zip",
      "created_at": "2026-11-19 06:31",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:31",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 611029160,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1675,10 +1836,11 @@
      "path": "/汉化补丁补档/Eloquent Countenance 汉化补丁.zip",
      "created_at": "2026-11-19 06:35",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:35",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 981355221,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜Eloquent Countenance 汉化补丁.zip 935.9MB 2026-11-19 06:35 "
     }
    }
   },
@@ -1696,10 +1858,11 @@
      "path": "/汉化补丁补档/Line 88 汉化补丁.zip",
      "created_at": "2026-11-19 06:35",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:35",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 19432,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜Line 88 汉化补丁.zip 19KB 2026-11-19 06:35 "
     }
    }
   },
@@ -1717,10 +1880,11 @@
      "path": "/汉化补丁补档/相反的理想主义 汉化补丁.zip",
      "created_at": "2026-11-19 06:37",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:37",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 181869332,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜相反的理想主义 汉化补丁.zip 173.4MB 2026-11-19 06:37 "
     }
    }
   },
@@ -1738,10 +1902,11 @@
      "path": "/汉化补丁补档/seekL 汉化补丁.zip",
      "created_at": "2026-11-19 06:38",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:38",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 25806819,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1759,10 +1924,11 @@
      "path": "/汉化补丁补档/不速之死 汉化补丁.zip",
      "created_at": "2026-11-19 06:41",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:41",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 865656222,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜不速之死 汉化补丁.zip 825.6MB 2026-11-19 06:41 "
     }
    }
   },
@@ -1780,10 +1946,11 @@
      "path": "/汉化补丁补档/Birla_NNN 汉化补丁.zip",
      "created_at": "2026-11-19 06:41",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:41",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 318806,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜Birla_NNN 汉化补丁.zip 311.3KB 2026-11-19 06:41 "
     }
    }
   },
@@ -1801,10 +1968,11 @@
      "path": "/汉化补丁补档/杀死公主 汉化补丁.zip",
      "created_at": "2026-11-19 06:44",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:44",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 34813227,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1822,10 +1990,11 @@
      "path": "/汉化补丁补档/BUSTAFELLOWS 汉化补丁.zip",
      "created_at": "2026-11-19 06:52",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:52",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 32757813,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜BUSTAFELLOWS 汉化补丁.zip 31.2MB 2026-11-19 06:52 "
     }
    }
   },
@@ -1843,10 +2012,11 @@
      "path": "/汉化补丁补档/Lost Friends1-DisappeardName- 汉化补丁.zip",
      "created_at": "2026-11-19 06:56",
      "checked": "ok",
-     "checked_at": "2026-11-19 06:56",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 47740684,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）"
     }
    }
   },
@@ -1864,10 +2034,11 @@
      "path": "/汉化补丁补档/純正優男Sweet&Bitter 汉化补丁.zip",
      "created_at": "2026-11-19 07:10",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:10",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 193281506,
-     "note": "从现存链接取回后上传迅雷（baidu）"
+     "note": "从现存链接取回后上传迅雷（baidu）",
+     "checked_detail": "分享有效（需提取码）｜永久有效｜純正優男Sweet&Bitter 汉化补丁.zip 184.3MB 2026-11-19 07:11 "
     }
    }
   },
@@ -1885,10 +2056,42 @@
      "path": "/汉化补丁补档/恶魔之心：猎人 汉化补丁.zip",
      "created_at": "2026-11-19 07:12",
      "checked": "ok",
-     "checked_at": "2026-11-19 07:12",
+     "checked_at": "2026-11-20 00:01",
      "via": "fetchfill",
      "size": 1150053,
-     "note": "从现存链接取回后上传迅雷（pool）"
+     "note": "从现存链接取回后上传迅雷（pool）",
+     "checked_detail": "分享有效（需提取码）",
+     "comment": {
+      "aid": 1001944783,
+      "rpid": "324516164192",
+      "root": 212969994112,
+      "where": "reply",
+      "pinned": "自己热评",
+      "at": "2026-11-20 00:11"
+     }
+    },
+    "baidu": {
+     "url": "https://pan.baidu.com/s/1QDUSEs4rBcCPeu98_KVDTw",
+     "pwd": "qdby",
+     "share_id": "32378235626",
+     "platform": "baidu",
+     "verified": true,
+     "check": "errno=-9",
+     "path": "/汉化补丁补档/_tmp/恶魔之心：猎人",
+     "created_at": "2026-11-20 00:07",
+     "bvid": "BV1Sx4y1m7tp",
+     "bili_url": "https://www.bilibili.com/video/BV1Sx4y1m7tp",
+     "checked": "ok",
+     "checked_at": "2026-11-20 00:01",
+     "checked_detail": "分享有效（需提取码）",
+     "comment": {
+      "aid": 1001944783,
+      "rpid": "324516164192",
+      "root": 212969994112,
+      "where": "reply",
+      "pinned": "自己热评",
+      "at": "2026-11-20 00:11"
+     }
     }
    }
   }
