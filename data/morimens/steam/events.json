@@ -1,7 +1,17 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-11-19T11:54:57.204Z",
+ "fetchedAt": "2026-11-20T11:56:30.411Z",
  "posts": [
+  {
+   "title": "✨ V2.7.0 Preorder Archives: Homecoming Stars",
+   "date": "2026-11-20",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1849827110430645"
+  },
+  {
+   "title": "V2.7.0 Tulu: Godking✦Awakener & Wheel of Destiny Introduction",
+   "date": "2026-11-19",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1849827110428121"
+  },
   {
    "title": "🎬 V2.7 PV - Advent of the Divine Realm (VA: Seki Tomokazu & Miyazono Miumi)",
    "date": "2026-11-18",
