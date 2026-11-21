@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-11-20T11:56:30.411Z",
+ "fetchedAt": "2026-11-21T11:26:15.132Z",
  "posts": [
+  {
+   "title": "🌟 Morimens 3rd Anniversary Celebration!",
+   "date": "2026-11-20",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1849827110432295"
+  },
   {
    "title": "✨ V2.7.0 Preorder Archives: Homecoming Stars",
    "date": "2026-11-20",
