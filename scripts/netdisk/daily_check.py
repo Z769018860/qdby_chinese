@@ -15,6 +15,9 @@
           → 传进迅雷 `/汉化补丁补档` → 建分享（慢，用 --fetch-minutes 限时，
           没跑完下一轮自动接着跑）。
      云端真没有的（全灭且补不回来）才留到最后告警。
+     补完再清一遍补档评论（scripts/netdisk/post_comments.py --prune-dead）：
+     评论里写的链接后来也失效了的，全死就删掉、活死混着就重写成只含活链接的一条。
+     放这一步是因为判定要用本轮刚核验完的死活，早跑会用上一轮的状态。
   4. 把结果写回台账，并重新生成站点用的 netdisk-status.json /
      netdisk-links.html / netdisk-autofill.json —— 也就是「更新到网站上」。
   5. 挑出「所有链接都失效、且自动补档也没救回来」的作品，发邮件告警
@@ -265,6 +268,11 @@ def compose(dead, now, backfill=None):
             lines.append('  · 从原网盘取回后传迅雷：补上 %s 条（失败 %s／源不支持 %s／待挑 %s／未跑完 %s）'
                          % (xf_.get('done', 0), xf_.get('failed', 0), xf_.get('unsupported', 0),
                             xf_.get('need_pick', 0), xf_.get('timeout', 0)))
+        pc_ = backfill.get('prune_comments') or {}
+        if pc_.get('ran'):
+            lines.append('  · 清理失效补档评论：删除 %s 条／重写 %s 条（仍有效保留 %s／失败 %s）'
+                         % (pc_.get('deleted', 0), pc_.get('rewritten', 0),
+                            pc_.get('kept', 0), pc_.get('failed', 0)))
         lines.append('')
     lines += ['——',
               '本信件由 scripts/netdisk/daily_check.py 每日 0 点自动发送。',
@@ -450,6 +458,41 @@ def xunlei_fetchfill(now, minutes=90, limit=0):
     return {'ran': True, **stat}
 
 
+def prune_comments(now, limit=30):
+    """清理已经失效的补档评论
+
+    补档评论里写的链接自己也会死（分享被取消 / 被判违规），或者被新补出来的
+    链接取代。这种评论留在置顶下面只会把人引到「来晚啦」，所以每轮巡检都收拾一次：
+    全失效的整条删掉，部分失效的重写成只含活链接的一条（先发新再删旧）。
+
+    失败不影响巡检其余步骤——评论清理不成功，数据该回写的照样回写。
+    """
+    script = os.path.join(HERE, 'post_comments.py')
+    if not os.path.exists(script):
+        return {}
+    cmd = [sys.executable, script, '--prune-dead', '--prune-limit', str(limit)]
+    try:
+        r = subprocess.run(cmd, cwd=REPO, timeout=1200, capture_output=True,
+                           text=True, encoding='utf-8', errors='replace')
+        for line in (r.stdout or '').strip().splitlines():
+            print('  ' + line)
+        if r.returncode != 0 and r.stderr:
+            print('  ! ' + r.stderr.strip().splitlines()[-1][:160])
+    except subprocess.TimeoutExpired:
+        print('  ! 清理失效评论超时（20 分钟），跳过')
+        return {}
+    out = r.stdout or ''
+    m = re.search(r'失效补档评论：删除 (\d+) ／ 重写 (\d+) ／ 仍有效保留 (\d+) ／ 失败 (\d+)', out)
+    res = {}
+    if m:
+        res = {'ran': True}
+        res.update(dict(zip(('deleted', 'rewritten', 'kept', 'failed'),
+                            (int(x) for x in m.groups()))))
+        print('  失效补档评论：删除 %d 条／重写 %d 条（仍有效 %d／失败 %d）'
+              % (res['deleted'], res['rewritten'], res['kept'], res['failed']))
+    return res
+
+
 def git_push(now, sync_main=False):
     def run(*a):
         return subprocess.run(['git', *a], cwd=REPO, capture_output=True, text=True)
@@ -522,6 +565,10 @@ def main():
                     help='取回补档本轮最多处理几个作品（0=不限）')
     ap.add_argument('--recheck-dead', action='store_true',
                     help='已判失效的链接也重新核验（默认沿用旧判定，不反复请求）')
+    ap.add_argument('--no-prune', action='store_true',
+                    help='跳过「清理失效补档评论」（默认每轮都删掉/重写已失效的补档评论）')
+    ap.add_argument('--prune-limit', type=int, default=30,
+                    help='清理失效评论单轮最多处理几条（默认 30，0=不限）')
     ap.add_argument('--sync-main', action='store_true',
                     help='push 完顺手把 main 快进到同一提交（main 是线上分支）')
     args = ap.parse_args()
@@ -627,6 +674,13 @@ def main():
             dead = all_dead_list(games, extras, by_name_rs)
             print('补档后仍全灭：%d 个%s' % (len(dead),
                   ('：' + '、'.join(d['name'] for d in dead)) if dead else ''))
+
+    # 补档链接的死活刚刷过，顺手把评论里已经失效的那批清掉：
+    # 全死的删、半死的重写。放这里是因为判定用的是本轮刚核验完的 checked。
+    pc = {}
+    if not args.no_prune:
+        print('-- 清理失效的补档评论 --')
+        pc = prune_comments(now, limit=args.prune_limit)
     failed = report.get('failed') or {}
     for d in dead:
         d['auto'] = failed.get(d['name']) or ('自动补档没救回来' if report else '')
@@ -645,7 +699,8 @@ def main():
         print('-- 更新站点数据 --')
         refresh_site(games, now)
 
-    backfill = {'reshare': report, 'xunlei_cloud': xb, 'xunlei_fetch': xf}
+    backfill = {'reshare': report, 'xunlei_cloud': xb, 'xunlei_fetch': xf,
+                'prune_comments': pc}
     subj, body = compose(dead, now, backfill) if dead else ('', '')
     alert = {'at': now, 'count': len(dead), 'games': dead, 'subject': subj, 'body': body,
              'summary': cnt, 'backfill': backfill, 'mailed': False, 'mail_error': ''}

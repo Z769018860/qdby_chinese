@@ -109,8 +109,33 @@ python scripts/netdisk/xunlei_fetchfill.py
 python scripts/netdisk/daily_check.py --push --sync-main
   ├─ 自动补档      auto_reshare.py
   ├─ 迅雷补链接    xunlei_backfill.py      （云端已有同名文件）
-  └─ 迅雷取回补档  xunlei_fetchfill.py     （下载 → 上传 → 分享）
+  ├─ 迅雷取回补档  xunlei_fetchfill.py     （下载 → 上传 → 分享）
+  └─ 清理失效评论  post_comments.py --prune-dead
 ```
+
+### 失效补档评论的清理
+
+补档评论写的是「当时的链接」，链接后来自己也会死（分享被取消、被判违规），
+或者被新补出来的链接取代。这种评论挂在那里只会把人引到「来晚啦」，所以
+每轮巡检最后都清一次（`post_comments.py --prune-dead`）：
+
+- 评论里写的链接**全都失效** → 整条删掉，`reshare.json` 里的 `rpid` 清干净，
+  补档成功时可以干净地发一条新的；
+- 评论里**活死混着** → 重写成只含活链接的一条（先发新的，再删旧的）；
+- 全活 → 不碰。
+
+「评论里写了哪些链接」优先看记录里的 `urls` 快照（新版记录才有）；
+老记录没有快照，就按这条评论覆盖的那几条链接算，宁少删不错删。
+删除成功记 `comment_removed`，失败记 `comment_removed_failed`（下一轮重试，
+但不再当成「已发过」挡住新链接）。单轮最多处理 30 条（`--prune-limit`，
+`0` = 不限），`--no-prune` 可整步跳过。巡检会打印一行：
+
+```
+失效补档评论：删除 X ／ 重写 Y ／ 仍有效保留 Z ／ 失败 W
+```
+
+> 只删评论、不动数据：`data/netdisk-reshare.json` 里的链接仍然保留，
+> 站点的补档弹层照旧显示（站上是站内直出，跟评论区两条路）。
 
 - 取回补档默认限时 **90 分钟**（`--fetch-minutes`）、不限制条数（`--fetch-limit`）；
   跑到时间上限就停，脚本把自己跳过的作品留给下一轮（已完成的不会重做，判定靠
