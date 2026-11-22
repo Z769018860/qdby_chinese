@@ -1,5 +1,9 @@
 # 更新日志
 
+## 2026-11-21
+
+- 巡检新增「清理失效补档评论」：补档评论里写的链接后来失效的，全部失效就整条删掉，活死混着就重写成只含活链接的一条（先发新再删旧）。评论记录新增 `urls` 快照，用来判断这条评论是否过期；删除结果记 `comment_removed` / `comment_removed_failed`。对应 `post_comments.py --prune-dead`，`daily_check.py` 每轮自动跑（`--no-prune` 可跳过，`--prune-limit` 限条数）。
+
 ## 2026-11-04
 
 - 修复战斗回放复盘对新版 BattleReplay 对象的误判。中继校验现在接受直接 LZ4 帧和旧版 `compStr` JSON 包装。

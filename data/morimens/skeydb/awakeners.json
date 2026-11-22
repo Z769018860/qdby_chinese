@@ -2,8 +2,8 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "d25d9826a449cb5b930c7eb9cb6bfad9df3945ee",
-    "syncedAt": "2026-11-20T11:55:58.384Z",
+    "commit": "67ad2ed8875656ddb6f8bbe260755161baa85a2b",
+    "syncedAt": "2026-11-21T11:25:55.183Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "count": 62,
@@ -665,7 +665,7 @@
           {
             "id": "voice-5315",
             "title": "Upgrade: I",
-            "content": "Heh. You're slightly smarter than I thought."
+            "content": "Heh. At least you know your place."
           },
           {
             "id": "voice-5316",
@@ -675,7 +675,7 @@
           {
             "id": "voice-5317",
             "title": "Upgrade: III",
-            "content": "You look quite amusing when you try to please me."
+            "content": "You're kind of cute when you try so hard to please me."
           },
           {
             "id": "voice-6405",
@@ -711,7 +711,7 @@
             "id": "voice-6220",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "I saw... It climbing up from the darkness of the well; countless eyes appearing on its flesh egg. They stared at me, calling me... Maze God!"
+            "content": "I saw... It climbing up out of the darkness of the well, countless eyes surfacing on its egg of flesh. They stared at me, and called me... God of the Maze."
           },
           {
             "id": "voice-5608",
@@ -746,7 +746,7 @@
           {
             "id": "voice-6507",
             "title": "Chat: Touch",
-            "content": "Shit! What are you doing?! Believe it or not, I'll chop your hand off!"
+            "content": "Shit! What are you doing?! Try that again and I'll chop your hand off!"
           },
           {
             "id": "voice-4965",
@@ -798,7 +798,7 @@
           {
             "id": "voice-5049",
             "title": "Investigation Success",
-            "content": "What should we do with these failures?"
+            "content": "So, what should we do with the losers?"
           },
           {
             "id": "voice-4911",
@@ -808,7 +808,7 @@
           {
             "id": "voice-6107",
             "title": "Strike: I",
-            "content": "How dare you look elsewhere!"
+            "content": "Don't you dare zone out!"
           },
           {
             "id": "voice-6108",
@@ -1226,7 +1226,7 @@
             "id": "voice-5368",
             "title": "Enlighten: Observe",
             "unlockCondition": "Unlocks at Enlighten Level 1",
-            "content": "What can I help you with...?"
+            "content": "Can Aigis help...?"
           },
           {
             "id": "voice-6066",
@@ -1286,7 +1286,7 @@
             "id": "voice-5170",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "Aigis... Can I really return to the crowd? I'm not ready yet, but you've already accepted me... In that case, please continue to look after me... Keeper."
+            "content": "Can Aigis... really be around people again? I'm not ready yet, but you've already welcomed me... So, from now on, p-please take care of me... Keeper."
           },
           {
             "id": "voice-6151",
@@ -1313,7 +1313,7 @@
           {
             "id": "voice-5840",
             "title": "Chat: About Dissolution",
-            "content": "If only Aigis could bear this black liquid for everyone... After all, Aigis never existed, which might be a good thing for this world, right?"
+            "content": "If only Aigis could take all this black liquid for everyone... After all, it would be better for the world if Aigis had never existed, wouldn't it?"
           },
           {
             "id": "voice-5255",
@@ -6563,7 +6563,7 @@
           {
             "id": "voice-6434",
             "title": "Upgrade: II",
-            "content": "Not bad, I guess."
+            "content": "Barely a pass."
           },
           {
             "id": "voice-6431",
@@ -6586,7 +6586,7 @@
             "id": "voice-5672",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "Balancing attendance, maintaining research progress, and completing teaching tasks. It seems the reverse time compression experiment requires immediate prioritization."
+            "content": "Field deployments, research deadlines, and teaching duties on top of that. It seems the reverse time-compression experiment needs to go on the schedule."
           },
           {
             "id": "voice-5352",
@@ -6604,13 +6604,13 @@
             "id": "voice-5354",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "This body can barely contain this Power, but it's not yet time to switch puppets. Why are you merely standing there? Assist me with this leg; adjustments are required."
+            "content": "This body can barely contain this power, but it's not time to swap dolls yet. Don't just stand there. Hold this leg for me; I need to make some adjustments."
           },
           {
             "id": "voice-6050",
             "title": "Affinity: I",
             "unlockCondition": "Unlocks at Affinity Level 2",
-            "content": "Thirteen reports require urgent approval, six damaged communicators await repair, and I must also monitor the results of five distinct Silver extraction experiments... So, instead of squandering my limited time by disturbing me, why not attempt to exercise your feeble brain matter?"
+            "content": "Thirteen reports require urgent approval, six damaged communicators await repair, and I must also monitor the results of five separate Silver Core extraction experiments... So rather than squander my limited time by disturbing me, why not try exercising that feeble white matter of yours?"
           },
           {
             "id": "voice-6047",
@@ -6634,7 +6634,7 @@
             "id": "voice-6094",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "I have no time for rest. The Dissolution has already claimed two of my bodies. Before the inevitable end catches up, there is much I must comprehend... Assist me, starting with the preparation of experimental materials. I trust you won't miscalculate the balance."
+            "content": "I have no time for rest. The Dissolution has already claimed two of my bodies. Before the end catches up with me, there is too much I need to understand... Help me. Start by preparing the experimental materials. I trust you're not foolish enough to get the equations unbalanced?"
           },
           {
             "id": "voice-6043",
@@ -6644,7 +6644,7 @@
           {
             "id": "voice-6629",
             "title": "Chat: About Afternoon Tea",
-            "content": "Awakeners might consume out of curiosity, but food is not essential for our existence. Therefore, there is no need to summon me for every afternoon tea. Sugar intake only accelerates the wear and tear on this body's ball joints."
+            "content": "Awakeners may eat out of curiosity, but food isn't necessary for our existence. So there's no need to fetch me for every afternoon tea. Sugar only makes this body's ball joints wear out faster."
           },
           {
             "id": "voice-4929",
@@ -6656,7 +6656,7 @@
             "id": "voice-5271",
             "title": "Chat: About Erica",
             "unlockCondition": "Unlocks after acquiring Awakener \"Erica\"",
-            "content": "I sincerely hope she doesn't malfunction during our conversation. My lovely yet infuriating assistant, there are no more spare labs for her to inadvertently detonate."
+            "content": "Let's hope she doesn't malfunction while we're talking. My lovable, detestable assistant... we're out of spare labs for her to blow up."
           },
           {
             "id": "voice-5938",
@@ -6716,12 +6716,12 @@
           {
             "id": "voice-6098",
             "title": "Hit: I",
-            "content": "An astute observation!"
+            "content": "(A startled gasp)"
           },
           {
             "id": "voice-5097",
             "title": "Hit: II",
-            "content": "A keen insight!"
+            "content": "(A startled gasp)"
           },
           {
             "id": "voice-4988",
@@ -8142,12 +8142,12 @@
           {
             "id": "voice-5458",
             "title": "Upgrade: II",
-            "content": "Have you grown a little?"
+            "content": "Did I grow a little?"
           },
           {
             "id": "voice-5459",
             "title": "Upgrade: III",
-            "content": "Sorry, it's hard for me to grow my body..."
+            "content": "Sorry, I don't grow very easily..."
           },
           {
             "id": "voice-4978",
@@ -8165,7 +8165,7 @@
             "id": "voice-5854",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "Maybe when I grow up, I'll be able to control myself and not drain others' Life... Just a tiny bit is enough for me to survive."
+            "content": "Maybe when I grow up, I'll be able to control myself and stop draining other people's life force... Just a tiny bit is enough for me to survive."
           },
           {
             "id": "voice-5855",
@@ -8201,7 +8201,7 @@
             "id": "voice-5576",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "Tinct is my twin sister. Unlike me, she always shines brightly... Without my drag, she would have a brighter future, her singing echoing throughout the galaxy..."
+            "content": "Tinct is my twin sister. Unlike me, she always shines... If I weren't dragging her down, she'd have a much brighter future, and her songs would ring across the whole galaxy..."
           },
           {
             "id": "voice-5573",
@@ -11910,7 +11910,7 @@
             "id": "voice-5602",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "Ungrateful monsters, assassins, and killers—do they have any value that you recognize? Freak."
+            "content": "An ungrateful monster, an assassin, a killer... and you still see some worth in that? You're strange."
           },
           {
             "id": "voice-5937",
@@ -11928,13 +11928,13 @@
             "id": "voice-5980",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "Spare me the high-sounding talk. What do you want from me? There must be a reason for keeping my sanity intact."
+            "content": "Spare me the fine words. What do you want from me? You spend so much effort keeping me sane. You must want something in return."
           },
           {
             "id": "voice-5979",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "Does my eyes make you uncomfortable? Good. That's the ferocity that kept me alive in that hell."
+            "content": "Does my glare make you uneasy? Good. That ferocity is what kept me alive in that hell."
           },
           {
             "id": "voice-5982",
@@ -11946,7 +11946,7 @@
             "id": "voice-5981",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "My vengeance was always directed at the Spartans, but now, even that city-state no longer exists... Fine. Becoming your blade is not impossible. I reluctantly accept you as my partner, but if you dare to betray me, I will tear out your heart."
+            "content": "My vengeance was only ever for the Spartans, but now even their city-state is gone... Fine. I may as well become your blade. I'll grudgingly accept you as my partner, but if you dare betray me, I will tear out your heart."
           },
           {
             "id": "voice-6116",
@@ -11969,7 +11969,7 @@
             "id": "voice-4964",
             "title": "Chat: About Aigis",
             "unlockCondition": "Unlocks after acquiring Awakener \"Aigis\"",
-            "content": "What kind of irresponsible parents would name their daughter after a shield made of Gorgon's head? ...She has no parents? Hmm... let's keep this conversation between us."
+            "content": "What kind of irresponsible parents name their daughter after a shield bearing a Gorgon's head? ...She has no parents? Hmm... let's keep this conversation between us."
           },
           {
             "id": "voice-6679",
@@ -11984,7 +11984,7 @@
           {
             "id": "voice-5750",
             "title": "Chat: What I Like",
-            "content": "Likes? Someone once asked me that on the battlefields of Peloponnesus... It's too late. I've long abandoned such personal preferences."
+            "content": "Likes? Someone asked me that once, on the battlefields of the Peloponnese... It's too late. I abandoned such personal preferences long ago."
           },
           {
             "id": "voice-6097",
@@ -12004,7 +12004,7 @@
           {
             "id": "voice-6688",
             "title": "Investigation Success",
-            "content": "The enemy's blood has not yet drained completely."
+            "content": "The enemy hasn't bled dry yet."
           },
           {
             "id": "voice-6068",
@@ -12019,17 +12019,17 @@
           {
             "id": "voice-5779",
             "title": "Hit: I",
-            "content": "(A scoff of endurance.)"
+            "content": "(A dismissive grunt)"
           },
           {
             "id": "voice-5777",
             "title": "Hit: II",
-            "content": "(A scoff of endurance.)"
+            "content": "(A dismissive grunt)"
           },
           {
             "id": "voice-5778",
             "title": "Hit: III",
-            "content": "(A scoff of endurance.)"
+            "content": "(A dismissive grunt)"
           },
           {
             "id": "voice-5776",
@@ -12049,7 +12049,7 @@
           {
             "id": "voice-5104",
             "title": "Rouse",
-            "content": "Exterminate!"
+            "content": "Leave none alive!"
           },
           {
             "id": "voice-5091",
@@ -12971,7 +12971,7 @@
             "kind": "story",
             "title": "Story: III",
             "unlockCondition": "Affinity Level 7",
-            "content": "\"I'm not an orphan,\" said six-year-old Jenkin. \"My mom just went to work. She'll pick me up after she's done.\"\n\nShe never wavered, nor did she dare to. This belief was the protective incantation she clung to whenever she jolted awake at night from nightmares filled with black slime. It was her only comfort whenever she tried to recall her mother's face but could only see a black shadow.\n\nGritting her teeth, she stood watch at the welfare home's gate through spring, summer, autumn, and winter. Only on the morning the home closed down did she wipe away her unseen tears and leave with her mouse friend.\n\n\"I am an orphan,\" said ten-year-old Jenkin. \"I don't have parents. I only have Brown.\"\n\nShe told this to herself and the mouse perched on her shoulder. It was true—people might be wary of children suddenly approaching; East End street children were infamous throughout Londinium—but no one suspected a mouse scurrying by their feet. Through this tacit cooperation, the girl occasionally enjoyed a full meal, and dreamed in the sewers of fireplaces and pastries.\n\nYet the bitter winter spared no one. It brought her sickness and high fever, bringing the Grim Reaper to a halt by her side. The girl lay dying, with only the mouse circling frantically about her, hoping for any attention at all.\n\nA young woman stopped and wrapped the girl in a warm embrace.\n\n\"I'm not an orphan,\" said thirteen-year-old Jenkin. \"I have my sister Mason and my best friend Brown!\"\n\nThe girl stood before an old house, holding the mouse close, her face bright with a radiant smile."
+            "content": "\"I'm not an orphan,\" said six-year-old Jenkin. \"My mom just went to work. She'll pick me up after she's done.\"\n\nShe never wavered, nor did she dare to. This belief was the protective incantation she clung to whenever she jolted awake at night from nightmares filled with black slime. It was her only comfort whenever she tried to recall her mother's face but could only see a black shadow.\n\nGritting her teeth, she stood watch at the welfare home's gate through spring, summer, autumn, and winter. Only on the morning the home closed down did she wipe away her unseen tears and leave with her mouse friend.\n\n\"I am an orphan,\" said ten-year-old Jenkin. \"I don't have parents. I only have Brown.\"\n\nShe told this to herself and the mouse perched on her shoulder. It was true—people might be wary of children suddenly approaching; East District street children were infamous throughout Londinium—but no one suspected a mouse scurrying by their feet. Through this tacit cooperation, the girl occasionally enjoyed a full meal, and dreamed in the sewers of fireplaces and pastries.\n\nYet the bitter winter spared no one. It brought her sickness and high fever, bringing the Grim Reaper to a halt by her side. The girl lay dying, with only the mouse circling frantically about her, hoping for any attention at all.\n\nA young woman stopped and wrapped the girl in a warm embrace.\n\n\"I'm not an orphan,\" said thirteen-year-old Jenkin. \"I have my sister Mason and my best friend Brown!\"\n\nThe girl stood before an old house, holding the mouse close, her face bright with a radiant smile."
           },
           {
             "kind": "story",
@@ -13065,7 +13065,7 @@
             "id": "voice-6157",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "I've got Sis, Brown, plus that coward girl from the workhouse... That's my crew. Fine... I'll count you in too. Brown, share a scrap of candy with {Male=him,Female=her}. \n\"Squeak?!\""
+            "content": "I've got Sis, Brown, and that scaredy-cat from the workhouse. That's all the friends I need. Mm... fine, you count too. Brown, give the Keeper a sweet.\n\"Squeak?!\""
           },
           {
             "id": "voice-5364",
@@ -14045,7 +14045,7 @@
           {
             "id": "voice-95430",
             "title": "Awaken",
-            "content": "You in trouble, kid? Kathigu-Ra's coming, and she's bringing Destruction. Say goodbye to your problems. Poof! Gone."
+            "content": "You in trouble, kid? Kathigu-Ra's coming, and she's bringing destruction. Say goodbye to your problems. Poof! Gone."
           },
           {
             "id": "voice-95434",
@@ -14136,7 +14136,7 @@
           {
             "id": "voice-95423",
             "title": "Chat: About Dissolution",
-            "content": "What do I think of Dissolution? Ask a sewer rat what it thinks of the king. My answer is simple: a deep, instinctual disgust. Give me the chance, and I'll pour a glass of camel milk wine and listen to their scream as my guns burns them to ashes."
+            "content": "What do I think of Dissolution? Ask a sewer rat what it thinks of the king. My answer is simple: a deep, instinctual disgust. Give me the chance, and I'll pour a glass of camel milk wine and listen to them shriek as my guns burn them to ash."
           },
           {
             "id": "voice-95425",
@@ -14146,7 +14146,7 @@
           {
             "id": "voice-95429",
             "title": "Chat: What I Like",
-            "content": "Burn and Destruction are my everything, I'm obsessed with the death that comes from hunting... Do you really think I'd say something like that? Haha. I only ever cared about my family... Even more than myself."
+            "content": "Burning and destruction are my everything. I live for the death the hunt brings... You really think I'd say that? Haha, I'm kidding. What matters most to me is everyone around me, of course. Nothing matters more than them. Not even... me."
           },
           {
             "id": "voice-95412",
@@ -14623,7 +14623,7 @@
             "id": "voice-5248",
             "title": "Enlighten: Ponder",
             "unlockCondition": "Unlocks at Enlighten Level 2",
-            "content": "Is it just me? Or... Did my craving for blood diminish somewhat?"
+            "content": "Is it just me? Or did my craving for blood ease a little?"
           },
           {
             "id": "voice-5246",
@@ -14641,7 +14641,7 @@
             "id": "voice-5244",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "The feeling of being bathed in sunlight again... I didn't know it felt so nice, so warm. It brings tears to my eyes."
+            "content": "Bathing in sunlight... I never knew it was this soft. It makes me want to cry."
           },
           {
             "id": "voice-5245",
@@ -14671,7 +14671,7 @@
             "id": "voice-6441",
             "title": "Affinity: IV",
             "unlockCondition": "Unlocks at Affinity Level 8",
-            "content": "Blood flows like a river. I am yours. Never have I felt so strongly."
+            "content": "Blood flows like a river. I belong to you... I've never felt it so strongly."
           },
           {
             "id": "voice-6440",
@@ -14713,7 +14713,7 @@
           {
             "id": "voice-6469",
             "title": "Chat: What I Like",
-            "content": "Don't be fooled by my appearance; I was once a noble lady, too... I embroidered, I read Tennyson... Oh, and I once sang songs: \"She flows like an endless river through my veins...\""
+            "content": "Don't be fooled by how I look. I was a lady once, too... I can embroider, I read Tennyson... Oh, and I can sing: \"She flows like an endless river through my veins...\""
           },
           {
             "id": "voice-5363",
@@ -14723,7 +14723,7 @@
           {
             "id": "voice-5437",
             "title": "Chat: About the Keeper",
-            "content": "I must accuse you, Keeper. Your kindness makes me uneasy—only physical pain feels real and stable to me."
+            "content": "I must accuse you, Keeper. You're far too gentle with me, and it makes me uneasy. To me, only the pain of the flesh is real and lasting."
           },
           {
             "id": "voice-5876",
@@ -14733,12 +14733,12 @@
           {
             "id": "voice-5157",
             "title": "Investigation Success",
-            "content": "Ah, time to get fed. Hehe..."
+            "content": "And now... it's mealtime. Hehe..."
           },
           {
             "id": "voice-5655",
             "title": "Investigation Halted",
-            "content": "If I am taken as a hostage, what cruel fate awaits me?"
+            "content": "If I'm taken as a prisoner of war, what cruel fate awaits me?"
           },
           {
             "id": "voice-6698",
@@ -14748,12 +14748,12 @@
           {
             "id": "voice-6592",
             "title": "Defense: I",
-            "content": "Be careful what you wish for."
+            "content": "Do be careful."
           },
           {
             "id": "voice-5621",
             "title": "Defense: II",
-            "content": "How do you like this?"
+            "content": "Like this?"
           },
           {
             "id": "voice-5662",
@@ -16231,13 +16231,13 @@
             "id": "voice-5197",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "Ah, back in the chaotic ocean. I like it."
+            "content": "Feels like I'm back in the ocean of chaos. Not bad."
           },
           {
             "id": "voice-5196",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "This beast is merely a fragment of my will. Its form may not change, but my power knows no bounds."
+            "content": "However much I'm upgraded, this beast's appearance won't change. In the end, it's only my power given form."
           },
           {
             "id": "voice-5199",
@@ -16261,25 +16261,25 @@
             "id": "voice-6278",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "Hmph... I still can't fathom why Ramona picked you as her partner. You reek of strength, yes, but you're nowhere near my league."
+            "content": "Hmph... I still can't fathom why Ramona picked you as her partner. You reek of strength, yes, but you're a long way from being my rival."
           },
           {
             "id": "voice-6279",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "Yes, gaze upon me. I am this planet's most ancient being, demanding reverence from the insignificant. I've guarded this planet for eons. Is a thrilling battle truly too much to ask for in return?"
+            "content": "That's it, look up at me with awe. I am this planet's oldest creation, and I'm owed the respect of lesser beings. I've guarded this planet for countless ages. Is one all-out duel as payment really too much to ask?"
           },
           {
             "id": "voice-6276",
             "title": "Affinity: IV",
             "unlockCondition": "Unlocks at Affinity Level 8",
-            "content": "Interesting. Your growth in battle far surpasses my expectations. Given time, you might become... Strange. Even after all this time, I still find hope in a creature as seemingly weak as you."
+            "content": "Interesting. Your growth in battle far surpasses my expectations. Given time, you might become... Strange. After all these ages, I still find myself expecting something of a creature as weak as you."
           },
           {
             "id": "voice-6277",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "Perhaps now is the time. Listen closely. Lotan, the Beast of the Stars, formally challenges you. Do not fret; I shall ensure your survival until you reach your zenith. I will not allow my chosen opponent to suffer the same fate again."
+            "content": "Perhaps now is the time to say it. Listen closely. Lotan, the Beast of the Stars, formally challenges you to a decisive duel... Of course, until you reach your peak, I will keep you safe. I won't let a rival I've chosen die young a second time."
           },
           {
             "id": "voice-5153",
@@ -16295,7 +16295,7 @@
             "id": "voice-6361",
             "title": "Chat: About Tulu",
             "unlockCondition": "Unlocks after acquiring Awakener \"Tulu\"",
-            "content": "How dare you summon him! That useless, lazy oaf! He was once someone I held in high regard! Away with him! I refuse to look at that fool!"
+            "content": "Why would you summon him?! That useless sleepyhead! No pride, no ambition... and to think I once had such high hopes for him! We're leaving! I don't want to see him!"
           },
           {
             "id": "voice-5929",
@@ -16321,7 +16321,7 @@
           {
             "id": "voice-6497",
             "title": "Chat: What I Hate",
-            "content": "Hate? I despise those who give up halfway. The mere thought of them makes me want to regurgitate last night's meal."
+            "content": "Things I hate... People who give up halfway, I suppose. Just thinking about them makes yesterday's dinner come back up."
           },
           {
             "id": "voice-6156",
@@ -16341,7 +16341,7 @@
           {
             "id": "voice-5865",
             "title": "Investigation Halted",
-            "content": "Hmph, not bad at all. Our next duel will be legendary."
+            "content": "Hmph, not bad. Next time we duel, I'll hold nothing back."
           },
           {
             "id": "voice-5723",
@@ -21895,7 +21895,7 @@
           {
             "id": "voice-95060",
             "title": "Awaken",
-            "content": "The Apostle of the Lightbearer, scion of the White Night, One who Dispels Darkness, Divus of the Divine Heart—I, Pollux, have answered your call. I offer unto you my power over Darkness, and my soul forged of Light."
+            "content": "The Apostle of the Lightbearer, scion of the White Night, One who Dispels Darkness, Divus of the Sacred Heart—I, Pollux, have answered your call. I offer unto you my power over Darkness, and my soul forged of Light."
           },
           {
             "id": "voice-95082",
@@ -21964,7 +21964,7 @@
             "id": "voice-95072",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "I have lost my light, and this blind suffering torments me. I beg you, save my lost soul. Please, take my hand as I guide yours over this Holy Heart in my chest. Please, guide me toward the light..."
+            "content": "I have lost my light, and this blind suffering torments me. I beg you, save my lost soul. Please, take my hand as I guide yours over this Sacred Heart in my chest. Please, guide me toward the light..."
           },
           {
             "id": "voice-95076",
@@ -21991,7 +21991,7 @@
           {
             "id": "voice-95069",
             "title": "Chat: About Mythag",
-            "content": "The one who can lead all from the mist is the true Lightbearer, forged of purest silver. The sinless paradise preached by Juliette is, in truth, built upon the bones of the faithful. As the Divus, I shall sow the new gospel among all who are worthy of salvation."
+            "content": "The one who can lead all from the mist is the true Lightbearer, forged of purest The Innocent Haven preached by Juliette is, in truth, built upon the bones of the faithful. As the Divus, I shall sow the new gospel among all who are worthy of salvation."
           },
           {
             "id": "voice-95080",
@@ -22006,7 +22006,7 @@
           {
             "id": "voice-95089",
             "title": "Chat: About the Keeper",
-            "content": "My Light, ever since I received your guidance, I believe I have embarked upon the one true path. Yet your rather dim-witted believer remains perplexed by one question: does the legendary sinless paradise also fall under your dominion? \"It doesn't exist,\" you say...? Could it be... you mean to say that paradise exists here, in the mortal world, within the pure hearts of the righteous?"
+            "content": "My Light, ever since I received your guidance, I believe I have embarked upon the one true path. Yet your rather dim-witted believer remains perplexed by one question: Does the legendary Innocent Haven also lie within your dominion? \"It doesn't exist,\" you say...? Could it be... you mean to say that paradise exists here, in the mortal world, within the pure hearts of the righteous?"
           },
           {
             "id": "voice-95073",
@@ -22978,7 +22978,7 @@
           {
             "id": "voice-5433",
             "title": "Upgrade: II",
-            "content": "Wow! Your luck is burnin' hot right now!"
+            "content": "Woohoo! My luck's on fire!"
           },
           {
             "id": "voice-5434",
@@ -23161,7 +23161,7 @@
           {
             "id": "voice-59464",
             "title": "Over-Exalt",
-            "content": "Make it an easy win! It's our total victory!"
+            "content": "Easy as pie! Total victory!"
           },
           {
             "id": "traphase-99785",
@@ -23505,7 +23505,7 @@
             "id": "voice-6162",
             "title": "Enlighten: Observe",
             "unlockCondition": "Unlocks at Enlighten Level 1",
-            "content": "Those with strength must not use their power to oppress others, for you all share my blood.\" I remember the teachings of our Father God of Compassion. I will use this strength only to protect those around me."
+            "content": "\"Those with strength must not use their power to oppress others, for you all share my blood.\" I hold fast to the teachings of the God of Love, and will use this strength only to protect those around me."
           },
           {
             "id": "voice-4977",
@@ -23547,7 +23547,7 @@
             "id": "voice-6454",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "Will you pray with me, my Pale Flame? Let us pray for those who died in our battle today. Though cursed with dissolution and madness, they are still children of the All-Father, our brothers and sisters. May they now find their deserved peace."
+            "content": "Will you pray with me, my Pale Flame? Let us pray for those who died in our battle today. Though Dissolution drove them mad, they are still children of the All-Father, our brothers and sisters. May they now find the peace they deserve."
           },
           {
             "id": "voice-6453",
@@ -23580,7 +23580,7 @@
           {
             "id": "voice-5355",
             "title": "Chat: About Fatigue",
-            "content": "The burden of guiding light can overwhelm even the purest of saints. If you feel weary, my pale flame, please confide in me. I will do everything in my power to ease your burden and share the weight of these countless blessings."
+            "content": "The burden of guiding the light can crush even the purest saint. If you grow weary, my Pale Flame, please tell me. I will do all I can to ease your burden, and share the weight of all the blessings you carry."
           },
           {
             "id": "voice-5468",
@@ -23636,7 +23636,7 @@
           {
             "id": "voice-45153",
             "title": "Chat: About Home",
-            "content": "I may not have been born in the Kingdom of Leo, but the Church of Redemption is where I received my second life. Why, then, can I not consider this place my home?"
+            "content": "I may not have been born in the Kingdom of Leonia, but the Church of Redemption is where I received my second life. Why, then, can I not consider this place my home?"
           },
           {
             "id": "voice-45159",
@@ -23647,7 +23647,7 @@
             "id": "voice-45157",
             "title": "Chat: About Ogier",
             "unlockCondition": "Unlocks after clearing Special Operation \"Color of Blood\"",
-            "content": "That child is sincere, steadfast, and kind, with a rare bright soul. The last time I met a spirit like this was during the first chapter of my life."
+            "content": "That child is sincere, steadfast, and kind, with a rare and radiant soul. The last time I met anyone like that was in my first life."
           },
           {
             "id": "voice-45161",
@@ -23713,7 +23713,7 @@
           {
             "id": "voice-5722",
             "title": "Exalt",
-            "content": "Lambs, the All-Father's will shall redeem you."
+            "content": "O lambs, the All-Father's mercy shall redeem you."
           },
           {
             "id": "voice-57835",
@@ -25753,7 +25753,7 @@
             "id": "voice-6054",
             "title": "Enlighten: Ponder",
             "unlockCondition": "Unlocks at Enlighten Level 2",
-            "content": "I'm so happy... You're so biased and favor me so much."
+            "content": "I'm so happy... You favor me so shamelessly."
           },
           {
             "id": "voice-6055",
@@ -25771,7 +25771,7 @@
             "id": "voice-6264",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "Is this the manifestation of your desire, to deepen my affection?"
+            "content": "You want my love to run even deeper? Is that what you desire?"
           },
           {
             "id": "voice-6058",
@@ -25807,7 +25807,7 @@
             "id": "voice-5699",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "I have always awaited the arrival of destruction, never considering \"resistance\"... Will you help my shallow soul cross the abyss? Even in a world where I narrowly survived, you still grant me salvation..."
+            "content": "I always waited for destruction to come, and never imagined I could resist it... Will you carry a soul as shallow as mine across annihilation, and save me even in a world that only just escaped death?"
           },
           {
             "id": "voice-6495",
@@ -25817,7 +25817,7 @@
           {
             "id": "voice-5287",
             "title": "Chat: About Past",
-            "content": "To survive annihilation, I've shared my spirit and blood with too many. My power now is a ghost of what it was when I first embraced this Supreme Will..."
+            "content": "To survive annihilation, I've shared my spirit and blood with far too many. My power now is a ghost of what it was when I first took on this will..."
           },
           {
             "id": "voice-5802",
@@ -25854,7 +25854,7 @@
           {
             "id": "voice-5424",
             "title": "Chat: About the Keeper",
-            "content": "You truly are a dishonest child. Lucky for you, I have eternity to wait..."
+            "content": "You're not being honest with yourself, child. Luckily, I have more than enough time and patience to wait for you..."
           },
           {
             "id": "voice-50903",
@@ -25866,7 +25866,7 @@
             "id": "voice-50910",
             "title": "Chat: About Tawil",
             "unlockCondition": "Unlocks after acquiring Awakener \"Ramona\"",
-            "content": "Oh dear, I've lost to her this time... But since she chose you, you'll drink the Holy Tree's sap and carry my blood and seeds to a new world, yes?"
+            "content": "Oh dear, I have to admit she beat me this time... But since she chose you, you'll drink the Tree's milk and carry my blood and seed into the new world, won't you?"
           },
           {
             "id": "voice-50901",
@@ -25929,7 +25929,7 @@
             "id": "voice-50900",
             "title": "Chat: About Keygrave",
             "unlockCondition": "Clear Main Story Chapter 7",
-            "content": "I glimpsed your tombstone in Keygrave's shadows... Will my mummified flesh rest here too, one day? No? What a pity."
+            "content": "While I was looking for a secluded spot in the Keygrave just now, I think I saw your tombstone... Will my mummy be buried here too? No? What a pity."
           },
           {
             "id": "voice-50909",
@@ -25940,7 +25940,7 @@
           {
             "id": "voice-50904",
             "title": "Chat: About the Desert",
-            "content": "Born from the yellow sands, and to the yellow sands you shall return. On this brief journey, shouldn't you leave some souvenirs along the way? Sow some seeds?"
+            "content": "Born of the yellow sands, and to the yellow sands you shall return. On this brief journey, surely you should leave something behind? Sow something?"
           },
           {
             "id": "voice-6198",
@@ -26471,7 +26471,7 @@
             "id": "voice-5275",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "Through the long, endless times, Faint and I only had each other. But now, I have a new significant person in my life. Keeper, please allow me to retract what I had said before. You are different. You see more than my songs and my appearance; you truly see me. This is why I will protect you, too. I will never turn my eyes away from you."
+            "content": "Through the long, endless ages, Faint and I had only each other. But now, I have someone new who matters to me... Keeper, please let me take back what I said before. You are different. You don't care only for my voice and my gown. You look at me. And so, I will look at you, too."
           },
           {
             "id": "voice-6175",
@@ -26508,12 +26508,12 @@
           {
             "id": "voice-6675",
             "title": "Chat: What I Like",
-            "content": "I love all lives. I love light. I want Faint to emerge from her secluded shell and experience the world with her own eyes and ears."
+            "content": "I love life. I love light. I want Faint to come out of her closed-up shell and hear and see the world with her own eyes and ears."
           },
           {
             "id": "voice-5605",
             "title": "Chat: What I Hate",
-            "content": "I fear loneliness, and the worry of being lost in endless darkness... So please, promise you will not leave my side."
+            "content": "I hate loneliness. I hate worrying over someone's feelings in darkness that never ends... So please, don't leave me behind. Will you?"
           },
           {
             "id": "voice-5868",
@@ -28008,12 +28008,12 @@
           {
             "id": "voice-5438",
             "title": "Upgrade: I",
-            "content": "Quite good, indeed."
+            "content": "Very good. You serve well."
           },
           {
             "id": "voice-5439",
             "title": "Upgrade: II",
-            "content": "This is barely enough."
+            "content": "This is nowhere near enough."
           },
           {
             "id": "voice-5440",
@@ -28066,7 +28066,7 @@
             "id": "voice-6475",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "Keeper, is there anyone you don't like? As a favor, I can teach them a lesson. Within a week, they'll be a changed person, obediently prostrating themselves before you."
+            "content": "Keeper, is there anyone you dislike? As a token of thanks, I could give them a little training. Within a week, they'll be a changed person, obediently licking your toes."
           },
           {
             "id": "voice-6474",
@@ -28084,7 +28084,7 @@
             "id": "voice-6472",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "What a surprise, I've gained an equivalent companionship.\nHowever... I request to retain the right to command you, merely for our mutual amusement. Come to my chambers tonight; I still have much to learn about human sensibilities..."
+            "content": "How novel. I seem to have gained a friendship between equals.\nHowever... I'd like to keep the right to order you around, as a little spice between us. Come to my bedroom tonight. There is still much I need to learn about human affection..."
           },
           {
             "id": "voice-6124",
@@ -28121,7 +28121,7 @@
           {
             "id": "voice-6326",
             "title": "Chat: What I Like",
-            "content": "A qualified servant must be pliable and vacuous—I prefer obedient lambs."
+            "content": "A proper servant must be frail and empty-headed. I prefer docile lambs."
           },
           {
             "id": "voice-5457",
@@ -29091,19 +29091,19 @@
             "id": "voice-126964",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "First Their bearing, then Their shape, until They also possessed a pair of... or rather, until all that remained memorable was a pair of beautiful, Soul-Capturing Eyes—eyes just like mine."
+            "content": "First their bearing, then their shape, until they too possessed a pair of... or rather, until all that remained memorable was a pair of beautiful, soul-capturing eyes, eyes just like mine."
           },
           {
             "id": "voice-126958",
             "title": "Enlighten: Elevate",
             "unlockCondition": "Unlocks at Enlighten Level 11",
-            "content": "Do you not love me? Then why cower when you are encompassed? Do you not loath me? Then why weep when there is no return?\nOh, now you fear my shadow? Has the fragrance of white magnolia become a cloying, inexplicable musk to you?"
+            "content": "Do you not love me? Then why cower when you are encompassed? Do you not loathe me? Then why weep when there is no return?\nOh, now you fear my shadow? Has the fragrance of white magnolia become a cloying, inexplicable musk to you?"
           },
           {
             "id": "voice-126972",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "Do not trouble yourself; you are not like those common multitude. \nHush. Do not look behind me. Pay no mind to the unseen caress. Look into my eyes, and my eyes alone."
+            "content": "Do not trouble yourself; you are not like that common multitude. Hush. Do not look behind me. Pay no mind to the unseen caress. Look into my eyes, and my eyes alone."
           },
           {
             "id": "voice-126976",
@@ -29115,7 +29115,7 @@
             "id": "voice-126965",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "I am utterly bored this day. Is there no wish you require me to make manifest?\n\nA pity you don't. So many are willing to wield the scythe and offer me sweetmeat for far more trifling ends.\nBut if it's you asking..."
+            "content": "I am utterly bored this day. Is there no wish you require me to make manifest? A pity you don't. So many are willing to wield the scythe and offer me blood for far more trifling ends.\nBut if it's you asking..."
           },
           {
             "id": "voice-126966",
@@ -29153,7 +29153,7 @@
           {
             "id": "voice-127090",
             "title": "Chat: What I Like",
-            "content": "In the legends of the Panlong Empire, the peacock is a handsome, flamboyant, and malicious beast. Beautiful and viscious—it makes the heart race. Ugly and kind, however, is rather boring."
+            "content": "In the legends of the Panlong Empire, the peacock is a handsome, flamboyant, and malicious beast. Beautiful and vicious: it makes the heart race. Ugly and kind, however, is rather boring."
           },
           {
             "id": "voice-127088",
@@ -29190,7 +29190,7 @@
           {
             "id": "voice-126948",
             "title": "Investigation Success",
-            "content": "You ask why Their crania are so vacant? Hmm, perhaps it is merely Their nature."
+            "content": "You ask why their crania are so vacant? Hmm, perhaps it is simply their nature."
           },
           {
             "id": "voice-126970",
@@ -30173,7 +30173,7 @@
             "id": "voice-133725",
             "title": "Enlighten: Flourish",
             "unlockCondition": "Unlocks at Enlighten Level 15",
-            "content": "Everything is a past epilogue. Everything is a new prologue. The new chapter between us waits for you to write it, Keeper."
+            "content": "What's past is prologue. Our new chapter is waiting for you to write it, Keeper."
           },
           {
             "id": "voice-133758",
@@ -30228,7 +30228,7 @@
           {
             "id": "voice-133759",
             "title": "Chat: What I Hate",
-            "content": "I have never cared for performances that simply repeat themselves. The very reason one steps into a theater is to witness a living stage—one that cannot be recreated.\nIf it does nothing but turn like clockwork, the stage becomes an ornate cage, and watching becomes nothing more than a tedious pilgrimage toward an ending you already know.\nA souless masquerade, no matter how magnificent the production is. What do you think?"
+            "content": "I have never cared for performances that simply repeat themselves. The very reason one steps into a theater is to witness a living stage, one that cannot be recreated.\nIf it does nothing but turn like clockwork, the stage becomes an ornate cage, and watching becomes nothing more than a tedious pilgrimage toward an ending you already know.\nA soulless masquerade, no matter how magnificent the production. What do you think?"
           },
           {
             "id": "voice-133722",
@@ -30318,7 +30318,7 @@
           {
             "id": "voice-133753",
             "title": "Skill: II",
-            "content": "What was written draws near."
+            "content": "The future has arrived."
           },
           {
             "id": "voice-133762",
@@ -31793,7 +31793,7 @@
             "id": "voice-146197",
             "title": "Affinity: I",
             "unlockCondition": "Unlocks at Affinity Level 2",
-            "content": "Mercy, weakness, confusion... your eyes are clouded with impurities. One who wavers can never understand what strength is."
+            "content": "Mercy, weakness, confusion... your eyes are clouded with impurities. One who isn't pure can never understand what strength is."
           },
           {
             "id": "voice-146173",
@@ -31817,7 +31817,7 @@
             "id": "voice-146199",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "Listen well, I'll say this only once:\nI, Lotan, deem you an opponent worthy of my patience.\nUntil you reach your peak, I shall be your most reliable blade. This promise has nothing to do with feeling or loyalty. You're my most thrilling rival, and I will never let you fall along the way."
+            "content": "Listen well, I'll say this only once:  I, Lotan, deem you an opponent worth waiting for. Until you reach your peak, I shall be your most reliable blade. My promise and my loyalty have nothing to do with feeling. You're my most thrilling rival, and I will never let you fall along the way."
           },
           {
             "id": "voice-146158",
@@ -31847,7 +31847,7 @@
           {
             "id": "voice-146160",
             "title": "Chat: About the Keeper",
-            "content": "I dislike those with a divided heart, as such division usually means weakness. But you are an exception. I once believed those who carry too much could never go far. But the path you've chosen surprises me... Perhaps an opponent walking a different path is more worthy of honing and challenge. Wouldn't you agree,\"opponent\"?"
+            "content": "I dislike the impure, because impurity usually means weakness. But you are an exception. I once believed someone carrying so much could never go far. But the path you've walked surprises even me... Perhaps one who walks a different road is all the more worth honing, and challenging. Wouldn't you agree, \"opponent\"?"
           },
           {
             "id": "voice-146175",
@@ -32330,7 +32330,7 @@
             "id": "voice-149683",
             "title": "Enlighten: Insight",
             "unlockCondition": "Unlocks at Enlighten Level 7",
-            "content": "Wowww, this much tribute...! Ahem. Hehe, well done, you've earned a reward! Come here, I'll grants you a fairy's kiss! ...What are you thinking? On the forehead, obviously!"
+            "content": "Wowww, this much tribute...! Ahem. Hehe, well done, you've earned a reward! Come here, I'll grant you a fairy's kiss! ...What are you thinking? On the forehead, obviously!"
           },
           {
             "id": "voice-149684",
@@ -33262,19 +33262,19 @@
             "id": "voice-154157",
             "title": "Enlighten: Observe",
             "unlockCondition": "Unlocks at Enlighten Level 1",
-            "content": "The stars are packed full of secrets. They are so vast, so appaling. In front of the stars, any one person's busy little efforts, and their attempts to understand the world, amounts to almost nothing."
+            "content": "The stars are packed full of secrets. They are so vast, so appalling. Before the stars, any one person's busy little efforts, and their attempts to understand the world, amount to almost nothing."
           },
           {
             "id": "voice-154129",
             "title": "Enlighten: Ponder",
             "unlockCondition": "Unlocks at Enlighten Level 2",
-            "content": "Sleep... only sleep matters. Go to sleep. A dreamless sleep is unbearably sweet. Dreams have their dangers too, naturally, but set beside the unmeasurable things waiting between the stars, the dangers of a dream is hardly worth mentioning. So long as They don't notice you in there."
+            "content": "Sleep... only sleep matters. Go to sleep. A dreamless sleep is unbearably sweet. Dreams have their dangers too, naturally, but set beside the unmeasurable things waiting between the stars, the dangers of a dream are hardly worth mentioning. So long as They don't notice you in there."
           },
           {
             "id": "voice-154126",
             "title": "Enlighten: Reflect",
             "unlockCondition": "Unlocks at Enlighten Level 3",
-            "content": "A pessimist? Certainly not. I'm fascinated by knowledge, and by the unknown. Any fool reckless enough—arrogant enough to have never once looked up at the sky—I am perfectly willing to hand them the most horrifying knowledge this world contains."
+            "content": "A pessimist? Certainly not. I'm fascinated by knowledge, and by the unknown. Anyone reckless enough, presumptuous enough... I am perfectly willing to hand them the most horrifying knowledge this world contains."
           },
           {
             "id": "voice-154152",
@@ -33304,13 +33304,13 @@
             "id": "voice-154144",
             "title": "Affinity: II",
             "unlockCondition": "Unlocks at Affinity Level 4",
-            "content": "Yes. I really was lucky. Father and Mother got precisely what they'd always wanted: to spend themselves on our country and its honour, holding it together down to the final moment. Their people lived, especially the children. So no, I've never regretted it. Given the chance to do it over, I would make the same choice. Next time before the water came to a boil, I'd remember to chew a few more belladonna leaves for the pain, though."
+            "content": "Yes. I really was lucky. Father and Mother got precisely what they'd always wanted: to spend themselves on our country and its honor, holding it together down to the final moment. Their people lived, especially the children. So no, I've never regretted it. Given the chance to do it over, I would make the same choice. Next time, though, I'd remember to chew a few more belladonna leaves for the pain before the water came to a boil."
           },
           {
             "id": "voice-154130",
             "title": "Affinity: III",
             "unlockCondition": "Unlocks at Affinity Level 6",
-            "content": "Why, exactly? What on earth do mortals keep inside their little heads, Keeper? They're exhausting, aren't they? Always acting on their own. Always doing entirely unnecessary things, and then filing them under love. I can't make sense of them at all. Can't they simply show up when they need someone to play board game with, then leave neatly once it's over?"
+            "content": "Why, exactly? What on earth do mortals keep inside their little heads, Keeper? They're exhausting, aren't they? Always acting on their own. Always doing entirely unnecessary things, and then filing them under love. I can't make sense of them at all. Can't they simply show up when they need someone to play a board game with, then leave neatly once it's over?"
           },
           {
             "id": "voice-154149",
@@ -33322,7 +33322,7 @@
             "id": "voice-154153",
             "title": "Affinity: V",
             "unlockCondition": "Unlocks at Affinity Level 10",
-            "content": "<Italic:*a very loud swear*>\nThis is... unspeakably awful.\nThis is... absolutely wonderful.\nSo be it then, Keeper. Let's think ourselves to shreds. Let's worry our hearts down to nothing. Use my power however you like. Put everything I know to work. In the middle of all this meaninglessness, let us spend everything we have on the few that aren't."
+            "content": "<Italic:(a very loud swear)>\nThis is... unspeakably awful.\nThis is... absolutely wonderful.\nSo be it then, Keeper. Let's think ourselves to shreds. Let's worry our hearts down to nothing. Use my power however you like. Put everything I know to work. In the middle of all this meaninglessness, let us spend everything we have on the few that aren't."
           },
           {
             "id": "voice-154159",
@@ -33332,7 +33332,7 @@
           {
             "id": "voice-154151",
             "title": "Chat: About Dissolution",
-            "content": "Dissolution... I used it to protect the last of my subjects, but it was also what brought my countrty down. A pity. Of all the knowledge They poured into me, not one page contained a way to prevent something like that."
+            "content": "Dissolution... I used it to protect the last of my subjects, but it was also what brought my country down. A pity. Of all the knowledge They poured into me, not one page contained a way to prevent something like that."
           },
           {
             "id": "voice-154154",
@@ -33347,7 +33347,7 @@
           {
             "id": "voice-154163",
             "title": "Chat: What I Hate",
-            "content": "No. I am not attending a salon, and I am not attending a tea party. This place hosts a frankly horrifying number of them. And I have a strong suspicion that the only reason they insist on seating me in the guest of honour's chair is the word princess. I'm a collectible doll, and they like the way I look on the shelf."
+            "content": "No. I am not attending a salon, and I am not attending a tea party. This place hosts a frankly horrifying number of them. And I have a strong suspicion that the only reason they insist on seating me in the guest of honor's chair is the word princess. I'm a collectible doll, and they like the way I look on the shelf."
           },
           {
             "id": "voice-154125",
@@ -33369,7 +33369,7 @@
           {
             "id": "voice-154146",
             "title": "Chat: About Gubble",
-            "content": "Have you heard the theory? Everything in this world came from a egg. An egg that stands outside time, outside space, outside every physical concept. It cycles endlessly, beginning and ending in a circle. Everything can exist at once, and yet there is always only one of it. \nI am you. Gubble is you. You are me. We can all be a hat called Gubble."
+            "content": "Have you heard the theory? Everything in this world came from an egg. An egg that stands outside time, outside space, outside every physical concept. It cycles endlessly, beginning and ending in a circle. Everything can exist at once, and yet there is always only one of it.\nI am you. Gubble is you. You are me. We can all be a hat called Gubble."
           },
           {
             "id": "voice-154147",
@@ -33434,7 +33434,7 @@
           {
             "id": "voice-154162",
             "title": "Rouse",
-            "content": "The vermins have overstayed their welcome."
+            "content": "The vermin have overstayed their welcome."
           },
           {
             "id": "voice-154139",

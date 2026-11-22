@@ -17,7 +17,14 @@
   python scripts/netdisk/post_comments.py --dry             # 只打印要发的内容
   python scripts/netdisk/post_comments.py --only 冬鸦       # 只发一个，验证格式
   python scripts/netdisk/post_comments.py --cleanup --dry   # 看要删哪些旧顶层评论
+  python scripts/netdisk/post_comments.py --prune-dead --dry  # 看要删哪些已经失效的补档评论
+  python scripts/netdisk/post_comments.py --prune-dead      # 真删（每天巡检自动跑一次）
   python scripts/netdisk/post_comments.py --reformat        # 把已发的评论改成短版（补档+链接）  python scripts/netdisk/post_comments.py                   # 全部发
+
+补档评论是有寿命的：评论里写的链接后来自己也会失效（分享被取消、被判违规），
+或者被新补出来的链接取代了。这种评论留在置顶下面只会把人引到「来晚啦」，
+所以每次巡检后跑一遍 --prune-dead 把它们删掉，并清掉 reshare.json 里的 rpid，
+下次补档成功时就能干净地发一条新的。
 """
 from __future__ import annotations
 
@@ -158,7 +165,7 @@ def build(name, links):
     大小是顺手带的：读者一眼能看出下的是完整版还是残缺包，
     也是给自己留个交叉验证——补到的那份大小明显不对，就说明补错了。
     """
-    live = [v for v in links.values() if v.get('url') and v.get('checked') != 'dead']
+    live = list(live_links(links).values())
     sizes = [v.get('size') or 0 for v in live]
     mx = max(sizes) if sizes else 0
     sz = human_size(mx)
@@ -178,6 +185,25 @@ def post_one(s, aid, msg, root=None):
         data['root'] = root      # 根评论（置顶那条）
         data['parent'] = root    # 直接回复它 → 楼中楼
     return s.post('https://api.bilibili.com/x/v2/reply/add', data=data, timeout=30).json()
+
+
+def live_links(links):
+    """评论里真正会写出去的链接：有 url 且没被巡检判死"""
+    return {k: v for k, v in links.items()
+            if v.get('url') and v.get('checked') != 'dead'}
+
+
+def comment_meta(aid, rpid, root, src, links, short=False):
+    """评论记录。urls 是「这条评论里当时写了哪几个链接」的快照——
+    以后判断这条评论是不是过期，靠的就是它：评论里列的链接如果全都不在当前
+    存活链接里，说明它已经把人引到死链接（或已被新链接取代）了。"""
+    meta = {'aid': aid, 'rpid': str(rpid), 'root': root or '',
+            'where': 'reply' if root else 'top', 'pinned': src or '',
+            'urls': [v['url'] for v in live_links(links).values()],
+            'at': time.strftime('%Y-%m-%d %H:%M')}
+    if short:
+        meta['short'] = True
+    return meta
 
 
 def delete_one(s, aid, rpid):
@@ -200,7 +226,13 @@ def reformat(s, data, name, g, args):
     root = olds[0][1]['comment'].get('root') or None
     msg = build(name, links)
     if not msg:
-        print(f'  - {name}: 补档链接已全部被复查判死，先不重发（留旧评论）')
+        # 没有一条活链接可写：旧的补档评论自己也失效了，留在置顶下面只会
+        # 把人引到「来晚啦」，所以直接删掉（发不出去就不发，别再挂着）。
+        if args.dry:
+            print(f'  [dry] {name}: 补档全灭，删旧评论 aid={aid} rpid={olds[0][1]["comment"].get("rpid")}')
+            return 0
+        drop_comment(s, data, name, g, aid, olds, reason='补档链接已全部失效')
+        json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
         return 0
     if args.dry:
         print(f'=== {name} aid={aid} root={root or "顶层"}\n{msg}\n')
@@ -210,24 +242,136 @@ def reformat(s, data, name, g, args):
         print(f'  ✗ {name}: 发新评论失败 code={r.get("code")} {r.get("message")}（旧评论保留）')
         return 0
     d = r.get('data') or {}
-    rpid = str(d.get('rpid_str') or d.get('rpid') or '')
-    for k, v in links.items():
-        c = v.get('comment') or {}
-        if not c.get('rpid'):
-            continue
-        old = c['rpid']
+    new_rpid = str(d.get('rpid_str') or d.get('rpid') or '')
+    # 同一条评论会挂在好几个盘下面，rpid 去重后再删，否则第二次必然报「已删除」
+    old_rpids = sorted({str((v.get('comment') or {}).get('rpid') or '')
+                        for _k, v in links.items() if (v.get('comment') or {}).get('rpid')})
+    gone = set()
+    for old in old_rpids:
         dr = delete_one(s, aid, old)
         if dr.get('code') == 0:
-            v['comment'] = {'aid': aid, 'rpid': rpid, 'root': root or '',
-                            'where': 'reply' if root else 'top',
-                            'pinned': c.get('pinned') or '', 'short': True,
-                            'at': time.strftime('%Y-%m-%d %H:%M')}
-            print(f'  ✓ {name} 改写 rpid {old} → {rpid}')
+            gone.add(old)
+            print(f'  ✓ {name} 改写 rpid {old} → {new_rpid}')
         else:
-            print(f'  ! {name} 新评论已发({rpid})，旧评论删除失败 code={dr.get("code")}')
+            print(f'  ! {name} 新评论已发({new_rpid})，旧评论删除失败 code={dr.get("code")}')
         time.sleep(3)
+    for k, v in links.items():
+        c = v.get('comment') or {}
+        if str(c.get('rpid') or '') in gone:
+            v['comment'] = comment_meta(aid, new_rpid, root, c.get('pinned'), links, short=True)
     json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
     return 1
+
+
+def drop_comment(s, data, name, g, aid, entries, reason=''):
+    """删掉一条补档评论，并把 reshare.json 里的 rpid 清干净
+
+    删除失败也不留隐患：记到 comment_removed_failed 里，下一轮 --prune-dead 再试，
+    但不会因为它就一直当成「已发过评论」挡住新链接。
+    """
+    now = time.strftime('%Y-%m-%d %H:%M')
+    rpids = sorted({str((v.get('comment') or {}).get('rpid') or '') for _k, v in entries})
+    rpids = [r for r in rpids if r]
+    ok_all = bool(rpids)
+    for rpid in rpids:
+        dr = delete_one(s, aid, rpid)
+        if dr.get('code') == 0:
+            print(f'  ⌫ {name} 删除失效补档评论 rpid={rpid}（{reason}）')
+        else:
+            ok_all = False
+            print(f'  ✗ {name} 删除补档评论失败 rpid={rpid} code={dr.get("code")} {dr.get("message")}')
+        time.sleep(3)
+    for _k, v in entries:
+        c = v.pop('comment', None) or {}
+        if ok_all:
+            v['comment_removed'] = {'at': now, 'rpid': ','.join(rpids), 'reason': reason}
+        else:
+            v['comment_removed_failed'] = {'at': now, 'rpid': ','.join(rpids) or c.get('rpid'),
+                                           'reason': reason}
+    return ok_all
+
+
+def prune_dead(s, data, args):
+    """清理已经失效的补档评论
+
+    一条评论常常同时写着好几个盘的链接，所以按 (aid, rpid) 归堆整体判断。
+    「评论里写了哪些链接」优先看 urls 快照；老记录没有快照，就按它覆盖的
+    那几条链接算（宁少删不错删）。
+
+      · 写了 0 条活链接        → 整条删掉：留着只会把人引到「来晚啦」
+      · 写了活链接也写了死链接  → 重写：发一条只含活链接的新评论，再删旧的
+      · 写的全是活链接         → 不碰
+
+    删除成功后清掉 comment 并记 comment_removed，下一轮不会再碰；
+    删除失败记 comment_removed_failed，下一轮重试，但不再当成「已发过」。
+    """
+    groups = {}
+    for name, g in (data.get('games') or {}).items():
+        for plat, v in (g.get('links') or {}).items():
+            c = v.get('comment') or {}
+            rpid = str(c.get('rpid') or '')
+            if not rpid:
+                continue
+            key = (str(c.get('aid') or ''), rpid)
+            it = groups.setdefault(key, {'name': name, 'g': g, 'entries': [],
+                                         'urls': [], 'bvid': v.get('bvid') or ''})
+            it['entries'].append((plat, v))
+            if c.get('urls'):
+                it['urls'] = list(c['urls'])
+            if not it['bvid'] and v.get('bvid'):
+                it['bvid'] = v['bvid']
+
+    n_del = n_rewrite = n_keep = n_fail = n_over = 0
+    for (aid, rpid), it in groups.items():
+        links = it['g'].get('links') or {}
+        live = {v['url'] for v in live_links(links).values() if v.get('url')}
+        snap = [u for u in it['urls'] if u]
+        listed = snap or [v['url'] for _p, v in it['entries'] if v.get('url')]
+        listed_live = [u for u in listed if u in live]
+        listed_dead = [u for u in listed if u not in live]
+        if not listed_live and not listed_dead:
+            n_keep += 1
+            continue
+        if not listed_dead:
+            n_keep += 1
+            continue
+        if args.prune_limit and (n_del + n_rewrite + n_fail) >= args.prune_limit:
+            n_over += 1
+            continue
+        full_dead = not listed_live
+        if full_dead:
+            reason = '评论里的链接已全部失效'
+        else:
+            reason = '评论里 %d 条链接已失效' % len(listed_dead)
+        if args.dry:
+            act = '⌫ 删除' if full_dead else '↻ 重写（删旧发新）'
+            print(f'  [dry] {act} {it["name"]} aid={aid or "?"} rpid={rpid}（{reason}）')
+            if full_dead:
+                n_del += 1
+            else:
+                n_rewrite += 1
+            continue
+        if not aid:
+            aid = (aid_of(s, it['bvid'])[0] if it['bvid'] else None) or ''
+        if not aid:
+            print(f'  ✗ {it["name"]}: 取不到 aid，处理不了 rpid={rpid}')
+            n_fail += 1
+            continue
+        if full_dead:
+            if drop_comment(s, data, it['name'], it['g'], aid, it['entries'], reason=reason):
+                n_del += 1
+            else:
+                n_fail += 1
+        else:
+            # 还有活链接：重写一条只含活链接的，旧的那条（含死链接）随之删除
+            if reformat(s, data, it['name'], it['g'], args):
+                n_rewrite += 1
+            else:
+                n_fail += 1
+        json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+    print(f'失效补档评论：删除 {n_del} ／ 重写 {n_rewrite} ／ 仍有效保留 {n_keep} ／ 失败 {n_fail}'
+          + (f' ／ 超过本轮上限未处理 {n_over}' if n_over else ''))
+    return n_del + n_rewrite
 
 
 def main():
@@ -239,12 +383,20 @@ def main():
     ap.add_argument('--force', action='store_true', help='已有 comment 记录也重发（先删旧的）')
     ap.add_argument('--reformat', action='store_true',
                     help='把已发的补档评论改成短版（只有补档+链接），先发新再删旧')
+    ap.add_argument('--prune-dead', action='store_true',
+                    help='删掉已经失效的补档评论（评论里列的链接后来死了/被新链接取代）')
+    ap.add_argument('--prune-limit', type=int, default=30,
+                    help='--prune-dead 单轮最多删几条（默认 30，0=不限）')
     args = ap.parse_args()
 
     data = json.load(open(SHARE, encoding='utf-8'))
     s = session()
     if not s.csrf:
         sys.exit('没有 bili_jct，无法发评论（先重新导出 360 的 cookie）')
+
+    if args.prune_dead:
+        prune_dead(s, data, args)
+        return
 
     if args.reformat:
         n = 0
@@ -326,9 +478,7 @@ def main():
             d = r.get('data') or {}
             rpid = str(d.get('rpid_str') or d.get('rpid') or '')
             for v in todo.values():
-                v['comment'] = {'aid': aid, 'rpid': rpid, 'root': root or '',
-                                'where': 'reply' if root else 'top',
-                                'pinned': src, 'at': time.strftime('%Y-%m-%d %H:%M')}
+                v['comment'] = comment_meta(aid, rpid, root, src, todo)
             n_ok += 1
             print(f'  ✓ {name} [{bvid}] {("回复 " + str(root)) if root else "顶层"} → rpid={rpid}')
             json.dump(data, open(SHARE, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
