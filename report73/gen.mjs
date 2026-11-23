@@ -253,23 +253,50 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .rank1 li span:first-child i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nmico{display:inline-flex;align-items:center;gap:4px;vertical-align:-3px}
 /* spread 7 low-cost */
-.lcband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:9px}
-.lbh{display:flex;align-items:baseline;gap:12px;padding:4px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
-.lbh h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:17px;color:#a1281b;font-weight:900;letter-spacing:.5px}
-.lbh em{font-style:normal;font-size:10px;color:#5f4c36}
-.lbh .rt{margin-left:auto;font-size:10px;color:#4b3a28}
-.lbh .rt b{color:#a1281b}
-.lcrow{display:grid;grid-template-columns:172px 74px 1fr 190px;gap:10px;align-items:center;
-  padding:5px 10px;border-bottom:1px dotted #d6c8ac}
-.lcrow:last-child{border-bottom:0}
-.lcpc b{font-size:16px;color:#a1281b;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
-.lcpc em{font-style:normal;font-size:9px;color:#8a7458}
-.lcpc span{display:block;font-size:8.5px;color:#6a5740;letter-spacing:.3px}
-.lczi{font-size:11px;font-weight:700;color:#3c2c1c}
-.lczi em{display:block;font-style:normal;font-size:9.5px;font-weight:400;color:#6a5740;margin-top:1px}
-.lcpf{font-size:10px;text-align:right;font-weight:700}
-.lcpf em{display:block;font-style:normal;font-size:9px;font-weight:400;color:#7b6750;margin-top:1px}
-.lclegend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:10px;color:#4b3a28;padding:2px 0 8px}
+.zblk{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:8px}
+.zh{display:flex;align-items:baseline;gap:10px;padding:4px 9px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.zh b{font-family:"Source Han Serif SC","SimSun",serif;font-size:14px;letter-spacing:.6px;color:#3c2c1c}
+.zh em{font-style:normal;font-size:9px;color:#6a5740}
+.zh .rt{margin-left:auto;font-size:9px;color:#4b3a28}
+.zh .rt b{color:#a1281b}
+.zcols{display:grid;grid-template-columns:1fr 1fr}
+.zcol{padding:2px 9px 3px;border-right:1px solid #d6c8ac;min-width:0}
+.zcol:last-child{border-right:0}
+.zt{display:flex;align-items:baseline;gap:6px;font-size:9px;font-weight:800;letter-spacing:.4px;color:#4b3a28;padding-bottom:1px;border-bottom:1px solid #ddd0b4}
+.zt b{color:#a1281b;font-size:11px;font-family:"Source Han Serif SC","SimSun",serif}
+.zt em{font-style:normal;font-weight:400;font-size:8.6px;color:#7b6750;margin-left:auto}
+.lrow{display:flex;align-items:center;gap:5px;padding:2.9px 0;border-bottom:1px dotted #d6c8ac;min-width:0}
+.lrow:last-child{border-bottom:0}
+.mb{display:inline-flex;align-items:center;gap:2px;font-size:9px;white-space:nowrap}
+.mb img{width:15px;height:15px;border-radius:2px;border:1px solid #b7a685;object-fit:cover;flex:none}
+.mb span{max-width:52px;overflow:hidden;text-overflow:ellipsis}
+.mb i{font-style:normal;font-size:8px;font-weight:700;color:#a1281b}
+.lrow .lm{margin-left:auto;font-size:8.6px;color:#6a5740;white-space:nowrap}
+.lrow .lm b{color:#a1281b;font-size:12.5px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.bband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:7px}
+.bhead{display:flex;align-items:baseline;gap:10px;padding:3px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.bhead h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:15px;color:#a1281b;font-weight:900;letter-spacing:.6px}
+.bhead em{font-style:normal;font-size:9px;color:#5f4c36}
+.bhead .rt{margin-left:auto;font-size:9px;color:#4b3a28}
+.bhead .rt b{color:#a1281b}
+.bwho{padding:3px 10px;font-size:10px;color:#3c2c1c;border-bottom:1px solid #e2d7bd;background:#fbf7ec}
+.bwho b{font-size:12px;font-family:"Source Han Serif SC","SimSun",serif}
+.bwho i{font-style:normal;color:#a1281b;font-weight:800}
+.bwho em{font-style:normal;font-size:9px;color:#7b6750}
+.bcols{display:grid;grid-template-columns:repeat(5,1fr)}
+.bcol{padding:3px 8px 4px;border-right:1px solid #d6c8ac;min-width:0}
+.bcol:last-child{border-right:0}
+.bch{font-size:9px;font-weight:800;color:#3c2c1c;border-bottom:1px solid #ddd0b4;padding-bottom:1px;margin-bottom:2px}
+.bch b{color:#a1281b}
+.bch span{float:right;font-weight:400;color:#7b6750;font-size:8.4px}
+.bm{display:flex;align-items:center;gap:3px;font-size:8.8px;line-height:1.5;white-space:nowrap;min-width:0}
+.bm img{width:14px;height:14px;border-radius:2px;border:1px solid #b7a685;object-fit:cover;flex:none}
+.bm span{overflow:hidden;text-overflow:ellipsis}
+.bm i{font-style:normal;font-size:8px;font-weight:700;color:#a1281b;margin-left:auto}
+.bcf{font-size:8.6px;color:#6a5740;margin-top:1px;border-top:1px dotted #d6c8ac;padding-top:2px}
+.bcf b{color:#a1281b;font-size:12px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.btot{display:flex;gap:14px;align-items:baseline;font-size:9px;color:#4b3a28;margin:0 0 6px}
+.btot b{color:#a1281b}
 `;
 
 function head(spread, total, stamp) {
@@ -356,7 +383,7 @@ const s1 = `<div class="page">${head(1, 7, stamp)}${mast(kicker)}
     <div><b>第 4 版</b> · 小众数据——▼ 零出场、神秘配队、最长鏖战与平均死扛。</div>
     <div><b>第 5 版</b> · 启灵特刊——▼ 与 SSS 难度下各唤醒体的启灵分布。</div>
     <div><b>第 6 版</b> · 对比特刊——第 73 期与第 72 期的全部主指标对照。</div>
-    <div><b>第 7 版</b> · 低配榜——500/475/450 三档分数段里，启灵总和最低的 ▼ 通关阵容。</div>
+    <div><b>第 7 版</b> · 低配榜——五个禁区的 ▼ 与 SSS 各自最省启灵的三套阵容，以及三档分数段里最省玩家的全部队伍。</div>
   </div></div>
 </div>
 <div class="hr2" style="margin-top:14px"></div>
@@ -667,54 +694,66 @@ const s6 = `<div class="page">${head(6, 7, stamp)}${mast(kicker)}
 
 // ---------------------------------------------------------------- spread 7（低配榜）
 const LC = cur.lowcost;
-const lcRow = (p) => `<div class="lcrow">
-  <div>${memChips(p.members, 4, 34)}</div>
-  <div class="lcpc"><b>${p.potSum}</b><em> / 60</em><span>启灵总和</span></div>
-  <div class="lczi">${WAVE_NAME[p.wave] || '—'} · ▼ 通关<em>${p.rounds} 回合 · 该区 ${p.zoneScore} 分 · ${tokenTag(p.token)}</em></div>
-  <div class="lcpf">第 ${p.rank} 名<em>总分 ${p.total}</em></div>
+const memInline = (members, size = 15) => members.map(m => {
+  const img = imgPath(iconOf.char(m.en));
+  return `<span class="mb">${img ? `<img style="width:${size}px;height:${size}px" src="file:///${img}">` : ''}<span>${esc(m.zh)}</span><i>+${m.potency ?? 0}</i></span>`;
+}).join('');
+const memStack = (members) => members.map(m => {
+  const img = imgPath(iconOf.char(m.en));
+  return `<div class="bm">${img ? `<img src="file:///${img}">` : ''}<span>${esc(m.zh)}</span><i>+${m.potency ?? 0}</i></div>`;
+}).join('');
+
+// A. 每个禁区 × ▼ / SSS 的最低配三套
+const lr = (p) => `<div class="lrow">${memInline(p.members)}<span class="lm"><b>${p.potSum}</b> /60 · 第 ${p.rank} 名 · ${p.total} 分 · ${p.rounds} 回合</span></div>`;
+const zblock = (z) => `<div class="zblk">
+  <div class="zh"><b>${WAVE_NAME[z.wave]}</b><em>▼ 队伍 ${z.down.teams} 支 · SSS ${z.sss.teams} 支</em>
+    <span class="rt">该区 ▼ 通关率 <b>${pct(cur.zones[z.wave - 1].downRate)}</b></span></div>
+  <div class="zcols">
+    <div class="zcol"><div class="zt">▼ 癫狂<b>最低 ${z.down.potMin}</b><em>中位 ${Math.round(z.down.potMedian)} / 60</em></div>${z.down.picks.map(lr).join('')}</div>
+    <div class="zcol"><div class="zt">SSS<b>最低 ${z.sss.potMin}</b><em>中位 ${Math.round(z.sss.potMedian)} / 60</em></div>${z.sss.picks.map(lr).join('')}</div>
+  </div>
 </div>`;
-const lcZoneMax = Math.max(...LC.cheapZone.map(z => z.n), 1);
+
+// B. 每个分数段里「五队均启灵」最低的玩家，列出他全部队伍
+const bband = (b) => {
+  const p = b.best;
+  return `<div class="bband">
+  <div class="bhead"><h3>${b.label} 分</h3><em>${b.players} 位玩家 · 队伍 ${b.teams} 支（▼ ${b.downTeams} 支）</em>
+    <span class="rt">该档 ▼ 启灵中位 <b>${Math.round(b.potMedian)}</b> · 最省 <b>${b.potMin}</b></span></div>
+  <div class="bwho">最省玩家 <b>${esc(p.name)}</b>　第 ${p.rank} 名 · 总分 <i>${p.score}</i>　<em>全部 ${p.teams} 支队伍平均启灵</em> <i>${p.avgPot}</i> <em>· 合计 ${p.sumPot} / ${p.teams * 60}</em></div>
+  <div class="bcols" style="grid-template-columns:repeat(${p.items.length},1fr)">${p.items.map(it => `<div class="bcol">
+    <div class="bch">${WAVE_NAME[it.wave]} <b>${it.threat}</b><span>${it.zoneScore} 分</span></div>
+    ${memStack(it.members)}
+    <div class="bcf">启灵 <b>${it.potSum}</b> · ${it.rounds} 回合</div>
+  </div>`).join('')}</div>
+</div>`;
+};
 
 const s7 = `<div class="page">${head(7, 7, stamp)}${mast(kicker)}
-<h2 class="lead">启灵总和 25 以内，<br><small>${LC.cheapN} 支队伍照样拿下 ▼</small></h2>
-<div class="sub">本版只算「钱」——把一支队伍四名唤醒体的启灵（潜能等级 0-15）相加，满配 60。全服 ${n0(LC.downN)} 支 ▼ 通关队伍里，${n0(LC.cheapN)} 支（${pct(LC.cheapN / LC.downN * 100)}%）的启灵总和不超过 25，最低只要 <b>${LC.potMin}</b>。中位数 ${LC.potMedian} 说明多数人还是靠启灵硬顶，但「省着打」在每一档分数段都成立。</div>
+<h2 class="lead">同样的分数，<br><small>只用别人一半的启灵就打下来</small></h2>
+<div class="sub">「启灵总和」把一支队伍四名唤醒体的启灵（潜能等级 0-15）相加，满配 60，是配装成本最直观的近似。上半是<b>每个禁区、▼ 与 SSS 两个难度各自启灵总和最低的三套阵容</b>；下半从三档分数段里各挑出「全部队伍平均启灵」最低的那位玩家，把他的全部队伍摊开。全服 ${n0(LC.downN)} 支 ▼ 队伍里，最省的一支只要 <b>${LC.potMin}</b> 点启灵；SSS 更极端，${LC.sssN} 支里最低只要 <b>${LC.sssMin}</b>。</div>
 <div class="grid-stats">
   <div class="stat"><span>▼ 通关队伍</span><b>${n0(LC.downN)}</b><i>支</i></div>
-  <div class="stat"><span>启灵总和中位</span><b>${Math.round(LC.potMedian)}</b><i>/ 60</i></div>
-  <div class="stat hot"><span>≤ 25 启灵</span><b>${n0(LC.cheapN)}</b><i>支 · ${pct(LC.cheapN / LC.downN * 100)}%</i></div>
-  <div class="stat"><span>≤ 20 启灵</span><b>${n0(LC.le['20'])}</b><i>支</i></div>
-  <div class="stat"><span>≤ 15 启灵</span><b>${n0(LC.le['15'])}</b><i>支</i></div>
-  <div class="stat"><span>全场最低</span><b>${LC.potMin}</b><i>启灵总和</i></div>
+  <div class="stat"><span>▼ 启灵中位</span><b>${Math.round(LC.potMedian)}</b><i>/ 60</i></div>
+  <div class="stat hot"><span>▼ 最低配</span><b>${LC.potMin}</b><i>启灵总和</i></div>
+  <div class="stat"><span>SSS 队伍</span><b>${n0(LC.sssN)}</b><i>支</i></div>
+  <div class="stat hot"><span>SSS 最低配</span><b>${LC.sssMin}</b><i>启灵总和</i></div>
+  <div class="stat"><span>≤ 25 启灵的 ▼ 队</span><b>${n0(LC.le['25'])}</b><i>${pct(LC.le['25'] / LC.downN * 100)}%</i></div>
 </div>
-<div class="lclegend" style="margin-top:10px">
-  <span>每档取该分段玩家 ▼ 队伍里「启灵总和」最低的四套阵容（同阵容只算一次）</span>
-  <span class="rt" style="margin-left:auto">分档按玩家结算总分</span>
+<div class="hr2" style="margin-top:10px"></div>
+<div class="h">一 · 各禁区的最低配阵容 <em>每格三条：该区该难度下启灵总和最低的三套，同阵容（不计站位）只算一次</em></div>
+${LC.zones.map(zblock).join('')}
+<div class="hr2"></div>
+<div class="h">二 · 三档分数段里最省的玩家 <em>选出条件：该档内「全部队伍的平均启灵」最低，且至少提交四支队伍（本期三位都交满五支）</em></div>
+<div class="btot"><span>三档共 <b>${n0(LC.bands.reduce((a, b) => a + b.players, 0))}</b> 位玩家参与评比</span>
+  <span>三档最省玩家的队伍平均启灵：<b>${LC.bands.map(b => b.best.avgPot).join(' / ')}</b></span>
+  <span>每格右上是这支队伍在该区的得分</span></div>
+${LC.bands.map(bband).join('')}
+<div class="note" style="font-size:9.6px;line-height:1.6;margin-top:2px">
+  读法：同一个分数段里，最省的玩家能把全部队伍的平均启灵压到该档 ▼ 中位的一半左右——500 分以上平均 <b>${LC.bands[0].best.avgPot}</b>（该档中位 ${Math.round(LC.bands[0].potMedian)}）、475–500 是 <b>${LC.bands[1].best.avgPot}</b>（中位 ${Math.round(LC.bands[1].potMedian)}）、450–475 是 <b>${LC.bands[2].best.avgPot}</b>（中位 ${Math.round(LC.bands[2].potMedian)}）。
+  禁区之间的差别比分数段更大：第五禁区 ▼ 全服最省也要 <b>${LC.zones[4].down.potMin}</b> 点启灵（中位 ${Math.round(LC.zones[4].down.potMedian)}），第三禁区 ▼ 最省只要 <b>${LC.zones[2].down.potMin}</b>——送分区才容得下低启灵硬吃；SSS 的极端值反而出现在第一禁区（<b>${LC.zones[0].sss.potMin}</b> 点）。第二、四、五禁区的 ▼ 队伍只有 ${Math.min(LC.zones[1].down.teams, LC.zones[3].down.teams, LC.zones[4].down.teams)}–${Math.max(LC.zones[1].down.teams, LC.zones[3].down.teams, LC.zones[4].down.teams)} 支，样本小，参考着看。
 </div>
-${LC.bands.map(b => `<div class="lcband">
-  <div class="lbh"><h3>${b.label} 分</h3><em>${b.players} 位玩家 · ▼ 队伍 ${b.teams} 支</em>
-    <span class="rt">该档 ▼ 队启灵总和中位 <b>${Math.round(b.potMedian)}</b> · 最省 <b>${b.potMin}</b></span></div>
-  ${b.picks.map(p => lcRow(p)).join('')}
-</div>`).join('')}
-<div class="hr2" style="margin-top:12px"></div>
-<div class="h">低配核心 <em>启灵总和 ≤ 25 的 ${n0(LC.cheapN)} 支 ▼ 队伍里，出场最多的唤醒体</em></div>
-<div class="mem" style="gap:5px">${LC.core.map(c => {
-  const img = imgPath(iconOf.char(c.en));
-  return `<div class="m" style="width:56px">${img ? `<img style="width:52px;height:52px" src="file:///${img}">` : ''}
-    <small>${esc(c.zh)}</small><u>${c.n} 队</u></div>`;
-}).join('')}</div>
-<div class="pair" style="margin-top:10px">
-  <div><div class="h">低配队的禁区分布 <em>≤ 25 启灵 · ${n0(LC.cheapN)} 支</em></div>
-    ${LC.cheapZone.map(z => `<div class="rankrow"><span class="p">${z.wave}</span><span class="n"><i>${WAVE_NAME[z.wave]}</i></span><span class="track"><b style="width:${z.n / lcZoneMax * 100}%"></b></span><span class="v">${z.n} <em>支</em></span></div>`).join('')}
-  </div>
-  <div><div class="h">怎么读这张榜</div>
-    <div class="guide">
-      <div><b>省的是启灵，不是分数</b>：450–475 档的中位启灵是 ${Math.round(LC.bands[2].potMedian)}，500 分以上一档却是 ${Math.round(LC.bands[0].potMedian)}——高分玩家大多在堆启灵，但同档里最省的队伍只用 ${LC.bands[0].potMin}。</div>
-      <div><b>四件套是核心</b>：${LC.core.slice(0, 4).map(c => `${esc(c.zh)} ${pct(c.n / LC.cheapN * 100)}%`).join(' / ')}——低配队最常带的四名唤醒体，靠机制而不是数值吃饭。</div>
-      <div><b>第三禁区最宽容</b>：${LC.cheapZone[2].n} 支低配队选在这里打 ▼，占全部低配队的 ${pct(LC.cheapZone[2].n / LC.cheapN * 100)}%。</div>
-    </div>
-  </div>
-</div>
-<div class="foot">口径：「启灵总和」= 队伍四名唤醒体的潜能等级之和（每人 0-15，满配 60），是配装成本的近似；分档按玩家五个禁区的结算总分，500–525 / 475–500 / 450–475。每档取该档玩家 ▼ 通关队伍里启灵总和最低的四套阵容，同阵容（不计站位）只取一次；出场数为该唤醒体在 ≤ 25 启灵 ▼ 队伍中的出现次数。低配不等于低配速，回合数同时列出。制图：忘忘看报。</div>
+<div class="foot">口径：「启灵总和」= 队伍四名唤醒体的潜能等级之和（每人 0-15，满配 60）。第一段每格取该禁区该难度（▼ 癫狂 / SSS）全服所有队伍里启灵总和最低的三套，同阵容（不计站位）只取一次，附排名、该玩家总分与该场回合数；第二段按玩家五个禁区的结算总分分档（500–525 / 475–500 / 450–475），取该档内「全部队伍启灵总和 ÷ 队伍数」最低且提交满四支的玩家，列出他提交的全部队伍。只统计终榜 Top 2000 内玩家。制图：忘忘看报。</div>
 </div>`;
 
 const pages = [s1, s2, s3, s4, s5, s6, s7];
