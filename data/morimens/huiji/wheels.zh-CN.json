@@ -4,7 +4,7 @@
     "skeydb": "dansa/SKeyDB public-v3",
     "syncedAt": "2026-09-17T09:08:34.121Z"
   },
-  "count": 146,
+  "count": 150,
   "records": [
     {
       "skeydbId": "wheel-0001",
@@ -1027,6 +1027,34 @@
       "name": "从黑暗到黑暗",
       "ownerAwakenerId": null,
       "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    {
+      "skeydbId": "wheel-0181",
+      "englishName": "The Seer's Riddle",
+      "name": "先知的难题",
+      "ownerAwakenerId": "awakener-0062",
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E5%85%88%E7%9F%A5%E7%9A%84%E9%9A%BE%E9%A2%98"
+    },
+    {
+      "skeydbId": "wheel-0182",
+      "englishName": "She and Her Tree Hole",
+      "name": "她和她的树洞",
+      "ownerAwakenerId": "awakener-0062",
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E5%A5%B9%E5%92%8C%E5%A5%B9%E7%9A%84%E6%A0%91%E6%B4%9E"
+    },
+    {
+      "skeydbId": "wheel-0183",
+      "englishName": "Imago's Clinic",
+      "name": "伊玛戈的诊室",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E4%BC%8A%E7%8E%9B%E6%88%88%E7%9A%84%E8%AF%8A%E5%AE%A4"
+    },
+    {
+      "skeydbId": "wheel-0184",
+      "englishName": "Next Time It Rains",
+      "name": "下一个雨天",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E4%B8%8B%E4%B8%80%E4%B8%AA%E9%9B%A8%E5%A4%A9"
     }
   ],
   "bySkeydbId": {
@@ -2051,6 +2079,34 @@
       "name": "从黑暗到黑暗",
       "ownerAwakenerId": null,
       "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    "wheel-0181": {
+      "skeydbId": "wheel-0181",
+      "englishName": "The Seer's Riddle",
+      "name": "先知的难题",
+      "ownerAwakenerId": "awakener-0062",
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E5%85%88%E7%9F%A5%E7%9A%84%E9%9A%BE%E9%A2%98"
+    },
+    "wheel-0182": {
+      "skeydbId": "wheel-0182",
+      "englishName": "She and Her Tree Hole",
+      "name": "她和她的树洞",
+      "ownerAwakenerId": "awakener-0062",
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E5%A5%B9%E5%92%8C%E5%A5%B9%E7%9A%84%E6%A0%91%E6%B4%9E"
+    },
+    "wheel-0183": {
+      "skeydbId": "wheel-0183",
+      "englishName": "Imago's Clinic",
+      "name": "伊玛戈的诊室",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E4%BC%8A%E7%8E%9B%E6%88%88%E7%9A%84%E8%AF%8A%E5%AE%A4"
+    },
+    "wheel-0184": {
+      "skeydbId": "wheel-0184",
+      "englishName": "Next Time It Rains",
+      "name": "下一个雨天",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E4%B8%8B%E4%B8%80%E4%B8%AA%E9%9B%A8%E5%A4%A9"
     }
   },
   "byEnglishName": {
@@ -3075,6 +3131,35 @@
       "name": "从黑暗到黑暗",
       "ownerAwakenerId": null,
       "sourceUrl": "https://github.com/Z769018860/morimens-summon (web/catalog.json)"
+    },
+    "The Seer's Riddle": {
+      "skeydbId": "wheel-0181",
+      "englishName": "The Seer's Riddle",
+      "name": "先知的难题",
+      "ownerAwakenerId": "awakener-0062",
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E5%85%88%E7%9F%A5%E7%9A%84%E9%9A%BE%E9%A2%98"
+    },
+    "She and Her Tree Hole": {
+      "skeydbId": "wheel-0182",
+      "englishName": "She and Her Tree Hole",
+      "name": "她和她的树洞",
+      "ownerAwakenerId": "awakener-0062",
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E5%A5%B9%E5%92%8C%E5%A5%B9%E7%9A%84%E6%A0%91%E6%B4%9E"
+    },
+    "Imago's Clinic": {
+      "skeydbId": "wheel-0183",
+      "englishName": "Imago's Clinic",
+      "name": "伊玛戈的诊室",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E4%BC%8A%E7%8E%9B%E6%88%88%E7%9A%84%E8%AF%8A%E5%AE%A4"
+    },
+    "Next Time It Rains": {
+      "skeydbId": "wheel-0184",
+      "englishName": "Next Time It Rains",
+      "name": "下一个雨天",
+      "ownerAwakenerId": null,
+      "sourceUrl": "https://morimens.huijiwiki.com/wiki/%E4%B8%8B%E4%B8%80%E4%B8%AA%E9%9B%A8%E5%A4%A9"
     }
-  }
+  },
+  "supplement": "Wheels released after the 2026-09-17 snapshot were appended by hand (names: official V2.6.2.0 announcement / the HuijiWiki wheel list); scripts/sync_morimens_wheel_localization.mjs carries the same names in its override table."
 }

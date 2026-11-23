@@ -149,3 +149,32 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
 ## 玩家近期排名 (recent players)
 
 `scripts/build_recent_players.py` 由 `sync_morimens_leaderboard.py` 在低配榜单之后自动运行，读取 manifest 中带 `lowspecPath` 的最近至多 10 期，且只统计第 70 期起（第 69 期及更早不计，脚本里 `MIN_SEASON`），写出 `data/morimens/eremora/recent/index.json`（玩家 UID、当前ID、每期排名/分数）。队伍详情不重复存放，页面展开时才读取对应期的 `lowspec/<期>.json`。新增期次后若要手动重建：`python3 scripts/build_recent_players.py`；第 69 期的低配文件用 `python3 scripts/build_lowspec_rank.py 69-postbug 70 71` 生成。
+
+## 10. 本次（第 73 期结算）的实际参数，供对照
+
+```
+--season 73 --final --allow-missing --updated-at "2026-11-23 09:18"
+捕获：C:/Users/Administrator/AppData/Local/MorimensCollector/season_83326（已解压目录，直接当参数传）
+      rankRange [1,2000]，retrievedAt 2026-11-23T09:18+08:00
+结果：2000 人在榜（无重复名次），队伍行 19138（新抓取 9873 + 旧捕获兜底 9265），逐场战斗 37101，
+      旧快照存为 ranking-20261115-0057.json.gz，未命名 id：造物 98420（榜上显示 #98420）
+命轮 id 推断：155077 = Next Time It Rains / 下一个雨天（SKeyDB wheel-0184，紧跟 wheel-0183 伊玛戈的诊室）
+```
+
+要点：
+
+- **抓取包可以直接传目录**。`sync_morimens_leaderboard.py` 现在会识别「单个参数且是目录」，跳过解压直接用（`--parts` 的 help 已同步改）。采集器把分卷解压到 `season_<activityTid>/` 时省一步。
+- 结算期（本期已结束）的 `build_recent_players.py` 不要再标 `complete:false`：判定已改为「`coverageMode` 含 `final` 或 `seasonId != currentSeason`」。
+- `latestLocalImport` 已改为按本次 `n` 从 `ranking.json` / `statistics.json` / manifest 重写，不再是写死的上一季信息。
+- 周期以官方公告为准：第 73 期实际是 **2026-11-09 – 2026-11-22**（导入脚本里的 `period` 不要按「两周一整天」推成 11-23）。
+
+## 11. 特刊（融灾报纸长图）
+
+`report73/` 是第 73 期特刊的生成链，三期复用可直接改 `SEASON` 相关路径：
+
+1. `python report73/build_data.py` → `report73/report.json`（当期 + 上一期的全部指标）
+2. `node report73/gen.mjs` → `report73/pages/s1..6.html`（1000×1800 的报纸版式）
+3. `node report73/shot.mjs` → `exports/season73-report/融灾第73期特刊-第N版.png`（dpr 2，2000×3600）
+4. `node report73/measure.mjs` → 打印每版「版面流内容底部 / 剩余留白」，用来判断有没有大片空白（目标留白 < 150，溢出会直接标 `over:true`）
+
+坑：分卷/整包无关，但**禁区判定一定按关卡名 `Zone N`**（`GROUP_WAVE` 的 stageGroupId 顺序与禁区号不对应）；造物统计要按队伍去重，并把「人人必备」的环造物（携带率 ≥ 99%）滤掉，否则五区清一色 100%。

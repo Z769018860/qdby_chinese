@@ -148,7 +148,8 @@
   "9550": "Aged",
   "151737": "The Seer's Riddle",
   "151763": "She and Her Tree Hole",
-  "152952": "Imago's Clinic"
+  "152952": "Imago's Clinic",
+  "155077": "Next Time It Rains"
  },
  "creation": {
   "98412": "Stellar Brew+",
@@ -1052,6 +1053,7 @@
  },
  "_note": "Season 73 name table, started from the Season 72 table (all ids stay valid) with the Season 73 stages (A=C ... F=SSS, G=▼, from the client stage dump). Items first seen in Season 73 are added below; see _inferred.",
  "_inferred": {
-  "83511": "Season 73 ring creation (Ultra Ring); SKeyDB lists relic-0293 Ultra Ring as the zones' initial ring, 83510 = Caro Ring (S72), 83512 = Chaos Ring (S71)"
+  "83511": "Season 73 ring creation (Ultra Ring); SKeyDB lists relic-0293 Ultra Ring as the zones' initial ring, 83510 = Caro Ring (S72), 83512 = Chaos Ring (S71)",
+  "155077": "New Season 73 wheel (74 team rows in the final capture use it). SKeyDB main lists wheel-0184 Next Time It Rains right after wheel-0183 Imago's Clinic (=152952), and the HuijiWiki wheel list has 下一个雨天 directly after 伊玛戈的诊室, so 155077 = Next Time It Rains / 下一个雨天 (English from SKeyDB, Chinese from HuijiWiki)."
  }
 }

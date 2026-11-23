@@ -159,7 +159,8 @@ def add_changelog(zh, en):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--season", type=int, required=True)
-    ap.add_argument("--parts", nargs="+", required=True, help="the .z01 .z02 ... and the final .zip of the upload")
+    ap.add_argument("--parts", nargs="+", required=True,
+                    help="the .z01 .z02 ... and the final .zip of the upload, or a single already-extracted capture directory")
     ap.add_argument("--updated-at", help='"YYYY-MM-DD HH:MM" (UTC+8); default: the retrievedAt of ranking.json')
     ap.add_argument("--final", action="store_true", help="the season is over: mark the board as the settled final one")
     ap.add_argument("--no-fallback", action="store_true", help="do not keep rows of the previous capture the new one lacks")
@@ -177,7 +178,12 @@ def main():
 
     tmp = Path(tempfile.mkdtemp(prefix=f"mmsync{n}_"))
     src = tmp / "src"
-    extract_split_zip(a.parts, src)
+    if len(a.parts) == 1 and Path(a.parts[0]).is_dir():
+        # an already-extracted capture folder (e.g. the collector's season_83326 directory) can be used as-is
+        src = Path(a.parts[0]).resolve()
+        log(f"using extracted capture directory {src}")
+    else:
+        extract_split_zip(a.parts, src)
     if not (src / "ranking.json").exists() or not (src / "teams_latest.jsonl").exists():
         raise SystemExit("the archive must contain ranking.json and teams_latest.jsonl")
     ranking = json.loads((src / "ranking.json").read_text(encoding="utf-8"))
@@ -251,10 +257,19 @@ def main():
                            "revision": f"s{n}-top{top}{'-final' if a.final else ''}-{got:%Y%m%d-%H%M}"})
     m["source"]["syncedAt"] = iso
     li = m["latestLocalImport"]
-    li.update({"rankedPlayers": rc, "parsedRecords": rc, "rankRange": [1, top], "teamRows": meta["teamRows"], "updatedAt": iso,
+    cur_entry = next((e for e in m["availableSeasons"] if e.get("seasonId") == n and not e.get("snapshotId")), {})
+    stats = json.loads((sdir / "statistics.json").read_text(encoding="utf-8"))
+    li.update({"seasonId": n, "activityTid": ranking.get("activityTid"),
+               "archive": Path(a.parts[0]).name if len(a.parts) == 1 else f"season_{ranking.get('activityTid')}.zip",
+               "ringRealm": cur_entry.get("ringRealm"), "ringRealmZh": cur_entry.get("ringRealmZh"),
+               "stageNaming": "Zone 1-5", "battleRows": stats.get("battleRows"),
+               "battleArchive": f"data/morimens/dzone/season{n}/meta.json",
+               "battleDetail": f"data/morimens/eremora/usage/{n}-battle-gzip/index.json",
+               "rankedPlayers": rc, "parsedRecords": rc, "rankRange": [1, top], "teamRows": meta["teamRows"], "updatedAt": iso,
                "revision": lidx["revision"],
                "note": f"Season {n} {'FINAL (settled)' if a.final else 'snapshot'}: Top {top} rank snapshot {updated} + teams_latest.jsonl of the same capture; "
-                       "rows the capture lacks come from the older captures (--fallback-raw)."})
+                       "rows the capture lacks come from the older captures (--fallback-raw).",
+               "teamRowsBySource": meta.get("teamRowsBySource")})
     for e in m["availableSeasons"]:
         if e.get("seasonId") == n and not e.get("snapshotId") and not e.get("aggregatePath"):
             e.update({"dataUpdatedAt": iso, "revision": lidx["revision"], "recordCount": rc, "leaderboardEntryCount": rc,

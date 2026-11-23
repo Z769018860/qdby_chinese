@@ -14,7 +14,12 @@ const overrides={
   // newer wheels not on the wiki list yet (names from Z769018860/morimens-summon web/catalog.json)
   'wheel-0178':'向阳而生',
   'wheel-0179':'往日如影随形',
-  'wheel-0180':'从黑暗到黑暗'
+  'wheel-0180':'从黑暗到黑暗',
+  // V2.6.2.0 announcement names (scripts/data/zh_manual.json) + the HuijiWiki list entry after 伊玛戈的诊室
+  'wheel-0181':'先知的难题',
+  'wheel-0182':'她和她的树洞',
+  'wheel-0183':'伊玛戈的诊室',
+  'wheel-0184':'下一个雨天'
 };
 
 const markdown=input

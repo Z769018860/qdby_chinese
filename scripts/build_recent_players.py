@@ -26,7 +26,8 @@ def main():
     for si, e in enumerate(chosen):
         d = json.loads((ROOT / e['lowspecPath']).read_text(encoding='utf-8'))
         seasons.append({'id': e['seasonId'], 'key': str(d['season']), 'zh': e.get('labelZh') or f"第{e['seasonId']}期", 'en': e.get('labelEn') or f"Season {e['seasonId']}",
-                        'period': e.get('periodShort') or e.get('period'), 'complete': e['seasonId'] != man.get('currentSeason'),
+                        'period': e.get('periodShort') or e.get('period'),
+                        'complete': 'final' in (e.get('coverageMode') or '') or e['seasonId'] != man.get('currentSeason'),
                         'path': e['lowspecPath'], 'count': len(d['players'])})
         for uid, name, rank, score in d['players']:
             p = players.setdefault(uid, {'name': name, 'name_season': si, 'r': [0] * len(chosen)})
