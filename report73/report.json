@@ -1877,6 +1877,20 @@
      "zh": "维度影像·阿拉克涅",
      "n": 1516,
      "rate": 15.2
+    },
+    {
+     "id": "71256",
+     "en": "Dimensional Image: Horla",
+     "zh": "维度影像·奥尔拉",
+     "n": 1346,
+     "rate": 13.5
+    },
+    {
+     "id": "84126",
+     "en": "Dimensional Image: Castor",
+     "zh": "维度影像·卡斯托尔",
+     "n": 1270,
+     "rate": 12.8
     }
    ],
    "assists": [
@@ -2037,7 +2051,25 @@
     "char": {
      "zh": "负誓·奥吉尔",
      "en": "Ogier: Oathbound"
-    }
+    },
+    "chars": [
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "卡斯托尔",
+      "en": "Castor"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     }
+    ]
    },
    "deathResist": {
     "value": 9,
@@ -2650,6 +2682,64 @@
    "145281": "噬鲸的风暴",
    "145970": "并非谎言之物",
    "148671": "永续新篇",
+   "151695": "Nightborn Evil"
+  },
+  "tokenEn": {
+   "9518": "Warded Injection",
+   "9653": "A Mouse's Wisdom",
+   "9685": "Encounter in Pure White",
+   "9991": "Unequal Exchange",
+   "9995": "Funus Aeternum",
+   "10032": "Obsession Eternal",
+   "10052": "Voices in Your Head",
+   "10065": "Tiny Wish",
+   "36801": "Aurita's Treasure",
+   "36813": "Roaring Blood and Sand",
+   "36814": "The Final Vow",
+   "36815": "Ephemeral Eternity",
+   "36847": "Bone-Chilling Embrace",
+   "36848": "Lakeside Glimpse",
+   "36849": "Gateway of Retrospection",
+   "36850": "Feast of Decay",
+   "36857": "Miracle's Dawn",
+   "36858": "Giant's Reign",
+   "36859": "All of Her",
+   "36860": "Victory of Roses",
+   "36861": "Truth Behind Grey Mist",
+   "36862": "Midsummer Vision",
+   "45298": "Pages Ever New",
+   "45299": "Black Swan's Dance",
+   "45300": "Festival of Tides",
+   "45301": "A Gun's Cry",
+   "45302": "The Mountains' Resolve",
+   "49204": "The Lone Seed",
+   "56636": "The Gated Answer",
+   "56638": "Symphony Fourth",
+   "56643": "Plague of Illusions",
+   "70919": "Blessing of the Stars",
+   "72095": "Tavern's Opening",
+   "80191": "Sacred Mending",
+   "81756": "Undying Thunder",
+   "88873": "Derision of Destiny",
+   "94559": "Voracious Resolve",
+   "95548": "Undying Sun",
+   "95691": "Cruel Homage",
+   "97737": "Beachside Memento",
+   "99102": "Void Hues",
+   "99724": "Sacred Bleeding Heart",
+   "100577": "A Fleeting Dream",
+   "118128": "Wayward Ship",
+   "119952": "Reunion's Wish",
+   "120491": "From the Mist Realm",
+   "124899": "Orbis Fatum",
+   "125190": "Manor Echoes",
+   "129499": "Year-End Sparks",
+   "130063": "For the New World",
+   "130703": "Drowned Innocence",
+   "141174": "The Hollow One",
+   "145281": "Cetus-Devouring Storm",
+   "145970": "That Which is No Lie",
+   "148671": "Pages Ever New",
    "151695": "Nightborn Evil"
   },
   "mysteryLineups": [
@@ -4031,6 +4121,549 @@
      "en": "Sorel",
      "n": 4,
      "all": 63
+    }
+   ]
+  },
+  "lowcost": {
+   "downN": 1002,
+   "potMedian": 37.0,
+   "potMin": 7,
+   "le": {
+    "15": 20,
+    "20": 90,
+    "25": 204,
+    "30": 339
+   },
+   "bands": [
+    {
+     "label": "500–525",
+     "lo": 500,
+     "hi": null,
+     "players": 36,
+     "teams": 157,
+     "potMedian": 52,
+     "potMin": 13,
+     "picks": [
+      {
+       "wave": 3,
+       "rounds": 24,
+       "zoneScore": 105,
+       "total": 500,
+       "rank": 36,
+       "name": "已区化",
+       "potSum": 13,
+       "token": "99724",
+       "members": [
+        {
+         "zh": "哈姆林",
+         "en": "Hameln",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "卡斯托尔",
+         "en": "Castor",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "旺达",
+         "en": "Wanda",
+         "potency": 2,
+         "borrowed": false
+        },
+        {
+         "zh": "波吕克斯",
+         "en": "Pollux",
+         "potency": 7,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 20,
+       "zoneScore": 90,
+       "total": 500,
+       "rank": 32,
+       "name": "Reimu",
+       "potSum": 16,
+       "token": "130703",
+       "members": [
+        {
+         "zh": "萨尔瓦多",
+         "en": "Salvador",
+         "potency": 5,
+         "borrowed": false
+        },
+        {
+         "zh": "墨菲",
+         "en": "Murphy",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "沙耶",
+         "en": "Saya",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "莫丝",
+         "en": "Vortice",
+         "potency": 7,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 20,
+       "zoneScore": 95,
+       "total": 500,
+       "rank": 36,
+       "name": "已区化",
+       "potSum": 17,
+       "token": "36859",
+       "members": [
+        {
+         "zh": "熔毁·朵尔",
+         "en": "Doll: Inferno",
+         "potency": 15,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "\"24\"",
+         "en": "\"24\"",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "莉莉",
+         "en": "Lily",
+         "potency": 1,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 16,
+       "zoneScore": 90,
+       "total": 500,
+       "rank": 31,
+       "name": "Rondonite",
+       "potSum": 22,
+       "token": "56636",
+       "members": [
+        {
+         "zh": "\"24\"",
+         "en": "\"24\"",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "环行·拉蒙娜",
+         "en": "Ramona: Timeworn",
+         "potency": 15,
+         "borrowed": false
+        },
+        {
+         "zh": "莉莉",
+         "en": "Lily",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "熔毁·朵尔",
+         "en": "Doll: Inferno",
+         "potency": 7,
+         "borrowed": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "label": "475–500",
+     "lo": 475,
+     "hi": 500,
+     "players": 57,
+     "teams": 109,
+     "potMedian": 38,
+     "potMin": 11,
+     "picks": [
+      {
+       "wave": 1,
+       "rounds": 9,
+       "zoneScore": 90,
+       "total": 490,
+       "rank": 46,
+       "name": "Sylvester",
+       "potSum": 11,
+       "token": "124899",
+       "members": [
+        {
+         "zh": "阿拉克涅",
+         "en": "Arachne",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "茉夏",
+         "en": "Mouchette",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "奥尔拉",
+         "en": "Horla",
+         "potency": 2,
+         "borrowed": false
+        },
+        {
+         "zh": "蚀灭·萝坦",
+         "en": "Lotan: Cetarchon",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 24,
+       "zoneScore": 105,
+       "total": 475,
+       "rank": 85,
+       "name": "루녹스",
+       "potSum": 13,
+       "token": "130703",
+       "members": [
+        {
+         "zh": "莫丝",
+         "en": "Vortice",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 2,
+         "borrowed": false
+        },
+        {
+         "zh": "希莱斯特",
+         "en": "Celeste",
+         "potency": 5,
+         "borrowed": false
+        },
+        {
+         "zh": "奥瑞塔",
+         "en": "Aurita",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 18,
+       "zoneScore": 90,
+       "total": 490,
+       "rank": 49,
+       "name": "Enjel",
+       "potSum": 14,
+       "token": "130703",
+       "members": [
+        {
+         "zh": "莫丝",
+         "en": "Vortice",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "墨菲",
+         "en": "Murphy",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "希莱斯特",
+         "en": "Celeste",
+         "potency": 7,
+         "borrowed": false
+        },
+        {
+         "zh": "沙耶",
+         "en": "Saya",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 29,
+       "zoneScore": 105,
+       "total": 490,
+       "rank": 44,
+       "name": "灰烬魔女",
+       "potSum": 18,
+       "token": "9685",
+       "members": [
+        {
+         "zh": "庞托斯",
+         "en": "Pontos",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "克珀珊特",
+         "en": "Corposant",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "奥瑞塔",
+         "en": "Aurita",
+         "potency": 7,
+         "borrowed": false
+        },
+        {
+         "zh": "卡茜亚",
+         "en": "Casiah",
+         "potency": 5,
+         "borrowed": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "label": "450–475",
+     "lo": 450,
+     "hi": 475,
+     "players": 518,
+     "teams": 544,
+     "potMedian": 36.0,
+     "potMin": 11,
+     "picks": [
+      {
+       "wave": 3,
+       "rounds": 8,
+       "zoneScore": 100,
+       "total": 450,
+       "rank": 501,
+       "name": "原之蓝白",
+       "potSum": 11,
+       "token": "10065",
+       "members": [
+        {
+         "zh": "熔毁·朵尔",
+         "en": "Doll: Inferno",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "萝坦",
+         "en": "Lotan",
+         "potency": 9,
+         "borrowed": false
+        },
+        {
+         "zh": "哈姆林",
+         "en": "Hameln",
+         "potency": 0,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 16,
+       "zoneScore": 90,
+       "total": 460,
+       "rank": 202,
+       "name": "windex",
+       "potSum": 13,
+       "token": "130703",
+       "members": [
+        {
+         "zh": "墨菲",
+         "en": "Murphy",
+         "potency": 2,
+         "borrowed": false
+        },
+        {
+         "zh": "沙耶",
+         "en": "Saya",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "希莱斯特",
+         "en": "Celeste",
+         "potency": 7,
+         "borrowed": false
+        },
+        {
+         "zh": "莫丝",
+         "en": "Vortice",
+         "potency": 1,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 15,
+       "zoneScore": 100,
+       "total": 450,
+       "rank": 497,
+       "name": "Lizie",
+       "potSum": 15,
+       "token": "10065",
+       "members": [
+        {
+         "zh": "萝坦",
+         "en": "Lotan",
+         "potency": 13,
+         "borrowed": false
+        },
+        {
+         "zh": "哈姆林",
+         "en": "Hameln",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "潘狄娅",
+         "en": "Pandia",
+         "potency": 2,
+         "borrowed": false
+        },
+        {
+         "zh": "艾尔瓦",
+         "en": "Alva",
+         "potency": 0,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 8,
+       "zoneScore": 90,
+       "total": 465,
+       "rank": 132,
+       "name": "kinoko",
+       "potSum": 16,
+       "token": "145281",
+       "members": [
+        {
+         "zh": "沙耶",
+         "en": "Saya",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "艾继丝",
+         "en": "Aigis",
+         "potency": 7,
+         "borrowed": false
+        },
+        {
+         "zh": "茉夏",
+         "en": "Mouchette",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "蚀灭·萝坦",
+         "en": "Lotan: Cetarchon",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "cheapN": 204,
+   "cheapZone": [
+    {
+     "wave": 1,
+     "n": 59
+    },
+    {
+     "wave": 2,
+     "n": 1
+    },
+    {
+     "wave": 3,
+     "n": 141
+    },
+    {
+     "wave": 4,
+     "n": 3
+    },
+    {
+     "wave": 5,
+     "n": 0
+    }
+   ],
+   "core": [
+    {
+     "zh": "萝坦",
+     "en": "Lotan",
+     "n": 129
+    },
+    {
+     "zh": "塔薇",
+     "en": "Tawil",
+     "n": 99
+    },
+    {
+     "zh": "熔毁·朵尔",
+     "en": "Doll: Inferno",
+     "n": 80
+    },
+    {
+     "zh": "哈姆林",
+     "en": "Hameln",
+     "n": 69
+    },
+    {
+     "zh": "茉夏",
+     "en": "Mouchette",
+     "n": 51
+    },
+    {
+     "zh": "阿拉克涅",
+     "en": "Arachne",
+     "n": 49
+    },
+    {
+     "zh": "奥尔拉",
+     "en": "Horla",
+     "n": 48
+    },
+    {
+     "zh": "蚀灭·萝坦",
+     "en": "Lotan: Cetarchon",
+     "n": 26
     }
    ]
   }
@@ -5898,6 +6531,20 @@
      "zh": "维度影像·沙耶",
      "n": 1722,
      "rate": 17.3
+    },
+    {
+     "id": "71260",
+     "en": "Dimensional Image: Thais",
+     "zh": "维度影像·泰旖丝",
+     "n": 1558,
+     "rate": 15.6
+    },
+    {
+     "id": "125489",
+     "en": "Dimensional Image: Xu",
+     "zh": "维度影像·徐",
+     "n": 1367,
+     "rate": 13.7
     }
    ],
    "assists": [
@@ -6058,7 +6705,25 @@
     "char": {
      "zh": "凯蒂古拉",
      "en": "Kathigu-Ra"
-    }
+    },
+    "chars": [
+     {
+      "zh": "凯蒂古拉",
+      "en": "Kathigu-Ra"
+     },
+     {
+      "zh": "克莱门汀",
+      "en": "Clementine"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     }
+    ]
    },
    "deathResist": {
     "value": 9,
@@ -6671,6 +7336,64 @@
    "145281": "噬鲸的风暴",
    "145970": "并非谎言之物",
    "148671": "永续新篇",
+   "151695": "Nightborn Evil"
+  },
+  "tokenEn": {
+   "9518": "Warded Injection",
+   "9653": "A Mouse's Wisdom",
+   "9685": "Encounter in Pure White",
+   "9991": "Unequal Exchange",
+   "9995": "Funus Aeternum",
+   "10032": "Obsession Eternal",
+   "10052": "Voices in Your Head",
+   "10065": "Tiny Wish",
+   "36801": "Aurita's Treasure",
+   "36813": "Roaring Blood and Sand",
+   "36814": "The Final Vow",
+   "36815": "Ephemeral Eternity",
+   "36847": "Bone-Chilling Embrace",
+   "36848": "Lakeside Glimpse",
+   "36849": "Gateway of Retrospection",
+   "36850": "Feast of Decay",
+   "36857": "Miracle's Dawn",
+   "36858": "Giant's Reign",
+   "36859": "All of Her",
+   "36860": "Victory of Roses",
+   "36861": "Truth Behind Grey Mist",
+   "36862": "Midsummer Vision",
+   "45298": "Pages Ever New",
+   "45299": "Black Swan's Dance",
+   "45300": "Festival of Tides",
+   "45301": "A Gun's Cry",
+   "45302": "The Mountains' Resolve",
+   "49204": "The Lone Seed",
+   "56636": "The Gated Answer",
+   "56638": "Symphony Fourth",
+   "56643": "Plague of Illusions",
+   "70919": "Blessing of the Stars",
+   "72095": "Tavern's Opening",
+   "80191": "Sacred Mending",
+   "81756": "Undying Thunder",
+   "88873": "Derision of Destiny",
+   "94559": "Voracious Resolve",
+   "95548": "Undying Sun",
+   "95691": "Cruel Homage",
+   "97737": "Beachside Memento",
+   "99102": "Void Hues",
+   "99724": "Sacred Bleeding Heart",
+   "100577": "A Fleeting Dream",
+   "118128": "Wayward Ship",
+   "119952": "Reunion's Wish",
+   "120491": "From the Mist Realm",
+   "124899": "Orbis Fatum",
+   "125190": "Manor Echoes",
+   "129499": "Year-End Sparks",
+   "130063": "For the New World",
+   "130703": "Drowned Innocence",
+   "141174": "The Hollow One",
+   "145281": "Cetus-Devouring Storm",
+   "145970": "That Which is No Lie",
+   "148671": "Pages Ever New",
    "151695": "Nightborn Evil"
   },
   "mysteryLineups": [
@@ -8056,6 +8779,549 @@
      "en": "Agrippa",
      "n": 4,
      "all": 258
+    }
+   ]
+  },
+  "lowcost": {
+   "downN": 724,
+   "potMedian": 41.0,
+   "potMin": 7,
+   "le": {
+    "15": 6,
+    "20": 31,
+    "25": 81,
+    "30": 159
+   },
+   "bands": [
+    {
+     "label": "500–525",
+     "lo": 500,
+     "hi": null,
+     "players": 42,
+     "teams": 191,
+     "potMedian": 49,
+     "potMin": 12,
+     "picks": [
+      {
+       "wave": 1,
+       "rounds": 11,
+       "zoneScore": 95,
+       "total": 515,
+       "rank": 9,
+       "name": "<#0CE>Rukia",
+       "potSum": 12,
+       "token": "124899",
+       "members": [
+        {
+         "zh": "奥尔拉",
+         "en": "Horla",
+         "potency": 2,
+         "borrowed": false
+        },
+        {
+         "zh": "阿拉克涅",
+         "en": "Arachne",
+         "potency": 4,
+         "borrowed": false
+        },
+        {
+         "zh": "蚀灭·萝坦",
+         "en": "Lotan: Cetarchon",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "茉夏",
+         "en": "Mouchette",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 20,
+       "zoneScore": 105,
+       "total": 510,
+       "rank": 12,
+       "name": "已区化",
+       "potSum": 17,
+       "token": "36859",
+       "members": [
+        {
+         "zh": "\"24\"",
+         "en": "\"24\"",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "莉莉",
+         "en": "Lily",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "珈伦",
+         "en": "Karen",
+         "potency": 15,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 8,
+       "zoneScore": 90,
+       "total": 500,
+       "rank": 32,
+       "name": "<#65F>Spooky",
+       "potSum": 18,
+       "token": "9653",
+       "members": [
+        {
+         "zh": "茉夏",
+         "en": "Mouchette",
+         "potency": 7,
+         "borrowed": false
+        },
+        {
+         "zh": "负誓·奥吉尔",
+         "en": "Ogier: Oathbound",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "阿拉克涅",
+         "en": "Arachne",
+         "potency": 7,
+         "borrowed": false
+        },
+        {
+         "zh": "奥尔拉",
+         "en": "Horla",
+         "potency": 4,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 29,
+       "zoneScore": 90,
+       "total": 500,
+       "rank": 33,
+       "name": "Angbak",
+       "potSum": 25,
+       "token": "148671",
+       "members": [
+        {
+         "zh": "负誓·奥吉尔",
+         "en": "Ogier: Oathbound",
+         "potency": 15,
+         "borrowed": false
+        },
+        {
+         "zh": "卡拉布",
+         "en": "Caraboo",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "泰旖丝",
+         "en": "Thais",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "萨尔瓦多",
+         "en": "Salvador",
+         "potency": 4,
+         "borrowed": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "label": "475–500",
+     "lo": 475,
+     "hi": 500,
+     "players": 93,
+     "teams": 156,
+     "potMedian": 41.5,
+     "potMin": 10,
+     "picks": [
+      {
+       "wave": 1,
+       "rounds": 19,
+       "zoneScore": 90,
+       "total": 490,
+       "rank": 62,
+       "name": "LuffyOMG",
+       "potSum": 10,
+       "token": "125190",
+       "members": [
+        {
+         "zh": "徐",
+         "en": "Xu",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "凯蒂古拉",
+         "en": "Kathigu-Ra",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "卡拉布",
+         "en": "Caraboo",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "薇薇安",
+         "en": "Vivian",
+         "potency": 1,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 1,
+       "rounds": 8,
+       "zoneScore": 90,
+       "total": 475,
+       "rank": 128,
+       "name": "Sylvester",
+       "potSum": 11,
+       "token": "124899",
+       "members": [
+        {
+         "zh": "阿拉克涅",
+         "en": "Arachne",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "茉夏",
+         "en": "Mouchette",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "奥尔拉",
+         "en": "Horla",
+         "potency": 2,
+         "borrowed": false
+        },
+        {
+         "zh": "蚀灭·萝坦",
+         "en": "Lotan: Cetarchon",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 16,
+       "zoneScore": 100,
+       "total": 490,
+       "rank": 61,
+       "name": "Asator",
+       "potSum": 17,
+       "token": "10065",
+       "members": [
+        {
+         "zh": "熔毁·朵尔",
+         "en": "Doll: Inferno",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "菲茵特",
+         "en": "Faint",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "萝坦",
+         "en": "Lotan",
+         "potency": 15,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 17,
+       "zoneScore": 100,
+       "total": 485,
+       "rank": 79,
+       "name": "<#fc3>非偌",
+       "potSum": 19,
+       "token": "36859",
+       "members": [
+        {
+         "zh": "萝坦",
+         "en": "Lotan",
+         "potency": 15,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "熔毁·朵尔",
+         "en": "Doll: Inferno",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "哈姆林",
+         "en": "Hameln",
+         "potency": 0,
+         "borrowed": false
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "label": "450–475",
+     "lo": 450,
+     "hi": 475,
+     "players": 559,
+     "teams": 342,
+     "potMedian": 38.0,
+     "potMin": 7,
+     "picks": [
+      {
+       "wave": 3,
+       "rounds": 16,
+       "zoneScore": 100,
+       "total": 450,
+       "rank": 561,
+       "name": "呆呆松",
+       "potSum": 7,
+       "token": "36859",
+       "members": [
+        {
+         "zh": "莉莉",
+         "en": "Lily",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 3,
+         "borrowed": false
+        },
+        {
+         "zh": "熔毁·朵尔",
+         "en": "Doll: Inferno",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "\"24\"",
+         "en": "\"24\"",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 9,
+       "zoneScore": 100,
+       "total": 455,
+       "rank": 321,
+       "name": "江流儿",
+       "potSum": 12,
+       "token": "10065",
+       "members": [
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "熔毁·朵尔",
+         "en": "Doll: Inferno",
+         "potency": 1,
+         "borrowed": false
+        },
+        {
+         "zh": "萝坦",
+         "en": "Lotan",
+         "potency": 10,
+         "borrowed": false
+        },
+        {
+         "zh": "莉莉",
+         "en": "Lily",
+         "potency": 1,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 17,
+       "zoneScore": 100,
+       "total": 460,
+       "rank": 262,
+       "name": "Opeth",
+       "potSum": 16,
+       "token": "10065",
+       "members": [
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "哈姆林",
+         "en": "Hameln",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "萝坦",
+         "en": "Lotan",
+         "potency": 7,
+         "borrowed": false
+        },
+        {
+         "zh": "菲茵特",
+         "en": "Faint",
+         "potency": 9,
+         "borrowed": false
+        }
+       ]
+      },
+      {
+       "wave": 3,
+       "rounds": 14,
+       "zoneScore": 100,
+       "total": 450,
+       "rank": 677,
+       "name": "song of saya",
+       "potSum": 17,
+       "token": "10065",
+       "members": [
+        {
+         "zh": "萝坦",
+         "en": "Lotan",
+         "potency": 9,
+         "borrowed": false
+        },
+        {
+         "zh": "哈姆林",
+         "en": "Hameln",
+         "potency": 5,
+         "borrowed": false
+        },
+        {
+         "zh": "塔薇",
+         "en": "Tawil",
+         "potency": 0,
+         "borrowed": false
+        },
+        {
+         "zh": "\"24\"",
+         "en": "\"24\"",
+         "potency": 3,
+         "borrowed": false
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "cheapN": 81,
+   "cheapZone": [
+    {
+     "wave": 1,
+     "n": 28
+    },
+    {
+     "wave": 2,
+     "n": 3
+    },
+    {
+     "wave": 3,
+     "n": 50
+    },
+    {
+     "wave": 4,
+     "n": 0
+    },
+    {
+     "wave": 5,
+     "n": 0
+    }
+   ],
+   "core": [
+    {
+     "zh": "萝坦",
+     "en": "Lotan",
+     "n": 47
+    },
+    {
+     "zh": "熔毁·朵尔",
+     "en": "Doll: Inferno",
+     "n": 42
+    },
+    {
+     "zh": "塔薇",
+     "en": "Tawil",
+     "n": 41
+    },
+    {
+     "zh": "阿拉克涅",
+     "en": "Arachne",
+     "n": 27
+    },
+    {
+     "zh": "奥尔拉",
+     "en": "Horla",
+     "n": 25
+    },
+    {
+     "zh": "茉夏",
+     "en": "Mouchette",
+     "n": 25
+    },
+    {
+     "zh": "哈姆林",
+     "en": "Hameln",
+     "n": 25
+    },
+    {
+     "zh": "徐",
+     "en": "Xu",
+     "n": 18
     }
    ]
   }

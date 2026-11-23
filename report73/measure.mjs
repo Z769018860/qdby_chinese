@@ -42,7 +42,7 @@ await S('Page.enable'); await S('Runtime.enable');
 await S('Emulation.setDeviceMetricsOverride', { width: 1000, height: 1800, deviceScaleFactor: 1, mobile: false });
 
 const only = process.argv[2];
-for (let i = 1; i <= 6; i++) {
+for (let i = 1; i <= 7; i++) {
   const f = `${DIR}/s${i}.html`;
   if (!fs.existsSync(f)) continue;
   if (only && String(i) !== only) continue;

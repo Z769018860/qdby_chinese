@@ -15,7 +15,27 @@ const awImg = new Map(pool.awakener.map(x => [x.en, x.img]));
 const wheelImg = new Map(pool.wheel.map(x => [x.en, x.img]));
 const relicImg = new Map(pool.relic.map(x => [x.en, x.img]));
 const tokenImg = new Map(pool.posse.map(x => [x.en, x.img]));
+const covImg = new Map(pool.covenant.map(x => [x.en, x.img]));
 const imgPath = p => p ? path.join(ROOT, p).replace(/\\/g, '/') : '';
+// 造物同名有 +1/+2 后缀（缠丝玛瑙+），SKeyDB 目录里只有基名
+const stripPlus = s => String(s || '').replace(/\++$/, '').trim();
+const lookup = (map, en) => map.get(en) || map.get(stripPlus(en)) || map.get(String(en || '').replace(/^"|"$/g, ''));
+const iconOf = {
+  char: en => lookup(awImg, en),
+  relic: en => lookup(relicImg, en),
+  token: en => lookup(tokenImg, en),
+  wheel: en => lookup(wheelImg, en),
+  cov: en => lookup(covImg, en),
+};
+// 小图标；取不到时返回空串（版面留空，不画灰块）
+const ic = (kind, en, size = 15) => {
+  const src = iconOf[kind](en);
+  return src ? `<img class="ico ico-${kind}" src="file:///${imgPath(src)}" style="width:${size}px;height:${size}px">` : '';
+};
+// 唤醒体名字前面带小头像
+const awico = (en, size = 18) => ic('char', en, size);
+// 造物里不属于「可选造物」的条目：本季人人必备的环 + 锈蚀钥匙（货币类，不是配装选择）
+const CREATION_SKIP = new Set(['超维戒指', '血肉戒指', '混沌戒指', '锈蚀钥匙']);
 
 const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const n0 = v => Number(v ?? 0).toLocaleString('en-US');
@@ -78,7 +98,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:6.5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -127,7 +147,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.1px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -153,17 +173,18 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .legend5 i{width:11px;height:11px;display:inline-block}
 .legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
 .enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
-.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+.enlw .enlrow{grid-template-columns:20px 26px 104px 1fr 50px;gap:7px;font-size:12.5px;padding:6.65px 0;
   border-bottom:1px dotted #d6c8ac}
 .enlw .enlrow .p{font-size:12px}
 .enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
 .enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
 .enlw .enlrow .track{height:17px}
 .enlw .enlrow .pc{font-size:13px}
-.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
-  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
-.myinfo span{color:#7b6750;text-align:right}
-.myinfo b{color:#a1281b;text-align:right}
+.myinfo{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:10.5px;white-space:nowrap;
+  border-left:1px solid #c3b393;padding-left:16px}
+.myinfo span{color:#7b6750}
+.myinfo b{color:#a1281b}
+.myinfo i{font-style:normal;color:#c3b393;margin:0 3px}
 .subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
   border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
 .subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
@@ -210,6 +231,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hz .bar{background:#3d6b46}
 .hz .bar2{background:#a1281b}
 .hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.hz .dl.down{color:#3d6b46}
 .assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
 .assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .assist b{color:#a1281b;margin-right:2px}
@@ -221,10 +243,37 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .close .v{font-size:17px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900;line-height:1.35}
 .close .v b{color:#a1281b}
 .close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
+/* icons inside rank rows and lists */
+.ico{object-fit:cover;border-radius:2px;border:1px solid #b7a685;background:#e6dcc6;vertical-align:-2px;margin-right:4px;flex:none}
+.ico-token{background:transparent;filter:brightness(.42) contrast(1.3)}
+.ico-relic,.ico-cov{background:#f0e8d4}
+.rankrow .n{display:flex;align-items:center;gap:4px;min-width:0}
+.rankrow .n i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank1 li span:first-child{display:flex;align-items:center;gap:4px;min-width:0}
+.rank1 li span:first-child i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nmico{display:inline-flex;align-items:center;gap:4px;vertical-align:-3px}
+/* spread 7 low-cost */
+.lcband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:9px}
+.lbh{display:flex;align-items:baseline;gap:12px;padding:4px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.lbh h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:17px;color:#a1281b;font-weight:900;letter-spacing:.5px}
+.lbh em{font-style:normal;font-size:10px;color:#5f4c36}
+.lbh .rt{margin-left:auto;font-size:10px;color:#4b3a28}
+.lbh .rt b{color:#a1281b}
+.lcrow{display:grid;grid-template-columns:172px 74px 1fr 190px;gap:10px;align-items:center;
+  padding:5px 10px;border-bottom:1px dotted #d6c8ac}
+.lcrow:last-child{border-bottom:0}
+.lcpc b{font-size:16px;color:#a1281b;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.lcpc em{font-style:normal;font-size:9px;color:#8a7458}
+.lcpc span{display:block;font-size:8.5px;color:#6a5740;letter-spacing:.3px}
+.lczi{font-size:11px;font-weight:700;color:#3c2c1c}
+.lczi em{display:block;font-style:normal;font-size:9.5px;font-weight:400;color:#6a5740;margin-top:1px}
+.lcpf{font-size:10px;text-align:right;font-weight:700}
+.lcpf em{display:block;font-style:normal;font-size:9px;font-weight:400;color:#7b6750;margin-top:1px}
+.lclegend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:10px;color:#4b3a28;padding:2px 0 8px}
 `;
 
 function head(spread, total, stamp) {
-  return `<div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 ${spread} 版 / 共 ${total} 版</div><div>熔铸快讯 ${stamp}（北京时间）</div></div>`;
+  return `<div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 ${spread} 版 / 共 ${total} 版</div><div>融灾快报 ${stamp}（北京时间）</div></div>`;
 }
 
 function mast(kicker) {
@@ -252,12 +301,12 @@ const zrow = z => `<div class="zavg zv2"><span>${z.name}</span>
   <span class="track"><b style="width:${z.downFull / z.down * 100}%"></b></span>
   <span class="v">${z.downFull} / ${z.down}<em> · ${pct(z.downFull / z.down * 100)}%</em></span></div>`;
 
-const s1 = `<div class="page">${head(1, 6, stamp)}${mast(kicker)}
+const s1 = `<div class="page">${head(1, 7, stamp)}${mast(kicker)}
 <h2 class="lead">${cur.ge['525']} 人登顶 525 满分，<br><small>${cur.ge['450']} 位玩家站上 450 分线</small></h2>
 <div class="sub">本刊统计终极 Top 2000（上榜门槛 <b>${cur.threshold}</b> 分）：<b>${cur.ge['500']}</b> 人 ≥500 分，<b>${cur.ge['450']}</b> 人 ≥450 分，满分 525 仅 <b>${cur.ge['525']}</b> 人，占统计样本的 ${pct(cur.ge['525'] / cur.count * 100)}%。</div>
 <div class="grid-stats">
   <div class="stat"><span>上榜门槛 · 第 2000 名</span><b>${cur.threshold}</b><i>分</i></div>
-  <div class="stat"><span>统计样本 · Top</span><b>2,000</b></div>
+  <div class="stat"><span>统计样本 · Top</span><b>${n0(cur.count)}</b></div>
   <div class="stat hot"><span>525 满分</span><b>${cur.ge['525']}</b></div>
   <div class="stat"><span>≥ 500 分</span><b>${cur.ge['500']}</b></div>
   <div class="stat"><span>≥ 450 分</span><b>${cur.ge['450']}</b></div>
@@ -296,8 +345,8 @@ const s1 = `<div class="page">${head(1, 6, stamp)}${mast(kicker)}
   <div><div class="h">头版观察</div><ul class="obs">
     <li>满分 525 只有 <b>${cur.ge['525']}</b> 人，五个禁区全取 ▼ 通关（95+100+105+110+115），是本期唯一的完美解法。</li>
     <li><b>450 分</b>是本期最明显的一道分水岭：${cur.ge['450']} 人站上，占总样本 ${pct(cur.ge['450'] / cur.count * 100)}%；光 450 分这一档就压着 <b>${n0(cur.dist['450'] || 0)}</b> 人。</li>
-    <li>第三禁区是全局的「送分区」：<b>667</b> 人拿下 ▼，通关率 33.5%，是第二禁区（48 人）的 13.9 倍。</li>
-    <li>第四、第五禁区的 ▼ 最难：各只有 <b>36</b> 人，通关率 1.8%，且最快也要 11 / 16 回合。</li>
+    <li>第三禁区是全局的「送分区」：<b>${cur.zones[2].down}</b> 人拿下 ▼，通关率 ${pct(cur.zones[2].downRate)}%，是第二禁区（${cur.zones[1].down} 人）的 ${pct(cur.zones[2].down / cur.zones[1].down)} 倍。</li>
+    <li>第四、第五禁区的 ▼ 最难：各只有 <b>${cur.zones[3].down}</b> / <b>${cur.zones[4].down}</b> 人，通关率 ${pct(cur.zones[3].downRate)}%，最快也要 ${cur.fastest[3].rounds} / ${cur.fastest[4].rounds} 回合。</li>
     <li>整体节奏明显变快：▼ + SSS 战斗平均 <b>${cur.avgRounds.hard}</b> 回合就结束，比上期少 ${(prev.avgRounds.hard - cur.avgRounds.hard).toFixed(2)} 回合；最快的 ▼ 通关只要 <b>4</b> 回合（第一禁区）。</li>
     <li>分数线整体下移、顶端反而更集中：平均 <b>${pct(cur.mean)}</b>（上期 ${pct(prev.mean)}）、中位 <b>${Math.round(cur.median)}</b>（上期 ${Math.round(prev.median)}），≥450 分人数从 ${prev.ge['450']} 掉到 ${cur.ge['450']}；可 525 满分反从 ${prev.ge['525']} 人增到 ${cur.ge['525']} 人。</li>
   </ul></div>
@@ -307,6 +356,7 @@ const s1 = `<div class="page">${head(1, 6, stamp)}${mast(kicker)}
     <div><b>第 4 版</b> · 小众数据——▼ 零出场、神秘配队、最长鏖战与平均死扛。</div>
     <div><b>第 5 版</b> · 启灵特刊——▼ 与 SSS 难度下各唤醒体的启灵分布。</div>
     <div><b>第 6 版</b> · 对比特刊——第 73 期与第 72 期的全部主指标对照。</div>
+    <div><b>第 7 版</b> · 低配榜——500/475/450 三档分数段里，启灵总和最低的 ▼ 通关阵容。</div>
   </div></div>
 </div>
 <div class="hr2" style="margin-top:14px"></div>
@@ -317,7 +367,8 @@ const s1 = `<div class="page">${head(1, 6, stamp)}${mast(kicker)}
 </div>
 <div class="note" style="margin-top:8px;font-size:9.6px;line-height:1.6">
   525 满分要求五个禁区<b style="color:#a1281b">全部打满</b>（95+100+105+110+115）；而 ▼ 只要拿到各区最低档（90/95/100/105/110）就算通关，两者之间往往只差 5 分。
-  于是 ▼ 通关队天然分成「打满」和「擦线」两类：第四、第五禁区能过的人里近三成打满，第一、第三这两个送分区却只有一成出头——人多的地方，大家只求过线。
+  于是 ▼ 通关队天然分成「打满」和「擦线」两类：${cur.zones.map(z => `${z.name} ${pct(z.downFull / z.down * 100)}%`).join('、')}（打满人数占该区 ▼ 通关人数的比例）。
+  第四、第五禁区能过的人里每四个就有一个打满，第一、第三这两个送分区只有一成出头——人多的地方，大家只求过线。
 </div>
 <div class="foot">数据来源：官方 Rank.QueryRank / Facade.QueryFacadeFields 接口抓取（season_83326，2026-11-23 09:18 快照，团队明细截至 09:41）；唤醒体 / 命轮 / 造物 / 钥令中文名参考 SKeyDB、灰机维基与官方公告。统计口径：每名玩家在五个禁区各自的队伍记录合并计算，同阵容（不计站位）计一次。制图：忘忘看报。</div>
 </div>`;
@@ -327,7 +378,7 @@ function memChips(members, n = 4, size = 0) {
   const st = size ? ` style="width:${size}px"` : '';
   const im = size ? ` style="width:${size}px;height:${size}px"` : '';
   return `<div class="mem">${members.slice(0, n).map(m => {
-    const img = imgPath(awImg.get(m.en));
+    const img = imgPath(iconOf.char(m.en));
     return `<div class="m"${st}>${img ? `<img${im} src="file:///${img}">` : `<div style="width:${size || 36}px;height:${size || 36}px;background:#ddd"></div>`}
       <small>${esc(m.zh)}</small><u>${m.potency != null ? '+' + m.potency : ''}</u></div>`;
   }).join('')}</div>`;
@@ -338,8 +389,10 @@ const tokenName = (id) => {
   const hit = cur.top.tokens.find(t => t.id === id);
   return hit ? hit.zh : (cur.tokenTable?.[id] || '');
 };
+// 钥令名 + 图标（按 id 反查英文名）
+const tokenTag = (id) => `<span class="nmico">${ic('token', (cur.tokenEn || {})[id] || '')}${esc(tokenName(id) || '—')}</span>`;
 
-const s2 = `<div class="page">${head(2, 6, stamp)}${mast(kicker)}
+const s2 = `<div class="page">${head(2, 7, stamp)}${mast(kicker)}
 <h2 class="lead">五大禁区，五种打法：<br><small>谁是 ▼ 难度的通关密码？</small></h2>
 <div class="sub">统计各禁区「通关队伍」中达成最高难度（▼）的队伍：第一禁区 ${cur.zones[0].down} 队、第二禁区 ${cur.zones[1].down} 队、第三禁区 ${cur.zones[2].down} 队、第四禁区 ${cur.zones[3].down} 队、第五禁区 ${cur.zones[4].down} 队。同阵容（不计站位）合并计数，「出场」为该禁区全部队伍中的占比。</div>
 ${cur.zoneTop.map(z => {
@@ -349,25 +402,25 @@ ${cur.zoneTop.map(z => {
   <div class="zbody">
     <div><div class="ttl">冠军配队 · 第 ${z.champion.rank} 名 · ${z.champion.score} 分</div>
       ${memChips(z.champion.members)}
-      <div class="mini" style="margin-top:5px">钥令：<b>${esc(tokenName(z.champion.token) || '—')}</b></div>
+      <div class="mini" style="margin-top:5px">钥令：<b style="color:#3c2c1c">${tokenTag(z.champion.token)}</b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
       ${z.hot.map((h, i) => `<div class="hotline"><span class="rk">${i + 1}</span>${memChips(h.members).replace('class="mem"', 'class="mem" style="display:inline-flex"')}<span class="cnt">${h.count} 队</span></div>`).join('')}
     </div>
     <div><div class="ttl">最快通关 ▼ ${z.fastest ? '(' + z.fastest.rounds + ' 回合)' : ''}</div>
-      ${z.fastest ? `<div class="mini">${esc(z.fastest.name)} · 第 ${z.fastest.rank} 名</div>${memChips(z.fastest.members)}<div class="mini" style="margin-top:4px">钥令：${esc(tokenName(z.fastest.token) || '—')}</div>` : '<div class="mini">无</div>'}
+      ${z.fastest ? `<div class="mini">${esc(z.fastest.name)} · 第 ${z.fastest.rank} 名</div>${memChips(z.fastest.members)}<div class="mini" style="margin-top:4px">钥令：${tokenTag(z.fastest.token)}</div>` : '<div class="mini">无</div>'}
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
-      <ul class="rank1">${z.chars.map(c => `<li><span>${esc(c.zh)}</span><span>${pct(c.n / zone.teams * 100)}%</span></li>`).join('')}</ul>
+      <ul class="rank1">${z.chars.map(c => `<li><span>${awico(c.en, 17)}<i>${esc(c.zh)}</i></span><span>${pct(c.n / zone.teams * 100)}%</span></li>`).join('')}</ul>
     </div>
     <div><div class="ttl">常用造物</div>
-      <ul class="rank1">${z.creations.filter(c => c.zh !== '超维戒指' && c.n / zone.teams < 0.99).slice(0, 6).map(c => `<li><span>${esc(c.zh)}</span><span>${pct(c.n / zone.teams * 100)}%</span></li>`).join('')}</ul>
+      <ul class="rank1">${z.creations.filter(c => !CREATION_SKIP.has(c.zh) && c.n / zone.teams < 0.99).slice(0, 6).map(c => `<li><span>${ic('relic', c.en, 16)}<i>${esc(c.zh)}</i></span><span>${pct(c.n / zone.teams * 100)}%</span></li>`).join('')}</ul>
       <div class="ttl" style="margin-top:6px">常用钥令</div>
-      <ul class="rank1">${z.tokens.slice(0, 3).map(c => `<li><span>${esc(c.zh)}</span><span>${pct(c.n / zone.teams * 100)}%</span></li>`).join('')}</ul>
+      <ul class="rank1">${z.tokens.slice(0, 3).map(c => `<li><span>${ic('token', c.en, 17)}<i>${esc(c.zh)}</i></span><span>${pct(c.n / zone.teams * 100)}%</span></li>`).join('')}</ul>
     </div>
   </div></div>`;
 }).join('')}
-<div class="foot">口径：出场率 = 该禁区队伍中携带该唤醒体 / 造物 / 钥令的比例（同队去重）；最热门配队按「同阵容队伍数」排序，分数取该阵容最高。冠军配队为该禁区分数最高的队伍。造物榜已略去本季人人必备的「超维戒指」及其固定配件（携带率 ≥ 99%），否则五区清一色 100% 没有信息量。制图：忘忘看报。</div>
+<div class="foot">口径：出场率 = 该禁区队伍中携带该唤醒体 / 造物 / 钥令的比例（同队去重）；最热门配队按「同阵容队伍数」排序，分数取该阵容最高。冠军配队为该禁区分数最高的队伍。造物榜已略去本季人人必备的「超维戒指」及其固定配件（携带率 ≥ 99%），以及不属于配装选择的「锈蚀钥匙」，否则五区清一色 100%、没有信息量。制图：忘忘看报。</div>
 </div>`;
 
 // ---------------------------------------------------------------- spread 3
@@ -377,13 +430,13 @@ const recCell = (k, label, r, extra = '') => `<div class="rec"><div class="k">${
   ${r && r.chars ? memChips(r.chars.map(c => ({ zh: c.zh, en: c.en })), 4) : ''}
   ${extra}</div>`;
 
-const s3 = `<div class="page">${head(3, 6, stamp)}${mast(kicker)}
+const s3 = `<div class="page">${head(3, 7, stamp)}${mast(kicker)}
 <h2 class="lead">${n0(Math.round(rec.maxHit.value / 1e4))} 万单回合伤害，<br><small>${rec.deathResist.value} 次死扛：本期的极限数据</small></h2>
 <div class="sub">从 ${n0(rec.totalBattles)} 场战斗记录里按字段排出「全场最高」的九项，并统计 Top 2000 的唤醒体、命轮、密契、造物与钥令出场率。</div>
 <div class="recs">
   <div class="rec"><div class="k">单回合最高伤害</div><div class="v">${n0(rec.maxHit.value)}</div><div class="d">第 ${rec.maxHit.rank} 名 · ${esc(rec.maxHit.name)} · 第${['一', '二', '三', '四', '五'][rec.maxHit.wave - 1]}禁区</div>${memChips(rec.maxHit.chars.map(c => ({ zh: c.zh, en: c.en })), 4)}</div>
   <div class="rec"><div class="k">单场总伤害之王</div><div class="v">${n0(rec.maxTotal.value)}</div><div class="d">第 ${rec.maxTotal.rank} 名 · ${esc(rec.maxTotal.name)} · 第${['一', '二', '三', '四', '五'][rec.maxTotal.wave - 1]}禁区</div>${memChips(rec.maxTotal.chars.map(c => ({ zh: c.zh, en: c.en })), 4)}</div>
-  <div class="rec"><div class="k">单角色最高伤害</div><div class="v">${n0(rec.maxChar.value)}</div><div class="d">${esc(rec.maxChar.char.zh)} · 第 ${rec.maxChar.rank} 名 · 第${['一', '二', '三', '四', '五'][rec.maxChar.wave - 1]}禁区</div></div>
+  <div class="rec"><div class="k">单角色最高伤害</div><div class="v">${n0(rec.maxChar.value)}</div><div class="d">${esc(rec.maxChar.char.zh)} · 第 ${rec.maxChar.rank} 名 · 第${['一', '二', '三', '四', '五'][rec.maxChar.wave - 1]}禁区</div>${rec.maxChar.chars ? memChips(rec.maxChar.chars.map(c => ({ zh: c.zh, en: c.en })), 4) : ''}</div>
   ${recCell('', '死扛之王', rec.deathResist)}
   ${recCell('', '反击之王', rec.counter)}
   ${recCell('', '触手之王', rec.tentacle)}
@@ -394,41 +447,41 @@ const s3 = `<div class="page">${head(3, 6, stamp)}${mast(kicker)}
 <div class="hr2" style="margin-top:14px"></div>
 <div class="h">最快通关榜 <em>▼ 难度，最少回合</em></div>
 <table class="ftbl"><thead><tr><th>禁区</th><th>回合数</th><th>玩家</th><th style="text-align:left">配队</th></tr></thead><tbody>
-${cur.fastest.map(f => `<tr><td>第${['一', '二', '三', '四', '五'][f.wave - 1]}禁区</td><td><b>${f.rounds}</b></td><td>${esc(f.name)}</td><td><div class="mem" style="display:flex">${f.chars.map(c => { const img = imgPath(awImg.get(c.en)); return `<div class="m"><img src="file:///${img}"><small>${esc(c.zh)}</small></div>`; }).join('')}</div></td></tr>`).join('')}
+${cur.fastest.map(f => `<tr><td>第${['一', '二', '三', '四', '五'][f.wave - 1]}禁区</td><td><b>${f.rounds}</b></td><td>${esc(f.name)}</td><td><div class="mem" style="display:flex">${f.chars.map(c => { const img = imgPath(iconOf.char(c.en)); return `<div class="m">${img ? `<img src="file:///${img}">` : ''}<small>${esc(c.zh)}</small></div>`; }).join('')}</div></td></tr>`).join('')}
 </tbody></table>
 <div class="hr" style="margin-top:12px"></div>
 <div class="pair">
   <div class="rankbox"><div class="h">出场榜 Top 10 <em>全部禁区 · 队伍占比</em></div>
-    ${cur.top.chars.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.rate / cur.top.chars[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
+    ${cur.top.chars.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${awico(c.en, 17)}<i>${esc(c.zh)}</i></span><span class="track"><b style="width:${c.rate / cur.top.chars[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
   </div>
   <div class="rankbox"><div class="h">命轮 Top 6 <em>携带该命轮的队伍占比</em></div>
-    ${cur.top.wheels.slice(0, 6).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.rate / cur.top.wheels[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
+    ${cur.top.wheels.slice(0, 6).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${ic('wheel', c.en, 15)}<i>${esc(c.zh)}</i></span><span class="track"><b style="width:${c.rate / cur.top.wheels[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
     <div class="h" style="margin-top:10px">密契 Top 6 <em>按队伍携带件数</em></div>
-    ${cur.top.covs.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.n / cur.top.covs[0].n * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
+    ${cur.top.covs.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${ic('cov', c.en, 15)}<i>${esc(c.zh)}</i></span><span class="track"><b style="width:${c.n / cur.top.covs[0].n * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
   </div>
 </div>
 <div class="two" style="margin-top:10px">
   <div><div class="h">造物 Top 8 <em>队伍携带率</em></div>
-    ${cur.top.creations.filter(c => c.zh !== '超维戒指').slice(0, 8).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.rate / 40 * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
+    ${(() => { const list = cur.top.creations.filter(c => !CREATION_SKIP.has(c.zh)).slice(0, 8); const mx = list[0]?.rate || 1; return list.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${ic('relic', c.en, 16)}<i>${esc(c.zh)}</i></span><span class="track"><b style="width:${c.rate / mx * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join(''); })()}
   </div>
   <div><div class="h">钥令 Top 6 <em>队伍携带率</em></div>
-    ${cur.top.tokens.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.rate / cur.top.tokens[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
+    ${cur.top.tokens.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${ic('token', c.en, 17)}<i>${esc(c.zh)}</i></span><span class="track"><b style="width:${c.rate / cur.top.tokens[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
     <div class="h" style="margin-top:8px">借用助战 Top 6 <em>被借次数</em></div>
-    <div class="assist">${cur.top.assists.slice(0, 6).map((a, i) => `<span><b>${i + 1}</b> ${esc(a.zh)} <em>${n0(a.n)}</em></span>`).join('')}</div>
+    <div class="assist">${cur.top.assists.slice(0, 6).map((a, i) => `<span><b>${i + 1}</b> ${awico(a.en, 15)}${esc(a.zh)} <em>${n0(a.n)}</em></span>`).join('')}</div>
   </div>
 </div>
-<div class="foot">口径：「单回合最高伤害」「死扛」「反击」「触手」「力量」「毒伤」「生命」取 ${n0(rec.totalBattles)} 场战斗记录里的单场最大值，玩家名后标注其当期名次；出场率按队伍去重统计（2000 名玩家 × 五个禁区共 ${n0(cur.top.teamN)} 支队伍）。制图：忘忘看报。</div>
+<div class="foot">口径：「单回合最高伤害」「死扛」「反击」「触手」「力量」「毒伤」「生命」取 ${n0(rec.totalBattles)} 场战斗记录里的单场最大值，玩家名后标注其当期名次；出场率按队伍去重统计（2000 名玩家 × 五个禁区共 ${n0(cur.top.teamN)} 支队伍）；造物榜不含本季人人必备的环造物与「锈蚀钥匙」。制图：忘忘看报。</div>
 </div>`;
 
 // ---------------------------------------------------------------- spread 4
 const nch = cur.niche, mys = cur.mystery, dA = cur.deathAvg;
-const s4 = `<div class="page">${head(4, 6, stamp)}${mast(kicker)}
+const s4 = `<div class="page">${head(4, 7, stamp)}${mast(kicker)}
 <h2 class="lead">癫狂难度里，${nch.zeroDown.length} 位唤醒体<br><small>一次都没出场</small></h2>
 <div class="sub">本版统计「癫狂」（▼）与 SSS 难度的队伍（含通关队与额外队）：共 <b>${n0(cur.zones.reduce((a, z) => a + z.down, 0))}</b> 队 ▼、<b>${n0(cur.zones.reduce((a, z) => a + z.threats.SSS, 0))}</b> 队 SSS 通关队。全部 ${nch.allChars} 个出场过的唤醒体里，只有 ${nch.hardChars} 个在 ▼ / SSS 露过面，其中又有 <b>${nch.zeroDown.length}</b> 个一次 ▼ 都没打。</div>
 <div class="hr2"></div>
 <div class="h">癫狂（▼）零出场 <em>本期有出场但 ▼ 队里一次未出现</em></div>
 <div style="display:flex;align-items:center;gap:16px;margin:6px 0 12px">
-  <div class="mem">${nch.zeroDown.map(c => { const img = imgPath(awImg.get(c.en)); return `<div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///${img}"><small>${esc(c.zh)}</small></div>`; }).join('') || '<span class="mini">无</span>'}</div>
+  <div class="mem">${nch.zeroDown.map(c => { const img = imgPath(iconOf.char(c.en)); return `<div class="m" style="width:52px">${img ? `<img style="width:50px;height:50px" src="file:///${img}">` : ''}<small>${esc(c.zh)}</small></div>`; }).join('') || '<span class="mini">无</span>'}</div>
   <div class="mini" style="flex:1;border-left:1px solid #c3b393;padding-left:14px">
     ${nch.leastDown.filter(c => c.n === 0).map(c => `<b>${esc(c.zh)}</b>：全部 ${c.all} 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打癫狂。`).join('<br>')}
     ${nch.zeroBoth.length ? `<br><b>${nch.zeroBoth.map(c => esc(c.zh)).join('、')}</b>更极端：▼ 与 SSS 两档加起来一次都没出现，只出现在 SS 及以下。` : ''}
@@ -436,15 +489,15 @@ const s4 = `<div class="page">${head(4, 6, stamp)}${mast(kicker)}
 </div>
 <div class="h">癫狂（▼）出场最少 Top 8 <em>括号内为全部禁区的出场队伍数</em></div>
 <table class="ftbl" style="margin-bottom:12px"><thead><tr><th>唤醒体</th><th>▼ 出场队伍</th><th>全部出场</th><th>▼ 占比</th></tr></thead><tbody>
-${nch.leastDown.map(c => `<tr><td>${esc(c.zh)}</td><td>${c.n}</td><td>${c.all}</td><td>${pct(c.all ? c.n / c.all * 100 : 0)}%</td></tr>`).join('')}
+${nch.leastDown.map(c => `<tr><td><span class="nmico">${awico(c.en, 18)}${esc(c.zh)}</span></td><td>${c.n}</td><td>${c.all}</td><td>${pct(c.all ? c.n / c.all * 100 : 0)}%</td></tr>`).join('')}
 </tbody></table>
 <div class="h">神秘配队 Top 5 <em>▼ + SSS 难度里只有一队使用的阵容</em></div>
-${cur.mysteryLineups.map((m, i) => `<div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">${i + 1}. ${esc(m.members[0].zh)} 队</h3><span>第 ${m.rank} 名 · ${m.score} 分 · 全服仅 ${m.count} 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:6px 10px"><div style="display:flex;align-items:center;gap:18px">
-  ${memChips(m.members, 4, 46)}
+${cur.mysteryLineups.map((m, i) => `<div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">${i + 1}. ${esc(m.members[0].zh)} 队</h3><span>第 ${m.rank} 名 · ${m.score} 分 · 全服仅 ${m.count} 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:4px 10px"><div style="display:flex;align-items:center;gap:18px">
+  ${memChips(m.members, 4, 42)}
   <div class="myinfo">
-    <span>禁区</span><b>${WAVE_NAME[m.wave] || '—'}</b>
-    <span>难度</span><b>${m.threat} 通关</b>
-    <span>钥令</span><b>${esc(tokenName(m.token) || '—')}</b>
+    <span>禁区</span><b>${WAVE_NAME[m.wave] || '—'}</b><i>|</i>
+    <span>难度</span><b>${m.threat} 通关</b><i>|</i>
+    <span>钥令</span><b>${tokenTag(m.token)}</b>
   </div>
 </div></div></div>`).join('')}
 <div class="hr2" style="margin-top:8px"></div>
@@ -461,7 +514,7 @@ ${cur.mysteryLineups.map((m, i) => `<div class="zblock" style="margin-bottom:4px
 </div>
 <div class="pair" style="margin-top:10px">
   <div class="rankbox"><div class="h">平均死扛最高的唤醒体 Top 5 <em>▼+SSS，至少 15 场</em></div>
-    ${dA.chars.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.avg / dA.chars[0].avg * 100}%"></b></span><span class="v">${c.avg}<em> ${c.n} 场</em></span></div>`).join('')}
+    ${dA.chars.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${awico(c.en, 16)}<i>${esc(c.zh)}</i></span><span class="track"><b style="width:${c.avg / dA.chars[0].avg * 100}%"></b></span><span class="v">${c.avg}<em> ${c.n} 场</em></span></div>`).join('')}
   </div>
   <div class="rankbox"><div class="h">平均死扛最高的玩家 Top 5 <em>▼+SSS，至少 5 场</em></div>
     ${dA.players.map((p, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(p.name)}</span><span class="track"><b style="width:${p.avg / dA.players[0].avg * 100}%"></b></span><span class="v">${p.avg}<em> #${p.rank}</em></span></div>`).join('')}
@@ -483,15 +536,16 @@ const top3big = enl.filter(r => r.n >= 20).slice(0, 3);
 const hardTeams = cur.zones.reduce((a, z) => a + z.down, 0);
 const sssTeams = cur.zones.reduce((a, z) => a + z.threats.SSS, 0);
 const row5 = (r, i) => `<div class="enlrow"><span class="p">${i + 1}</span>
+  <span class="av">${ic('char', r.en, 22)}</span>
   <span class="nm">${esc(r.zh)}<em>${r.n} 场${r.small ? ' ※' : ''}</em></span>
   <span class="track">${BK.map(k => `<i style="width:${r.dist[k] / r.n * 100}%;background:${enlColor[k]}"></i>`).join('')}</span>
   <span class="pc">${pct(r.p12)}%</span></div>`;
 
-const s5 = `<div class="page">${head(5, 6, stamp)}${mast(kicker)}
+const s5 = `<div class="page">${head(5, 7, stamp)}${mast(kicker)}
 <h2 class="lead">▼ 与 SSS 难度里，<br><small>${pct(cur.enlight12)}% 的出场位已经 +12</small></h2>
 <div class="sub">统计 ▼ 与 SSS 难度的 ${n0(hardTeams + sssTeams)} 支队伍（含通关队与额外队），共 ${n0(eS.n)} 个唤醒体出场位，按各唤醒体「+12」占比从高到低排序——在 ▼ / SSS 出场过的 <b>${enl.length}</b> 个唤醒体全部列入（出场位不足 20 场的另列在末尾）。主榜里 +12 占比最高的是：${top3big.map(r => `<b>${esc(r.zh)}</b> ${pct(r.p12)}%`).join('、')}。</div>
 <div class="legend5">
-  ${BK.map(k => `<span><i style="background:${enlColor[k]}"></i>${k} 启 · ${n0(eS.dist[k])} 位（${pct(eS.dist[k] / eS.n * 100)}%）</span>`).join('')}
+  ${BK.map(k => `<span><i style="background:${enlColor[k]}"></i>${k} 启 · ${n0(eS.dist[k])} 个出场位（${pct(eS.dist[k] / eS.n * 100)}%）</span>`).join('')}
   <span class="rt">条 = 启灵构成 · 右侧数字 = +12 占比 · 小字 = 出场位，※ 为不足 20 场</span>
 </div>
 <div class="hr2"></div>
@@ -504,11 +558,12 @@ const s5 = `<div class="page">${head(5, 6, stamp)}${mast(kicker)}
   <div>${small5.slice(0, halfSmall).map((r, i) => row5(r, i + big5.length)).join('')}</div>
   <div>${small5.slice(halfSmall).map((r, i) => row5(r, i + big5.length + halfSmall)).join('')}</div>
 </div>
-<div class="foot">口径：启灵 = 唤醒体的潜能等级（0-15，本版分 0-2 / 3-5 / 6-8 / 9-11 / 12+ 五段，+12 及以上为满启）；同一队伍里同一唤醒体只计一次，出场位 = 该唤醒体在 ▼ / SSS 队伍中的出场次数。<b>※ 标记的唤醒体出场位不足 20 场</b>，一两个满启玩家就能把比例推到 100%，排序看看即可。全场平均启灵 ${eS.avgPotency}，▼ 通关队 47.8% 的出场位满启、SSS 通关队 39.3%。制图：忘忘看报。</div>
+<div class="foot">口径：启灵 = 唤醒体的潜能等级（0-15，本版分 0-2 / 3-5 / 6-8 / 9-11 / 12+ 五段，+12 及以上为满启）；同一队伍里同一唤醒体只计一次，出场位 = 该唤醒体在 ▼ / SSS 队伍中的出场次数。<b>※ 标记的唤醒体出场位不足 20 场</b>，一两个满启玩家就能把比例推到 100%，排序看看即可。全场平均启灵 ${eS.avgPotency}：▼ 通关队 ${pct(eS.byThreat['▼'].p12)}% 的出场位满启，SSS 通关队 ${pct(eS.byThreat.SSS.p12)}%；按部分段看，队伍平均启灵 0-2 时平均 ${eS.roundsByBucket[0].avg} 回合收工、12 以上 ${eS.roundsByBucket[4].avg} 回合。制图：忘忘看报。</div>
 </div>`;
 
 // ---------------------------------------------------------------- spread 6
 const zc = cur.zones, zp = prev.zones;
+const chg = (a, b) => (b.down ? (a.down >= b.down ? '+' : '') + Math.round((a.down / b.down - 1) * 100) + '%' : '—');
 const downTotal = zc.reduce((a, z) => a + z.down, 0);
 const downPrev = zp.reduce((a, z) => a + z.down, 0);
 const dlt = (now, before, unit = '') => {
@@ -526,7 +581,7 @@ const fallers = [...charDelta].sort((a, b) => a.d - b.d).slice(0, 4);
 const prevToken = new Map(prev.top.tokens.map(t => [t.zh, t.rate]));
 const prevWheel = new Map(prev.top.wheels.map(t => [t.zh, t.rate]));
 
-const s6 = `<div class="page">${head(6, 6, stamp)}${mast(kicker)}
+const s6 = `<div class="page">${head(6, 7, stamp)}${mast(kicker)}
 <h2 class="lead">超维戒指对比血肉戒指：<br><small>▼ 通关 ${downPrev} → ${downTotal}（${downTotal >= downPrev ? '+' : ''}${Math.round((downTotal / downPrev - 1) * 100)}%）</small></h2>
 <div class="sub">同样统计终榜 Top 2000：第 73 期上榜门槛 ${cur.threshold} 分（上期 ${prev.threshold}），满分人数 ${prev.ge['525']} 人变为 ${cur.ge['525']} 人，各禁区的 ▼ 通关总数合计 ${downPrev} → ${downTotal}，▼+SSS 战斗的平均回合从 ${prev.avgRounds.hard} 回合降到 <b>${cur.avgRounds.hard}</b> 回合（${Math.round((cur.avgRounds.hard / prev.avgRounds.hard - 1) * 100)}%）。</div>
 <div class="cmp">
@@ -564,7 +619,7 @@ const s6 = `<div class="page">${head(6, 6, stamp)}${mast(kicker)}
       return `<div class="hz"><span class="zl">${z.name}</span><span class="vstack">
         <span class="line"><i class="bar2" style="width:${z.down / max * 100}%"></i><em>${z.down}</em></span>
         <span class="line"><i class="bar" style="width:${p.down / max * 100}%"></i><em>${p.down}</em></span>
-      </span><span class="dl">${p.down ? '+' + Math.round((z.down / p.down - 1) * 100) + '%' : ''}</span></div>`;
+      </span><span class="dl ${z.down >= p.down ? 'up' : 'down'}">${p.down ? chg(z, p) : ''}</span></div>`;
     }).join('')}
   </div>
   <div><div class="h">最快 ▼ 通关 <em>回合数</em></div>
@@ -582,21 +637,26 @@ const s6 = `<div class="page">${head(6, 6, stamp)}${mast(kicker)}
 <div class="hr" style="margin-top:8px"></div>
 <div class="pair">
   <div><div class="h">唤醒体出场 Top 8 <em>73 期，括号内为上期</em></div>
-    ${cur.top.chars.slice(0, 8).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.rate / cur.top.chars[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%<em> (${pct(prevChars.get(c.zh) ?? 0)})</em></span></div>`).join('')}
+    ${cur.top.chars.slice(0, 8).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${awico(c.en, 16)}<i>${esc(c.zh)}</i></span><span class="track"><b style="width:${c.rate / cur.top.chars[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%<em> (${pct(prevChars.get(c.zh) ?? 0)})</em></span></div>`).join('')}
   </div>
   <div><div class="h">出场率上升最多 <em>百分点</em></div>
-    ${risers.map(c => `<div class="rankrow"><span class="p">▲</span><span class="n">${esc(c.zh)}</span><span class="v" style="width:auto">+${pct(c.d)}</span></div>`).join('')}
+    ${risers.map(c => `<div class="rankrow"><span class="p">▲</span><span class="n">${awico(c.en, 16)}<i>${esc(c.zh)}</i></span><span class="v" style="width:auto">+${pct(c.d)}</span></div>`).join('')}
     <div class="h" style="margin-top:8px">出场率下降最多</div>
-    ${fallers.map(c => `<div class="rankrow"><span class="p">▼</span><span class="n">${esc(c.zh)}</span><span class="v" style="width:auto">${pct(c.d)}</span></div>`).join('')}
+    ${fallers.map(c => `<div class="rankrow"><span class="p">▼</span><span class="n">${awico(c.en, 16)}<i>${esc(c.zh)}</i></span><span class="v" style="width:auto">${pct(c.d)}</span></div>`).join('')}
   </div>
 </div>
 <div class="pair" style="margin-top:8px">
-  <div><div class="h">钥令 Top 4</div>${cur.top.tokens.slice(0, 4).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="v" style="width:auto">${pct(c.rate)}%<em> (${pct(prevToken.get(c.zh) ?? 0)})</em></span></div>`).join('')}</div>
-  <div><div class="h">命轮 Top 4</div>${cur.top.wheels.slice(0, 4).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="v" style="width:auto">${pct(c.rate)}%<em> (${pct(prevWheel.get(c.zh) ?? 0)})</em></div>`).join('')}</div>
+  <div><div class="h">钥令 Top 4</div>${cur.top.tokens.slice(0, 4).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${ic('token', c.en, 17)}<i>${esc(c.zh)}</i></span><span class="v" style="width:auto">${pct(c.rate)}%<em> (${pct(prevToken.get(c.zh) ?? 0)})</em></span></div>`).join('')}</div>
+  <div><div class="h">命轮 Top 4</div>${cur.top.wheels.slice(0, 4).map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${ic('wheel', c.en, 15)}<i>${esc(c.zh)}</i></span><span class="v" style="width:auto">${pct(c.rate)}%<em> (${pct(prevWheel.get(c.zh) ?? 0)})</em></div>`).join('')}</div>
+</div>
+<div class="h" style="margin-top:8px">装备变化速记 <em>括号内为该装备上期的携带率</em></div>
+<div class="mini" style="font-size:9.8px;line-height:1.85">
+  造物：${(() => { const m = new Map(prev.top.creations.map(c => [c.zh, c.rate])); return cur.top.creations.filter(c => !CREATION_SKIP.has(c.zh)).slice(0, 3).map(c => `${ic('relic', c.en, 14)}${esc(c.zh)} ${pct(c.rate)}%（${pct(m.get(c.zh) ?? 0)}%）`).join('　'); })()}<br>
+  密契：${(() => { const m = new Map(prev.top.covs.map(c => [c.zh, c.rate])); return cur.top.covs.slice(0, 3).map(c => `${ic('cov', c.en, 14)}${esc(c.zh)} ${pct(c.rate)}%（${pct(m.get(c.zh) ?? 0)}%）`).join('　'); })()}
 </div>
 <div class="close">
-  <div><div class="k">涨得最猛</div><div class="v">第一禁区 <b>+65%</b></div>
-    <div class="d">▼ 通关 ${zp[0].down} → ${zc[0].down} 人；第三禁区同样从 ${zp[2].down} 涨到 ${zc[2].down}（+56%）。反过来第二、四、五禁区各退了 21% / 31% / 32%，五区合计 ${downPrev} → ${downTotal}。</div></div>
+  <div><div class="k">涨得最猛</div><div class="v">第一禁区 <b>${chg(zc[0], zp[0])}</b></div>
+    <div class="d">▼ 通关 ${zp[0].down} → ${zc[0].down} 人；第三禁区同样从 ${zp[2].down} 涨到 ${zc[2].down}（${chg(zc[2], zp[2])}）。反过来第二、四、五禁区各退了 ${chg(zc[1], zp[1]).replace(/[+-]/g, '')} / ${chg(zc[3], zp[3]).replace(/[+-]/g, '')} / ${chg(zc[4], zp[4]).replace(/[+-]/g, '')}，五区合计 ${downPrev} → ${downTotal}。</div></div>
   <div><div class="k">分数线整体下移，顶端更集中</div><div class="v">中位 <b>${Math.round(prev.median)} → ${Math.round(cur.median)}</b></div>
     <div class="d">平均 ${pct(prev.mean)} → ${pct(cur.mean)}，≥450 分从 ${prev.ge['450']} 掉到 ${cur.ge['450']}；但 525 满分反从 ${prev.ge['525']} 人增到 ${cur.ge['525']} 人，500 分以上却从 ${prev.ge['500']} 降到 ${cur.ge['500']}。</div></div>
   <div><div class="k">极限被抬高</div><div class="v">单场 <b>${n0(Math.round(prev.records.maxTotal.value / 1e4))} 万 → ${n0(Math.round(rec.maxTotal.value / 1e4))} 万</b></div>
@@ -605,7 +665,59 @@ const s6 = `<div class="page">${head(6, 6, stamp)}${mast(kicker)}
 <div class="foot">口径：两期均按各自终榜 Top 2000 统计；▼ 通关数为五个禁区 ▼ 难度通关队伍之和；出场率括号内为第 72 期同口径数据。制图：忘忘看报。</div>
 </div>`;
 
-const pages = [s1, s2, s3, s4, s5, s6];
+// ---------------------------------------------------------------- spread 7（低配榜）
+const LC = cur.lowcost;
+const lcRow = (p) => `<div class="lcrow">
+  <div>${memChips(p.members, 4, 34)}</div>
+  <div class="lcpc"><b>${p.potSum}</b><em> / 60</em><span>启灵总和</span></div>
+  <div class="lczi">${WAVE_NAME[p.wave] || '—'} · ▼ 通关<em>${p.rounds} 回合 · 该区 ${p.zoneScore} 分 · ${tokenTag(p.token)}</em></div>
+  <div class="lcpf">第 ${p.rank} 名<em>总分 ${p.total}</em></div>
+</div>`;
+const lcZoneMax = Math.max(...LC.cheapZone.map(z => z.n), 1);
+
+const s7 = `<div class="page">${head(7, 7, stamp)}${mast(kicker)}
+<h2 class="lead">启灵总和 25 以内，<br><small>${LC.cheapN} 支队伍照样拿下 ▼</small></h2>
+<div class="sub">本版只算「钱」——把一支队伍四名唤醒体的启灵（潜能等级 0-15）相加，满配 60。全服 ${n0(LC.downN)} 支 ▼ 通关队伍里，${n0(LC.cheapN)} 支（${pct(LC.cheapN / LC.downN * 100)}%）的启灵总和不超过 25，最低只要 <b>${LC.potMin}</b>。中位数 ${LC.potMedian} 说明多数人还是靠启灵硬顶，但「省着打」在每一档分数段都成立。</div>
+<div class="grid-stats">
+  <div class="stat"><span>▼ 通关队伍</span><b>${n0(LC.downN)}</b><i>支</i></div>
+  <div class="stat"><span>启灵总和中位</span><b>${Math.round(LC.potMedian)}</b><i>/ 60</i></div>
+  <div class="stat hot"><span>≤ 25 启灵</span><b>${n0(LC.cheapN)}</b><i>支 · ${pct(LC.cheapN / LC.downN * 100)}%</i></div>
+  <div class="stat"><span>≤ 20 启灵</span><b>${n0(LC.le['20'])}</b><i>支</i></div>
+  <div class="stat"><span>≤ 15 启灵</span><b>${n0(LC.le['15'])}</b><i>支</i></div>
+  <div class="stat"><span>全场最低</span><b>${LC.potMin}</b><i>启灵总和</i></div>
+</div>
+<div class="lclegend" style="margin-top:10px">
+  <span>每档取该分段玩家 ▼ 队伍里「启灵总和」最低的四套阵容（同阵容只算一次）</span>
+  <span class="rt" style="margin-left:auto">分档按玩家结算总分</span>
+</div>
+${LC.bands.map(b => `<div class="lcband">
+  <div class="lbh"><h3>${b.label} 分</h3><em>${b.players} 位玩家 · ▼ 队伍 ${b.teams} 支</em>
+    <span class="rt">该档 ▼ 队启灵总和中位 <b>${Math.round(b.potMedian)}</b> · 最省 <b>${b.potMin}</b></span></div>
+  ${b.picks.map(p => lcRow(p)).join('')}
+</div>`).join('')}
+<div class="hr2" style="margin-top:12px"></div>
+<div class="h">低配核心 <em>启灵总和 ≤ 25 的 ${n0(LC.cheapN)} 支 ▼ 队伍里，出场最多的唤醒体</em></div>
+<div class="mem" style="gap:5px">${LC.core.map(c => {
+  const img = imgPath(iconOf.char(c.en));
+  return `<div class="m" style="width:56px">${img ? `<img style="width:52px;height:52px" src="file:///${img}">` : ''}
+    <small>${esc(c.zh)}</small><u>${c.n} 队</u></div>`;
+}).join('')}</div>
+<div class="pair" style="margin-top:10px">
+  <div><div class="h">低配队的禁区分布 <em>≤ 25 启灵 · ${n0(LC.cheapN)} 支</em></div>
+    ${LC.cheapZone.map(z => `<div class="rankrow"><span class="p">${z.wave}</span><span class="n"><i>${WAVE_NAME[z.wave]}</i></span><span class="track"><b style="width:${z.n / lcZoneMax * 100}%"></b></span><span class="v">${z.n} <em>支</em></span></div>`).join('')}
+  </div>
+  <div><div class="h">怎么读这张榜</div>
+    <div class="guide">
+      <div><b>省的是启灵，不是分数</b>：450–475 档的中位启灵是 ${Math.round(LC.bands[2].potMedian)}，500 分以上一档却是 ${Math.round(LC.bands[0].potMedian)}——高分玩家大多在堆启灵，但同档里最省的队伍只用 ${LC.bands[0].potMin}。</div>
+      <div><b>四件套是核心</b>：${LC.core.slice(0, 4).map(c => `${esc(c.zh)} ${pct(c.n / LC.cheapN * 100)}%`).join(' / ')}——低配队最常带的四名唤醒体，靠机制而不是数值吃饭。</div>
+      <div><b>第三禁区最宽容</b>：${LC.cheapZone[2].n} 支低配队选在这里打 ▼，占全部低配队的 ${pct(LC.cheapZone[2].n / LC.cheapN * 100)}%。</div>
+    </div>
+  </div>
+</div>
+<div class="foot">口径：「启灵总和」= 队伍四名唤醒体的潜能等级之和（每人 0-15，满配 60），是配装成本的近似；分档按玩家五个禁区的结算总分，500–525 / 475–500 / 450–475。每档取该档玩家 ▼ 通关队伍里启灵总和最低的四套阵容，同阵容（不计站位）只取一次；出场数为该唤醒体在 ≤ 25 启灵 ▼ 队伍中的出现次数。低配不等于低配速，回合数同时列出。制图：忘忘看报。</div>
+</div>`;
+
+const pages = [s1, s2, s3, s4, s5, s6, s7];
 pages.forEach((html, i) => {
   const doc = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>融灾第73期特刊-第${i + 1}版</title><style>${CSS}</style></head><body>${html}</body></html>`;
   fs.writeFileSync(path.join(OUT, `s${i + 1}.html`), doc, 'utf8');

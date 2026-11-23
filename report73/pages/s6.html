@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:6.5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.1px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -129,17 +129,18 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .legend5 i{width:11px;height:11px;display:inline-block}
 .legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
 .enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
-.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+.enlw .enlrow{grid-template-columns:20px 26px 104px 1fr 50px;gap:7px;font-size:12.5px;padding:6.65px 0;
   border-bottom:1px dotted #d6c8ac}
 .enlw .enlrow .p{font-size:12px}
 .enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
 .enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
 .enlw .enlrow .track{height:17px}
 .enlw .enlrow .pc{font-size:13px}
-.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
-  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
-.myinfo span{color:#7b6750;text-align:right}
-.myinfo b{color:#a1281b;text-align:right}
+.myinfo{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:10.5px;white-space:nowrap;
+  border-left:1px solid #c3b393;padding-left:16px}
+.myinfo span{color:#7b6750}
+.myinfo b{color:#a1281b}
+.myinfo i{font-style:normal;color:#c3b393;margin:0 3px}
 .subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
   border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
 .subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
@@ -186,6 +187,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hz .bar{background:#3d6b46}
 .hz .bar2{background:#a1281b}
 .hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.hz .dl.down{color:#3d6b46}
 .assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
 .assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .assist b{color:#a1281b;margin-right:2px}
@@ -197,7 +199,34 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .close .v{font-size:17px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900;line-height:1.35}
 .close .v b{color:#a1281b}
 .close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
-</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 6 版 / 共 6 版</div><div>熔铸快讯 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
+/* icons inside rank rows and lists */
+.ico{object-fit:cover;border-radius:2px;border:1px solid #b7a685;background:#e6dcc6;vertical-align:-2px;margin-right:4px;flex:none}
+.ico-token{background:transparent;filter:brightness(.42) contrast(1.3)}
+.ico-relic,.ico-cov{background:#f0e8d4}
+.rankrow .n{display:flex;align-items:center;gap:4px;min-width:0}
+.rankrow .n i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank1 li span:first-child{display:flex;align-items:center;gap:4px;min-width:0}
+.rank1 li span:first-child i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nmico{display:inline-flex;align-items:center;gap:4px;vertical-align:-3px}
+/* spread 7 low-cost */
+.lcband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:9px}
+.lbh{display:flex;align-items:baseline;gap:12px;padding:4px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.lbh h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:17px;color:#a1281b;font-weight:900;letter-spacing:.5px}
+.lbh em{font-style:normal;font-size:10px;color:#5f4c36}
+.lbh .rt{margin-left:auto;font-size:10px;color:#4b3a28}
+.lbh .rt b{color:#a1281b}
+.lcrow{display:grid;grid-template-columns:172px 74px 1fr 190px;gap:10px;align-items:center;
+  padding:5px 10px;border-bottom:1px dotted #d6c8ac}
+.lcrow:last-child{border-bottom:0}
+.lcpc b{font-size:16px;color:#a1281b;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.lcpc em{font-style:normal;font-size:9px;color:#8a7458}
+.lcpc span{display:block;font-size:8.5px;color:#6a5740;letter-spacing:.3px}
+.lczi{font-size:11px;font-weight:700;color:#3c2c1c}
+.lczi em{display:block;font-style:normal;font-size:9.5px;font-weight:400;color:#6a5740;margin-top:1px}
+.lcpf{font-size:10px;text-align:right;font-weight:700}
+.lcpf em{display:block;font-style:normal;font-size:9px;font-weight:400;color:#7b6750;margin-top:1px}
+.lclegend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:10px;color:#4b3a28;padding:2px 0 8px}
+</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 6 版 / 共 7 版</div><div>融灾快报 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
   <h1>忘忘看报</h1><div class="rule"></div><div class="kicker">融灾第 73 期 ·「超维戒指」· 2026 年 11 月 9 日 — 11 月 22 日 · 终核特刊</div></div>
 <h2 class="lead">超维戒指对比血肉戒指：<br><small>▼ 通关 724 → 1002（+38%）</small></h2>
 <div class="sub">同样统计终榜 Top 2000：第 73 期上榜门槛 385 分（上期 400），满分人数 6 人变为 8 人，各禁区的 ▼ 通关总数合计 724 → 1002，▼+SSS 战斗的平均回合从 20.46 回合降到 <b>14.92</b> 回合（-27%）。</div>
@@ -228,19 +257,19 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
     <div class="hz"><span class="zl">第一禁区</span><span class="vstack">
         <span class="line"><i class="bar2" style="width:32.23388305847077%"></i><em>215</em></span>
         <span class="line"><i class="bar" style="width:19.490254872563717%"></i><em>130</em></span>
-      </span><span class="dl">+65%</span></div><div class="hz"><span class="zl">第二禁区</span><span class="vstack">
+      </span><span class="dl up">+65%</span></div><div class="hz"><span class="zl">第二禁区</span><span class="vstack">
         <span class="line"><i class="bar2" style="width:7.19640179910045%"></i><em>48</em></span>
         <span class="line"><i class="bar" style="width:9.145427286356822%"></i><em>61</em></span>
-      </span><span class="dl">+-21%</span></div><div class="hz"><span class="zl">第三禁区</span><span class="vstack">
+      </span><span class="dl down">-21%</span></div><div class="hz"><span class="zl">第三禁区</span><span class="vstack">
         <span class="line"><i class="bar2" style="width:100%"></i><em>667</em></span>
         <span class="line"><i class="bar" style="width:64.16791604197901%"></i><em>428</em></span>
-      </span><span class="dl">+56%</span></div><div class="hz"><span class="zl">第四禁区</span><span class="vstack">
+      </span><span class="dl up">+56%</span></div><div class="hz"><span class="zl">第四禁区</span><span class="vstack">
         <span class="line"><i class="bar2" style="width:5.397301349325337%"></i><em>36</em></span>
         <span class="line"><i class="bar" style="width:7.796101949025487%"></i><em>52</em></span>
-      </span><span class="dl">+-31%</span></div><div class="hz"><span class="zl">第五禁区</span><span class="vstack">
+      </span><span class="dl down">-31%</span></div><div class="hz"><span class="zl">第五禁区</span><span class="vstack">
         <span class="line"><i class="bar2" style="width:5.397301349325337%"></i><em>36</em></span>
         <span class="line"><i class="bar" style="width:7.946026986506746%"></i><em>53</em></span>
-      </span><span class="dl">+-32%</span></div>
+      </span><span class="dl down">-32%</span></div>
   </div>
   <div><div class="h">最快 ▼ 通关 <em>回合数</em></div>
     <table class="ftbl"><thead><tr><th>禁区</th><th>73 期</th><th>72 期</th></tr></thead><tbody>
@@ -257,17 +286,22 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 <div class="hr" style="margin-top:8px"></div>
 <div class="pair">
   <div><div class="h">唤醒体出场 Top 8 <em>73 期，括号内为上期</em></div>
-    <div class="rankrow"><span class="p">1</span><span class="n">沙耶</span><span class="track"><b style="width:100%"></b></span><span class="v">16.0%<em> (17.3)</em></span></div><div class="rankrow"><span class="p">2</span><span class="n">茉夏</span><span class="track"><b style="width:100%"></b></span><span class="v">16.0%<em> (14.9)</em></span></div><div class="rankrow"><span class="p">3</span><span class="n">阿拉克涅</span><span class="track"><b style="width:95%"></b></span><span class="v">15.2%<em> (13.3)</em></span></div><div class="rankrow"><span class="p">4</span><span class="n">奥尔拉</span><span class="track"><b style="width:84.375%"></b></span><span class="v">13.5%<em> (12.7)</em></span></div><div class="rankrow"><span class="p">5</span><span class="n">熔毁·朵尔</span><span class="track"><b style="width:81.25%"></b></span><span class="v">13.0%<em> (14.9)</em></span></div><div class="rankrow"><span class="p">6</span><span class="n">诞妄·墨菲</span><span class="track"><b style="width:81.25%"></b></span><span class="v">13.0%<em> (13.3)</em></span></div><div class="rankrow"><span class="p">7</span><span class="n">卡斯托尔</span><span class="track"><b style="width:80%"></b></span><span class="v">12.8%<em> (0.0)</em></span></div><div class="rankrow"><span class="p">8</span><span class="n">泰旖丝</span><span class="track"><b style="width:78.125%"></b></span><span class="v">12.5%<em> (15.6)</em></span></div>
+    <div class="rankrow"><span class="p">1</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp" style="width:16px;height:16px"><i>沙耶</i></span><span class="track"><b style="width:100%"></b></span><span class="v">16.0%<em> (17.3)</em></span></div><div class="rankrow"><span class="p">2</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:16px;height:16px"><i>茉夏</i></span><span class="track"><b style="width:100%"></b></span><span class="v">16.0%<em> (14.9)</em></span></div><div class="rankrow"><span class="p">3</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:16px;height:16px"><i>阿拉克涅</i></span><span class="track"><b style="width:95%"></b></span><span class="v">15.2%<em> (13.3)</em></span></div><div class="rankrow"><span class="p">4</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp" style="width:16px;height:16px"><i>奥尔拉</i></span><span class="track"><b style="width:84.375%"></b></span><span class="v">13.5%<em> (12.7)</em></span></div><div class="rankrow"><span class="p">5</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp" style="width:16px;height:16px"><i>熔毁·朵尔</i></span><span class="track"><b style="width:81.25%"></b></span><span class="v">13.0%<em> (14.9)</em></span></div><div class="rankrow"><span class="p">6</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp" style="width:16px;height:16px"><i>诞妄·墨菲</i></span><span class="track"><b style="width:81.25%"></b></span><span class="v">13.0%<em> (13.3)</em></span></div><div class="rankrow"><span class="p">7</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp" style="width:16px;height:16px"><i>卡斯托尔</i></span><span class="track"><b style="width:80%"></b></span><span class="v">12.8%<em> (0.0)</em></span></div><div class="rankrow"><span class="p">8</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp" style="width:16px;height:16px"><i>泰旖丝</i></span><span class="track"><b style="width:78.125%"></b></span><span class="v">12.5%<em> (15.6)</em></span></div>
   </div>
   <div><div class="h">出场率上升最多 <em>百分点</em></div>
-    <div class="rankrow"><span class="p">▲</span><span class="n">卡斯托尔</span><span class="v" style="width:auto">+12.8</span></div><div class="rankrow"><span class="p">▲</span><span class="n">蚀灭·萝坦</span><span class="v" style="width:auto">+11.4</span></div><div class="rankrow"><span class="p">▲</span><span class="n">阿拉克涅</span><span class="v" style="width:auto">+1.9</span></div><div class="rankrow"><span class="p">▲</span><span class="n">茉夏</span><span class="v" style="width:auto">+1.1</span></div>
+    <div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp" style="width:16px;height:16px"><i>卡斯托尔</i></span><span class="v" style="width:auto">+12.8</span></div><div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan-cetarchon.webp" style="width:16px;height:16px"><i>蚀灭·萝坦</i></span><span class="v" style="width:auto">+11.4</span></div><div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:16px;height:16px"><i>阿拉克涅</i></span><span class="v" style="width:auto">+1.9</span></div><div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:16px;height:16px"><i>茉夏</i></span><span class="v" style="width:auto">+1.1</span></div>
     <div class="h" style="margin-top:8px">出场率下降最多</div>
-    <div class="rankrow"><span class="p">▼</span><span class="n">泰旖丝</span><span class="v" style="width:auto">-3.1</span></div><div class="rankrow"><span class="p">▼</span><span class="n">熔毁·朵尔</span><span class="v" style="width:auto">-1.9</span></div><div class="rankrow"><span class="p">▼</span><span class="n">沙耶</span><span class="v" style="width:auto">-1.3</span></div><div class="rankrow"><span class="p">▼</span><span class="n">弥利亚姆</span><span class="v" style="width:auto">-0.6</span></div>
+    <div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp" style="width:16px;height:16px"><i>泰旖丝</i></span><span class="v" style="width:auto">-3.1</span></div><div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp" style="width:16px;height:16px"><i>熔毁·朵尔</i></span><span class="v" style="width:auto">-1.9</span></div><div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp" style="width:16px;height:16px"><i>沙耶</i></span><span class="v" style="width:auto">-1.3</span></div><div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp" style="width:16px;height:16px"><i>弥利亚姆</i></span><span class="v" style="width:auto">-0.6</span></div>
   </div>
 </div>
 <div class="pair" style="margin-top:8px">
-  <div><div class="h">钥令 Top 4</div><div class="rankrow"><span class="p">1</span><span class="n">来自雾境</span><span class="v" style="width:auto">9.2%<em> (8.3)</em></span></div><div class="rankrow"><span class="p">2</span><span class="n">鼠鼠的智慧</span><span class="v" style="width:auto">8.8%<em> (8.8)</em></span></div><div class="rankrow"><span class="p">3</span><span class="n">溺亡的纯真</span><span class="v" style="width:auto">7.7%<em> (8.6)</em></span></div><div class="rankrow"><span class="p">4</span><span class="n">小小心愿</span><span class="v" style="width:auto">6.4%<em> (0.0)</em></span></div></div>
-  <div><div class="h">命轮 Top 4</div><div class="rankrow"><span class="p">1</span><span class="n">愿世界化作芬芳</span><span class="v" style="width:auto">16.3%<em> (17.5)</em></div><div class="rankrow"><span class="p">2</span><span class="n">巨人之刃</span><span class="v" style="width:auto">15.7%<em> (14.8)</em></div><div class="rankrow"><span class="p">3</span><span class="n">星天之兽</span><span class="v" style="width:auto">15.2%<em> (15.1)</em></div><div class="rankrow"><span class="p">4</span><span class="n">狂戮至世界尽头</span><span class="v" style="width:auto">14.9%<em> (14.1)</em></div></div>
+  <div><div class="h">钥令 Top 4</div><div class="rankrow"><span class="p">1</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_48.webp" style="width:17px;height:17px"><i>来自雾境</i></span><span class="v" style="width:auto">9.2%<em> (8.3)</em></span></div><div class="rankrow"><span class="p">2</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_04.webp" style="width:17px;height:17px"><i>鼠鼠的智慧</i></span><span class="v" style="width:auto">8.8%<em> (8.8)</em></span></div><div class="rankrow"><span class="p">3</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_51.webp" style="width:17px;height:17px"><i>溺亡的纯真</i></span><span class="v" style="width:auto">7.7%<em> (8.6)</em></span></div><div class="rankrow"><span class="p">4</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_05.webp" style="width:17px;height:17px"><i>小小心愿</i></span><span class="v" style="width:auto">6.4%<em> (0.0)</em></span></div></div>
+  <div><div class="h">命轮 Top 4</div><div class="rankrow"><span class="p">1</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_B15.webp" style="width:15px;height:15px"><i>愿世界化作芬芳</i></span><span class="v" style="width:auto">16.3%<em> (17.5)</em></div><div class="rankrow"><span class="p">2</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_O06.webp" style="width:15px;height:15px"><i>巨人之刃</i></span><span class="v" style="width:auto">15.7%<em> (14.8)</em></div><div class="rankrow"><span class="p">3</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_C04.webp" style="width:15px;height:15px"><i>星天之兽</i></span><span class="v" style="width:auto">15.2%<em> (15.1)</em></div><div class="rankrow"><span class="p">4</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_C17.webp" style="width:15px;height:15px"><i>狂戮至世界尽头</i></span><span class="v" style="width:auto">14.9%<em> (14.1)</em></div></div>
+</div>
+<div class="h" style="margin-top:8px">装备变化速记 <em>括号内为该装备上期的携带率</em></div>
+<div class="mini" style="font-size:9.8px;line-height:1.85">
+  造物：<img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_039.webp" style="width:14px;height:14px">缠丝玛瑙+ 22.4%（0.0%）　<img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_066.webp" style="width:14px;height:14px">恶童+ 22.0%（0.0%）　<img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_032.webp" style="width:14px;height:14px">遗落的祭祀刀+ 21.2%（0.0%）<br>
+  密契：<img class="ico ico-cov" src="file:///H:/work/tmp/s73/assets/morimens/covenants/Icon/Icon_Trinket_008.webp" style="width:14px;height:14px">埋骨地絮语 72.7%（72.4%）　<img class="ico ico-cov" src="file:///H:/work/tmp/s73/assets/morimens/covenants/Icon/Icon_Trinket_015.webp" style="width:14px;height:14px">生机榨取 60.6%（63.1%）　<img class="ico ico-cov" src="file:///H:/work/tmp/s73/assets/morimens/covenants/Icon/Icon_Trinket_019.webp" style="width:14px;height:14px">入药之梦 48.3%（52.1%）
 </div>
 <div class="close">
   <div><div class="k">涨得最猛</div><div class="v">第一禁区 <b>+65%</b></div>

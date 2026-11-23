@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:6.5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.1px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -129,17 +129,18 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .legend5 i{width:11px;height:11px;display:inline-block}
 .legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
 .enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
-.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+.enlw .enlrow{grid-template-columns:20px 26px 104px 1fr 50px;gap:7px;font-size:12.5px;padding:6.65px 0;
   border-bottom:1px dotted #d6c8ac}
 .enlw .enlrow .p{font-size:12px}
 .enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
 .enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
 .enlw .enlrow .track{height:17px}
 .enlw .enlrow .pc{font-size:13px}
-.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
-  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
-.myinfo span{color:#7b6750;text-align:right}
-.myinfo b{color:#a1281b;text-align:right}
+.myinfo{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:10.5px;white-space:nowrap;
+  border-left:1px solid #c3b393;padding-left:16px}
+.myinfo span{color:#7b6750}
+.myinfo b{color:#a1281b}
+.myinfo i{font-style:normal;color:#c3b393;margin:0 3px}
 .subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
   border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
 .subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
@@ -186,6 +187,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hz .bar{background:#3d6b46}
 .hz .bar2{background:#a1281b}
 .hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.hz .dl.down{color:#3d6b46}
 .assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
 .assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .assist b{color:#a1281b;margin-right:2px}
@@ -197,7 +199,34 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .close .v{font-size:17px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900;line-height:1.35}
 .close .v b{color:#a1281b}
 .close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
-</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 2 版 / 共 6 版</div><div>熔铸快讯 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
+/* icons inside rank rows and lists */
+.ico{object-fit:cover;border-radius:2px;border:1px solid #b7a685;background:#e6dcc6;vertical-align:-2px;margin-right:4px;flex:none}
+.ico-token{background:transparent;filter:brightness(.42) contrast(1.3)}
+.ico-relic,.ico-cov{background:#f0e8d4}
+.rankrow .n{display:flex;align-items:center;gap:4px;min-width:0}
+.rankrow .n i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank1 li span:first-child{display:flex;align-items:center;gap:4px;min-width:0}
+.rank1 li span:first-child i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nmico{display:inline-flex;align-items:center;gap:4px;vertical-align:-3px}
+/* spread 7 low-cost */
+.lcband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:9px}
+.lbh{display:flex;align-items:baseline;gap:12px;padding:4px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.lbh h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:17px;color:#a1281b;font-weight:900;letter-spacing:.5px}
+.lbh em{font-style:normal;font-size:10px;color:#5f4c36}
+.lbh .rt{margin-left:auto;font-size:10px;color:#4b3a28}
+.lbh .rt b{color:#a1281b}
+.lcrow{display:grid;grid-template-columns:172px 74px 1fr 190px;gap:10px;align-items:center;
+  padding:5px 10px;border-bottom:1px dotted #d6c8ac}
+.lcrow:last-child{border-bottom:0}
+.lcpc b{font-size:16px;color:#a1281b;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.lcpc em{font-style:normal;font-size:9px;color:#8a7458}
+.lcpc span{display:block;font-size:8.5px;color:#6a5740;letter-spacing:.3px}
+.lczi{font-size:11px;font-weight:700;color:#3c2c1c}
+.lczi em{display:block;font-style:normal;font-size:9.5px;font-weight:400;color:#6a5740;margin-top:1px}
+.lcpf{font-size:10px;text-align:right;font-weight:700}
+.lcpf em{display:block;font-style:normal;font-size:9px;font-weight:400;color:#7b6750;margin-top:1px}
+.lclegend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:10px;color:#4b3a28;padding:2px 0 8px}
+</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 2 版 / 共 7 版</div><div>融灾快报 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
   <h1>忘忘看报</h1><div class="rule"></div><div class="kicker">融灾第 73 期 ·「超维戒指」· 2026 年 11 月 9 日 — 11 月 22 日 · 终核特刊</div></div>
 <h2 class="lead">五大禁区，五种打法：<br><small>谁是 ▼ 难度的通关密码？</small></h2>
 <div class="sub">统计各禁区「通关队伍」中达成最高难度（▼）的队伍：第一禁区 215 队、第二禁区 48 队、第三禁区 667 队、第四禁区 36 队、第五禁区 36 队。同阵容（不计站位）合并计数，「出场」为该禁区全部队伍中的占比。</div>
@@ -210,7 +239,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>徐</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/karen.webp">
       <small>珈伦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp">
       <small>负誓·奥吉尔</small><u>+0</u></div></div>
-      <div class="mini" style="margin-top:5px">钥令：<b>深宅往事</b></div>
+      <div class="mini" style="margin-top:5px">钥令：<b style="color:#3c2c1c"><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_49.webp" style="width:15px;height:15px">深宅往事</span></b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
       <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
@@ -232,15 +261,15 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
       <small>奥尔拉</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
       <small>阿拉克涅</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
-      <small>薇薇安</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：来自雾境</div>
+      <small>薇薇安</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：<span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_48.webp" style="width:15px;height:15px">来自雾境</span></div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
-      <ul class="rank1"><li><span>茉夏</span><span>30.5%</span></li><li><span>蚀灭·萝坦</span><span>25.8%</span></li><li><span>奥尔拉</span><span>21.2%</span></li><li><span>阿拉克涅</span><span>19.1%</span></li><li><span>薇薇安</span><span>16.3%</span></li><li><span>艾继丝</span><span>15.9%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:17px;height:17px"><i>茉夏</i></span><span>30.5%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan-cetarchon.webp" style="width:17px;height:17px"><i>蚀灭·萝坦</i></span><span>25.8%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp" style="width:17px;height:17px"><i>奥尔拉</i></span><span>21.2%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:17px;height:17px"><i>阿拉克涅</i></span><span>19.1%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp" style="width:17px;height:17px"><i>薇薇安</i></span><span>16.3%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/aigis.webp" style="width:17px;height:17px"><i>艾继丝</i></span><span>15.9%</span></li></ul>
     </div>
     <div><div class="ttl">常用造物</div>
-      <ul class="rank1"><li><span>维度影像·奥尔拉</span><span>21.2%</span></li><li><span>维度影像·阿拉克涅</span><span>19.1%</span></li><li><span>维度影像·卡斯托尔</span><span>12.7%</span></li><li><span>维度影像·克莱门汀</span><span>12.0%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D06.webp" style="width:16px;height:16px"><i>维度影像·奥尔拉</i></span><span>21.2%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D10.webp" style="width:16px;height:16px"><i>维度影像·阿拉克涅</i></span><span>19.1%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D11.webp" style="width:16px;height:16px"><i>维度影像·卡斯托尔</i></span><span>12.7%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D13.webp" style="width:16px;height:16px"><i>维度影像·克莱门汀</i></span><span>12.0%</span></li></ul>
       <div class="ttl" style="margin-top:6px">常用钥令</div>
-      <ul class="rank1"><li><span>来自雾境</span><span>19.6%</span></li><li><span>噬鲸的风暴</span><span>8.9%</span></li><li><span>鼠鼠的智慧</span><span>8.8%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_48.webp" style="width:17px;height:17px"><i>来自雾境</i></span><span>19.6%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_55.webp" style="width:17px;height:17px"><i>噬鲸的风暴</i></span><span>8.9%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_04.webp" style="width:17px;height:17px"><i>鼠鼠的智慧</i></span><span>8.8%</span></li></ul>
     </div>
   </div></div><div class="zblock">
   <div class="zt"><h3>第二禁区</h3><span>▼ 通关 48 人 · 该区共 1,990 队 · 最高分 100 · 中位 75</span></div>
@@ -251,7 +280,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>奥尔拉</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp">
       <small>克莱门汀</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
       <small>薇薇安</small><u>+3</u></div></div>
-      <div class="mini" style="margin-top:5px">钥令：<b>不落的太阳</b></div>
+      <div class="mini" style="margin-top:5px">钥令：<b style="color:#3c2c1c"><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_40.webp" style="width:15px;height:15px">不落的太阳</span></b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
       <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
@@ -273,15 +302,15 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
       <small>奥尔拉</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
       <small>薇薇安</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：鼠鼠的智慧</div>
+      <small>阿拉克涅</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：<span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_04.webp" style="width:15px;height:15px">鼠鼠的智慧</span></div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
-      <ul class="rank1"><li><span>诞妄·墨菲</span><span>17.3%</span></li><li><span>泰旖丝</span><span>17.1%</span></li><li><span>弥利亚姆</span><span>15.6%</span></li><li><span>卡斯托尔</span><span>15.6%</span></li><li><span>阿拉克涅</span><span>15.4%</span></li><li><span>图鲁</span><span>14.7%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp" style="width:17px;height:17px"><i>诞妄·墨菲</i></span><span>17.3%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp" style="width:17px;height:17px"><i>泰旖丝</i></span><span>17.1%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp" style="width:17px;height:17px"><i>弥利亚姆</i></span><span>15.6%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp" style="width:17px;height:17px"><i>卡斯托尔</i></span><span>15.6%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:17px;height:17px"><i>阿拉克涅</i></span><span>15.4%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp" style="width:17px;height:17px"><i>图鲁</i></span><span>14.7%</span></li></ul>
     </div>
     <div><div class="ttl">常用造物</div>
-      <ul class="rank1"><li><span>锈蚀钥匙</span><span>64.5%</span></li><li><span>维度影像·卡斯托尔</span><span>15.6%</span></li><li><span>维度影像·阿拉克涅</span><span>15.4%</span></li><li><span>维度影像·奥尔拉</span><span>14.6%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D11.webp" style="width:16px;height:16px"><i>维度影像·卡斯托尔</i></span><span>15.6%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D10.webp" style="width:16px;height:16px"><i>维度影像·阿拉克涅</i></span><span>15.4%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D06.webp" style="width:16px;height:16px"><i>维度影像·奥尔拉</i></span><span>14.6%</span></li></ul>
       <div class="ttl" style="margin-top:6px">常用钥令</div>
-      <ul class="rank1"><li><span>唯一的种子</span><span>8.9%</span></li><li><span>鼠鼠的智慧</span><span>8.5%</span></li><li><span>偏航船</span><span>8.0%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_23.webp" style="width:17px;height:17px"><i>唯一的种子</i></span><span>8.9%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_04.webp" style="width:17px;height:17px"><i>鼠鼠的智慧</i></span><span>8.5%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_46.webp" style="width:17px;height:17px"><i>偏航船</i></span><span>8.0%</span></li></ul>
     </div>
   </div></div><div class="zblock">
   <div class="zt"><h3>第三禁区</h3><span>▼ 通关 667 人 · 该区共 1,992 队 · 最高分 105 · 中位 85</span></div>
@@ -292,7 +321,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
       <small>弥利亚姆</small><u>+6</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
       <small>图鲁</small><u>+13</u></div></div>
-      <div class="mini" style="margin-top:5px">钥令：<b>偏航船</b></div>
+      <div class="mini" style="margin-top:5px">钥令：<b style="color:#3c2c1c"><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_46.webp" style="width:15px;height:15px">偏航船</span></b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
       <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
@@ -314,15 +343,15 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>萝坦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/hameln.webp">
       <small>哈姆林</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tawil.webp">
       <small>塔薇</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp">
-      <small>熔毁·朵尔</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：小小心愿</div>
+      <small>熔毁·朵尔</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：<span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_05.webp" style="width:15px;height:15px">小小心愿</span></div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
-      <ul class="rank1"><li><span>萝坦</span><span>33.4%</span></li><li><span>熔毁·朵尔</span><span>27.4%</span></li><li><span>塔薇</span><span>24.6%</span></li><li><span>哈姆林</span><span>17.3%</span></li><li><span>徐</span><span>15.3%</span></li><li><span>诞妄·墨菲</span><span>15.2%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan.webp" style="width:17px;height:17px"><i>萝坦</i></span><span>33.4%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp" style="width:17px;height:17px"><i>熔毁·朵尔</i></span><span>27.4%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/tawil.webp" style="width:17px;height:17px"><i>塔薇</i></span><span>24.6%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/hameln.webp" style="width:17px;height:17px"><i>哈姆林</i></span><span>17.3%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/xu.webp" style="width:17px;height:17px"><i>徐</i></span><span>15.3%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp" style="width:17px;height:17px"><i>诞妄·墨菲</i></span><span>15.2%</span></li></ul>
     </div>
     <div><div class="ttl">常用造物</div>
-      <ul class="rank1"><li><span>维度影像·卡茜亚</span><span>5.8%</span></li><li><span>维度影像·阿拉克涅</span><span>4.9%</span></li><li><span>维度影像·卡斯托尔</span><span>4.5%</span></li><li><span>维度影像·奥尔拉</span><span>4.3%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D09.webp" style="width:16px;height:16px"><i>维度影像·卡茜亚</i></span><span>5.8%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D10.webp" style="width:16px;height:16px"><i>维度影像·阿拉克涅</i></span><span>4.9%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D11.webp" style="width:16px;height:16px"><i>维度影像·卡斯托尔</i></span><span>4.5%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D06.webp" style="width:16px;height:16px"><i>维度影像·奥尔拉</i></span><span>4.3%</span></li></ul>
       <div class="ttl" style="margin-top:6px">常用钥令</div>
-      <ul class="rank1"><li><span>小小心愿</span><span>25.0%</span></li><li><span>全部的她</span><span>7.8%</span></li><li><span>深宅往事</span><span>7.4%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_05.webp" style="width:17px;height:17px"><i>小小心愿</i></span><span>25.0%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_22.webp" style="width:17px;height:17px"><i>全部的她</i></span><span>7.8%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_49.webp" style="width:17px;height:17px"><i>深宅往事</i></span><span>7.4%</span></li></ul>
     </div>
   </div></div><div class="zblock">
   <div class="zt"><h3>第四禁区</h3><span>▼ 通关 36 人 · 该区共 1,984 队 · 最高分 110 · 中位 85</span></div>
@@ -333,7 +362,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp">
       <small>墨菲</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/salvador.webp">
       <small>萨尔瓦多</small><u>+9</u></div></div>
-      <div class="mini" style="margin-top:5px">钥令：<b>溺亡的纯真</b></div>
+      <div class="mini" style="margin-top:5px">钥令：<b style="color:#3c2c1c"><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_51.webp" style="width:15px;height:15px">溺亡的纯真</span></b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
       <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
@@ -355,15 +384,15 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>阿拉克涅</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
       <small>奥尔拉</small><u>+10</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp">
       <small>负誓·奥吉尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
-      <small>茉夏</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：来自雾境</div>
+      <small>茉夏</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：<span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_48.webp" style="width:15px;height:15px">来自雾境</span></div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
-      <ul class="rank1"><li><span>沙耶</span><span>26.2%</span></li><li><span>墨菲</span><span>18.8%</span></li><li><span>莫丝</span><span>18.0%</span></li><li><span>茉夏</span><span>17.4%</span></li><li><span>阿拉克涅</span><span>16.3%</span></li><li><span>诞妄·墨菲</span><span>16.1%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp" style="width:17px;height:17px"><i>沙耶</i></span><span>26.2%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp" style="width:17px;height:17px"><i>墨菲</i></span><span>18.8%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vortice.webp" style="width:17px;height:17px"><i>莫丝</i></span><span>18.0%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:17px;height:17px"><i>茉夏</i></span><span>17.4%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:17px;height:17px"><i>阿拉克涅</i></span><span>16.3%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp" style="width:17px;height:17px"><i>诞妄·墨菲</i></span><span>16.1%</span></li></ul>
     </div>
     <div><div class="ttl">常用造物</div>
-      <ul class="rank1"><li><span>维度影像·阿拉克涅</span><span>16.3%</span></li><li><span>活性注射器+</span><span>14.0%</span></li><li><span>维度影像·奥尔拉</span><span>13.4%</span></li><li><span>恩赐之血+</span><span>12.1%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D10.webp" style="width:16px;height:16px"><i>维度影像·阿拉克涅</i></span><span>16.3%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_023.webp" style="width:16px;height:16px"><i>活性注射器+</i></span><span>14.0%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D06.webp" style="width:16px;height:16px"><i>维度影像·奥尔拉</i></span><span>13.4%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_085.webp" style="width:16px;height:16px"><i>恩赐之血+</i></span><span>12.1%</span></li></ul>
       <div class="ttl" style="margin-top:6px">常用钥令</div>
-      <ul class="rank1"><li><span>溺亡的纯真</span><span>17.5%</span></li><li><span>来自雾境</span><span>10.7%</span></li><li><span>鼠鼠的智慧</span><span>10.1%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_51.webp" style="width:17px;height:17px"><i>溺亡的纯真</i></span><span>17.5%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_48.webp" style="width:17px;height:17px"><i>来自雾境</i></span><span>10.7%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_04.webp" style="width:17px;height:17px"><i>鼠鼠的智慧</i></span><span>10.1%</span></li></ul>
     </div>
   </div></div><div class="zblock">
   <div class="zt"><h3>第五禁区</h3><span>▼ 通关 36 人 · 该区共 1,987 队 · 最高分 115 · 中位 90</span></div>
@@ -374,7 +403,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>泰旖丝</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot.webp">
       <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
       <small>阿拉克涅</small><u>+15</u></div></div>
-      <div class="mini" style="margin-top:5px">钥令：<b>唯一的种子</b></div>
+      <div class="mini" style="margin-top:5px">钥令：<b style="color:#3c2c1c"><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_23.webp" style="width:15px;height:15px">唯一的种子</span></b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
       <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
@@ -396,16 +425,16 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
       <small>血链·希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
       <small>泰旖丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot.webp">
       <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：唯一的种子</div>
+      <small>阿拉克涅</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：<span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_23.webp" style="width:15px;height:15px">唯一的种子</span></div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
-      <ul class="rank1"><li><span>阿拉克涅</span><span>20.5%</span></li><li><span>卡斯托尔</span><span>19.6%</span></li><li><span>沙耶</span><span>18.9%</span></li><li><span>波吕克斯</span><span>17.6%</span></li><li><span>凯刻斯</span><span>15.9%</span></li><li><span>墨菲</span><span>14.5%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:17px;height:17px"><i>阿拉克涅</i></span><span>20.5%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp" style="width:17px;height:17px"><i>卡斯托尔</i></span><span>19.6%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp" style="width:17px;height:17px"><i>沙耶</i></span><span>18.9%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pollux.webp" style="width:17px;height:17px"><i>波吕克斯</i></span><span>17.6%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/caecus.webp" style="width:17px;height:17px"><i>凯刻斯</i></span><span>15.9%</span></li><li><span><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp" style="width:17px;height:17px"><i>墨菲</i></span><span>14.5%</span></li></ul>
     </div>
     <div><div class="ttl">常用造物</div>
-      <ul class="rank1"><li><span>维度影像·阿拉克涅</span><span>20.5%</span></li><li><span>维度影像·卡斯托尔</span><span>19.6%</span></li><li><span>维度影像·波吕克斯</span><span>17.6%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D10.webp" style="width:16px;height:16px"><i>维度影像·阿拉克涅</i></span><span>20.5%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D11.webp" style="width:16px;height:16px"><i>维度影像·卡斯托尔</i></span><span>19.6%</span></li><li><span><img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_Unique_D14.webp" style="width:16px;height:16px"><i>维度影像·波吕克斯</i></span><span>17.6%</span></li></ul>
       <div class="ttl" style="margin-top:6px">常用钥令</div>
-      <ul class="rank1"><li><span>溺亡的纯真</span><span>10.7%</span></li><li><span>鼠鼠的智慧</span><span>9.8%</span></li><li><span>泣血的圣心</span><span>8.9%</span></li></ul>
+      <ul class="rank1"><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_51.webp" style="width:17px;height:17px"><i>溺亡的纯真</i></span><span>10.7%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_04.webp" style="width:17px;height:17px"><i>鼠鼠的智慧</i></span><span>9.8%</span></li><li><span><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_41.webp" style="width:17px;height:17px"><i>泣血的圣心</i></span><span>8.9%</span></li></ul>
     </div>
   </div></div>
-<div class="foot">口径：出场率 = 该禁区队伍中携带该唤醒体 / 造物 / 钥令的比例（同队去重）；最热门配队按「同阵容队伍数」排序，分数取该阵容最高。冠军配队为该禁区分数最高的队伍。造物榜已略去本季人人必备的「超维戒指」及其固定配件（携带率 ≥ 99%），否则五区清一色 100% 没有信息量。制图：忘忘看报。</div>
+<div class="foot">口径：出场率 = 该禁区队伍中携带该唤醒体 / 造物 / 钥令的比例（同队去重）；最热门配队按「同阵容队伍数」排序，分数取该阵容最高。冠军配队为该禁区分数最高的队伍。造物榜已略去本季人人必备的「超维戒指」及其固定配件（携带率 ≥ 99%），以及不属于配装选择的「锈蚀钥匙」，否则五区清一色 100%、没有信息量。制图：忘忘看报。</div>
 </div></body></html>

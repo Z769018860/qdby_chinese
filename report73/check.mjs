@@ -20,7 +20,7 @@ const { result: { sessionId } } = await send('Target.attachToTarget', { targetId
 const S = (m, pp) => send(m, pp, sessionId);
 await S('Page.enable'); await S('Runtime.enable');
 await S('Emulation.setDeviceMetricsOverride', { width: 1000, height: 1800, deviceScaleFactor: 1, mobile: false });
-for (const n of [1, 2, 3, 4, 5, 6]) {
+for (const n of [1, 2, 3, 4, 5, 6, 7]) {
   await S('Page.navigate', { url: 'file:///' + path.join(HERE, 'pages', `s${n}.html`).replace(/\\/g, '/') });
   await sleep(1400);
   const r = await S('Runtime.evaluate', {

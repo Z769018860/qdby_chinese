@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:6.5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.1px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -129,17 +129,18 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .legend5 i{width:11px;height:11px;display:inline-block}
 .legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
 .enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
-.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+.enlw .enlrow{grid-template-columns:20px 26px 104px 1fr 50px;gap:7px;font-size:12.5px;padding:6.65px 0;
   border-bottom:1px dotted #d6c8ac}
 .enlw .enlrow .p{font-size:12px}
 .enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
 .enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
 .enlw .enlrow .track{height:17px}
 .enlw .enlrow .pc{font-size:13px}
-.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
-  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
-.myinfo span{color:#7b6750;text-align:right}
-.myinfo b{color:#a1281b;text-align:right}
+.myinfo{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:10.5px;white-space:nowrap;
+  border-left:1px solid #c3b393;padding-left:16px}
+.myinfo span{color:#7b6750}
+.myinfo b{color:#a1281b}
+.myinfo i{font-style:normal;color:#c3b393;margin:0 3px}
 .subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
   border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
 .subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
@@ -186,6 +187,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hz .bar{background:#3d6b46}
 .hz .bar2{background:#a1281b}
 .hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.hz .dl.down{color:#3d6b46}
 .assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
 .assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .assist b{color:#a1281b;margin-right:2px}
@@ -197,156 +199,230 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .close .v{font-size:17px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900;line-height:1.35}
 .close .v b{color:#a1281b}
 .close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
-</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 5 版 / 共 6 版</div><div>熔铸快讯 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
+/* icons inside rank rows and lists */
+.ico{object-fit:cover;border-radius:2px;border:1px solid #b7a685;background:#e6dcc6;vertical-align:-2px;margin-right:4px;flex:none}
+.ico-token{background:transparent;filter:brightness(.42) contrast(1.3)}
+.ico-relic,.ico-cov{background:#f0e8d4}
+.rankrow .n{display:flex;align-items:center;gap:4px;min-width:0}
+.rankrow .n i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank1 li span:first-child{display:flex;align-items:center;gap:4px;min-width:0}
+.rank1 li span:first-child i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nmico{display:inline-flex;align-items:center;gap:4px;vertical-align:-3px}
+/* spread 7 low-cost */
+.lcband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:9px}
+.lbh{display:flex;align-items:baseline;gap:12px;padding:4px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.lbh h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:17px;color:#a1281b;font-weight:900;letter-spacing:.5px}
+.lbh em{font-style:normal;font-size:10px;color:#5f4c36}
+.lbh .rt{margin-left:auto;font-size:10px;color:#4b3a28}
+.lbh .rt b{color:#a1281b}
+.lcrow{display:grid;grid-template-columns:172px 74px 1fr 190px;gap:10px;align-items:center;
+  padding:5px 10px;border-bottom:1px dotted #d6c8ac}
+.lcrow:last-child{border-bottom:0}
+.lcpc b{font-size:16px;color:#a1281b;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.lcpc em{font-style:normal;font-size:9px;color:#8a7458}
+.lcpc span{display:block;font-size:8.5px;color:#6a5740;letter-spacing:.3px}
+.lczi{font-size:11px;font-weight:700;color:#3c2c1c}
+.lczi em{display:block;font-style:normal;font-size:9.5px;font-weight:400;color:#6a5740;margin-top:1px}
+.lcpf{font-size:10px;text-align:right;font-weight:700}
+.lcpf em{display:block;font-style:normal;font-size:9px;font-weight:400;color:#7b6750;margin-top:1px}
+.lclegend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:10px;color:#4b3a28;padding:2px 0 8px}
+</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 5 版 / 共 7 版</div><div>融灾快报 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
   <h1>忘忘看报</h1><div class="rule"></div><div class="kicker">融灾第 73 期 ·「超维戒指」· 2026 年 11 月 9 日 — 11 月 22 日 · 终核特刊</div></div>
 <h2 class="lead">▼ 与 SSS 难度里，<br><small>45.7% 的出场位已经 +12</small></h2>
 <div class="sub">统计 ▼ 与 SSS 难度的 1,331 支队伍（含通关队与额外队），共 5,324 个唤醒体出场位，按各唤醒体「+12」占比从高到低排序——在 ▼ / SSS 出场过的 <b>61</b> 个唤醒体全部列入（出场位不足 20 场的另列在末尾）。主榜里 +12 占比最高的是：<b>奥吉尔</b> 100.0%、<b>萝坦</b> 91.9%、<b>环行·拉蒙娜</b> 91.3%。</div>
 <div class="legend5">
-  <span><i style="background:#3d6b46"></i>0-2 启 · 787 位（14.8%）</span><span><i style="background:#d9c06a"></i>3-5 启 · 1,014 位（19.0%）</span><span><i style="background:#c98f4a"></i>6-8 启 · 809 位（15.2%）</span><span><i style="background:#a1281b"></i>9-11 启 · 282 位（5.3%）</span><span><i style="background:#6d1a12"></i>12+ 启 · 2,432 位（45.7%）</span>
+  <span><i style="background:#3d6b46"></i>0-2 启 · 787 个出场位（14.8%）</span><span><i style="background:#d9c06a"></i>3-5 启 · 1,014 个出场位（19.0%）</span><span><i style="background:#c98f4a"></i>6-8 启 · 809 个出场位（15.2%）</span><span><i style="background:#a1281b"></i>9-11 启 · 282 个出场位（5.3%）</span><span><i style="background:#6d1a12"></i>12+ 启 · 2,432 个出场位（45.7%）</span>
   <span class="rt">条 = 启灵构成 · 右侧数字 = +12 占比 · 小字 = 出场位，※ 为不足 20 场</span>
 </div>
 <div class="hr2"></div>
 <div class="enlw">
   <div><div class="enlrow"><span class="p">1</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier.webp" style="width:22px;height:22px"></span>
   <span class="nm">奥吉尔<em>126 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:100%;background:#6d1a12"></i></span>
   <span class="pc">100.0%</span></div><div class="enlrow"><span class="p">2</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan.webp" style="width:22px;height:22px"></span>
   <span class="nm">萝坦<em>606 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:2.145214521452145%;background:#c98f4a"></i><i style="width:5.9405940594059405%;background:#a1281b"></i><i style="width:91.91419141914191%;background:#6d1a12"></i></span>
   <span class="pc">91.9%</span></div><div class="enlrow"><span class="p">3</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ramona-timeworn.webp" style="width:22px;height:22px"></span>
   <span class="nm">环行·拉蒙娜<em>23 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:8.695652173913043%;background:#a1281b"></i><i style="width:91.30434782608695%;background:#6d1a12"></i></span>
   <span class="pc">91.3%</span></div><div class="enlrow"><span class="p">4</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/kathigu-ra.webp" style="width:22px;height:22px"></span>
   <span class="nm">凯蒂古拉<em>42 场</em></span>
   <span class="track"><i style="width:2.380952380952381%;background:#3d6b46"></i><i style="width:2.380952380952381%;background:#d9c06a"></i><i style="width:7.142857142857142%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:88.09523809523809%;background:#6d1a12"></i></span>
   <span class="pc">88.1%</span></div><div class="enlrow"><span class="p">5</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll.webp" style="width:22px;height:22px"></span>
   <span class="nm">朵尔<em>108 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:1.8518518518518516%;background:#d9c06a"></i><i style="width:2.7777777777777777%;background:#c98f4a"></i><i style="width:8.333333333333332%;background:#a1281b"></i><i style="width:87.03703703703704%;background:#6d1a12"></i></span>
   <span class="pc">87.0%</span></div><div class="enlrow"><span class="p">6</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp" style="width:22px;height:22px"></span>
   <span class="nm">戈利亚<em>66 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:3.0303030303030303%;background:#d9c06a"></i><i style="width:6.0606060606060606%;background:#c98f4a"></i><i style="width:6.0606060606060606%;background:#a1281b"></i><i style="width:84.84848484848484%;background:#6d1a12"></i></span>
   <span class="pc">84.8%</span></div><div class="enlrow"><span class="p">7</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/aurita.webp" style="width:22px;height:22px"></span>
   <span class="nm">奥瑞塔<em>74 场</em></span>
   <span class="track"><i style="width:1.3513513513513513%;background:#3d6b46"></i><i style="width:5.405405405405405%;background:#d9c06a"></i><i style="width:10.81081081081081%;background:#c98f4a"></i><i style="width:4.054054054054054%;background:#a1281b"></i><i style="width:78.37837837837837%;background:#6d1a12"></i></span>
   <span class="pc">78.4%</span></div><div class="enlrow"><span class="p">8</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:22px;height:22px"></span>
   <span class="nm">茉夏<em>291 场</em></span>
   <span class="track"><i style="width:1.3745704467353952%;background:#3d6b46"></i><i style="width:6.872852233676976%;background:#d9c06a"></i><i style="width:11.34020618556701%;background:#c98f4a"></i><i style="width:2.7491408934707904%;background:#a1281b"></i><i style="width:77.66323024054984%;background:#6d1a12"></i></span>
   <span class="pc">77.7%</span></div><div class="enlrow"><span class="p">9</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/winkle.webp" style="width:22px;height:22px"></span>
   <span class="nm">温柯尔<em>22 场</em></span>
   <span class="track"><i style="width:9.090909090909092%;background:#3d6b46"></i><i style="width:4.545454545454546%;background:#d9c06a"></i><i style="width:9.090909090909092%;background:#c98f4a"></i><i style="width:4.545454545454546%;background:#a1281b"></i><i style="width:72.72727272727273%;background:#6d1a12"></i></span>
   <span class="pc">72.7%</span></div><div class="enlrow"><span class="p">10</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pollux.webp" style="width:22px;height:22px"></span>
   <span class="nm">波吕克斯<em>32 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:3.125%;background:#d9c06a"></i><i style="width:18.75%;background:#c98f4a"></i><i style="width:6.25%;background:#a1281b"></i><i style="width:71.875%;background:#6d1a12"></i></span>
   <span class="pc">71.9%</span></div><div class="enlrow"><span class="p">11</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ramona.webp" style="width:22px;height:22px"></span>
   <span class="nm">拉蒙娜<em>109 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0.9174311926605505%;background:#d9c06a"></i><i style="width:3.669724770642202%;background:#c98f4a"></i><i style="width:23.853211009174313%;background:#a1281b"></i><i style="width:71.55963302752293%;background:#6d1a12"></i></span>
   <span class="pc">71.6%</span></div><div class="enlrow"><span class="p">12</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp" style="width:22px;height:22px"></span>
   <span class="nm">诞妄·墨菲<em>52 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:23.076923076923077%;background:#c98f4a"></i><i style="width:5.769230769230769%;background:#a1281b"></i><i style="width:71.15384615384616%;background:#6d1a12"></i></span>
   <span class="pc">71.2%</span></div><div class="enlrow"><span class="p">13</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot-catena.webp" style="width:22px;height:22px"></span>
   <span class="nm">血链·希洛<em>28 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:14.285714285714285%;background:#d9c06a"></i><i style="width:17.857142857142858%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:67.85714285714286%;background:#6d1a12"></i></span>
   <span class="pc">67.9%</span></div><div class="enlrow"><span class="p">14</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/celeste.webp" style="width:22px;height:22px"></span>
   <span class="nm">希莱斯特<em>40 场</em></span>
   <span class="track"><i style="width:2.5%;background:#3d6b46"></i><i style="width:7.5%;background:#d9c06a"></i><i style="width:20%;background:#c98f4a"></i><i style="width:5%;background:#a1281b"></i><i style="width:65%;background:#6d1a12"></i></span>
   <span class="pc">65.0%</span></div><div class="enlrow"><span class="p">15</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/nautila.webp" style="width:22px;height:22px"></span>
   <span class="nm">诺缔拉<em>95 场</em></span>
   <span class="track"><i style="width:4.2105263157894735%;background:#3d6b46"></i><i style="width:10.526315789473683%;background:#d9c06a"></i><i style="width:9.473684210526317%;background:#c98f4a"></i><i style="width:11.578947368421053%;background:#a1281b"></i><i style="width:64.21052631578948%;background:#6d1a12"></i></span>
   <span class="pc">64.2%</span></div><div class="enlrow"><span class="p">16</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/karen.webp" style="width:22px;height:22px"></span>
   <span class="nm">珈伦<em>46 场</em></span>
   <span class="track"><i style="width:4.3478260869565215%;background:#3d6b46"></i><i style="width:13.043478260869565%;background:#d9c06a"></i><i style="width:10.869565217391305%;background:#c98f4a"></i><i style="width:8.695652173913043%;background:#a1281b"></i><i style="width:63.04347826086957%;background:#6d1a12"></i></span>
   <span class="pc">63.0%</span></div><div class="enlrow"><span class="p">17</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/aigis.webp" style="width:22px;height:22px"></span>
   <span class="nm">艾继丝<em>137 场</em></span>
   <span class="track"><i style="width:2.18978102189781%;background:#3d6b46"></i><i style="width:10.948905109489052%;background:#d9c06a"></i><i style="width:18.97810218978102%;background:#c98f4a"></i><i style="width:6.569343065693431%;background:#a1281b"></i><i style="width:61.31386861313869%;background:#6d1a12"></i></span>
   <span class="pc">61.3%</span></div><div class="enlrow"><span class="p">18</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp" style="width:22px;height:22px"></span>
   <span class="nm">卡斯托尔<em>41 场</em></span>
   <span class="track"><i style="width:2.4390243902439024%;background:#3d6b46"></i><i style="width:12.195121951219512%;background:#d9c06a"></i><i style="width:26.82926829268293%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:58.536585365853654%;background:#6d1a12"></i></span>
   <span class="pc">58.5%</span></div><div class="enlrow"><span class="p">19</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot.webp" style="width:22px;height:22px"></span>
   <span class="nm">希洛<em>52 场</em></span>
   <span class="track"><i style="width:23.076923076923077%;background:#3d6b46"></i><i style="width:5.769230769230769%;background:#d9c06a"></i><i style="width:13.461538461538462%;background:#c98f4a"></i><i style="width:3.8461538461538463%;background:#a1281b"></i><i style="width:53.84615384615385%;background:#6d1a12"></i></span>
   <span class="pc">53.8%</span></div><div class="enlrow"><span class="p">20</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/casiah.webp" style="width:22px;height:22px"></span>
   <span class="nm">卡茜亚<em>62 场</em></span>
   <span class="track"><i style="width:4.838709677419355%;background:#3d6b46"></i><i style="width:19.35483870967742%;background:#d9c06a"></i><i style="width:16.129032258064516%;background:#c98f4a"></i><i style="width:6.451612903225806%;background:#a1281b"></i><i style="width:53.2258064516129%;background:#6d1a12"></i></span>
   <span class="pc">53.2%</span></div><div class="enlrow"><span class="p">21</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/faint.webp" style="width:22px;height:22px"></span>
   <span class="nm">菲茵特<em>177 场</em></span>
   <span class="track"><i style="width:12.994350282485875%;background:#3d6b46"></i><i style="width:11.864406779661017%;background:#d9c06a"></i><i style="width:12.994350282485875%;background:#c98f4a"></i><i style="width:11.299435028248588%;background:#a1281b"></i><i style="width:50.847457627118644%;background:#6d1a12"></i></span>
   <span class="pc">50.8%</span></div><div class="enlrow"><span class="p">22</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp" style="width:22px;height:22px"></span>
   <span class="nm">负誓·奥吉尔<em>45 场</em></span>
   <span class="track"><i style="width:42.22222222222222%;background:#3d6b46"></i><i style="width:8.88888888888889%;background:#d9c06a"></i><i style="width:2.2222222222222223%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:46.666666666666664%;background:#6d1a12"></i></span>
   <span class="pc">46.7%</span></div><div class="enlrow"><span class="p">23</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/caraboo.webp" style="width:22px;height:22px"></span>
   <span class="nm">卡拉布<em>37 场</em></span>
   <span class="track"><i style="width:5.405405405405405%;background:#3d6b46"></i><i style="width:32.432432432432435%;background:#d9c06a"></i><i style="width:16.216216216216218%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:45.94594594594595%;background:#6d1a12"></i></span>
   <span class="pc">45.9%</span></div><div class="enlrow"><span class="p">24</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/alva.webp" style="width:22px;height:22px"></span>
   <span class="nm">艾尔瓦<em>69 场</em></span>
   <span class="track"><i style="width:13.043478260869565%;background:#3d6b46"></i><i style="width:18.84057971014493%;background:#d9c06a"></i><i style="width:11.594202898550725%;background:#c98f4a"></i><i style="width:11.594202898550725%;background:#a1281b"></i><i style="width:44.927536231884055%;background:#6d1a12"></i></span>
   <span class="pc">44.9%</span></div></div>
   <div><div class="enlrow"><span class="p">25</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vortice.webp" style="width:22px;height:22px"></span>
   <span class="nm">莫丝<em>53 场</em></span>
   <span class="track"><i style="width:5.660377358490567%;background:#3d6b46"></i><i style="width:11.320754716981133%;background:#d9c06a"></i><i style="width:32.075471698113205%;background:#c98f4a"></i><i style="width:7.547169811320755%;background:#a1281b"></i><i style="width:43.39622641509434%;background:#6d1a12"></i></span>
   <span class="pc">43.4%</span></div><div class="enlrow"><span class="p">26</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp" style="width:22px;height:22px"></span>
   <span class="nm">克莱门汀<em>71 场</em></span>
   <span class="track"><i style="width:4.225352112676056%;background:#3d6b46"></i><i style="width:35.2112676056338%;background:#d9c06a"></i><i style="width:18.30985915492958%;background:#c98f4a"></i><i style="width:1.4084507042253522%;background:#a1281b"></i><i style="width:40.845070422535215%;background:#6d1a12"></i></span>
   <span class="pc">40.8%</span></div><div class="enlrow"><span class="p">27</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pickman.webp" style="width:22px;height:22px"></span>
   <span class="nm">皮克曼<em>23 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:13.043478260869565%;background:#d9c06a"></i><i style="width:39.130434782608695%;background:#c98f4a"></i><i style="width:8.695652173913043%;background:#a1281b"></i><i style="width:39.130434782608695%;background:#6d1a12"></i></span>
   <span class="pc">39.1%</span></div><div class="enlrow"><span class="p">28</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pontos.webp" style="width:22px;height:22px"></span>
   <span class="nm">庞托斯<em>29 场</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:34.48275862068966%;background:#d9c06a"></i><i style="width:24.137931034482758%;background:#c98f4a"></i><i style="width:3.4482758620689653%;background:#a1281b"></i><i style="width:37.93103448275862%;background:#6d1a12"></i></span>
   <span class="pc">37.9%</span></div><div class="enlrow"><span class="p">29</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pandia.webp" style="width:22px;height:22px"></span>
   <span class="nm">潘狄娅<em>38 场</em></span>
   <span class="track"><i style="width:23.684210526315788%;background:#3d6b46"></i><i style="width:23.684210526315788%;background:#d9c06a"></i><i style="width:10.526315789473683%;background:#c98f4a"></i><i style="width:5.263157894736842%;background:#a1281b"></i><i style="width:36.84210526315789%;background:#6d1a12"></i></span>
   <span class="pc">36.8%</span></div><div class="enlrow"><span class="p">30</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan-cetarchon.webp" style="width:22px;height:22px"></span>
   <span class="nm">蚀灭·萝坦<em>184 场</em></span>
   <span class="track"><i style="width:11.956521739130435%;background:#3d6b46"></i><i style="width:29.891304347826086%;background:#d9c06a"></i><i style="width:20.652173913043477%;background:#c98f4a"></i><i style="width:1.0869565217391304%;background:#a1281b"></i><i style="width:36.41304347826087%;background:#6d1a12"></i></span>
   <span class="pc">36.4%</span></div><div class="enlrow"><span class="p">31</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp" style="width:22px;height:22px"></span>
   <span class="nm">沙耶<em>156 场</em></span>
   <span class="track"><i style="width:5.769230769230769%;background:#3d6b46"></i><i style="width:40.38461538461539%;background:#d9c06a"></i><i style="width:19.230769230769234%;background:#c98f4a"></i><i style="width:0.641025641025641%;background:#a1281b"></i><i style="width:33.97435897435898%;background:#6d1a12"></i></span>
   <span class="pc">34.0%</span></div><div class="enlrow"><span class="p">32</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp" style="width:22px;height:22px"></span>
   <span class="nm">弥利亚姆<em>49 场</em></span>
   <span class="track"><i style="width:16.3265306122449%;background:#3d6b46"></i><i style="width:24.489795918367346%;background:#d9c06a"></i><i style="width:16.3265306122449%;background:#c98f4a"></i><i style="width:10.204081632653061%;background:#a1281b"></i><i style="width:32.6530612244898%;background:#6d1a12"></i></span>
   <span class="pc">32.7%</span></div><div class="enlrow"><span class="p">33</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp" style="width:22px;height:22px"></span>
   <span class="nm">泰旖丝<em>70 场</em></span>
   <span class="track"><i style="width:14.285714285714285%;background:#3d6b46"></i><i style="width:34.285714285714285%;background:#d9c06a"></i><i style="width:14.285714285714285%;background:#c98f4a"></i><i style="width:7.142857142857142%;background:#a1281b"></i><i style="width:30%;background:#6d1a12"></i></span>
   <span class="pc">30.0%</span></div><div class="enlrow"><span class="p">34</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/corposant.webp" style="width:22px;height:22px"></span>
   <span class="nm">克珀珊特<em>45 场</em></span>
   <span class="track"><i style="width:8.88888888888889%;background:#3d6b46"></i><i style="width:42.22222222222222%;background:#d9c06a"></i><i style="width:22.22222222222222%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:26.666666666666668%;background:#6d1a12"></i></span>
   <span class="pc">26.7%</span></div><div class="enlrow"><span class="p">35</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:22px;height:22px"></span>
   <span class="nm">阿拉克涅<em>229 场</em></span>
   <span class="track"><i style="width:5.240174672489083%;background:#3d6b46"></i><i style="width:51.96506550218341%;background:#d9c06a"></i><i style="width:14.41048034934498%;background:#c98f4a"></i><i style="width:3.056768558951965%;background:#a1281b"></i><i style="width:25.327510917030565%;background:#6d1a12"></i></span>
   <span class="pc">25.3%</span></div><div class="enlrow"><span class="p">36</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp" style="width:22px;height:22px"></span>
   <span class="nm">图鲁<em>47 场</em></span>
   <span class="track"><i style="width:23.404255319148938%;background:#3d6b46"></i><i style="width:23.404255319148938%;background:#d9c06a"></i><i style="width:17.02127659574468%;background:#c98f4a"></i><i style="width:14.893617021276595%;background:#a1281b"></i><i style="width:21.27659574468085%;background:#6d1a12"></i></span>
   <span class="pc">21.3%</span></div><div class="enlrow"><span class="p">37</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/salvador.webp" style="width:22px;height:22px"></span>
   <span class="nm">萨尔瓦多<em>45 场</em></span>
   <span class="track"><i style="width:17.77777777777778%;background:#3d6b46"></i><i style="width:37.77777777777778%;background:#d9c06a"></i><i style="width:17.77777777777778%;background:#c98f4a"></i><i style="width:6.666666666666667%;background:#a1281b"></i><i style="width:20%;background:#6d1a12"></i></span>
   <span class="pc">20.0%</span></div><div class="enlrow"><span class="p">38</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/xu.webp" style="width:22px;height:22px"></span>
   <span class="nm">徐<em>141 场</em></span>
   <span class="track"><i style="width:11.347517730496454%;background:#3d6b46"></i><i style="width:43.262411347517734%;background:#d9c06a"></i><i style="width:24.822695035460992%;background:#c98f4a"></i><i style="width:1.4184397163120568%;background:#a1281b"></i><i style="width:19.148936170212767%;background:#6d1a12"></i></span>
   <span class="pc">19.1%</span></div><div class="enlrow"><span class="p">39</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp" style="width:22px;height:22px"></span>
   <span class="nm">熔毁·朵尔<em>368 场</em></span>
   <span class="track"><i style="width:22.282608695652172%;background:#3d6b46"></i><i style="width:8.967391304347826%;background:#d9c06a"></i><i style="width:43.75%;background:#c98f4a"></i><i style="width:6.521739130434782%;background:#a1281b"></i><i style="width:18.478260869565215%;background:#6d1a12"></i></span>
   <span class="pc">18.5%</span></div><div class="enlrow"><span class="p">40</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/tawil.webp" style="width:22px;height:22px"></span>
   <span class="nm">塔薇<em>441 场</em></span>
   <span class="track"><i style="width:35.600907029478456%;background:#3d6b46"></i><i style="width:23.356009070294785%;background:#d9c06a"></i><i style="width:17.913832199546487%;background:#c98f4a"></i><i style="width:5.215419501133787%;background:#a1281b"></i><i style="width:17.913832199546487%;background:#6d1a12"></i></span>
   <span class="pc">17.9%</span></div><div class="enlrow"><span class="p">41</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mason.webp" style="width:22px;height:22px"></span>
   <span class="nm">"24"<em>68 场</em></span>
   <span class="track"><i style="width:22.058823529411764%;background:#3d6b46"></i><i style="width:33.82352941176471%;background:#d9c06a"></i><i style="width:16.176470588235293%;background:#c98f4a"></i><i style="width:10.294117647058822%;background:#a1281b"></i><i style="width:17.647058823529413%;background:#6d1a12"></i></span>
   <span class="pc">17.6%</span></div><div class="enlrow"><span class="p">42</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp" style="width:22px;height:22px"></span>
   <span class="nm">薇薇安<em>149 场</em></span>
   <span class="track"><i style="width:20.13422818791946%;background:#3d6b46"></i><i style="width:45.63758389261745%;background:#d9c06a"></i><i style="width:17.449664429530202%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:16.778523489932887%;background:#6d1a12"></i></span>
   <span class="pc">16.8%</span></div><div class="enlrow"><span class="p">43</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/lily.webp" style="width:22px;height:22px"></span>
   <span class="nm">莉莉<em>83 场</em></span>
   <span class="track"><i style="width:25.301204819277107%;background:#3d6b46"></i><i style="width:37.34939759036144%;background:#d9c06a"></i><i style="width:19.27710843373494%;background:#c98f4a"></i><i style="width:6.024096385542169%;background:#a1281b"></i><i style="width:12.048192771084338%;background:#6d1a12"></i></span>
   <span class="pc">12.0%</span></div><div class="enlrow"><span class="p">44</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp" style="width:22px;height:22px"></span>
   <span class="nm">墨菲<em>51 场</em></span>
   <span class="track"><i style="width:23.52941176470588%;background:#3d6b46"></i><i style="width:21.568627450980394%;background:#d9c06a"></i><i style="width:33.33333333333333%;background:#c98f4a"></i><i style="width:9.803921568627452%;background:#a1281b"></i><i style="width:11.76470588235294%;background:#6d1a12"></i></span>
   <span class="pc">11.8%</span></div><div class="enlrow"><span class="p">45</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ryker.webp" style="width:22px;height:22px"></span>
   <span class="nm">莱克<em>52 场</em></span>
   <span class="track"><i style="width:51.92307692307693%;background:#3d6b46"></i><i style="width:26.923076923076923%;background:#d9c06a"></i><i style="width:7.6923076923076925%;background:#c98f4a"></i><i style="width:5.769230769230769%;background:#a1281b"></i><i style="width:7.6923076923076925%;background:#6d1a12"></i></span>
   <span class="pc">7.7%</span></div><div class="enlrow"><span class="p">46</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp" style="width:22px;height:22px"></span>
   <span class="nm">奥尔拉<em>225 场</em></span>
   <span class="track"><i style="width:39.55555555555556%;background:#3d6b46"></i><i style="width:33.33333333333333%;background:#d9c06a"></i><i style="width:15.555555555555555%;background:#c98f4a"></i><i style="width:4.888888888888889%;background:#a1281b"></i><i style="width:6.666666666666667%;background:#6d1a12"></i></span>
   <span class="pc">6.7%</span></div><div class="enlrow"><span class="p">47</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/hameln.webp" style="width:22px;height:22px"></span>
   <span class="nm">哈姆林<em>253 场</em></span>
   <span class="track"><i style="width:56.52173913043478%;background:#3d6b46"></i><i style="width:29.64426877470356%;background:#d9c06a"></i><i style="width:6.719367588932807%;background:#c98f4a"></i><i style="width:2.766798418972332%;background:#a1281b"></i><i style="width:4.3478260869565215%;background:#6d1a12"></i></span>
   <span class="pc">4.3%</span></div></div>
@@ -354,49 +430,63 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 <div class="subh">出场位不足 20 场 <em>※ 一两个满启玩家就能把比例推满，排在后面仅供参考</em></div>
 <div class="enlw">
   <div><div class="enlrow"><span class="p">48</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/caecus.webp" style="width:22px;height:22px"></span>
   <span class="nm">凯刻斯<em>7 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:100%;background:#6d1a12"></i></span>
   <span class="pc">100.0%</span></div><div class="enlrow"><span class="p">49</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/sanga.webp" style="width:22px;height:22px"></span>
   <span class="nm">珊<em>5 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:100%;background:#6d1a12"></i></span>
   <span class="pc">100.0%</span></div><div class="enlrow"><span class="p">50</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/liz.webp" style="width:22px;height:22px"></span>
   <span class="nm">莉兹<em>3 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:100%;background:#6d1a12"></i></span>
   <span class="pc">100.0%</span></div><div class="enlrow"><span class="p">51</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/faros.webp" style="width:22px;height:22px"></span>
   <span class="nm">法洛思<em>2 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:100%;background:#6d1a12"></i></span>
   <span class="pc">100.0%</span></div><div class="enlrow"><span class="p">52</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doresain.webp" style="width:22px;height:22px"></span>
   <span class="nm">杜勒赛因<em>8 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:12.5%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:87.5%;background:#6d1a12"></i></span>
   <span class="pc">87.5%</span></div><div class="enlrow"><span class="p">53</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/erica.webp" style="width:22px;height:22px"></span>
   <span class="nm">艾瑞卡<em>13 场 ※</em></span>
   <span class="track"><i style="width:7.6923076923076925%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:7.6923076923076925%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:84.61538461538461%;background:#6d1a12"></i></span>
   <span class="pc">84.6%</span></div><div class="enlrow"><span class="p">54</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/leigh.webp" style="width:22px;height:22px"></span>
   <span class="nm">雷娅<em>6 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:16.666666666666664%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:83.33333333333334%;background:#6d1a12"></i></span>
   <span class="pc">83.3%</span></div></div>
   <div><div class="enlrow"><span class="p">55</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/nymphaea.webp" style="width:22px;height:22px"></span>
   <span class="nm">宁菲亚<em>8 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:25%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:75%;background:#6d1a12"></i></span>
   <span class="pc">75.0%</span></div><div class="enlrow"><span class="p">56</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/uvhash.webp" style="width:22px;height:22px"></span>
   <span class="nm">尤乌哈希<em>3 场 ※</em></span>
   <span class="track"><i style="width:33.33333333333333%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:66.66666666666666%;background:#6d1a12"></i></span>
   <span class="pc">66.7%</span></div><div class="enlrow"><span class="p">57</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/agrippa.webp" style="width:22px;height:22px"></span>
   <span class="nm">阿格里帕<em>4 场 ※</em></span>
   <span class="track"><i style="width:25%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:25%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:50%;background:#6d1a12"></i></span>
   <span class="pc">50.0%</span></div><div class="enlrow"><span class="p">58</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/sorel.webp" style="width:22px;height:22px"></span>
   <span class="nm">索蕾尔<em>4 场 ※</em></span>
   <span class="track"><i style="width:50%;background:#3d6b46"></i><i style="width:25%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:25%;background:#6d1a12"></i></span>
   <span class="pc">25.0%</span></div><div class="enlrow"><span class="p">59</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/wanda.webp" style="width:22px;height:22px"></span>
   <span class="nm">旺达<em>6 场 ※</em></span>
   <span class="track"><i style="width:33.33333333333333%;background:#3d6b46"></i><i style="width:16.666666666666664%;background:#d9c06a"></i><i style="width:50%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:0%;background:#6d1a12"></i></span>
   <span class="pc">0.0%</span></div><div class="enlrow"><span class="p">60</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/jenkin.webp" style="width:22px;height:22px"></span>
   <span class="nm">詹金<em>3 场 ※</em></span>
   <span class="track"><i style="width:66.66666666666666%;background:#3d6b46"></i><i style="width:33.33333333333333%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:0%;background:#6d1a12"></i></span>
   <span class="pc">0.0%</span></div><div class="enlrow"><span class="p">61</span>
+  <span class="av"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/daffodil.webp" style="width:22px;height:22px"></span>
   <span class="nm">达芙黛尔<em>2 场 ※</em></span>
   <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:50%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:50%;background:#a1281b"></i><i style="width:0%;background:#6d1a12"></i></span>
   <span class="pc">0.0%</span></div></div>
 </div>
-<div class="foot">口径：启灵 = 唤醒体的潜能等级（0-15，本版分 0-2 / 3-5 / 6-8 / 9-11 / 12+ 五段，+12 及以上为满启）；同一队伍里同一唤醒体只计一次，出场位 = 该唤醒体在 ▼ / SSS 队伍中的出场次数。<b>※ 标记的唤醒体出场位不足 20 场</b>，一两个满启玩家就能把比例推到 100%，排序看看即可。全场平均启灵 9.19，▼ 通关队 47.8% 的出场位满启、SSS 通关队 39.3%。制图：忘忘看报。</div>
+<div class="foot">口径：启灵 = 唤醒体的潜能等级（0-15，本版分 0-2 / 3-5 / 6-8 / 9-11 / 12+ 五段，+12 及以上为满启）；同一队伍里同一唤醒体只计一次，出场位 = 该唤醒体在 ▼ / SSS 队伍中的出场次数。<b>※ 标记的唤醒体出场位不足 20 场</b>，一两个满启玩家就能把比例推到 100%，排序看看即可。全场平均启灵 9.19：▼ 通关队 47.8% 的出场位满启，SSS 通关队 39.3%；按部分段看，队伍平均启灵 0-2 时平均 13 回合收工、12 以上 20.04 回合。制图：忘忘看报。</div>
 </div></body></html>

@@ -292,7 +292,7 @@ def analyse(season):
         'wheels': pack(wheel_use, names['wheel'], 8, 'wheel'),
         'covs': pack(cov_use, names['cov'], 6, 'cov'),
         'tokens': pack(token_use, names['token'], 6, 'token'),
-        'creations': pack(crea_use, names['relic'], 8, 'relic'),
+        'creations': pack(crea_use, names['relic'], 10, 'relic'),
         'assists': pack(assist_use, names['aw'], 6, 'assist'),
         'perfectChars': pack(perfect_chars, names['aw'], 6, 'perfect'),
         'teamN': team_n,
@@ -326,7 +326,9 @@ def analyse(season):
         'maxTotal': battle_brief(best(battles, '_total'), '_total'),
         'maxChar': ({'value': top_char_dmg[0], 'rank': top_char_dmg[1]['rank'], 'uid': top_char_dmg[1]['uid'],
                      'name': ranks.get(top_char_dmg[1]['uid'], {}).get('name', ''), 'wave': top_char_dmg[1]['wave'],
-                     'char': {'zh': top_char_dmg[2]['_zh'], 'en': top_char_dmg[2]['name']}} if top_char_dmg else None),
+                     'char': {'zh': top_char_dmg[2]['_zh'], 'en': top_char_dmg[2]['name']},
+                     'chars': [{'zh': names['aw'].get(str(a['tid']), ('', ''))[1], 'en': a['name']}
+                               for a in (top_char_dmg[1].get('awakers') or [])]} if top_char_dmg else None),
         'deathResist': battle_brief(best(battles, 'deathResistCount'), 'deathResistCount'),
         'counter': battle_brief(best(battles, 'maxCounterAtt'), 'maxCounterAtt'),
         'tentacle': battle_brief(best(battles, 'maxTentacleDamage'), 'maxTentacleDamage'),
@@ -403,6 +405,7 @@ def analyse(season):
     }
     # token id -> zh, for keeper-skill names in the zone champions
     res['tokenTable'] = {k: v[1] for k, v in names['token'].items()}
+    res['tokenEn'] = {k: v[0] for k, v in names['token'].items()}
     # mystery lineups: ▼ + SSS lineups that only one team brought
     grp = defaultdict(list)
     for r in teams:
@@ -542,6 +545,67 @@ def analyse(season):
                             for t in all_chars], key=lambda x: (x['n'], -x['all']))[:8],
         'leastBoth': sorted([{'zh': names['aw'].get(t, ('', ''))[1], 'en': names['aw'].get(t, ('', ''))[0], 'n': sss_down_chars.get(t, 0), 'all': char_use[t]}
                              for t in all_chars], key=lambda x: (x['n'], -x['all']))[:8],
+    }
+
+    # ---- 低配榜（第 7 版）：按玩家总分分档，取启灵总和最低的 ▼ 通关阵容
+    def pot_of(r):
+        return sum((m['potency'] or 0) for m in parse_team(r['response']['team'], names))
+
+    def row_rounds(r):
+        return ((r['response']['team'].get('recordStageData') or {}).get('stageRoundCount') or 0)
+
+    down_all = [r for r in teams if threat_of(names, r['response']['stageTid']) == '▼']
+    down_pots = sorted(pot_of(r) for r in down_all)
+    bands = []
+    for lo, hi, label in ((500, 10000, '500–525'), (475, 500, '475–500'), (450, 475, '450–475')):
+        sel = [r for r in down_all if lo <= ranks[r['uid']]['score'] < hi]
+        pots = sorted(pot_of(r) for r in sel)
+        picks, seen = [], set()
+        for r in sorted(sel, key=lambda r: (pot_of(r), -row_rounds(r))):
+            mem = parse_team(r['response']['team'], names)
+            key = '|'.join(sorted(m['tid'] for m in mem))
+            if key in seen:
+                continue
+            seen.add(key)
+            picks.append({
+                'wave': zone_of(names, r['response']['stageTid']),
+                'rounds': row_rounds(r), 'zoneScore': r['response']['score'],
+                'total': ranks[r['uid']]['score'], 'rank': r['rank'],
+                'name': ranks[r['uid']]['name'], 'potSum': pot_of(r),
+                'token': keeper_token(r),
+                'members': [{'zh': m['zh'], 'en': m['en'], 'potency': m['potency'], 'borrowed': m['borrowed']} for m in mem],
+            })
+            if len(picks) >= 4:
+                break
+        bands.append({
+            'label': label, 'lo': lo, 'hi': None if hi >= 10000 else hi,
+            'players': sum(1 for u in ranks if lo <= ranks[u]['score'] < hi),
+            'teams': len(sel),
+            'potMedian': statistics.median(pots) if pots else None,
+            'potMin': pots[0] if pots else None,
+            'picks': picks,
+        })
+    cheap_core = Counter()
+    cheap_zone = Counter()
+    cheap_n = 0
+    for r in down_all:
+        mem = parse_team(r['response']['team'], names)
+        if pot_of(r) > 25:
+            continue
+        cheap_n += 1
+        cheap_zone[zone_of(names, r['response']['stageTid'])] += 1
+        for m in mem:
+            cheap_core[m['tid']] += 1
+    res['lowcost'] = {
+        'downN': len(down_all),
+        'potMedian': statistics.median(down_pots) if down_pots else None,
+        'potMin': down_pots[0] if down_pots else None,
+        'le': {str(t): sum(1 for x in down_pots if x <= t) for t in (15, 20, 25, 30)},
+        'bands': bands,
+        'cheapN': cheap_n,
+        'cheapZone': [{'wave': w, 'n': cheap_zone.get(w, 0)} for w in range(1, 6)],
+        'core': [{'zh': names['aw'].get(t, ('', ''))[1], 'en': names['aw'].get(t, ('', ''))[0], 'n': n}
+                 for t, n in cheap_core.most_common(8)],
     }
     return res
 

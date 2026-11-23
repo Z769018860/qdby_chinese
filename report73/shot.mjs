@@ -42,7 +42,7 @@ const S = (m, p) => send(m, p, sessionId);
 await S('Page.enable'); await S('Runtime.enable');
 await S('Emulation.setDeviceMetricsOverride', { width: 1000, height: 1800, deviceScaleFactor: 2, mobile: false });
 
-for (let i = 1; i <= 6; i++) {
+for (let i = 1; i <= 7; i++) {
   await S('Page.navigate', { url: `file:///${DIR}/s${i}.html` });
   const ready = await S('Runtime.evaluate', { expression: `new Promise(r=>{const t0=Date.now();const check=()=>{const im=[...document.images];const ok=document.readyState==='complete'&&im.length>0&&im.every(i=>i.complete&&i.naturalWidth>0);if(ok)return r('ok:'+im.length);if(Date.now()-t0>15000)return r('timeout:'+im.filter(i=>!i.complete||!i.naturalWidth).length+'/'+im.length);setTimeout(check,100)};check()})`, awaitPromise: true, returnByValue: true });
   console.log('  ready', ready.result?.result?.value);
