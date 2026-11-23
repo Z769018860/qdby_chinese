@@ -59,10 +59,10 @@ h2.lead small{display:block;font-size:44px}
 .h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
   padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
 .h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
-.bars{display:flex;align-items:flex-end;gap:2.5px;height:272px;padding-top:8px}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
 .bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
-.bars .b i{position:absolute;left:0;right:0;bottom:-14px;font-style:normal;font-size:7.5px;color:#6f5c45;
-  text-align:center;transform:rotate(-90deg);transform-origin:center}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
 .bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
@@ -78,7 +78,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -117,7 +117,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .rank1 li span:last-child{color:#a1281b;font-weight:700}
 /* spread 3/4 */
 .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.rec{padding:9px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
 .rec:nth-child(3n){border-right:0}
 .rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
 .rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
@@ -127,7 +127,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -148,6 +148,25 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .enl1 .enlrow .track{height:12.5px}
 .enl1 .enlrow .pc{font-size:11.5px}
 .enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
+  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
+.myinfo span{color:#7b6750;text-align:right}
+.myinfo b{color:#a1281b;text-align:right}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
 .ovw{margin-bottom:10px}
 .ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
 .ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
@@ -164,7 +183,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
 .zavg .v{text-align:right;font-weight:700;font-size:11.5px}
 .zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
-.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:5.5px 0}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
 .thcmp{margin-top:4px}
 .thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
 .thcmp .bar{display:flex;height:15px;background:#e9dfc8}
@@ -181,11 +200,20 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .cmp .c b s{text-decoration:none;color:#a1281b}
 .cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
 .up{color:#a1281b}.down{color:#3d6b46}
-.hz{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:6px;font-size:11px;padding:3.5px 0;
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
   border-bottom:1px solid #ddd0b6}
-.hz .track{height:13px;display:flex;align-items:center;gap:2px}
-.hz .bar{height:11px;background:#3d6b46}
-.hz .bar2{height:11px;background:#a1281b}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
 .close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
 .close>div{padding:8px 12px;border-right:1px solid #c3b393}
 .close>div:last-child{border-right:0}
@@ -225,19 +253,20 @@ const zrow = z => `<div class="zavg zv2"><span>${z.name}</span>
   <span class="v">${z.downFull} / ${z.down}<em> · ${pct(z.downFull / z.down * 100)}%</em></span></div>`;
 
 const s1 = `<div class="page">${head(1, 6, stamp)}${mast(kicker)}
-<h2 class="lead">8 人登顶 525 满分，<br><small>611 位玩家站上 450 分线</small></h2>
-<div class="sub">本刊统计终极 Top 2000（上榜门槛 <b>385</b> 分）：<b>36</b> 人 ≥500 分，<b>611</b> 人 ≥450 分，满分 525 仅 <b>8</b> 人，占统计样本的 0.4%。</div>
+<h2 class="lead">${cur.ge['525']} 人登顶 525 满分，<br><small>${cur.ge['450']} 位玩家站上 450 分线</small></h2>
+<div class="sub">本刊统计终极 Top 2000（上榜门槛 <b>${cur.threshold}</b> 分）：<b>${cur.ge['500']}</b> 人 ≥500 分，<b>${cur.ge['450']}</b> 人 ≥450 分，满分 525 仅 <b>${cur.ge['525']}</b> 人，占统计样本的 ${pct(cur.ge['525'] / cur.count * 100)}%。</div>
 <div class="grid-stats">
-  <div class="stat"><span>上榜门槛 · 第 2000 名</span><b>385</b><i>分</i></div>
+  <div class="stat"><span>上榜门槛 · 第 2000 名</span><b>${cur.threshold}</b><i>分</i></div>
   <div class="stat"><span>统计样本 · Top</span><b>2,000</b></div>
-  <div class="stat hot"><span>525 满分</span><b>8</b></div>
-  <div class="stat"><span>≥ 500 分</span><b>36</b></div>
-  <div class="stat"><span>≥ 450 分</span><b>611</b></div>
-  <div class="stat"><span>平均 / 中位</span><b>422 / 415</b></div>
+  <div class="stat hot"><span>525 满分</span><b>${cur.ge['525']}</b></div>
+  <div class="stat"><span>≥ 500 分</span><b>${cur.ge['500']}</b></div>
+  <div class="stat"><span>≥ 450 分</span><b>${cur.ge['450']}</b></div>
+  <div class="stat"><span>平均 / 中位</span><b>${Math.round(cur.mean)} / ${Math.round(cur.median)}</b></div>
 </div>
 <div class="cols3" style="margin-top:16px">
   <div class="col"><div class="h">分数分布 <em>每 10 分一档，共 2,000 人</em></div>
-    <div class="bars">${buckets.map(([hi, n]) => `<div class="b" style="height:${Math.max(1, n / maxBucket * 150)}px"><em>${n}</em><i>${hi}</i></div>`).join('')}</div>
+    <div class="bars">${buckets.map(([hi, n]) => `<div class="b" style="height:${Math.max(1, n / maxBucket * 368)}px"><em>${n}</em></div>`).join('')}</div>
+    <div class="axis">${buckets.map(([hi], i) => `<span>${i % 2 === 0 ? hi : ''}</span>`).join('')}</div>
   </div>
   <div class="col"><div class="h">分数阶梯 <em>累计人数</em></div>
     <table class="ladder">${ladderSteps.map(t => {
@@ -265,11 +294,12 @@ const s1 = `<div class="page">${head(1, 6, stamp)}${mast(kicker)}
 }).join('')}</div>
 <div class="two" style="margin-top:16px">
   <div><div class="h">头版观察</div><ul class="obs">
-    <li>满分 525 只有 <b>8</b> 人，五个禁区全取 ▼ 通关（95+100+105+110+115），是本期唯一的完美解法。</li>
-    <li><b>450 分</b>是本期最明显的一道分水岭：611 人站上，占总样本 30.6%；从 460 到 450 一口气挤进 337 人。</li>
+    <li>满分 525 只有 <b>${cur.ge['525']}</b> 人，五个禁区全取 ▼ 通关（95+100+105+110+115），是本期唯一的完美解法。</li>
+    <li><b>450 分</b>是本期最明显的一道分水岭：${cur.ge['450']} 人站上，占总样本 ${pct(cur.ge['450'] / cur.count * 100)}%；光 450 分这一档就压着 <b>${n0(cur.dist['450'] || 0)}</b> 人。</li>
     <li>第三禁区是全局的「送分区」：<b>667</b> 人拿下 ▼，通关率 33.5%，是第二禁区（48 人）的 13.9 倍。</li>
     <li>第四、第五禁区的 ▼ 最难：各只有 <b>36</b> 人，通关率 1.8%，且最快也要 11 / 16 回合。</li>
     <li>整体节奏明显变快：▼ + SSS 战斗平均 <b>${cur.avgRounds.hard}</b> 回合就结束，比上期少 ${(prev.avgRounds.hard - cur.avgRounds.hard).toFixed(2)} 回合；最快的 ▼ 通关只要 <b>4</b> 回合（第一禁区）。</li>
+    <li>分数线整体下移、顶端反而更集中：平均 <b>${pct(cur.mean)}</b>（上期 ${pct(prev.mean)}）、中位 <b>${Math.round(cur.median)}</b>（上期 ${Math.round(prev.median)}），≥450 分人数从 ${prev.ge['450']} 掉到 ${cur.ge['450']}；可 525 满分反从 ${prev.ge['525']} 人增到 ${cur.ge['525']} 人。</li>
   </ul></div>
   <div><div class="h">读报指南</div><div class="guide">
     <div><b>第 2 版</b> · 各禁区的配队榜——冠军配队、最热门配队、最快通关、出场与常用造物。</div>
@@ -293,10 +323,12 @@ const s1 = `<div class="page">${head(1, 6, stamp)}${mast(kicker)}
 </div>`;
 
 // ---------------------------------------------------------------- spread 2
-function memChips(members, n = 4) {
+function memChips(members, n = 4, size = 0) {
+  const st = size ? ` style="width:${size}px"` : '';
+  const im = size ? ` style="width:${size}px;height:${size}px"` : '';
   return `<div class="mem">${members.slice(0, n).map(m => {
     const img = imgPath(awImg.get(m.en));
-    return `<div class="m">${img ? `<img src="file:///${img}">` : '<div style="width:36px;height:36px;background:#ddd"></div>'}
+    return `<div class="m"${st}>${img ? `<img${im} src="file:///${img}">` : `<div style="width:${size || 36}px;height:${size || 36}px;background:#ddd"></div>`}
       <small>${esc(m.zh)}</small><u>${m.potency != null ? '+' + m.potency : ''}</u></div>`;
   }).join('')}</div>`;
 }
@@ -346,7 +378,7 @@ const recCell = (k, label, r, extra = '') => `<div class="rec"><div class="k">${
   ${extra}</div>`;
 
 const s3 = `<div class="page">${head(3, 6, stamp)}${mast(kicker)}
-<h2 class="lead">4,676 万单回合伤害，<br><small>9 次死扛：本期的极限数据</small></h2>
+<h2 class="lead">${n0(Math.round(rec.maxHit.value / 1e4))} 万单回合伤害，<br><small>${rec.deathResist.value} 次死扛：本期的极限数据</small></h2>
 <div class="sub">从 ${n0(rec.totalBattles)} 场战斗记录里按字段排出「全场最高」的九项，并统计 Top 2000 的唤醒体、命轮、密契、造物与钥令出场率。</div>
 <div class="recs">
   <div class="rec"><div class="k">单回合最高伤害</div><div class="v">${n0(rec.maxHit.value)}</div><div class="d">第 ${rec.maxHit.rank} 名 · ${esc(rec.maxHit.name)} · 第${['一', '二', '三', '四', '五'][rec.maxHit.wave - 1]}禁区</div>${memChips(rec.maxHit.chars.map(c => ({ zh: c.zh, en: c.en })), 4)}</div>
@@ -382,7 +414,7 @@ ${cur.fastest.map(f => `<tr><td>第${['一', '二', '三', '四', '五'][f.wave 
   <div><div class="h">钥令 Top 6 <em>队伍携带率</em></div>
     ${cur.top.tokens.map((c, i) => `<div class="rankrow"><span class="p">${i + 1}</span><span class="n">${esc(c.zh)}</span><span class="track"><b style="width:${c.rate / cur.top.tokens[0].rate * 100}%"></b></span><span class="v">${pct(c.rate)}%</span></div>`).join('')}
     <div class="h" style="margin-top:8px">借用助战 Top 6 <em>被借次数</em></div>
-    <div class="mini">${cur.top.assists.map((a, i) => `${i + 1}. ${esc(a.zh)} ${a.n}`).join('　')}</div>
+    <div class="assist">${cur.top.assists.slice(0, 6).map((a, i) => `<span><b>${i + 1}</b> ${esc(a.zh)} <em>${n0(a.n)}</em></span>`).join('')}</div>
   </div>
 </div>
 <div class="foot">口径：「单回合最高伤害」「死扛」「反击」「触手」「力量」「毒伤」「生命」取 ${n0(rec.totalBattles)} 场战斗记录里的单场最大值，玩家名后标注其当期名次；出场率按队伍去重统计（2000 名玩家 × 五个禁区共 ${n0(cur.top.teamN)} 支队伍）。制图：忘忘看报。</div>
@@ -391,25 +423,29 @@ ${cur.fastest.map(f => `<tr><td>第${['一', '二', '三', '四', '五'][f.wave 
 // ---------------------------------------------------------------- spread 4
 const nch = cur.niche, mys = cur.mystery, dA = cur.deathAvg;
 const s4 = `<div class="page">${head(4, 6, stamp)}${mast(kicker)}
-<h2 class="lead">狂癫难度里，${nch.zeroDown.length} 位唤醒体<br><small>一次都没出场</small></h2>
-<div class="sub">本版统计「狂癫」（▼）与 SSS 难度的队伍（含通关队与额外队）：共 ${n0(cur.zones.reduce((a, z) => a + z.down, 0))} 队 ▼、${n0(cur.zones.reduce((a, z) => a + z.threats.SSS, 0))} 队 SSS 通关队，${cur.top.chars.length ? cur.enlight.length : 0} 个出场过的唤醒体里只有 ${cur.enlight.length} 个在 ▼ 与 SSS 里留下记录。</div>
+<h2 class="lead">癫狂难度里，${nch.zeroDown.length} 位唤醒体<br><small>一次都没出场</small></h2>
+<div class="sub">本版统计「癫狂」（▼）与 SSS 难度的队伍（含通关队与额外队）：共 <b>${n0(cur.zones.reduce((a, z) => a + z.down, 0))}</b> 队 ▼、<b>${n0(cur.zones.reduce((a, z) => a + z.threats.SSS, 0))}</b> 队 SSS 通关队。全部 ${nch.allChars} 个出场过的唤醒体里，只有 ${nch.hardChars} 个在 ▼ / SSS 露过面，其中又有 <b>${nch.zeroDown.length}</b> 个一次 ▼ 都没打。</div>
 <div class="hr2"></div>
-<div class="h">狂癫（▼）零出场 <em>本期有出场但 ▼ 队里一次未出现</em></div>
+<div class="h">癫狂（▼）零出场 <em>本期有出场但 ▼ 队里一次未出现</em></div>
 <div style="display:flex;align-items:center;gap:16px;margin:6px 0 12px">
   <div class="mem">${nch.zeroDown.map(c => { const img = imgPath(awImg.get(c.en)); return `<div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///${img}"><small>${esc(c.zh)}</small></div>`; }).join('') || '<span class="mini">无</span>'}</div>
   <div class="mini" style="flex:1;border-left:1px solid #c3b393;padding-left:14px">
-    ${nch.leastDown.filter(c => c.n === 0).map(c => `<b>${esc(c.zh)}</b>：全部 ${c.all} 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打狂癫。`).join('<br>')}
+    ${nch.leastDown.filter(c => c.n === 0).map(c => `<b>${esc(c.zh)}</b>：全部 ${c.all} 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打癫狂。`).join('<br>')}
     ${nch.zeroBoth.length ? `<br><b>${nch.zeroBoth.map(c => esc(c.zh)).join('、')}</b>更极端：▼ 与 SSS 两档加起来一次都没出现，只出现在 SS 及以下。` : ''}
   </div>
 </div>
-<div class="h">狂癫（▼）出场最少 Top 8 <em>括号内为全部禁区的出场队伍数</em></div>
+<div class="h">癫狂（▼）出场最少 Top 8 <em>括号内为全部禁区的出场队伍数</em></div>
 <table class="ftbl" style="margin-bottom:12px"><thead><tr><th>唤醒体</th><th>▼ 出场队伍</th><th>全部出场</th><th>▼ 占比</th></tr></thead><tbody>
 ${nch.leastDown.map(c => `<tr><td>${esc(c.zh)}</td><td>${c.n}</td><td>${c.all}</td><td>${pct(c.all ? c.n / c.all * 100 : 0)}%</td></tr>`).join('')}
 </tbody></table>
 <div class="h">神秘配队 Top 5 <em>▼ + SSS 难度里只有一队使用的阵容</em></div>
-${cur.mysteryLineups.map((m, i) => `<div class="zblock" style="margin-bottom:6px"><div class="zt"><h3 style="font-size:15px">${i + 1}. ${esc(m.members[0].zh)} 队</h3><span>第 ${m.rank} 名 · ${m.score} 分 · 全服仅 ${m.count} 队</span></div><div class="zbody" style="grid-template-columns:1fr"><div style="display:flex;align-items:center;gap:22px">
-  ${memChips(m.members)}
-  <div class="mini" style="text-align:right;white-space:nowrap">${WAVE_NAME[m.wave] || ''} · ${m.threat} 通关<br>钥令：<b>${esc(tokenName(m.token) || '—')}</b></div>
+${cur.mysteryLineups.map((m, i) => `<div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">${i + 1}. ${esc(m.members[0].zh)} 队</h3><span>第 ${m.rank} 名 · ${m.score} 分 · 全服仅 ${m.count} 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:6px 10px"><div style="display:flex;align-items:center;gap:18px">
+  ${memChips(m.members, 4, 46)}
+  <div class="myinfo">
+    <span>禁区</span><b>${WAVE_NAME[m.wave] || '—'}</b>
+    <span>难度</span><b>${m.threat} 通关</b>
+    <span>钥令</span><b>${esc(tokenName(m.token) || '—')}</b>
+  </div>
 </div></div></div>`).join('')}
 <div class="hr2" style="margin-top:8px"></div>
 <div class="h">神秘数据 <em>▼ + SSS 通关战斗之最</em></div>
@@ -435,45 +471,40 @@ ${cur.mysteryLineups.map((m, i) => `<div class="zblock" style="margin-bottom:6px
 </div>`;
 
 // ---------------------------------------------------------------- spread 5
-const enl = cur.enlight;
+const enl = cur.enlight;                 // every awakener seen in a ▼/SSS team
 const eS = cur.enlightSummary;
 const enlColor = { '0-2': '#3d6b46', '3-5': '#d9c06a', '6-8': '#c98f4a', '9-11': '#a1281b', '12+': '#6d1a12' };
 const BK = ['0-2', '3-5', '6-8', '9-11', '12+'];
+const big5 = enl.filter(r => !r.small);      // 20 场以上：主榜
+const small5 = enl.filter(r => r.small);     // 不足 20 场：附在主榜之后
+const halfBig = Math.ceil(big5.length / 2);
+const halfSmall = Math.ceil(small5.length / 2);
+const top3big = enl.filter(r => r.n >= 20).slice(0, 3);
+const hardTeams = cur.zones.reduce((a, z) => a + z.down, 0);
+const sssTeams = cur.zones.reduce((a, z) => a + z.threats.SSS, 0);
+const row5 = (r, i) => `<div class="enlrow"><span class="p">${i + 1}</span>
+  <span class="nm">${esc(r.zh)}<em>${r.n} 场${r.small ? ' ※' : ''}</em></span>
+  <span class="track">${BK.map(k => `<i style="width:${r.dist[k] / r.n * 100}%;background:${enlColor[k]}"></i>`).join('')}</span>
+  <span class="pc">${pct(r.p12)}%</span></div>`;
 
 const s5 = `<div class="page">${head(5, 6, stamp)}${mast(kicker)}
-<h2 class="lead">▼ 与 SSS 难度里，<br><small>${Math.round(cur.enlight12)}% 的唤醒体已经 +12</small></h2>
-<div class="sub">统计 ▼ + SSS 难度的通关队伍（含额外队），共 ${n0(cur.enlightTotal)} 个唤醒体出场位，按启灵档位分段统计；下表按「+12 启灵」占比降序排列，样本低于 20 场的已略去（共 ${enl.length} 个唤醒体入选）。</div>
+<h2 class="lead">▼ 与 SSS 难度里，<br><small>${pct(cur.enlight12)}% 的出场位已经 +12</small></h2>
+<div class="sub">统计 ▼ 与 SSS 难度的 ${n0(hardTeams + sssTeams)} 支队伍（含通关队与额外队），共 ${n0(eS.n)} 个唤醒体出场位，按各唤醒体「+12」占比从高到低排序——在 ▼ / SSS 出场过的 <b>${enl.length}</b> 个唤醒体全部列入（出场位不足 20 场的另列在末尾）。主榜里 +12 占比最高的是：${top3big.map(r => `<b>${esc(r.zh)}</b> ${pct(r.p12)}%`).join('、')}。</div>
+<div class="legend5">
+  ${BK.map(k => `<span><i style="background:${enlColor[k]}"></i>${k} 启 · ${n0(eS.dist[k])} 位（${pct(eS.dist[k] / eS.n * 100)}%）</span>`).join('')}
+  <span class="rt">条 = 启灵构成 · 右侧数字 = +12 占比 · 小字 = 出场位，※ 为不足 20 场</span>
+</div>
 <div class="hr2"></div>
-<div class="h">全样本启灵分布 <em>▼ + SSS 通关队 · ${n0(eS.n)} 个出场位 · 平均启灵 ${eS.avgPotency}</em></div>
-<div class="ovw">
-  <div class="ovwbar">${BK.map(k => `<i style="width:${eS.dist[k] / eS.n * 100}%;background:${enlColor[k]}">${eS.dist[k] / eS.n >= 0.06 ? pct(eS.dist[k] / eS.n * 100) + '%' : ''}</i>`).join('')}</div>
-  <div class="ovwnums">${BK.map(k => `<div><b>${n0(eS.dist[k])}</b><span>${k} 启 · ${pct(eS.dist[k] / eS.n * 100)}%</span></div>`).join('')}</div>
+<div class="enlw">
+  <div>${big5.slice(0, halfBig).map((r, i) => row5(r, i)).join('')}</div>
+  <div>${big5.slice(halfBig).map((r, i) => row5(r, i + halfBig)).join('')}</div>
 </div>
-<div class="h" style="margin-top:12px">逐觉醒体启灵分布 <em>右侧为 +12 占比，末尾为出场位</em></div>
-<div class="enl1">
-  ${enl.map((r, i) => `<div class="enlrow"><span class="p">${i + 1}</span><span class="nm">${esc(r.zh)}</span>
-    <span class="track">${BK.map(k => `<i style="width:${r.dist[k] / r.n * 100}%;background:${enlColor[k]}"></i>`).join('')}</span>
-    <span class="pc">${pct(r.p12)}%</span><span class="nn">${r.n} 场</span></div>`).join('')}
+<div class="subh">出场位不足 20 场 <em>※ 一两个满启玩家就能把比例推满，排在后面仅供参考</em></div>
+<div class="enlw">
+  <div>${small5.slice(0, halfSmall).map((r, i) => row5(r, i + big5.length)).join('')}</div>
+  <div>${small5.slice(halfSmall).map((r, i) => row5(r, i + big5.length + halfSmall)).join('')}</div>
 </div>
-<div class="pair" style="margin-top:11px">
-  <div><div class="h">各禁区出场的平均启灵 <em>▼ + SSS，红虚线为全样本 ${eS.avgPotency}</em></div>
-    ${eS.byZone.map(z => `<div class="zavg"><span>${WAVE_NAME[z.wave]}</span>
-      <span class="track"><b style="width:${z.avg / 15 * 100}%"></b><i style="left:${eS.avgPotency / 15 * 100}%"></i></span>
-      <span class="v">${z.avg}<em> / ${n0(z.n)}</em></span></div>`).join('')}
-  </div>
-  <div><div class="h">▼ 与 SSS 的启灵结构对照 <em>同一套五档配色</em></div>
-    <div class="thcmp">
-      ${['▼', 'SSS'].map(t => `<div class="row"><span>${t}</span><span class="bar">${BK.map(k => `<i style="width:${eS.byThreat[t].dist[k] / eS.byThreat[t].n * 100}%;background:${enlColor[k]}"></i>`).join('')}</span><span>+12 ${pct(eS.byThreat[t].p12)}%<br><em style="font-style:normal;color:#8a7458">${n0(eS.byThreat[t].n)} 位</em></span></div>`).join('')}
-    </div>
-    <div class="note" style="margin-top:2px">▼ 通关队的 +12 比例比 SSS 高 ${pct(eS.byThreat['▼'].p12 - eS.byThreat.SSS.p12)} 个百分点：打得动最难的一档，多半靠把启灵堆满；而 SSS 里仍有 ${n0(eS.byThreat.SSS.dist['0-2'] + eS.byThreat.SSS.dist['3-5'])} 位（${pct((eS.byThreat.SSS.dist['0-2'] + eS.byThreat.SSS.dist['3-5']) / eS.byThreat.SSS.n * 100)}%）是 5 启以下。</div>
-  </div>
-</div>
-<div class="note" style="margin-top:8px;font-size:9.6px;line-height:1.6">
-  <b style="color:#a1281b">满启与低启</b>：全场唯一「全员 +12」的唤醒体是 <b>${eS.full.join('、') || '—'}</b>${eS.full.length ? `（${enl.find(r => r.zh === eS.full[0])?.n || 0} 个出场位，100% 满启）` : ''}。反面是一批纯机制位——上场不少、却几乎不带启灵：${eS.low.map(x => `${esc(x.zh)} ${n0(x.n)} 场仅 ${pct(x.p12)}%`).join('、')}。
-  这些角色靠机制（护盾、减伤、控场）站住位置，启灵堆不堆影响很小；主力输出则几乎必然满启。
-  <b style="color:#a1281b">读表提示</b>：横向条是构成，五段之和为 100%，条长不代表强弱；出场位只有二三十场的角色波动极大，一两个满启玩家就能把 +12 占比推到 50% 以上。
-</div>
-<div class="foot">口径：启灵 = 唤醒体的潜能等级（0-15，图中分 0-2 / 3-5 / 6-8 / 9-11 / 12+ 五段，+12 以上为满启）；同一队伍里同一唤醒体只计一次。「全样本」为样本 ≥ 20 场的 ${enl.length} 个唤醒体合计（${n0(eS.n)} 位），▼ / SSS 结构对照含样本不足 20 场的唤醒体（${n0(eS.byThreat['▼'].n + eS.byThreat.SSS.n)} 位），故略多于全样本。出场数少的唤醒体波动大，仅供参考。制图：忘忘看报。</div>
+<div class="foot">口径：启灵 = 唤醒体的潜能等级（0-15，本版分 0-2 / 3-5 / 6-8 / 9-11 / 12+ 五段，+12 及以上为满启）；同一队伍里同一唤醒体只计一次，出场位 = 该唤醒体在 ▼ / SSS 队伍中的出场次数。<b>※ 标记的唤醒体出场位不足 20 场</b>，一两个满启玩家就能把比例推到 100%，排序看看即可。全场平均启灵 ${eS.avgPotency}，▼ 通关队 47.8% 的出场位满启、SSS 通关队 39.3%。制图：忘忘看报。</div>
 </div>`;
 
 // ---------------------------------------------------------------- spread 6
@@ -481,7 +512,7 @@ const zc = cur.zones, zp = prev.zones;
 const downTotal = zc.reduce((a, z) => a + z.down, 0);
 const downPrev = zp.reduce((a, z) => a + z.down, 0);
 const dlt = (now, before, unit = '') => {
-  const d = now - before;
+  const d = Math.round((now - before) * 10) / 10;
   if (!d) return `<i>${now}${unit}</i>`;
   return `<i class="${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${d}${unit}</i>`;
 };
@@ -504,7 +535,7 @@ const s6 = `<div class="page">${head(6, 6, stamp)}${mast(kicker)}
   ${cmpCell('≥ 450 分', cur.ge['450'], prev.ge['450'])}
   ${cmpCell('平均分', cur.mean, prev.mean)}
   ${cmpCell('中位分', cur.median, prev.median)}
-  <div class="c"><span>▽ 通关总数</span><b>${downTotal}</b><b style="font-size:13px;color:#6a5740">${downPrev}</b><i class="up">+${Math.round((downTotal / downPrev - 1) * 100)}%</i></div>
+  <div class="c"><span>▼ 通关总数</span><b>${downTotal}</b><b style="font-size:13px;color:#6a5740">${downPrev}</b><i class="up">+${Math.round((downTotal / downPrev - 1) * 100)}%</i></div>
 </div>
 <div class="hr2" style="margin-top:12px"></div>
 <div class="pair">
@@ -530,12 +561,10 @@ const s6 = `<div class="page">${head(6, 6, stamp)}${mast(kicker)}
     ${zc.map((z, i) => {
       const p = zp[i];
       const max = Math.max(...zc.map(x => x.down), ...zp.map(x => x.down));
-      return `<div class="hz"><span>${z.name}</span><span class="track">
-        <span class="bar2" style="width:${z.down / max * 100}%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">${z.down}</span>
-        <span class="bar" style="width:${p.down / max * 100}%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">${p.down}</span>
-      </span><span style="text-align:right;font-size:10px;color:#a1281b">${p.down ? '+' + Math.round((z.down / p.down - 1) * 100) + '%' : ''}</span></div>`;
+      return `<div class="hz"><span class="zl">${z.name}</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:${z.down / max * 100}%"></i><em>${z.down}</em></span>
+        <span class="line"><i class="bar" style="width:${p.down / max * 100}%"></i><em>${p.down}</em></span>
+      </span><span class="dl">${p.down ? '+' + Math.round((z.down / p.down - 1) * 100) + '%' : ''}</span></div>`;
     }).join('')}
   </div>
   <div><div class="h">最快 ▼ 通关 <em>回合数</em></div>
@@ -567,11 +596,11 @@ const s6 = `<div class="page">${head(6, 6, stamp)}${mast(kicker)}
 </div>
 <div class="close">
   <div><div class="k">涨得最猛</div><div class="v">第一禁区 <b>+65%</b></div>
-    <div class="d">▼ 通关 130 → 215 人，是五个禁区里唯一翻倍级的增长；第四、第五禁区各只有 +31% / +32%。</div></div>
-  <div><div class="k">分数整体上移，高分段反而变薄</div><div class="v">中位 <b>405 → 415</b></div>
-    <div class="d">平均分 413.3 → 422.1、中位分 405 → 415，但 ≥450 分的人数从 649 掉到 611，≥500 分从 42 掉到 36。</div></div>
-  <div><div class="k">极限被抬高</div><div class="v">单场 <b>5,556 万 → 8,262 万</b></div>
-    <div class="d">单回合最高伤害 4,101 万 → 4,676 万，单场总伤害 +49%；死扛纪录仍是 9 次，两期持平。</div></div>
+    <div class="d">▼ 通关 ${zp[0].down} → ${zc[0].down} 人；第三禁区同样从 ${zp[2].down} 涨到 ${zc[2].down}（+56%）。反过来第二、四、五禁区各退了 21% / 31% / 32%，五区合计 ${downPrev} → ${downTotal}。</div></div>
+  <div><div class="k">分数线整体下移，顶端更集中</div><div class="v">中位 <b>${Math.round(prev.median)} → ${Math.round(cur.median)}</b></div>
+    <div class="d">平均 ${pct(prev.mean)} → ${pct(cur.mean)}，≥450 分从 ${prev.ge['450']} 掉到 ${cur.ge['450']}；但 525 满分反从 ${prev.ge['525']} 人增到 ${cur.ge['525']} 人，500 分以上却从 ${prev.ge['500']} 降到 ${cur.ge['500']}。</div></div>
+  <div><div class="k">极限被抬高</div><div class="v">单场 <b>${n0(Math.round(prev.records.maxTotal.value / 1e4))} 万 → ${n0(Math.round(rec.maxTotal.value / 1e4))} 万</b></div>
+    <div class="d">单回合最高伤害 ${n0(Math.round(prev.records.maxHit.value / 1e4))} 万 → ${n0(Math.round(rec.maxHit.value / 1e4))} 万（+${Math.round((rec.maxHit.value / prev.records.maxHit.value - 1) * 100)}%），单场总伤害 +${Math.round((rec.maxTotal.value / prev.records.maxTotal.value - 1) * 100)}%；死扛纪录仍是 ${rec.deathResist.value} 次。</div></div>
 </div>
 <div class="foot">口径：两期均按各自终榜 Top 2000 统计；▼ 通关数为五个禁区 ▼ 难度通关队伍之和；出场率括号内为第 72 期同口径数据。制图：忘忘看报。</div>
 </div>`;

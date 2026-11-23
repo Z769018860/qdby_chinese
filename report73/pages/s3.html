@@ -35,10 +35,10 @@ h2.lead small{display:block;font-size:44px}
 .h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
   padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
 .h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
-.bars{display:flex;align-items:flex-end;gap:2.5px;height:272px;padding-top:8px}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
 .bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
-.bars .b i{position:absolute;left:0;right:0;bottom:-14px;font-style:normal;font-size:7.5px;color:#6f5c45;
-  text-align:center;transform:rotate(-90deg);transform-origin:center}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
 .bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -93,7 +93,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .rank1 li span:last-child{color:#a1281b;font-weight:700}
 /* spread 3/4 */
 .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.rec{padding:9px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
 .rec:nth-child(3n){border-right:0}
 .rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
 .rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -124,6 +124,25 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .enl1 .enlrow .track{height:12.5px}
 .enl1 .enlrow .pc{font-size:11.5px}
 .enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
+  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
+.myinfo span{color:#7b6750;text-align:right}
+.myinfo b{color:#a1281b;text-align:right}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
 .ovw{margin-bottom:10px}
 .ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
 .ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
@@ -140,7 +159,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
 .zavg .v{text-align:right;font-weight:700;font-size:11.5px}
 .zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
-.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:5.5px 0}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
 .thcmp{margin-top:4px}
 .thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
 .thcmp .bar{display:flex;height:15px;background:#e9dfc8}
@@ -157,11 +176,20 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .cmp .c b s{text-decoration:none;color:#a1281b}
 .cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
 .up{color:#a1281b}.down{color:#3d6b46}
-.hz{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:6px;font-size:11px;padding:3.5px 0;
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
   border-bottom:1px solid #ddd0b6}
-.hz .track{height:13px;display:flex;align-items:center;gap:2px}
-.hz .bar{height:11px;background:#3d6b46}
-.hz .bar2{height:11px;background:#a1281b}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
 .close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
 .close>div{padding:8px 12px;border-right:1px solid #c3b393}
 .close>div:last-child{border-right:0}
@@ -174,70 +202,70 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 <h2 class="lead">4,676 万单回合伤害，<br><small>9 次死扛：本期的极限数据</small></h2>
 <div class="sub">从 37,101 场战斗记录里按字段排出「全场最高」的九项，并统计 Top 2000 的唤醒体、命轮、密契、造物与钥令出场率。</div>
 <div class="recs">
-  <div class="rec"><div class="k">单回合最高伤害</div><div class="v">46,760,126</div><div class="d">第 27 名 · Helleios · 第五禁区</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ogier-oathbound.webp">
-      <small>负誓·奥吉尔</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/castor.webp">
-      <small>卡斯托尔</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
+  <div class="rec"><div class="k">单回合最高伤害</div><div class="v">46,760,126</div><div class="d">第 27 名 · Helleios · 第五禁区</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp">
+      <small>负誓·奥吉尔</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp">
+      <small>卡斯托尔</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
       <small>奥尔拉</small><u></u></div></div></div>
-  <div class="rec"><div class="k">单场总伤害之王</div><div class="v">82,616,083</div><div class="d">第 430 名 · Jad · 第四禁区</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/salvador.webp">
-      <small>萨尔瓦多</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
-      <small>泰旖丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/caraboo.webp">
+  <div class="rec"><div class="k">单场总伤害之王</div><div class="v">82,616,083</div><div class="d">第 430 名 · Jad · 第四禁区</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/salvador.webp">
+      <small>萨尔瓦多</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
+      <small>泰旖丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
+      <small>奥尔拉</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/caraboo.webp">
       <small>卡拉布</small><u></u></div></div></div>
   <div class="rec"><div class="k">单角色最高伤害</div><div class="v">79,627,647</div><div class="d">负誓·奥吉尔 · 第 27 名 · 第五禁区</div></div>
   <div class="rec"><div class="k">死扛之王</div><div class="v">9</div>
   <div class="d">第 30 名 · &lt;#65F&gt;Spooky · 第一禁区</div>
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/lotan.webp">
-      <small>萝坦</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp">
-      <small>茉夏</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/aigis.webp">
-      <small>艾继丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/faint.webp">
+  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan.webp">
+      <small>萝坦</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
+      <small>茉夏</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/aigis.webp">
+      <small>艾继丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/faint.webp">
       <small>菲茵特</small><u></u></div></div>
   </div>
   <div class="rec"><div class="k">反击之王</div><div class="v">764,468</div>
   <div class="d">第 96 名 · Mogoo · 第五禁区</div>
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp">
-      <small>薇薇安</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/pandia.webp">
-      <small>潘狄娅</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
-      <small>泰旖丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/pickman.webp">
+  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/pandia.webp">
+      <small>潘狄娅</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
+      <small>泰旖丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/pickman.webp">
       <small>皮克曼</small><u></u></div></div>
   </div>
   <div class="rec"><div class="k">触手之王</div><div class="v">14,107</div>
   <div class="d">第 33 名 · 岛屿的奇幻漂流 · 第二禁区</div>
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tulu.webp">
-      <small>图鲁</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/miryam.webp">
-      <small>弥利亚姆</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/goliath.webp">
+  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
+      <small>图鲁</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
       <small>戈利亚</small><u></u></div></div>
   </div>
   <div class="rec"><div class="k">力量之王</div><div class="v">12,558</div>
   <div class="d">第 37 名 · 볼빵빵판다곰 · 第二禁区</div>
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/kathigu-ra.webp">
-      <small>凯蒂古拉</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp">
-      <small>薇薇安</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/clementine.webp">
-      <small>克莱门汀</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
+  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/kathigu-ra.webp">
+      <small>凯蒂古拉</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp">
+      <small>克莱门汀</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
       <small>奥尔拉</small><u></u></div></div>
   </div>
   <div class="rec"><div class="k">毒伤之王</div><div class="v">443,430</div>
   <div class="d">第 4 名 · leah1 · 第五禁区</div>
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/xu.webp">
-      <small>徐</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/doll-inferno.webp">
-      <small>熔毁·朵尔</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/karen.webp">
-      <small>珈伦</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/caraboo.webp">
+  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/xu.webp">
+      <small>徐</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp">
+      <small>熔毁·朵尔</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/karen.webp">
+      <small>珈伦</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/caraboo.webp">
       <small>卡拉布</small><u></u></div></div>
   </div>
   <div class="rec"><div class="k">生命之王</div><div class="v">5,654</div>
   <div class="d">第 332 名 · Shunia · 第二禁区</div>
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/pontos.webp">
-      <small>庞托斯</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
-      <small>泰旖丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/caraboo.webp">
-      <small>卡拉布</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/salvador.webp">
+  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/pontos.webp">
+      <small>庞托斯</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
+      <small>泰旖丝</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/caraboo.webp">
+      <small>卡拉布</small><u></u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/salvador.webp">
       <small>萨尔瓦多</small><u></u></div></div>
   </div>
 </div>
 <div class="hr2" style="margin-top:14px"></div>
 <div class="h">最快通关榜 <em>▼ 难度，最少回合</em></div>
 <table class="ftbl"><thead><tr><th>禁区</th><th>回合数</th><th>玩家</th><th style="text-align:left">配队</th></tr></thead><tbody>
-<tr><td>第一禁区</td><td><b>4</b></td><td>萨摩不耶</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp"><small>茉夏</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp"><small>奥尔拉</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp"><small>薇薇安</small></div></div></td></tr><tr><td>第二禁区</td><td><b>13</b></td><td>麻木似水</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp"><small>茉夏</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp"><small>奥尔拉</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp"><small>薇薇安</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div></div></td></tr><tr><td>第三禁区</td><td><b>5</b></td><td>YANA</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/lotan.webp"><small>萝坦</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/hameln.webp"><small>哈姆林</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tawil.webp"><small>塔薇</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/doll-inferno.webp"><small>熔毁·朵尔</small></div></div></td></tr><tr><td>第四禁区</td><td><b>11</b></td><td>Anicillia</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp"><small>奥尔拉</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ogier-oathbound.webp"><small>负誓·奥吉尔</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp"><small>茉夏</small></div></div></td></tr><tr><td>第五禁区</td><td><b>16</b></td><td>&lt;#7FC&gt;魔龙</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot-catena.webp"><small>血链·希洛</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp"><small>泰旖丝</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot.webp"><small>希洛</small></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div></div></td></tr>
+<tr><td>第一禁区</td><td><b>4</b></td><td>萨摩不耶</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp"><small>茉夏</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp"><small>奥尔拉</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp"><small>薇薇安</small></div></div></td></tr><tr><td>第二禁区</td><td><b>13</b></td><td>麻木似水</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp"><small>茉夏</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp"><small>奥尔拉</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp"><small>薇薇安</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div></div></td></tr><tr><td>第三禁区</td><td><b>5</b></td><td>YANA</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan.webp"><small>萝坦</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/hameln.webp"><small>哈姆林</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tawil.webp"><small>塔薇</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp"><small>熔毁·朵尔</small></div></div></td></tr><tr><td>第四禁区</td><td><b>11</b></td><td>Anicillia</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp"><small>奥尔拉</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp"><small>负誓·奥吉尔</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp"><small>茉夏</small></div></div></td></tr><tr><td>第五禁区</td><td><b>16</b></td><td>&lt;#7FC&gt;魔龙</td><td><div class="mem" style="display:flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot-catena.webp"><small>血链·希洛</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp"><small>泰旖丝</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot.webp"><small>希洛</small></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp"><small>阿拉克涅</small></div></div></td></tr>
 </tbody></table>
 <div class="hr" style="margin-top:12px"></div>
 <div class="pair">
@@ -257,7 +285,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
   <div><div class="h">钥令 Top 6 <em>队伍携带率</em></div>
     <div class="rankrow"><span class="p">1</span><span class="n">来自雾境</span><span class="track"><b style="width:100%"></b></span><span class="v">9.2%</span></div><div class="rankrow"><span class="p">2</span><span class="n">鼠鼠的智慧</span><span class="track"><b style="width:95.6521739130435%"></b></span><span class="v">8.8%</span></div><div class="rankrow"><span class="p">3</span><span class="n">溺亡的纯真</span><span class="track"><b style="width:83.69565217391305%"></b></span><span class="v">7.7%</span></div><div class="rankrow"><span class="p">4</span><span class="n">小小心愿</span><span class="track"><b style="width:69.56521739130436%"></b></span><span class="v">6.4%</span></div><div class="rankrow"><span class="p">5</span><span class="n">偏航船</span><span class="track"><b style="width:60.86956521739131%"></b></span><span class="v">5.6%</span></div><div class="rankrow"><span class="p">6</span><span class="n">深宅往事</span><span class="track"><b style="width:57.608695652173914%"></b></span><span class="v">5.3%</span></div>
     <div class="h" style="margin-top:8px">借用助战 Top 6 <em>被借次数</em></div>
-    <div class="mini">1. 茉夏 477　2. 莫丝 142　3. 阿拉克涅 90　4. 波吕克斯 89　5. 蚀灭·萝坦 74　6. 负誓·奥吉尔 74</div>
+    <div class="assist"><span><b>1</b> 茉夏 <em>477</em></span><span><b>2</b> 莫丝 <em>142</em></span><span><b>3</b> 阿拉克涅 <em>90</em></span><span><b>4</b> 波吕克斯 <em>89</em></span><span><b>5</b> 蚀灭·萝坦 <em>74</em></span><span><b>6</b> 负誓·奥吉尔 <em>74</em></span></div>
   </div>
 </div>
 <div class="foot">口径：「单回合最高伤害」「死扛」「反击」「触手」「力量」「毒伤」「生命」取 37,101 场战斗记录里的单场最大值，玩家名后标注其当期名次；出场率按队伍去重统计（2000 名玩家 × 五个禁区共 9,946 支队伍）。制图：忘忘看报。</div>

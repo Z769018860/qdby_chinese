@@ -35,10 +35,10 @@ h2.lead small{display:block;font-size:44px}
 .h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
   padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
 .h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
-.bars{display:flex;align-items:flex-end;gap:2.5px;height:272px;padding-top:8px}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
 .bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
-.bars .b i{position:absolute;left:0;right:0;bottom:-14px;font-style:normal;font-size:7.5px;color:#6f5c45;
-  text-align:center;transform:rotate(-90deg);transform-origin:center}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
 .bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -93,7 +93,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .rank1 li span:last-child{color:#a1281b;font-weight:700}
 /* spread 3/4 */
 .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.rec{padding:9px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
 .rec:nth-child(3n){border-right:0}
 .rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
 .rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -124,6 +124,25 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .enl1 .enlrow .track{height:12.5px}
 .enl1 .enlrow .pc{font-size:11.5px}
 .enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
+  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
+.myinfo span{color:#7b6750;text-align:right}
+.myinfo b{color:#a1281b;text-align:right}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
 .ovw{margin-bottom:10px}
 .ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
 .ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
@@ -140,7 +159,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
 .zavg .v{text-align:right;font-weight:700;font-size:11.5px}
 .zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
-.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:5.5px 0}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
 .thcmp{margin-top:4px}
 .thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
 .thcmp .bar{display:flex;height:15px;background:#e9dfc8}
@@ -157,11 +176,20 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .cmp .c b s{text-decoration:none;color:#a1281b}
 .cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
 .up{color:#a1281b}.down{color:#3d6b46}
-.hz{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:6px;font-size:11px;padding:3.5px 0;
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
   border-bottom:1px solid #ddd0b6}
-.hz .track{height:13px;display:flex;align-items:center;gap:2px}
-.hz .bar{height:11px;background:#3d6b46}
-.hz .bar2{height:11px;background:#a1281b}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
 .close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
 .close>div{padding:8px 12px;border-right:1px solid #c3b393}
 .close>div:last-child{border-right:0}
@@ -183,7 +211,8 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 </div>
 <div class="cols3" style="margin-top:16px">
   <div class="col"><div class="h">分数分布 <em>每 10 分一档，共 2,000 人</em></div>
-    <div class="bars"><div class="b" style="height:2.9347826086956523px"><em>9</em><i>525</i></div><div class="b" style="height:1px"><em>2</em><i>515</i></div><div class="b" style="height:8.152173913043478px"><em>25</em><i>505</i></div><div class="b" style="height:4.239130434782608px"><em>13</em><i>495</i></div><div class="b" style="height:7.5px"><em>23</em><i>485</i></div><div class="b" style="height:14.021739130434783px"><em>43</em><i>475</i></div><div class="b" style="height:30.32608695652174px"><em>93</em><i>465</i></div><div class="b" style="height:131.41304347826087px"><em>403</em><i>455</i></div><div class="b" style="height:16.956521739130434px"><em>52</em><i>445</i></div><div class="b" style="height:30.32608695652174px"><em>93</em><i>435</i></div><div class="b" style="height:62.28260869565217px"><em>191</em><i>425</i></div><div class="b" style="height:58.04347826086956px"><em>178</em><i>415</i></div><div class="b" style="height:150px"><em>460</em><i>405</i></div><div class="b" style="height:76.30434782608695px"><em>234</em><i>395</i></div><div class="b" style="height:59.02173913043478px"><em>181</em><i>385</i></div></div>
+    <div class="bars"><div class="b" style="height:7.2px"><em>9</em></div><div class="b" style="height:1.6px"><em>2</em></div><div class="b" style="height:20px"><em>25</em></div><div class="b" style="height:10.4px"><em>13</em></div><div class="b" style="height:18.400000000000002px"><em>23</em></div><div class="b" style="height:34.4px"><em>43</em></div><div class="b" style="height:74.4px"><em>93</em></div><div class="b" style="height:322.40000000000003px"><em>403</em></div><div class="b" style="height:41.6px"><em>52</em></div><div class="b" style="height:74.4px"><em>93</em></div><div class="b" style="height:152.79999999999998px"><em>191</em></div><div class="b" style="height:142.4px"><em>178</em></div><div class="b" style="height:368px"><em>460</em></div><div class="b" style="height:187.2px"><em>234</em></div><div class="b" style="height:144.8px"><em>181</em></div></div>
+    <div class="axis"><span>525</span><span></span><span>505</span><span></span><span>485</span><span></span><span>465</span><span></span><span>445</span><span></span><span>425</span><span></span><span>405</span><span></span><span>385</span></div>
   </div>
   <div class="col"><div class="h">分数阶梯 <em>累计人数</em></div>
     <table class="ladder"><tr><td class="n">≥ 525</td><td><div class="track"><b style="width:0.4%"></b></div></td><td class="n">8 人</td></tr><tr><td class="n">≥ 510</td><td><div class="track"><b style="width:0.5499999999999999%"></b></div></td><td class="n">11 人</td></tr><tr><td class="n">≥ 500</td><td><div class="track"><b style="width:1.7999999999999998%"></b></div></td><td class="n">36 人</td></tr><tr><td class="n">≥ 490</td><td><div class="track"><b style="width:2.45%"></b></div></td><td class="n">49 人</td></tr><tr><td class="n">≥ 480</td><td><div class="track"><b style="width:3.5999999999999996%"></b></div></td><td class="n">72 人</td></tr><tr><td class="n">≥ 470</td><td><div class="track"><b style="width:5.75%"></b></div></td><td class="n">115 人</td></tr><tr><td class="n">≥ 460</td><td><div class="track"><b style="width:10.4%"></b></div></td><td class="n">208 人</td></tr><tr><td class="n">≥ 450</td><td><div class="track"><b style="width:30.55%"></b></div></td><td class="n">611 人</td></tr><tr><td class="n">≥ 425</td><td><div class="track"><b style="width:43.9%"></b></div></td><td class="n">878 人</td></tr><tr><td class="n">≥ 400</td><td><div class="track"><b style="width:79.25%"></b></div></td><td class="n">1,585 人</td></tr></table>
@@ -225,10 +254,11 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 <div class="two" style="margin-top:16px">
   <div><div class="h">头版观察</div><ul class="obs">
     <li>满分 525 只有 <b>8</b> 人，五个禁区全取 ▼ 通关（95+100+105+110+115），是本期唯一的完美解法。</li>
-    <li><b>450 分</b>是本期最明显的一道分水岭：611 人站上，占总样本 30.6%；从 460 到 450 一口气挤进 337 人。</li>
+    <li><b>450 分</b>是本期最明显的一道分水岭：611 人站上，占总样本 30.6%；光 450 分这一档就压着 <b>337</b> 人。</li>
     <li>第三禁区是全局的「送分区」：<b>667</b> 人拿下 ▼，通关率 33.5%，是第二禁区（48 人）的 13.9 倍。</li>
     <li>第四、第五禁区的 ▼ 最难：各只有 <b>36</b> 人，通关率 1.8%，且最快也要 11 / 16 回合。</li>
     <li>整体节奏明显变快：▼ + SSS 战斗平均 <b>14.92</b> 回合就结束，比上期少 5.54 回合；最快的 ▼ 通关只要 <b>4</b> 回合（第一禁区）。</li>
+    <li>分数线整体下移、顶端反而更集中：平均 <b>422.1</b>（上期 430.3）、中位 <b>415</b>（上期 425），≥450 分人数从 694 掉到 611；可 525 满分反从 6 人增到 8 人。</li>
   </ul></div>
   <div><div class="h">读报指南</div><div class="guide">
     <div><b>第 2 版</b> · 各禁区的配队榜——冠军配队、最热门配队、最快通关、出场与常用造物。</div>

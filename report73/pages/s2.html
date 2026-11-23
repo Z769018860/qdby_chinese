@@ -35,10 +35,10 @@ h2.lead small{display:block;font-size:44px}
 .h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
   padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
 .h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
-.bars{display:flex;align-items:flex-end;gap:2.5px;height:272px;padding-top:8px}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
 .bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
-.bars .b i{position:absolute;left:0;right:0;bottom:-14px;font-style:normal;font-size:7.5px;color:#6f5c45;
-  text-align:center;transform:rotate(-90deg);transform-origin:center}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
 .bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -93,7 +93,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .rank1 li span:last-child{color:#a1281b;font-weight:700}
 /* spread 3/4 */
 .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.rec{padding:9px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
 .rec:nth-child(3n){border-right:0}
 .rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
 .rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -124,6 +124,25 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .enl1 .enlrow .track{height:12.5px}
 .enl1 .enlrow .pc{font-size:11.5px}
 .enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
+  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
+.myinfo span{color:#7b6750;text-align:right}
+.myinfo b{color:#a1281b;text-align:right}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
 .ovw{margin-bottom:10px}
 .ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
 .ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
@@ -140,7 +159,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
 .zavg .v{text-align:right;font-weight:700;font-size:11.5px}
 .zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
-.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:5.5px 0}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
 .thcmp{margin-top:4px}
 .thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
 .thcmp .bar{display:flex;height:15px;background:#e9dfc8}
@@ -157,11 +176,20 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .cmp .c b s{text-decoration:none;color:#a1281b}
 .cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
 .up{color:#a1281b}.down{color:#3d6b46}
-.hz{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:6px;font-size:11px;padding:3.5px 0;
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
   border-bottom:1px solid #ddd0b6}
-.hz .track{height:13px;display:flex;align-items:center;gap:2px}
-.hz .bar{height:11px;background:#3d6b46}
-.hz .bar2{height:11px;background:#a1281b}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
 .close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
 .close>div{padding:8px 12px;border-right:1px solid #c3b393}
 .close>div:last-child{border-right:0}
@@ -177,33 +205,33 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
   <div class="zt"><h3>第一禁区</h3><span>▼ 通关 215 人 · 该区共 1,993 队 · 最高分 95 · 中位 75</span></div>
   <div class="zbody">
     <div><div class="ttl">冠军配队 · 第 1 名 · 95 分</div>
-      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/doll-inferno.webp">
-      <small>熔毁·朵尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/xu.webp">
-      <small>徐</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/karen.webp">
-      <small>珈伦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ogier-oathbound.webp">
+      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp">
+      <small>熔毁·朵尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/xu.webp">
+      <small>徐</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/karen.webp">
+      <small>珈伦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp">
       <small>负誓·奥吉尔</small><u>+0</u></div></div>
       <div class="mini" style="margin-top:5px">钥令：<b>深宅往事</b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
-      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tulu.webp">
-      <small>图鲁</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/goliath.webp">
-      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/miryam.webp">
-      <small>弥利亚姆</small><u>+15</u></div></div><span class="cnt">86 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp">
-      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/lotan-cetarchon.webp">
-      <small>蚀灭·萝坦</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+4</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u>+6</u></div></div><span class="cnt">81 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp">
-      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp">
-      <small>薇薇安</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+4</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
+      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
+      <small>图鲁</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+15</u></div></div><span class="cnt">86 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
+      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan-cetarchon.webp">
+      <small>蚀灭·萝坦</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+4</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
+      <small>奥尔拉</small><u>+6</u></div></div><span class="cnt">81 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
+      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+4</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
       <small>奥尔拉</small><u>+3</u></div></div><span class="cnt">69 队</span></div>
     </div>
     <div><div class="ttl">最快通关 ▼ (4 回合)</div>
-      <div class="mini">萨摩不耶 · 第 90 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp">
-      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp">
+      <div class="mini">萨摩不耶 · 第 90 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
+      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
+      <small>奥尔拉</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
       <small>薇薇安</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：来自雾境</div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
@@ -218,33 +246,33 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
   <div class="zt"><h3>第二禁区</h3><span>▼ 通关 48 人 · 该区共 1,990 队 · 最高分 100 · 中位 75</span></div>
   <div class="zbody">
     <div><div class="ttl">冠军配队 · 第 1 名 · 100 分</div>
-      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/kathigu-ra.webp">
-      <small>凯蒂古拉</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/clementine.webp">
-      <small>克莱门汀</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp">
+      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/kathigu-ra.webp">
+      <small>凯蒂古拉</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
+      <small>奥尔拉</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp">
+      <small>克莱门汀</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
       <small>薇薇安</small><u>+3</u></div></div>
       <div class="mini" style="margin-top:5px">钥令：<b>不落的太阳</b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
-      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tulu.webp">
-      <small>图鲁</small><u>+9</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/miryam.webp">
-      <small>弥利亚姆</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/goliath.webp">
-      <small>戈利亚</small><u>+15</u></div></div><span class="cnt">234 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/kathigu-ra.webp">
-      <small>凯蒂古拉</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/clementine.webp">
-      <small>克莱门汀</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp">
-      <small>薇薇安</small><u>+3</u></div></div><span class="cnt">59 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot-catena.webp">
-      <small>血链·希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot.webp">
-      <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
+      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
+      <small>图鲁</small><u>+9</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div></div><span class="cnt">234 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/kathigu-ra.webp">
+      <small>凯蒂古拉</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
+      <small>奥尔拉</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp">
+      <small>克莱门汀</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u>+3</u></div></div><span class="cnt">59 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot-catena.webp">
+      <small>血链·希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot.webp">
+      <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
       <small>泰旖丝</small><u>+15</u></div></div><span class="cnt">53 队</span></div>
     </div>
     <div><div class="ttl">最快通关 ▼ (13 回合)</div>
-      <div class="mini">麻木似水 · 第 26 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp">
-      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vivian.webp">
-      <small>薇薇安</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
+      <div class="mini">麻木似水 · 第 26 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
+      <small>茉夏</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
+      <small>奥尔拉</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
       <small>阿拉克涅</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：鼠鼠的智慧</div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
@@ -259,33 +287,33 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
   <div class="zt"><h3>第三禁区</h3><span>▼ 通关 667 人 · 该区共 1,992 队 · 最高分 105 · 中位 85</span></div>
   <div class="zbody">
     <div><div class="ttl">冠军配队 · 第 1 名 · 105 分</div>
-      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/goliath.webp">
-      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/miryam.webp">
-      <small>弥利亚姆</small><u>+6</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tulu.webp">
+      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+6</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
       <small>图鲁</small><u>+13</u></div></div>
       <div class="mini" style="margin-top:5px">钥令：<b>偏航船</b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
-      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/goliath.webp">
-      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/miryam.webp">
-      <small>弥利亚姆</small><u>+6</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tulu.webp">
-      <small>图鲁</small><u>+13</u></div></div><span class="cnt">210 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/lotan.webp">
-      <small>萝坦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/doll-inferno.webp">
-      <small>熔毁·朵尔</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/hameln.webp">
-      <small>哈姆林</small><u>+5</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tawil.webp">
-      <small>塔薇</small><u>+2</u></div></div><span class="cnt">54 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/lotan.webp">
-      <small>萝坦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/doll-inferno.webp">
-      <small>熔毁·朵尔</small><u>+11</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/xu.webp">
-      <small>徐</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/faint.webp">
+      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+6</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
+      <small>图鲁</small><u>+13</u></div></div><span class="cnt">210 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan.webp">
+      <small>萝坦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp">
+      <small>熔毁·朵尔</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/hameln.webp">
+      <small>哈姆林</small><u>+5</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tawil.webp">
+      <small>塔薇</small><u>+2</u></div></div><span class="cnt">54 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan.webp">
+      <small>萝坦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp">
+      <small>熔毁·朵尔</small><u>+11</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/xu.webp">
+      <small>徐</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/faint.webp">
       <small>菲茵特</small><u>+15</u></div></div><span class="cnt">50 队</span></div>
     </div>
     <div><div class="ttl">最快通关 ▼ (5 回合)</div>
-      <div class="mini">YANA · 第 590 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/lotan.webp">
-      <small>萝坦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/hameln.webp">
-      <small>哈姆林</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tawil.webp">
-      <small>塔薇</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/doll-inferno.webp">
+      <div class="mini">YANA · 第 590 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan.webp">
+      <small>萝坦</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/hameln.webp">
+      <small>哈姆林</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tawil.webp">
+      <small>塔薇</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp">
       <small>熔毁·朵尔</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：小小心愿</div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
@@ -300,33 +328,33 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
   <div class="zt"><h3>第四禁区</h3><span>▼ 通关 36 人 · 该区共 1,984 队 · 最高分 110 · 中位 85</span></div>
   <div class="zbody">
     <div><div class="ttl">冠军配队 · 第 1 名 · 110 分</div>
-      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/saya.webp">
-      <small>沙耶</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vortice.webp">
-      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy.webp">
-      <small>墨菲</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/salvador.webp">
+      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp">
+      <small>沙耶</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vortice.webp">
+      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp">
+      <small>墨菲</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/salvador.webp">
       <small>萨尔瓦多</small><u>+9</u></div></div>
       <div class="mini" style="margin-top:5px">钥令：<b>溺亡的纯真</b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
-      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/goliath.webp">
-      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/miryam.webp">
-      <small>弥利亚姆</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tulu.webp">
-      <small>图鲁</small><u>+7</u></div></div><span class="cnt">223 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/saya.webp">
-      <small>沙耶</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vortice.webp">
-      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy.webp">
-      <small>墨菲</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/salvador.webp">
-      <small>萨尔瓦多</small><u>+9</u></div></div><span class="cnt">149 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vortice.webp">
-      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/celeste.webp">
-      <small>希莱斯特</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/saya.webp">
-      <small>沙耶</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy.webp">
+      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
+      <small>图鲁</small><u>+7</u></div></div><span class="cnt">223 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp">
+      <small>沙耶</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vortice.webp">
+      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp">
+      <small>墨菲</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/salvador.webp">
+      <small>萨尔瓦多</small><u>+9</u></div></div><span class="cnt">149 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vortice.webp">
+      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/celeste.webp">
+      <small>希莱斯特</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp">
+      <small>沙耶</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp">
       <small>墨菲</small><u>+8</u></div></div><span class="cnt">46 队</span></div>
     </div>
     <div><div class="ttl">最快通关 ▼ (11 回合)</div>
-      <div class="mini">Anicillia · 第 23 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u>+10</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ogier-oathbound.webp">
-      <small>负誓·奥吉尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/mouchette.webp">
+      <div class="mini">Anicillia · 第 23 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp">
+      <small>奥尔拉</small><u>+10</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp">
+      <small>负誓·奥吉尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
       <small>茉夏</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：来自雾境</div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>
@@ -341,33 +369,33 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
   <div class="zt"><h3>第五禁区</h3><span>▼ 通关 36 人 · 该区共 1,987 队 · 最高分 115 · 中位 90</span></div>
   <div class="zbody">
     <div><div class="ttl">冠军配队 · 第 1 名 · 115 分</div>
-      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot-catena.webp">
-      <small>血链·希洛</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
-      <small>泰旖丝</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot.webp">
-      <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
+      <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot-catena.webp">
+      <small>血链·希洛</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
+      <small>泰旖丝</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot.webp">
+      <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
       <small>阿拉克涅</small><u>+15</u></div></div>
       <div class="mini" style="margin-top:5px">钥令：<b>唯一的种子</b></div>
     </div>
     <div><div class="ttl">最热门配队 Top 3</div>
-      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/goliath.webp">
-      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tulu.webp">
-      <small>图鲁</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/miryam.webp">
-      <small>弥利亚姆</small><u>+5</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u>+15</u></div></div><span class="cnt">94 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy.webp">
-      <small>墨菲</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vortice.webp">
-      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/saya.webp">
-      <small>沙耶</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/salvador.webp">
-      <small>萨尔瓦多</small><u>+3</u></div></div><span class="cnt">70 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/pollux.webp">
-      <small>波吕克斯</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/castor.webp">
-      <small>卡斯托尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/clementine.webp">
+      <div class="hotline"><span class="rk">1</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/tulu.webp">
+      <small>图鲁</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+5</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+15</u></div></div><span class="cnt">94 队</span></div><div class="hotline"><span class="rk">2</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy.webp">
+      <small>墨菲</small><u>+8</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/vortice.webp">
+      <small>莫丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp">
+      <small>沙耶</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/salvador.webp">
+      <small>萨尔瓦多</small><u>+3</u></div></div><span class="cnt">70 队</span></div><div class="hotline"><span class="rk">3</span><div class="mem" style="display:inline-flex"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/pollux.webp">
+      <small>波吕克斯</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp">
+      <small>卡斯托尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp">
       <small>克莱门汀</small><u>+15</u></div></div><span class="cnt">42 队</span></div>
     </div>
     <div><div class="ttl">最快通关 ▼ (16 回合)</div>
-      <div class="mini">&lt;#7FC&gt;魔龙 · 第 7 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot-catena.webp">
-      <small>血链·希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
-      <small>泰旖丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/helot.webp">
-      <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
+      <div class="mini">&lt;#7FC&gt;魔龙 · 第 7 名</div><div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot-catena.webp">
+      <small>血链·希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
+      <small>泰旖丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/helot.webp">
+      <small>希洛</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
       <small>阿拉克涅</small><u>+15</u></div></div><div class="mini" style="margin-top:4px">钥令：唯一的种子</div>
     </div>
     <div><div class="ttl">出场 Top 6 唤醒体</div>

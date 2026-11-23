@@ -419,7 +419,18 @@ def analyse(season):
                    'token': keeper_token(best[0]),
                    'members': [{'zh': m['zh'], 'en': m['en'], 'potency': m['potency']} for m in best[1]]})
     my.sort(key=lambda x: (x['count'], -x['score']))
-    res['mysteryLineups'] = my[:5]
+    # one lineup per zone first, so the five cards are not all from the same zone
+    picked, used = [], set()
+    for x in my:
+        if x['wave'] and x['wave'] not in used and len(picked) < 5:
+            used.add(x['wave'])
+            picked.append(x)
+    for x in my:
+        if len(picked) >= 5:
+            break
+        if x not in picked:
+            picked.append(x)
+    res['mysteryLineups'] = picked[:5]
 
     # enlightenment spread on ▼ + SSS (per awakener appearance in those battles)
     enl = defaultdict(lambda: Counter())
@@ -439,6 +450,8 @@ def analyse(season):
     enl_threat = {'▼': Counter(), 'SSS': Counter()}
     pot_zone = defaultdict(list)
     pot_all = []
+    pot_sum = Counter()     # per awakener summed potency, for the exact average
+    pot_cnt = Counter()
     pot_round = []          # (该队平均启灵, 该队回合数) on ▼+SSS
     for r in teams:
         t = threat_of(names, r['response']['stageTid'])
@@ -454,6 +467,8 @@ def analyse(season):
             enl2[tid][cls] += 1
             enl_all[cls] += 1
             enl_threat[t][cls] += 1
+            pot_sum[tid] += p
+            pot_cnt[tid] += 1
             pot_all.append(p)
             pots.append(p)
             if w:
@@ -464,10 +479,12 @@ def analyse(season):
     rows = []
     for tid, c in enl2.items():
         tot = sum(c.values())
-        if tot < 20:
-            continue
+        # keep every awakener that showed up in a ▼/SSS team, no sample-size cut-off:
+        # the spread itself is the story, and tiny samples are flagged in the footnote
         rows.append({'tid': tid, 'zh': names['aw'].get(tid, ('', ''))[1], 'en': names['aw'].get(tid, ('', ''))[0],
                      'n': tot, 'p12': round(c.get('12+', 0) / tot * 100, 1),
+                     'avg': round(pot_sum[tid] / pot_cnt[tid], 2) if pot_cnt[tid] else None,
+                     'small': tot < 20,
                      'dist': {k: c.get(k, 0) for k in ('0-2', '3-5', '6-8', '9-11', '12+')}})
     rows.sort(key=lambda x: (-x['p12'], -x['n']))
     res['enlight'] = rows
@@ -517,6 +534,8 @@ def analyse(season):
     zero_down = [t for t in all_chars if down_chars.get(t, 0) == 0]
     zero_both = [t for t in all_chars if sss_down_chars.get(t, 0) == 0]
     res['niche'] = {
+        'allChars': len(all_chars),
+        'hardChars': len(enl2),
         'zeroDown': [{'zh': names['aw'].get(t, ('', ''))[1], 'en': names['aw'].get(t, ('', ''))[0]} for t in zero_down],
         'zeroBoth': [{'zh': names['aw'].get(t, ('', ''))[1], 'en': names['aw'].get(t, ('', ''))[0]} for t in zero_both],
         'leastDown': sorted([{'zh': names['aw'].get(t, ('', ''))[1], 'en': names['aw'].get(t, ('', ''))[0], 'n': down_chars.get(t, 0), 'all': char_use[t]}

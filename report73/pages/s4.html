@@ -35,10 +35,10 @@ h2.lead small{display:block;font-size:44px}
 .h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
   padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
 .h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
-.bars{display:flex;align-items:flex-end;gap:2.5px;height:272px;padding-top:8px}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
 .bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
-.bars .b i{position:absolute;left:0;right:0;bottom:-14px;font-style:normal;font-size:7.5px;color:#6f5c45;
-  text-align:center;transform:rotate(-90deg);transform-origin:center}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
 .bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -93,7 +93,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .rank1 li span:last-child{color:#a1281b;font-weight:700}
 /* spread 3/4 */
 .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.rec{padding:9px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
 .rec:nth-child(3n){border-right:0}
 .rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
 .rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -124,6 +124,25 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .enl1 .enlrow .track{height:12.5px}
 .enl1 .enlrow .pc{font-size:11.5px}
 .enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
+  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
+.myinfo span{color:#7b6750;text-align:right}
+.myinfo b{color:#a1281b;text-align:right}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
 .ovw{margin-bottom:10px}
 .ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
 .ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
@@ -140,7 +159,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
 .zavg .v{text-align:right;font-weight:700;font-size:11.5px}
 .zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
-.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:5.5px 0}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
 .thcmp{margin-top:4px}
 .thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
 .thcmp .bar{display:flex;height:15px;background:#e9dfc8}
@@ -157,11 +176,20 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .cmp .c b s{text-decoration:none;color:#a1281b}
 .cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
 .up{color:#a1281b}.down{color:#3d6b46}
-.hz{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:6px;font-size:11px;padding:3.5px 0;
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
   border-bottom:1px solid #ddd0b6}
-.hz .track{height:13px;display:flex;align-items:center;gap:2px}
-.hz .bar{height:11px;background:#3d6b46}
-.hz .bar2{height:11px;background:#a1281b}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
 .close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
 .close>div{padding:8px 12px;border-right:1px solid #c3b393}
 .close>div:last-child{border-right:0}
@@ -171,57 +199,77 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
 </style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 4 版 / 共 6 版</div><div>熔铸快讯 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
   <h1>忘忘看报</h1><div class="rule"></div><div class="kicker">融灾第 73 期 ·「超维戒指」· 2026 年 11 月 9 日 — 11 月 22 日 · 终核特刊</div></div>
-<h2 class="lead">狂癫难度里，2 位唤醒体<br><small>一次都没出场</small></h2>
-<div class="sub">本版统计「狂癫」（▼）与 SSS 难度的队伍（含通关队与额外队）：共 1,002 队 ▼、329 队 SSS 通关队，47 个出场过的唤醒体里只有 47 个在 ▼ 与 SSS 里留下记录。</div>
+<h2 class="lead">癫狂难度里，2 位唤醒体<br><small>一次都没出场</small></h2>
+<div class="sub">本版统计「癫狂」（▼）与 SSS 难度的队伍（含通关队与额外队）：共 <b>1,002</b> 队 ▼、<b>329</b> 队 SSS 通关队。全部 62 个出场过的唤醒体里，只有 61 个在 ▼ / SSS 露过面，其中又有 <b>2</b> 个一次 ▼ 都没打。</div>
 <div class="hr2"></div>
-<div class="h">狂癫（▼）零出场 <em>本期有出场但 ▼ 队里一次未出现</em></div>
+<div class="h">癫狂（▼）零出场 <em>本期有出场但 ▼ 队里一次未出现</em></div>
 <div style="display:flex;align-items:center;gap:16px;margin:6px 0 12px">
-  <div class="mem"><div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///H:/work/tmp/s73p/assets/morimens/portraits/caecus.webp"><small>凯刻斯</small></div><div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///H:/work/tmp/s73p/assets/morimens/portraits/tinct.webp"><small>汀克特</small></div></div>
+  <div class="mem"><div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/caecus.webp"><small>凯刻斯</small></div><div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/tinct.webp"><small>汀克特</small></div></div>
   <div class="mini" style="flex:1;border-left:1px solid #c3b393;padding-left:14px">
-    <b>凯刻斯</b>：全部 544 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打狂癫。<br><b>汀克特</b>：全部 121 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打狂癫。
+    <b>凯刻斯</b>：全部 544 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打癫狂。<br><b>汀克特</b>：全部 121 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打癫狂。
     <br><b>汀克特</b>更极端：▼ 与 SSS 两档加起来一次都没出现，只出现在 SS 及以下。
   </div>
 </div>
-<div class="h">狂癫（▼）出场最少 Top 8 <em>括号内为全部禁区的出场队伍数</em></div>
+<div class="h">癫狂（▼）出场最少 Top 8 <em>括号内为全部禁区的出场队伍数</em></div>
 <table class="ftbl" style="margin-bottom:12px"><thead><tr><th>唤醒体</th><th>▼ 出场队伍</th><th>全部出场</th><th>▼ 占比</th></tr></thead><tbody>
 <tr><td>凯刻斯</td><td>0</td><td>544</td><td>0.0%</td></tr><tr><td>汀克特</td><td>0</td><td>121</td><td>0.0%</td></tr><tr><td>法洛思</td><td>1</td><td>173</td><td>0.6%</td></tr><tr><td>莉兹</td><td>1</td><td>73</td><td>1.4%</td></tr><tr><td>达芙黛尔</td><td>2</td><td>109</td><td>1.8%</td></tr><tr><td>尤乌哈希</td><td>2</td><td>41</td><td>4.9%</td></tr><tr><td>珊</td><td>3</td><td>273</td><td>1.1%</td></tr><tr><td>旺达</td><td>3</td><td>255</td><td>1.2%</td></tr>
 </tbody></table>
 <div class="h">神秘配队 Top 5 <em>▼ + SSS 难度里只有一队使用的阵容</em></div>
-<div class="zblock" style="margin-bottom:6px"><div class="zt"><h3 style="font-size:15px">1. 负誓·奥吉尔 队</h3><span>第 14 名 · 110 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr"><div style="display:flex;align-items:center;gap:22px">
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ogier-oathbound.webp">
-      <small>负誓·奥吉尔</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/pickman.webp">
-      <small>皮克曼</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
-      <small>泰旖丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ryker.webp">
+<div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">1. 负誓·奥吉尔 队</h3><span>第 14 名 · 110 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:6px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp">
+      <small>负誓·奥吉尔</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pickman.webp">
+      <small>皮克曼</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
+      <small>泰旖丝</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ryker.webp">
       <small>莱克</small><u>+4</u></div></div>
-  <div class="mini" style="text-align:right;white-space:nowrap">第五禁区 · ▼ 通关<br>钥令：<b>永续新篇</b></div>
-</div></div></div><div class="zblock" style="margin-bottom:6px"><div class="zt"><h3 style="font-size:15px">2. 墨菲 队</h3><span>第 34 名 · 110 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr"><div style="display:flex;align-items:center;gap:22px">
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy.webp">
-      <small>墨菲</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vortice.webp">
-      <small>莫丝</small><u>+7</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/casiah.webp">
-      <small>卡茜亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/winkle.webp">
-      <small>温柯尔</small><u>+15</u></div></div>
-  <div class="mini" style="text-align:right;white-space:nowrap">第五禁区 · ▼ 通关<br>钥令：<b>溺亡的纯真</b></div>
-</div></div></div><div class="zblock" style="margin-bottom:6px"><div class="zt"><h3 style="font-size:15px">3. 阿拉克涅 队</h3><span>第 140 名 · 110 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr"><div style="display:flex;align-items:center;gap:22px">
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/arachne.webp">
-      <small>阿拉克涅</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ramona.webp">
-      <small>拉蒙娜</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/horla.webp">
-      <small>奥尔拉</small><u>+3</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/ogier-oathbound.webp">
-      <small>负誓·奥吉尔</small><u>+15</u></div></div>
-  <div class="mini" style="text-align:right;white-space:nowrap">第五禁区 · ▼ 通关<br>钥令：<b>永续新篇</b></div>
-</div></div></div><div class="zblock" style="margin-bottom:6px"><div class="zt"><h3 style="font-size:15px">4. 克珀珊特 队</h3><span>第 208 名 · 110 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr"><div style="display:flex;align-items:center;gap:22px">
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/corposant.webp">
-      <small>克珀珊特</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/casiah.webp">
-      <small>卡茜亚</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/murphy-fauxborn.webp">
-      <small>诞妄·墨菲</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/winkle.webp">
-      <small>温柯尔</small><u>+15</u></div></div>
-  <div class="mini" style="text-align:right;white-space:nowrap">第五禁区 · ▼ 通关<br>钥令：<b>纯白初遇</b></div>
-</div></div></div><div class="zblock" style="margin-bottom:6px"><div class="zt"><h3 style="font-size:15px">5. 雷娅 队</h3><span>第 362 名 · 110 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr"><div style="display:flex;align-items:center;gap:22px">
-  <div class="mem"><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/leigh.webp">
-      <small>雷娅</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/caraboo.webp">
-      <small>卡拉布</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/thais.webp">
-      <small>泰旖丝</small><u>+15</u></div><div class="m"><img src="file:///H:/work/tmp/s73p/assets/morimens/portraits/vortice.webp">
-      <small>莫丝</small><u>+15</u></div></div>
-  <div class="mini" style="text-align:right;white-space:nowrap">第五禁区 · ▼ 通关<br>钥令：<b>溺亡的纯真</b></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第五禁区</b>
+    <span>难度</span><b>▼ 通关</b>
+    <span>钥令</span><b>永续新篇</b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">2. 奥瑞塔 队</h3><span>第 7 名 · 105 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:6px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/aurita.webp">
+      <small>奥瑞塔</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第三禁区</b>
+    <span>难度</span><b>▼ 通关</b>
+    <span>钥令</span><b>奥瑞塔的宝藏</b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">3. 凯蒂古拉 队</h3><span>第 3 名 · 100 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:6px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/kathigu-ra.webp">
+      <small>凯蒂古拉</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/erica.webp">
+      <small>艾瑞卡</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp">
+      <small>克莱门汀</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第二禁区</b>
+    <span>难度</span><b>▼ 通关</b>
+    <span>钥令</span><b>不落的太阳</b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">4. 波吕克斯 队</h3><span>第 5 名 · 95 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:6px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pollux.webp">
+      <small>波吕克斯</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp">
+      <small>卡斯托尔</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/faint.webp">
+      <small>菲茵特</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/erica.webp">
+      <small>艾瑞卡</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第一禁区</b>
+    <span>难度</span><b>▼ 通关</b>
+    <span>钥令</span><b>短暂的永恒</b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">5. 阿拉克涅 队</h3><span>第 53 名 · 100 分 · 全服仅 2 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:6px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+3</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u>+0</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier.webp">
+      <small>奥吉尔</small><u>+15</u></div><div class="m" style="width:46px"><img style="width:46px;height:46px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
+      <small>茉夏</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第四禁区</b>
+    <span>难度</span><b>SSS 通关</b>
+    <span>钥令</span><b>来自雾境</b>
+  </div>
 </div></div></div>
 <div class="hr2" style="margin-top:8px"></div>
 <div class="h">神秘数据 <em>▼ + SSS 通关战斗之最</em></div>

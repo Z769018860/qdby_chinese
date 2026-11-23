@@ -35,10 +35,10 @@ h2.lead small{display:block;font-size:44px}
 .h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
   padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
 .h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
-.bars{display:flex;align-items:flex-end;gap:2.5px;height:272px;padding-top:8px}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
 .bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
-.bars .b i{position:absolute;left:0;right:0;bottom:-14px;font-style:normal;font-size:7.5px;color:#6f5c45;
-  text-align:center;transform:rotate(-90deg);transform-origin:center}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
 .bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
@@ -54,7 +54,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .hall .item b{color:#a1281b}
 .zone{margin-top:4px}
 .zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
-  padding:5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+  padding:8px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
 .zonerow .nm{font-weight:800;font-size:12.5px}
 .zonerow .num b{color:#a1281b;font-size:13px}
 .zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
@@ -93,7 +93,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .rank1 li span:last-child{color:#a1281b;font-weight:700}
 /* spread 3/4 */
 .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.rec{padding:9px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
 .rec:nth-child(3n){border-right:0}
 .rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
 .rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
@@ -103,7 +103,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rankbox .h{margin-bottom:6px}
-.rankrow{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
 .rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
 .rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
@@ -124,6 +124,25 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .enl1 .enlrow .track{height:12.5px}
 .enl1 .enlrow .pc{font-size:11.5px}
 .enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:24px 112px 1fr 52px;gap:8px;font-size:13px;padding:6.55px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:grid;grid-template-columns:auto auto;gap:2px 14px;margin-left:auto;font-size:10.5px;
+  align-items:baseline;border-left:1px solid #c3b393;padding-left:18px}
+.myinfo span{color:#7b6750;text-align:right}
+.myinfo b{color:#a1281b;text-align:right}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
 .ovw{margin-bottom:10px}
 .ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
 .ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
@@ -140,7 +159,7 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
 .zavg .v{text-align:right;font-weight:700;font-size:11.5px}
 .zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
-.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:5.5px 0}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
 .thcmp{margin-top:4px}
 .thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
 .thcmp .bar{display:flex;height:15px;background:#e9dfc8}
@@ -157,11 +176,20 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .cmp .c b s{text-decoration:none;color:#a1281b}
 .cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
 .up{color:#a1281b}.down{color:#3d6b46}
-.hz{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:6px;font-size:11px;padding:3.5px 0;
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
   border-bottom:1px solid #ddd0b6}
-.hz .track{height:13px;display:flex;align-items:center;gap:2px}
-.hz .bar{height:11px;background:#3d6b46}
-.hz .bar2{height:11px;background:#a1281b}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
 .close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
 .close>div{padding:8px 12px;border-right:1px solid #c3b393}
 .close>div:last-child{border-right:0}
@@ -177,9 +205,9 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
   <div class="c"><span>525 满分</span><b>8</b><b style="font-size:13px;color:#6a5740">6</b><i class="up">+2</i></div>
   <div class="c"><span>≥ 500 分</span><b>36</b><b style="font-size:13px;color:#6a5740">42</b><i class="down">-6</i></div>
   <div class="c"><span>≥ 450 分</span><b>611</b><b style="font-size:13px;color:#6a5740">694</b><i class="down">-83</i></div>
-  <div class="c"><span>平均分</span><b>422.1</b><b style="font-size:13px;color:#6a5740">430.3</b><i class="down">-8.199999999999989</i></div>
+  <div class="c"><span>平均分</span><b>422.1</b><b style="font-size:13px;color:#6a5740">430.3</b><i class="down">-8.2</i></div>
   <div class="c"><span>中位分</span><b>415</b><b style="font-size:13px;color:#6a5740">425</b><i class="down">-10</i></div>
-  <div class="c"><span>▽ 通关总数</span><b>1002</b><b style="font-size:13px;color:#6a5740">724</b><i class="up">+38%</i></div>
+  <div class="c"><span>▼ 通关总数</span><b>1002</b><b style="font-size:13px;color:#6a5740">724</b><i class="up">+38%</i></div>
 </div>
 <div class="hr2" style="margin-top:12px"></div>
 <div class="pair">
@@ -197,32 +225,22 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 <div class="hr" style="margin-top:10px"></div>
 <div class="two">
   <div><div class="h">各禁区 ▼ 通关人数 <em>73 期（红）对 72 期（绿）</em></div>
-    <div class="hz"><span>第一禁区</span><span class="track">
-        <span class="bar2" style="width:32.23388305847077%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">215</span>
-        <span class="bar" style="width:19.490254872563717%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">130</span>
-      </span><span style="text-align:right;font-size:10px;color:#a1281b">+65%</span></div><div class="hz"><span>第二禁区</span><span class="track">
-        <span class="bar2" style="width:7.19640179910045%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">48</span>
-        <span class="bar" style="width:9.145427286356822%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">61</span>
-      </span><span style="text-align:right;font-size:10px;color:#a1281b">+-21%</span></div><div class="hz"><span>第三禁区</span><span class="track">
-        <span class="bar2" style="width:100%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">667</span>
-        <span class="bar" style="width:64.16791604197901%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">428</span>
-      </span><span style="text-align:right;font-size:10px;color:#a1281b">+56%</span></div><div class="hz"><span>第四禁区</span><span class="track">
-        <span class="bar2" style="width:5.397301349325337%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">36</span>
-        <span class="bar" style="width:7.796101949025487%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">52</span>
-      </span><span style="text-align:right;font-size:10px;color:#a1281b">+-31%</span></div><div class="hz"><span>第五禁区</span><span class="track">
-        <span class="bar2" style="width:5.397301349325337%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">36</span>
-        <span class="bar" style="width:7.946026986506746%"></span>
-        <span style="font-size:9.5px;color:#6a5740;margin-left:4px">53</span>
-      </span><span style="text-align:right;font-size:10px;color:#a1281b">+-32%</span></div>
+    <div class="hz"><span class="zl">第一禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:32.23388305847077%"></i><em>215</em></span>
+        <span class="line"><i class="bar" style="width:19.490254872563717%"></i><em>130</em></span>
+      </span><span class="dl">+65%</span></div><div class="hz"><span class="zl">第二禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:7.19640179910045%"></i><em>48</em></span>
+        <span class="line"><i class="bar" style="width:9.145427286356822%"></i><em>61</em></span>
+      </span><span class="dl">+-21%</span></div><div class="hz"><span class="zl">第三禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:100%"></i><em>667</em></span>
+        <span class="line"><i class="bar" style="width:64.16791604197901%"></i><em>428</em></span>
+      </span><span class="dl">+56%</span></div><div class="hz"><span class="zl">第四禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:5.397301349325337%"></i><em>36</em></span>
+        <span class="line"><i class="bar" style="width:7.796101949025487%"></i><em>52</em></span>
+      </span><span class="dl">+-31%</span></div><div class="hz"><span class="zl">第五禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:5.397301349325337%"></i><em>36</em></span>
+        <span class="line"><i class="bar" style="width:7.946026986506746%"></i><em>53</em></span>
+      </span><span class="dl">+-32%</span></div>
   </div>
   <div><div class="h">最快 ▼ 通关 <em>回合数</em></div>
     <table class="ftbl"><thead><tr><th>禁区</th><th>73 期</th><th>72 期</th></tr></thead><tbody>
@@ -253,11 +271,11 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 </div>
 <div class="close">
   <div><div class="k">涨得最猛</div><div class="v">第一禁区 <b>+65%</b></div>
-    <div class="d">▼ 通关 130 → 215 人，是五个禁区里唯一翻倍级的增长；第四、第五禁区各只有 +31% / +32%。</div></div>
-  <div><div class="k">分数整体上移，高分段反而变薄</div><div class="v">中位 <b>405 → 415</b></div>
-    <div class="d">平均分 413.3 → 422.1、中位分 405 → 415，但 ≥450 分的人数从 649 掉到 611，≥500 分从 42 掉到 36。</div></div>
+    <div class="d">▼ 通关 130 → 215 人；第三禁区同样从 428 涨到 667（+56%）。反过来第二、四、五禁区各退了 21% / 31% / 32%，五区合计 724 → 1002。</div></div>
+  <div><div class="k">分数线整体下移，顶端更集中</div><div class="v">中位 <b>425 → 415</b></div>
+    <div class="d">平均 430.3 → 422.1，≥450 分从 694 掉到 611；但 525 满分反从 6 人增到 8 人，500 分以上却从 42 降到 36。</div></div>
   <div><div class="k">极限被抬高</div><div class="v">单场 <b>5,556 万 → 8,262 万</b></div>
-    <div class="d">单回合最高伤害 4,101 万 → 4,676 万，单场总伤害 +49%；死扛纪录仍是 9 次，两期持平。</div></div>
+    <div class="d">单回合最高伤害 4,101 万 → 4,676 万（+14%），单场总伤害 +49%；死扛纪录仍是 9 次。</div></div>
 </div>
 <div class="foot">口径：两期均按各自终榜 Top 2000 统计；▼ 通关数为五个禁区 ▼ 难度通关队伍之和；出场率括号内为第 72 期同口径数据。制图：忘忘看报。</div>
 </div></body></html>
