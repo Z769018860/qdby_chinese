@@ -547,65 +547,95 @@ def analyse(season):
                              for t in all_chars], key=lambda x: (x['n'], -x['all']))[:8],
     }
 
-    # ---- 低配榜（第 7 版）：按玩家总分分档，取启灵总和最低的 ▼ 通关阵容
+    # ---- 低配榜（第 7 版）：各禁区 SSS/▼ 的最低配阵容 + 各分数段最省玩家的全部队伍
     def pot_of(r):
         return sum((m['potency'] or 0) for m in parse_team(r['response']['team'], names))
 
     def row_rounds(r):
         return ((r['response']['team'].get('recordStageData') or {}).get('stageRoundCount') or 0)
 
-    down_all = [r for r in teams if threat_of(names, r['response']['stageTid']) == '▼']
-    down_pots = sorted(pot_of(r) for r in down_all)
-    bands = []
-    for lo, hi, label in ((500, 10000, '500–525'), (475, 500, '475–500'), (450, 475, '450–475')):
-        sel = [r for r in down_all if lo <= ranks[r['uid']]['score'] < hi]
-        pots = sorted(pot_of(r) for r in sel)
+    def lineup_key(mem):
+        return '|'.join(sorted(m['tid'] for m in mem))
+
+    def pick_proto(r):
+        mem = parse_team(r['response']['team'], names)
+        return {
+            'wave': zone_of(names, r['response']['stageTid']),
+            'threat': threat_of(names, r['response']['stageTid']),
+            'rounds': row_rounds(r), 'zoneScore': r['response']['score'],
+            'total': ranks[r['uid']]['score'], 'rank': r['rank'], 'name': ranks[r['uid']]['name'],
+            'potSum': pot_of(r), 'token': keeper_token(r),
+            'members': [{'zh': m['zh'], 'en': m['en'], 'potency': m['potency'], 'borrowed': m['borrowed']}
+                        for m in mem],
+        }
+
+    def cheapest(sel, n=3):
         picks, seen = [], set()
-        for r in sorted(sel, key=lambda r: (pot_of(r), -row_rounds(r))):
-            mem = parse_team(r['response']['team'], names)
-            key = '|'.join(sorted(m['tid'] for m in mem))
+        for r in sorted(sel, key=lambda r: (pot_of(r), -row_rounds(r), -r['response']['score'])):
+            key = lineup_key(parse_team(r['response']['team'], names))
             if key in seen:
                 continue
             seen.add(key)
-            picks.append({
-                'wave': zone_of(names, r['response']['stageTid']),
-                'rounds': row_rounds(r), 'zoneScore': r['response']['score'],
-                'total': ranks[r['uid']]['score'], 'rank': r['rank'],
-                'name': ranks[r['uid']]['name'], 'potSum': pot_of(r),
-                'token': keeper_token(r),
-                'members': [{'zh': m['zh'], 'en': m['en'], 'potency': m['potency'], 'borrowed': m['borrowed']} for m in mem],
-            })
-            if len(picks) >= 4:
+            picks.append(pick_proto(r))
+            if len(picks) >= n:
                 break
-        bands.append({
-            'label': label, 'lo': lo, 'hi': None if hi >= 10000 else hi,
-            'players': sum(1 for u in ranks if lo <= ranks[u]['score'] < hi),
-            'teams': len(sel),
-            'potMedian': statistics.median(pots) if pots else None,
-            'potMin': pots[0] if pots else None,
-            'picks': picks,
-        })
-    cheap_core = Counter()
-    cheap_zone = Counter()
-    cheap_n = 0
-    for r in down_all:
-        mem = parse_team(r['response']['team'], names)
-        if pot_of(r) > 25:
-            continue
-        cheap_n += 1
-        cheap_zone[zone_of(names, r['response']['stageTid'])] += 1
-        for m in mem:
-            cheap_core[m['tid']] += 1
+        return picks
+
+    zone_low = []
+    for w in range(1, 6):
+        blk = {'wave': w}
+        for t, key in (('▼', 'down'), ('SSS', 'sss')):
+            sel = [r for r in teams
+                   if zone_of(names, r['response']['stageTid']) == w
+                   and threat_of(names, r['response']['stageTid']) == t]
+            pots = sorted(pot_of(r) for r in sel)
+            blk[key] = {'teams': len(sel), 'potMin': pots[0] if pots else None,
+                        'potMedian': statistics.median(pots) if pots else None,
+                        'picks': cheapest(sel, 3)}
+        zone_low.append(blk)
+
+    down_all = [r for r in teams if threat_of(names, r['response']['stageTid']) == '▼']
+    down_pots = sorted(pot_of(r) for r in down_all)
+    sss_all = [r for r in teams if threat_of(names, r['response']['stageTid']) == 'SSS']
+    by_uid = defaultdict(list)
+    for r in teams:
+        by_uid[r['uid']].append(r)
+
+    bands = []
+    for lo, hi, label in ((500, 10000, '500–525'), (475, 500, '475–500'), (450, 475, '450–475')):
+        pool = []
+        for uid, rows_ in by_uid.items():
+            sc = ranks[uid]['score']
+            if not (lo <= sc < hi) or len(rows_) < 4:
+                continue
+            cost = sum(pot_of(r) for r in rows_)
+            pool.append((cost / len(rows_), -sc, uid, cost, rows_))
+        pool.sort(key=lambda x: (x[0], x[1]))
+        best = None
+        if pool:
+            avg, negsc, uid, cost, rows_ = pool[0]
+            items = sorted((pick_proto(r) for r in rows_), key=lambda x: (x['wave'] or 9, x['threat']))
+            best = {'name': ranks[uid]['name'], 'uid': uid, 'rank': ranks[uid]['rank'], 'score': -negsc,
+                    'avgPot': round(avg, 1), 'sumPot': cost, 'teams': len(rows_), 'items': items}
+        dsel = [r for r in down_all if lo <= ranks[r['uid']]['score'] < hi]
+        dpots = sorted(pot_of(r) for r in dsel)
+        bands.append({'label': label, 'lo': lo, 'hi': None if hi >= 10000 else hi,
+                      'players': sum(1 for u in ranks if lo <= ranks[u]['score'] < hi),
+                      'teams': sum(1 for r in teams if lo <= ranks[r['uid']]['score'] < hi),
+                      'downTeams': len(dsel),
+                      'potMedian': statistics.median(dpots) if dpots else None,
+                      'potMin': dpots[0] if dpots else None,
+                      'candPlayers': len(pool), 'best': best})
+
     res['lowcost'] = {
         'downN': len(down_all),
         'potMedian': statistics.median(down_pots) if down_pots else None,
         'potMin': down_pots[0] if down_pots else None,
+        'sssN': len(sss_all),
+        'sssMin': min((pot_of(r) for r in sss_all), default=None),
         'le': {str(t): sum(1 for x in down_pots if x <= t) for t in (15, 20, 25, 30)},
+        'zones': zone_low,
         'bands': bands,
-        'cheapN': cheap_n,
-        'cheapZone': [{'wave': w, 'n': cheap_zone.get(w, 0)} for w in range(1, 6)],
-        'core': [{'zh': names['aw'].get(t, ('', ''))[1], 'en': names['aw'].get(t, ('', ''))[0], 'n': n}
-                 for t, n in cheap_core.most_common(8)],
     }
     return res
 

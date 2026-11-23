@@ -23,8 +23,9 @@ await S('Page.enable'); await S('Runtime.enable');
 await S('Emulation.setDeviceMetricsOverride', { width: 1000, height: 1800, deviceScaleFactor: 2, mobile: false });
 await S('Page.navigate', { url: 'file:///' + path.join(HERE, 'pages', `s${pg}.html`).replace(/\\/g, '/') });
 await sleep(2200);
+const [selQ, idxQ] = sel.split('@@');
 const box = await S('Runtime.evaluate', {
-  expression: `(()=>{const el=document.querySelector(${JSON.stringify(sel)});if(!el)return 'none';const r=el.getBoundingClientRect();return JSON.stringify({x:r.x,y:r.y,w:r.width,h:r.height})})()`,
+  expression: `(()=>{const el=document.querySelectorAll(${JSON.stringify(selQ)})[${Number(idxQ) || 0}];if(!el)return 'none';const r=el.getBoundingClientRect();return JSON.stringify({x:r.x,y:r.y,w:r.width,h:r.height})})()`,
   returnByValue: true
 });
 const raw = box.result.result.value;
