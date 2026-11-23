@@ -5538,7 +5538,33 @@
          }
         ]
        }
+      ],
+      "top3": [
+       {
+        "name": "<#65F>Spooky",
+        "rank": 30,
+        "score": 500,
+        "avgPot": 24.6,
+        "teams": 5
+       },
+       {
+        "name": "Rondonite",
+        "rank": 31,
+        "score": 500,
+        "avgPot": 29.8,
+        "teams": 5
+       },
+       {
+        "name": "已区化",
+        "rank": 36,
+        "score": 500,
+        "avgPot": 33.0,
+        "teams": 5
+       }
       ]
+     },
+     "teamSpread": {
+      "5": 36
      }
     },
     {
@@ -5745,7 +5771,33 @@
          }
         ]
        }
+      ],
+      "top3": [
+       {
+        "name": "루녹스",
+        "rank": 85,
+        "score": 475,
+        "avgPot": 16.0,
+        "teams": 5
+       },
+       {
+        "name": "Sylvester",
+        "rank": 46,
+        "score": 490,
+        "avgPot": 19.2,
+        "teams": 5
+       },
+       {
+        "name": "灰烬魔女",
+        "rank": 44,
+        "score": 490,
+        "avgPot": 22.8,
+        "teams": 5
+       }
       ]
+     },
+     "teamSpread": {
+      "5": 57
      }
     },
     {
@@ -5952,7 +6004,33 @@
          }
         ]
        }
+      ],
+      "top3": [
+       {
+        "name": "Stella",
+        "rank": 567,
+        "score": 450,
+        "avgPot": 15.0,
+        "teams": 5
+       },
+       {
+        "name": "Lizie",
+        "rank": 497,
+        "score": 450,
+        "avgPot": 16.0,
+        "teams": 5
+       },
+       {
+        "name": "Lerok",
+        "rank": 432,
+        "score": 450,
+        "avgPot": 16.2,
+        "teams": 5
+       }
       ]
+     },
+     "teamSpread": {
+      "5": 518
      }
     }
    ]
@@ -11486,7 +11564,33 @@
          }
         ]
        }
+      ],
+      "top3": [
+       {
+        "name": "<#0CE>Rukia",
+        "rank": 9,
+        "score": 515,
+        "avgPot": 24.0,
+        "teams": 5
+       },
+       {
+        "name": "<#65F>Spooky",
+        "rank": 32,
+        "score": 500,
+        "avgPot": 28.6,
+        "teams": 5
+       },
+       {
+        "name": "已区化",
+        "rank": 12,
+        "score": 510,
+        "avgPot": 29.2,
+        "teams": 5
+       }
       ]
+     },
+     "teamSpread": {
+      "5": 42
      }
     },
     {
@@ -11693,7 +11797,33 @@
          }
         ]
        }
+      ],
+      "top3": [
+       {
+        "name": "Asator",
+        "rank": 61,
+        "score": 490,
+        "avgPot": 20.8,
+        "teams": 5
+       },
+       {
+        "name": "<#E57>Kizuno",
+        "rank": 74,
+        "score": 485,
+        "avgPot": 21.4,
+        "teams": 5
+       },
+       {
+        "name": "Camil",
+        "rank": 87,
+        "score": 480,
+        "avgPot": 21.6,
+        "teams": 5
+       }
       ]
+     },
+     "teamSpread": {
+      "5": 93
      }
     },
     {
@@ -11900,7 +12030,33 @@
          }
         ]
        }
+      ],
+      "top3": [
+       {
+        "name": "Abirvalg",
+        "rank": 198,
+        "score": 465,
+        "avgPot": 14.8,
+        "teams": 5
+       },
+       {
+        "name": "Leon",
+        "rank": 259,
+        "score": 460,
+        "avgPot": 15.8,
+        "teams": 5
+       },
+       {
+        "name": "Guava",
+        "rank": 455,
+        "score": 450,
+        "avgPot": 16.0,
+        "teams": 5
+       }
       ]
+     },
+     "teamSpread": {
+      "5": 559
      }
     }
    ]

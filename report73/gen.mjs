@@ -279,7 +279,9 @@ thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
 .bhead em{font-style:normal;font-size:9px;color:#5f4c36}
 .bhead .rt{margin-left:auto;font-size:9px;color:#4b3a28}
 .bhead .rt b{color:#a1281b}
-.bwho{padding:3px 10px;font-size:10px;color:#3c2c1c;border-bottom:1px solid #e2d7bd;background:#fbf7ec}
+.bwho{display:flex;align-items:baseline;gap:10px;padding:3px 10px;font-size:10px;color:#3c2c1c;border-bottom:1px solid #e2d7bd;background:#fbf7ec}
+.bwho .rt{margin-left:auto;white-space:nowrap;font-size:9px;color:#6a5740}
+.bwho .rt i{font-style:normal;color:#a1281b;font-weight:800}
 .bwho b{font-size:12px;font-family:"Source Han Serif SC","SimSun",serif}
 .bwho i{font-style:normal;color:#a1281b;font-weight:800}
 .bwho em{font-style:normal;font-size:9px;color:#7b6750}
@@ -720,7 +722,8 @@ const bband = (b) => {
   return `<div class="bband">
   <div class="bhead"><h3>${b.label} 分</h3><em>${b.players} 位玩家 · 队伍 ${b.teams} 支（▼ ${b.downTeams} 支）</em>
     <span class="rt">该档 ▼ 启灵中位 <b>${Math.round(b.potMedian)}</b> · 最省 <b>${b.potMin}</b></span></div>
-  <div class="bwho">最省玩家 <b>${esc(p.name)}</b>　第 ${p.rank} 名 · 总分 <i>${p.score}</i>　<em>全部 ${p.teams} 支队伍平均启灵</em> <i>${p.avgPot}</i> <em>· 合计 ${p.sumPot} / ${p.teams * 60}</em></div>
+  <div class="bwho"><span>最省玩家 <b>${esc(p.name)}</b>　第 ${p.rank} 名 · 总分 <i>${p.score}</i>　<em>全部 ${p.teams} 支队伍平均启灵</em> <i>${p.avgPot}</i> <em>· 合计 ${p.sumPot} / ${p.teams * 60}</em></span>
+    ${p.top3 && p.top3[1] ? `<span class="rt">该档次省 ${esc(p.top3[1].name)} <i>${p.top3[1].avgPot}</i>　第三 ${esc(p.top3[2] ? p.top3[2].name : '—')} <i>${p.top3[2] ? p.top3[2].avgPot : ''}</i></span>` : ''}</div>
   <div class="bcols" style="grid-template-columns:repeat(${p.items.length},1fr)">${p.items.map(it => `<div class="bcol">
     <div class="bch">${WAVE_NAME[it.wave]} <b>${it.threat}</b><span>${it.zoneScore} 分</span></div>
     ${memStack(it.members)}
@@ -744,16 +747,16 @@ const s7 = `<div class="page">${head(7, 7, stamp)}${mast(kicker)}
 <div class="h">一 · 各禁区的最低配阵容 <em>每格三条：该区该难度下启灵总和最低的三套，同阵容（不计站位）只算一次</em></div>
 ${LC.zones.map(zblock).join('')}
 <div class="hr2"></div>
-<div class="h">二 · 三档分数段里最省的玩家 <em>选出条件：该档内「全部队伍的平均启灵」最低，且至少提交四支队伍（本期三位都交满五支）</em></div>
+<div class="h">二 · 三档分数段里最省的玩家 <em>选出条件：该档内「全部队伍的平均启灵」最低，不设队伍数门槛——用总和排会让交得少的玩家天然占便宜</em></div>
 <div class="btot"><span>三档共 <b>${n0(LC.bands.reduce((a, b) => a + b.players, 0))}</b> 位玩家参与评比</span>
-  <span>三档最省玩家的队伍平均启灵：<b>${LC.bands.map(b => b.best.avgPot).join(' / ')}</b></span>
+  <span>三档最省玩家的平均启灵：<b>${LC.bands.map(b => b.best.avgPot).join(' / ')}</b></span>
   <span>每格右上是这支队伍在该区的得分</span></div>
 ${LC.bands.map(bband).join('')}
 <div class="note" style="font-size:9.6px;line-height:1.6;margin-top:2px">
-  读法：同一个分数段里，最省的玩家能把全部队伍的平均启灵压到该档 ▼ 中位的一半左右——500 分以上平均 <b>${LC.bands[0].best.avgPot}</b>（该档中位 ${Math.round(LC.bands[0].potMedian)}）、475–500 是 <b>${LC.bands[1].best.avgPot}</b>（中位 ${Math.round(LC.bands[1].potMedian)}）、450–475 是 <b>${LC.bands[2].best.avgPot}</b>（中位 ${Math.round(LC.bands[2].potMedian)}）。
-  禁区之间的差别比分数段更大：第五禁区 ▼ 全服最省也要 <b>${LC.zones[4].down.potMin}</b> 点启灵（中位 ${Math.round(LC.zones[4].down.potMedian)}），第三禁区 ▼ 最省只要 <b>${LC.zones[2].down.potMin}</b>——送分区才容得下低启灵硬吃；SSS 的极端值反而出现在第一禁区（<b>${LC.zones[0].sss.potMin}</b> 点）。第二、四、五禁区的 ▼ 队伍只有 ${Math.min(LC.zones[1].down.teams, LC.zones[3].down.teams, LC.zones[4].down.teams)}–${Math.max(LC.zones[1].down.teams, LC.zones[3].down.teams, LC.zones[4].down.teams)} 支，样本小，参考着看。
+  读法：一律比「平均启灵」——最省的玩家把全部队伍的平均启灵压到该档 ▼ 中位的一半以下（<b>${LC.bands.map(b => b.best.avgPot).join(' / ')}</b> 对 ${LC.bands.map(b => Math.round(b.potMedian)).join(' / ')}）。
+  禁区差别更大：第五禁区 ▼ 最省也要 <b>${LC.zones[4].down.potMin}</b> 点（中位 ${Math.round(LC.zones[4].down.potMedian)}），第三禁区只要 <b>${LC.zones[2].down.potMin}</b>，SSS 的极端值在第一禁区（<b>${LC.zones[0].sss.potMin}</b> 点）；第二、四、五禁区 ▼ 只有 ${Math.min(LC.zones[1].down.teams, LC.zones[3].down.teams, LC.zones[4].down.teams)}–${Math.max(LC.zones[1].down.teams, LC.zones[3].down.teams, LC.zones[4].down.teams)} 支，样本小。全服只交三、四支队伍的 49 位玩家总分都在 450 以下，本就不进这三档。
 </div>
-<div class="foot">口径：「启灵总和」= 队伍四名唤醒体的潜能等级之和（每人 0-15，满配 60）。第一段每格取该禁区该难度（▼ 癫狂 / SSS）全服所有队伍里启灵总和最低的三套，同阵容（不计站位）只取一次，附排名、该玩家总分与该场回合数；第二段按玩家五个禁区的结算总分分档（500–525 / 475–500 / 450–475），取该档内「全部队伍启灵总和 ÷ 队伍数」最低且提交满四支的玩家，列出他提交的全部队伍。只统计终榜 Top 2000 内玩家。制图：忘忘看报。</div>
+<div class="foot">口径：「启灵总和」= 队伍四名唤醒体的潜能等级之和（每人 0-15，满配 60）。第一段每格取该禁区该难度（▼ 癫狂 / SSS）全服所有队伍里启灵总和最低的三套，同阵容（不计站位）只取一次，附排名、该玩家总分与该场回合数；第二段按玩家五个禁区的结算总分分档（500–525 / 475–500 / 450–475），按「全部队伍启灵总和 ÷ 队伍数」即平均启灵排序，取该档最低的一位（不设队伍数门槛），列出他提交的全部队伍。只统计终榜 Top 2000 内玩家。制图：忘忘看报。</div>
 </div>`;
 
 const pages = [s1, s2, s3, s4, s5, s6, s7];

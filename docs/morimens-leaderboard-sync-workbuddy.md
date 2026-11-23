@@ -198,7 +198,7 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
 - 成本统一用「启灵总和」= 队伍四人 `potencyLevel` 之和（0-60，满配 60）。全服 1002 支 ▼ 队伍中位 37、≤25 的 204 支、最低 7；329 支 SSS 里最低只要 4。
 - **上半段：各禁区 × ▼/SSS 的最低配三套**（`lowcost.zones[].down` / `.sss`）——按启灵总和升序、同阵容（tid 集合，不计站位）去重取 3 套，`picks[]` 附玩家排名、总分、该场回合数与该区得分。
   小样本要有心理准备：第二/四/五禁区的 ▼ 队伍只有 48/36/36 支，第三名常常比最低配高出一大截（第四禁区 22 → 24 → 46），版面按真实顺序照列，不要为了好看把高成本的删掉或补位。
-- **下半段：三档分数段里「最省玩家」的全部队伍**（`lowcost.bands[].best`）——分档 500–525 / 475–500 / 450–475；候选条件 `len(rows) >= 4`，排序键 = 该玩家全部队伍的启灵总和 ÷ 队伍数，取最小；`items[]` 是他提交的每一支队伍（禁区、难度、阵容、启灵总和、回合数、该区得分）。**别把 `total`（玩家总分）当该区得分写进卡片右上**，那里用 `zoneScore`。
+- **下半段：三档分数段里「最省玩家」的全部队伍**（`lowcost.bands[].best`）——分档 500–525 / 475–500 / 450–475；排序键 = 该玩家全部队伍的启灵总和 ÷ 队伍数（**平均启灵，不设队伍数门槛**：按总和排会让只交三四支的队伍天然占便宜，比出来的是「交得少」而不是「配得省」），取最小；`bands[].best.top3` 存前三名、`bands[].teamSpread` 存该档玩家提交队伍数的分布；`items[]` 是他提交的每一支队伍（禁区、难度、阵容、启灵总和、回合数、该区得分）。**别把 `total`（玩家总分）当该区得分写进卡片右上**，那里用 `zoneScore`。
 - 版面：上半每格两列（▼ 癫狂 / SSS），行 = 四名唤醒体（头像 + 名字 + `+启灵`）+ 右对齐「启灵总和 /60 · 第 N 名 · 总分 · 回合」；下半每档一张卡、五列（玩家五支队伍）。`node report73/measure.mjs 7` 的 `gap` 控制在 40~70px，`check.mjs` 的 overlap 为负即可。
 
 ### 图标与头像（2026-11-23 加）
@@ -208,3 +208,12 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
 - **唤醒体 `"24"` 带引号**，tier-pool 里是 `24`，取图要剥引号；否则会渲染成灰块。
 - **钥令图标是灰色剪影**（`posse/Icon/KeyToken_*.webp`）：用 `filter:brightness(.42)` 压暗才看得清，而且**不能给 img 元素加背景色**——filter 会把背景一起压黑，看起来是个黑方块。
 - 造物榜一律排除 `超维戒指 / 血肉戒指 / 混沌戒指 / 锈蚀钥匙`（`CREATION_SKIP`）：前者人人必备，后者是货币类道具、不属于配装选择。
+
+### 助战索引（`scripts/build_assist_index.mjs`，2026-11-23 修）
+
+- 目标：把每期 usage 数据里「借用的助战成员」单独抽成 `data/morimens/eremora/assist/<key>.json`，页面「互助助战列表」优先读它，读不到才回退整包（几十 MB）。
+- **第 71 期起 usage 换成了 `gzip-base64-chunked-v2`（表池压缩）**，脚本原先只认 v1，抛 `unsupported format` 后 `index.json` 是最后才写的，于是 71/72/73 三期一个都没登记，页面只能回退整包（体感就是切期特别慢）。
+- `loadDataset()` 现在两种格式都吃：v2 解 gzip 后交给 `expandV2()`（`decode_records()` 的 JS 移植，与 `pack_morimens_usage_v2.py`、`morimens-dtide-loader.js` 的 expandV2 三处保持同步），还原成和 v1 一样的 `records[].waves[].teams[].members[]`。
+- **v2 的成员没有 `skeydbId`**：只有 `tid`（`chars[i][0]`）+ `ingameId` + 名字。脚本用 `data/morimens/skeydb/awakeners.json` 的 `ingameId → id` 反查补齐，否则页面按 `skeydbId` 找不到角色、头像会掉。补完后 71–73 的 `tids` 映射有 62 条（v1 那几期是 0，因为 v1 成员的 `id` 不是数字）。
+- 自检：`node scripts/build_assist_index.mjs` 每期打印一行 `key format records N -> M pool P`；71/72/73 的 providers 应在 1637~1653 之间（70 是 1646）。
+- 端到端验证：`python -m http.server 4200`（**别用仓库里的 `server.mjs`，它限流 240/min，页面一次要几百个模块会全 429**）→ 无头 Edge 打开 `http://127.0.0.1:4200/morimens-tools.html#assist` → 等 9 秒后调 `window.MorimensAssistList.open()`（hash 触发时模块还没 import 完）→ 看 `#assistSeason` 是否出现 71/72/73、`performance.getEntriesByType('resource')` 里是否出现 `assist/73.json`（出现即走的是瘦身路径）。

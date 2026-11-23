@@ -603,20 +603,26 @@ def analyse(season):
 
     bands = []
     for lo, hi, label in ((500, 10000, '500–525'), (475, 500, '475–500'), (450, 475, '450–475')):
+        # 只按「平均启灵」排，不设队伍数门槛：用总和会让交得少的玩家天然占便宜
         pool = []
         for uid, rows_ in by_uid.items():
             sc = ranks[uid]['score']
-            if not (lo <= sc < hi) or len(rows_) < 4:
+            if not (lo <= sc < hi):
                 continue
             cost = sum(pot_of(r) for r in rows_)
             pool.append((cost / len(rows_), -sc, uid, cost, rows_))
         pool.sort(key=lambda x: (x[0], x[1]))
         best = None
+        top3 = []
+        for avg, negsc, uid, cost, rows_ in pool[:3]:
+            top3.append({'name': ranks[uid]['name'], 'rank': ranks[uid]['rank'], 'score': -negsc,
+                         'avgPot': round(avg, 1), 'teams': len(rows_)})
         if pool:
             avg, negsc, uid, cost, rows_ = pool[0]
             items = sorted((pick_proto(r) for r in rows_), key=lambda x: (x['wave'] or 9, x['threat']))
             best = {'name': ranks[uid]['name'], 'uid': uid, 'rank': ranks[uid]['rank'], 'score': -negsc,
-                    'avgPot': round(avg, 1), 'sumPot': cost, 'teams': len(rows_), 'items': items}
+                    'avgPot': round(avg, 1), 'sumPot': cost, 'teams': len(rows_), 'items': items,
+                    'top3': top3}
         dsel = [r for r in down_all if lo <= ranks[r['uid']]['score'] < hi]
         dpots = sorted(pot_of(r) for r in dsel)
         bands.append({'label': label, 'lo': lo, 'hi': None if hi >= 10000 else hi,
@@ -625,7 +631,9 @@ def analyse(season):
                       'downTeams': len(dsel),
                       'potMedian': statistics.median(dpots) if dpots else None,
                       'potMin': dpots[0] if dpots else None,
-                      'candPlayers': len(pool), 'best': best})
+                      'candPlayers': len(pool), 'best': best,
+                      'teamSpread': dict(sorted(Counter(len(v) for u, v in by_uid.items()
+                                                       if lo <= ranks[u]['score'] < hi).items()))})
 
     res['lowcost'] = {
         'downN': len(down_all),
