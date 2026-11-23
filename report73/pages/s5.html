@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>融灾第73期特刊-第5版</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1000px;height:1800px;overflow:hidden}
+body{background:#f5efdf;color:#2b2118;font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.page{position:relative;width:1000px;height:1800px;padding:26px 34px 20px;}
+.serif{font-family:"Source Han Serif SC","Noto Serif SC","SimSun",serif}
+.head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#5d4b34;
+  border-bottom:1px solid #b9a884;padding-bottom:7px;letter-spacing:.5px}
+.head b{font-weight:700;color:#3c2c1c}
+.mast{margin:14px 0 0;text-align:center}
+.mast .latin{font-size:11.5px;letter-spacing:3.6px;color:#7c6444}
+.mast h1{font-family:"Source Han Serif SC","SimSun",serif;font-size:74px;font-weight:900;letter-spacing:8px;
+  line-height:1.05;color:#211a12;margin-top:2px;text-shadow:0 1px 0 #fff}
+.mast .rule{height:3px;background:#3c2c1c;margin:9px 62px 6px;position:relative}
+.mast .rule:after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:#3c2c1c}
+.kicker{font-size:14px;letter-spacing:1px;color:#4b3a28;padding:7px 0 0}
+h2.lead{font-family:"Source Han Serif SC","SimSun",serif;font-size:44px;line-height:1.22;font-weight:900;
+  color:#a1281b;text-align:center;margin:24px 0 10px;letter-spacing:1px}
+h2.lead small{display:block;font-size:44px}
+.sub{text-align:center;font-size:13px;color:#4c3b29;line-height:1.6;margin-bottom:16px}
+.sub b{color:#a1281b}
+.hr{height:1px;background:#c3b393;margin:12px 0}
+.hr2{height:2px;background:#3c2c1c;margin:10px 0 8px}
+.grid-stats{display:grid;grid-template-columns:repeat(6,1fr);border-top:2px solid #3c2c1c;border-bottom:2px solid #3c2c1c}
+.stat{padding:10px 8px;text-align:center;border-right:1px solid #c3b393}
+.stat:last-child{border-right:0}
+.stat span{display:block;font-size:10.5px;color:#6a5740;letter-spacing:.5px;margin-bottom:3px}
+.stat b{font-size:26px;font-weight:800;font-family:"Source Han Serif SC","SimSun",serif}
+.stat.hot b{color:#a1281b}
+.stat i{display:block;font-size:10px;color:#8b765c;font-style:normal}
+.cols3{display:grid;grid-template-columns:1.05fr .95fr 1fr;gap:0}
+.col{padding:0 12px}
+.col+.col{border-left:1px solid #c3b393}
+.h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
+  padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
+.h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:272px;padding-top:8px}
+.bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
+.bars .b i{position:absolute;left:0;right:0;bottom:-14px;font-style:normal;font-size:7.5px;color:#6f5c45;
+  text-align:center;transform:rotate(-90deg);transform-origin:center}
+.bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
+.ladder td:nth-child(2){width:70px}
+.ladder .track{height:9px;background:#e6dcc6;position:relative;border-radius:1px}
+.ladder .track b{position:absolute;left:0;top:0;bottom:0;background:#3a2c1d}
+.ladder td.n{font-weight:700;font-size:11px;white-space:nowrap}
+.hall{font-size:12px}
+.hall td{none}
+.hall .item{display:flex;justify-content:space-between;padding:3.5px 0;border-bottom:1px dotted #cfc0a4;font-size:11.5px}
+.hall .item b{color:#a1281b}
+.zone{margin-top:4px}
+.zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
+  padding:5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+.zonerow .nm{font-weight:800;font-size:12.5px}
+.zonerow .num b{color:#a1281b;font-size:13px}
+.zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
+.zonerow .track i{display:block;height:100%}
+.zonerow .legend{font-size:9.5px;color:#6a5740;display:flex;gap:7px;justify-content:flex-end}
+.tag{display:inline-block;padding:0 4px;border-radius:2px;font-size:9px;color:#fff;margin-right:2px}
+.two{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+.note{font-size:9.5px;color:#6d5a43;line-height:1.55;margin-top:6px}
+.foot{position:absolute;left:34px;right:34px;bottom:14px;border-top:1px solid #b9a884;padding-top:6px;
+  font-size:9px;color:#6d5a43;line-height:1.5}
+.obs{font-size:12px;line-height:1.85}
+.obs li{margin-left:15px;margin-bottom:2px}
+.obs b{color:#a1281b}
+.guide{font-size:11.5px;line-height:1.75}
+.guide div{margin-bottom:3px}
+.guide b{color:#3c2c1c}
+/* spread 2 */
+.zblock{border:1px solid #c3b393;margin-bottom:9px;background:#f8f3e6}
+.zblock .zt{display:flex;align-items:center;gap:10px;padding:5px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.zblock .zt h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:19px;color:#a1281b;font-weight:900}
+.zblock .zt span{font-size:10.5px;color:#5f4c36}
+.zbody{display:grid;grid-template-columns:1.35fr 1.2fr 1.25fr .95fr .95fr;gap:9px;padding:7px 9px}
+.zbody .ttl{font-size:10.5px;font-weight:700;color:#4b3a28;margin-bottom:4px;border-bottom:1px solid #d6c8ac;padding-bottom:2px}
+.mem{display:flex;gap:3px}
+.mem .m{text-align:center;width:38px}
+.mem .m img{width:36px;height:36px;border-radius:3px;object-fit:cover;border:1px solid #b7a685;background:#ddd}
+.mem .m small{display:block;font-size:7.5px;line-height:1.15;color:#3a2c1d;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mem .m u{display:block;font-size:7px;color:#8a6a3a;text-decoration:none}
+.hotline{display:flex;align-items:center;gap:5px;margin-bottom:3px;font-size:10px}
+.hotline .rk{width:12px;font-weight:800;color:#a1281b}
+.hotline .cnt{font-size:9px;color:#5f4c36;white-space:nowrap}
+.mini{font-size:9.5px;line-height:1.5;color:#3a2c1d}
+.mini b{color:#a1281b}
+.rank1{font-size:10px;line-height:1.45}
+.rank1 li{list-style:none;display:flex;justify-content:space-between;gap:4px;padding:1.5px 0;border-bottom:1px dotted #d3c4a6}
+.rank1 li span:last-child{color:#a1281b;font-weight:700}
+/* spread 3/4 */
+.recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.rec{padding:9px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec:nth-child(3n){border-right:0}
+.rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
+.rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
+.rec .d{font-size:10px;color:#4b3a28;line-height:1.45}
+.rec .mem{margin-top:4px}
+.tbl-people td{font-size:10.5px}
+.ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rankbox .h{margin-bottom:6px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
+.rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
+.rankrow .track b{position:absolute;left:0;top:0;bottom:0;background:#2c2318}
+.rankrow .v{width:48px;text-align:right;font-weight:700;font-size:10.5px}
+.rankrow .v em{font-style:normal;font-size:8.5px;color:#8a7458}
+/* enlight */
+.enl{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.enlrow{display:grid;grid-template-columns:18px 132px 1fr 44px;align-items:center;gap:5px;font-size:10.5px;padding:2.6px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlrow .p{font-weight:800;color:#a1281b;text-align:right}
+.enlrow .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.enlrow .nm em{font-style:normal;color:#8a7458;font-size:9px}
+.enlrow .track{display:flex;height:12px;background:#e9dfc8;overflow:hidden}
+.enlrow .track i{display:block;height:100%}
+.enlrow .pc{text-align:right;font-weight:700}
+.enl1 .enlrow{grid-template-columns:20px 146px 1fr 66px 46px;gap:6px;font-size:10.6px;padding:1.9px 0}
+.enl1 .enlrow .track{height:12.5px}
+.enl1 .enlrow .pc{font-size:11.5px}
+.enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.ovw{margin-bottom:10px}
+.ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
+.ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
+  font-size:11px;font-weight:700;letter-spacing:.5px;overflow:hidden}
+.ovwnums{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1.5px solid #3c2c1c}
+.ovwnums div{text-align:center;padding:5px 2px;border-right:1px dotted #c3b393}
+.ovwnums div:last-child{border-right:0}
+.ovwnums b{display:block;font-size:15px;font-family:"Source Han Serif SC","SimSun",serif}
+.ovwnums span{font-size:9.5px;color:#6a5740}
+.zavg{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:7px;font-size:11px;
+  padding:4px 0;border-bottom:1px dotted #d3c4a6}
+.zavg .track{height:13px;background:#e9dfc8;position:relative}
+.zavg .track b{position:absolute;left:0;top:0;bottom:0;background:#2c2318}
+.zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
+.zavg .v{text-align:right;font-weight:700;font-size:11.5px}
+.zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:5.5px 0}
+.thcmp{margin-top:4px}
+.thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
+.thcmp .bar{display:flex;height:15px;background:#e9dfc8}
+.thcmp .bar i{display:block;height:100%}
+.thcmp .row>span:first-child{font-weight:800;color:#a1281b;font-size:12px}
+.thcmp .row>span:last-child{text-align:right;font-size:10.5px;color:#4b3a28}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(6,1fr);border-top:2px solid #3c2c1c;border-bottom:2px solid #3c2c1c}
+.cmp .c{padding:8px 6px;text-align:center;border-right:1px solid #c3b393}
+.cmp .c:last-child{border-right:0}
+.cmp .c span{display:block;font-size:10px;color:#6a5740}
+.cmp .c b{display:block;font-size:15px;font-weight:800;font-family:"Source Han Serif SC","SimSun",serif;line-height:1.5}
+.cmp .c b u{text-decoration:none;color:#2c2318}
+.cmp .c b s{text-decoration:none;color:#a1281b}
+.cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
+.up{color:#a1281b}.down{color:#3d6b46}
+.hz{display:grid;grid-template-columns:150px 1fr 70px;align-items:center;gap:6px;font-size:11px;padding:3.5px 0;
+  border-bottom:1px solid #ddd0b6}
+.hz .track{height:13px;display:flex;align-items:center;gap:2px}
+.hz .bar{height:11px;background:#3d6b46}
+.hz .bar2{height:11px;background:#a1281b}
+.close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
+.close>div{padding:8px 12px;border-right:1px solid #c3b393}
+.close>div:last-child{border-right:0}
+.close .k{font-size:10.5px;color:#6a5740;letter-spacing:.3px}
+.close .v{font-size:17px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900;line-height:1.35}
+.close .v b{color:#a1281b}
+.close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
+</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 5 版 / 共 6 版</div><div>熔铸快讯 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
+  <h1>忘忘看报</h1><div class="rule"></div><div class="kicker">融灾第 73 期 ·「超维戒指」· 2026 年 11 月 9 日 — 11 月 22 日 · 终核特刊</div></div>
+<h2 class="lead">▼ 与 SSS 难度里，<br><small>45% 的唤醒体已经 +12</small></h2>
+<div class="sub">统计 ▼ + SSS 难度的通关队伍（含额外队），共 5,250 个唤醒体出场位，按启灵档位分段统计；下表按「+12 启灵」占比降序排列，样本低于 20 场的已略去（共 47 个唤醒体入选）。</div>
+<div class="hr2"></div>
+<div class="h">全样本启灵分布 <em>▼ + SSS 通关队 · 5,250 个出场位 · 平均启灵 9.19</em></div>
+<div class="ovw">
+  <div class="ovwbar"><i style="width:14.819047619047618%;background:#3d6b46">14.8%</i><i style="width:19.18095238095238%;background:#d9c06a">19.2%</i><i style="width:15.295238095238094%;background:#c98f4a">15.3%</i><i style="width:5.352380952380952%;background:#a1281b"></i><i style="width:45.352380952380955%;background:#6d1a12">45.4%</i></div>
+  <div class="ovwnums"><div><b>778</b><span>0-2 启 · 14.8%</span></div><div><b>1,007</b><span>3-5 启 · 19.2%</span></div><div><b>803</b><span>6-8 启 · 15.3%</span></div><div><b>281</b><span>9-11 启 · 5.4%</span></div><div><b>2,381</b><span>12+ 启 · 45.4%</span></div></div>
+</div>
+<div class="h" style="margin-top:12px">逐觉醒体启灵分布 <em>右侧为 +12 占比，末尾为出场位</em></div>
+<div class="enl1">
+  <div class="enlrow"><span class="p">1</span><span class="nm">奥吉尔</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:100%;background:#6d1a12"></i></span>
+    <span class="pc">100.0%</span><span class="nn">126 场</span></div><div class="enlrow"><span class="p">2</span><span class="nm">萝坦</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:2.145214521452145%;background:#c98f4a"></i><i style="width:5.9405940594059405%;background:#a1281b"></i><i style="width:91.91419141914191%;background:#6d1a12"></i></span>
+    <span class="pc">91.9%</span><span class="nn">606 场</span></div><div class="enlrow"><span class="p">3</span><span class="nm">环行·拉蒙娜</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:0%;background:#c98f4a"></i><i style="width:8.695652173913043%;background:#a1281b"></i><i style="width:91.30434782608695%;background:#6d1a12"></i></span>
+    <span class="pc">91.3%</span><span class="nn">23 场</span></div><div class="enlrow"><span class="p">4</span><span class="nm">凯蒂古拉</span>
+    <span class="track"><i style="width:2.380952380952381%;background:#3d6b46"></i><i style="width:2.380952380952381%;background:#d9c06a"></i><i style="width:7.142857142857142%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:88.09523809523809%;background:#6d1a12"></i></span>
+    <span class="pc">88.1%</span><span class="nn">42 场</span></div><div class="enlrow"><span class="p">5</span><span class="nm">朵尔</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:1.8518518518518516%;background:#d9c06a"></i><i style="width:2.7777777777777777%;background:#c98f4a"></i><i style="width:8.333333333333332%;background:#a1281b"></i><i style="width:87.03703703703704%;background:#6d1a12"></i></span>
+    <span class="pc">87.0%</span><span class="nn">108 场</span></div><div class="enlrow"><span class="p">6</span><span class="nm">戈利亚</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:3.0303030303030303%;background:#d9c06a"></i><i style="width:6.0606060606060606%;background:#c98f4a"></i><i style="width:6.0606060606060606%;background:#a1281b"></i><i style="width:84.84848484848484%;background:#6d1a12"></i></span>
+    <span class="pc">84.8%</span><span class="nn">66 场</span></div><div class="enlrow"><span class="p">7</span><span class="nm">奥瑞塔</span>
+    <span class="track"><i style="width:1.3513513513513513%;background:#3d6b46"></i><i style="width:5.405405405405405%;background:#d9c06a"></i><i style="width:10.81081081081081%;background:#c98f4a"></i><i style="width:4.054054054054054%;background:#a1281b"></i><i style="width:78.37837837837837%;background:#6d1a12"></i></span>
+    <span class="pc">78.4%</span><span class="nn">74 场</span></div><div class="enlrow"><span class="p">8</span><span class="nm">茉夏</span>
+    <span class="track"><i style="width:1.3745704467353952%;background:#3d6b46"></i><i style="width:6.872852233676976%;background:#d9c06a"></i><i style="width:11.34020618556701%;background:#c98f4a"></i><i style="width:2.7491408934707904%;background:#a1281b"></i><i style="width:77.66323024054984%;background:#6d1a12"></i></span>
+    <span class="pc">77.7%</span><span class="nn">291 场</span></div><div class="enlrow"><span class="p">9</span><span class="nm">温柯尔</span>
+    <span class="track"><i style="width:9.090909090909092%;background:#3d6b46"></i><i style="width:4.545454545454546%;background:#d9c06a"></i><i style="width:9.090909090909092%;background:#c98f4a"></i><i style="width:4.545454545454546%;background:#a1281b"></i><i style="width:72.72727272727273%;background:#6d1a12"></i></span>
+    <span class="pc">72.7%</span><span class="nn">22 场</span></div><div class="enlrow"><span class="p">10</span><span class="nm">波吕克斯</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:3.125%;background:#d9c06a"></i><i style="width:18.75%;background:#c98f4a"></i><i style="width:6.25%;background:#a1281b"></i><i style="width:71.875%;background:#6d1a12"></i></span>
+    <span class="pc">71.9%</span><span class="nn">32 场</span></div><div class="enlrow"><span class="p">11</span><span class="nm">拉蒙娜</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0.9174311926605505%;background:#d9c06a"></i><i style="width:3.669724770642202%;background:#c98f4a"></i><i style="width:23.853211009174313%;background:#a1281b"></i><i style="width:71.55963302752293%;background:#6d1a12"></i></span>
+    <span class="pc">71.6%</span><span class="nn">109 场</span></div><div class="enlrow"><span class="p">12</span><span class="nm">诞妄·墨菲</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:0%;background:#d9c06a"></i><i style="width:23.076923076923077%;background:#c98f4a"></i><i style="width:5.769230769230769%;background:#a1281b"></i><i style="width:71.15384615384616%;background:#6d1a12"></i></span>
+    <span class="pc">71.2%</span><span class="nn">52 场</span></div><div class="enlrow"><span class="p">13</span><span class="nm">血链·希洛</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:14.285714285714285%;background:#d9c06a"></i><i style="width:17.857142857142858%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:67.85714285714286%;background:#6d1a12"></i></span>
+    <span class="pc">67.9%</span><span class="nn">28 场</span></div><div class="enlrow"><span class="p">14</span><span class="nm">希莱斯特</span>
+    <span class="track"><i style="width:2.5%;background:#3d6b46"></i><i style="width:7.5%;background:#d9c06a"></i><i style="width:20%;background:#c98f4a"></i><i style="width:5%;background:#a1281b"></i><i style="width:65%;background:#6d1a12"></i></span>
+    <span class="pc">65.0%</span><span class="nn">40 场</span></div><div class="enlrow"><span class="p">15</span><span class="nm">诺缔拉</span>
+    <span class="track"><i style="width:4.2105263157894735%;background:#3d6b46"></i><i style="width:10.526315789473683%;background:#d9c06a"></i><i style="width:9.473684210526317%;background:#c98f4a"></i><i style="width:11.578947368421053%;background:#a1281b"></i><i style="width:64.21052631578948%;background:#6d1a12"></i></span>
+    <span class="pc">64.2%</span><span class="nn">95 场</span></div><div class="enlrow"><span class="p">16</span><span class="nm">珈伦</span>
+    <span class="track"><i style="width:4.3478260869565215%;background:#3d6b46"></i><i style="width:13.043478260869565%;background:#d9c06a"></i><i style="width:10.869565217391305%;background:#c98f4a"></i><i style="width:8.695652173913043%;background:#a1281b"></i><i style="width:63.04347826086957%;background:#6d1a12"></i></span>
+    <span class="pc">63.0%</span><span class="nn">46 场</span></div><div class="enlrow"><span class="p">17</span><span class="nm">艾继丝</span>
+    <span class="track"><i style="width:2.18978102189781%;background:#3d6b46"></i><i style="width:10.948905109489052%;background:#d9c06a"></i><i style="width:18.97810218978102%;background:#c98f4a"></i><i style="width:6.569343065693431%;background:#a1281b"></i><i style="width:61.31386861313869%;background:#6d1a12"></i></span>
+    <span class="pc">61.3%</span><span class="nn">137 场</span></div><div class="enlrow"><span class="p">18</span><span class="nm">卡斯托尔</span>
+    <span class="track"><i style="width:2.4390243902439024%;background:#3d6b46"></i><i style="width:12.195121951219512%;background:#d9c06a"></i><i style="width:26.82926829268293%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:58.536585365853654%;background:#6d1a12"></i></span>
+    <span class="pc">58.5%</span><span class="nn">41 场</span></div><div class="enlrow"><span class="p">19</span><span class="nm">希洛</span>
+    <span class="track"><i style="width:23.076923076923077%;background:#3d6b46"></i><i style="width:5.769230769230769%;background:#d9c06a"></i><i style="width:13.461538461538462%;background:#c98f4a"></i><i style="width:3.8461538461538463%;background:#a1281b"></i><i style="width:53.84615384615385%;background:#6d1a12"></i></span>
+    <span class="pc">53.8%</span><span class="nn">52 场</span></div><div class="enlrow"><span class="p">20</span><span class="nm">卡茜亚</span>
+    <span class="track"><i style="width:4.838709677419355%;background:#3d6b46"></i><i style="width:19.35483870967742%;background:#d9c06a"></i><i style="width:16.129032258064516%;background:#c98f4a"></i><i style="width:6.451612903225806%;background:#a1281b"></i><i style="width:53.2258064516129%;background:#6d1a12"></i></span>
+    <span class="pc">53.2%</span><span class="nn">62 场</span></div><div class="enlrow"><span class="p">21</span><span class="nm">菲茵特</span>
+    <span class="track"><i style="width:12.994350282485875%;background:#3d6b46"></i><i style="width:11.864406779661017%;background:#d9c06a"></i><i style="width:12.994350282485875%;background:#c98f4a"></i><i style="width:11.299435028248588%;background:#a1281b"></i><i style="width:50.847457627118644%;background:#6d1a12"></i></span>
+    <span class="pc">50.8%</span><span class="nn">177 场</span></div><div class="enlrow"><span class="p">22</span><span class="nm">负誓·奥吉尔</span>
+    <span class="track"><i style="width:42.22222222222222%;background:#3d6b46"></i><i style="width:8.88888888888889%;background:#d9c06a"></i><i style="width:2.2222222222222223%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:46.666666666666664%;background:#6d1a12"></i></span>
+    <span class="pc">46.7%</span><span class="nn">45 场</span></div><div class="enlrow"><span class="p">23</span><span class="nm">卡拉布</span>
+    <span class="track"><i style="width:5.405405405405405%;background:#3d6b46"></i><i style="width:32.432432432432435%;background:#d9c06a"></i><i style="width:16.216216216216218%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:45.94594594594595%;background:#6d1a12"></i></span>
+    <span class="pc">45.9%</span><span class="nn">37 场</span></div><div class="enlrow"><span class="p">24</span><span class="nm">艾尔瓦</span>
+    <span class="track"><i style="width:13.043478260869565%;background:#3d6b46"></i><i style="width:18.84057971014493%;background:#d9c06a"></i><i style="width:11.594202898550725%;background:#c98f4a"></i><i style="width:11.594202898550725%;background:#a1281b"></i><i style="width:44.927536231884055%;background:#6d1a12"></i></span>
+    <span class="pc">44.9%</span><span class="nn">69 场</span></div><div class="enlrow"><span class="p">25</span><span class="nm">莫丝</span>
+    <span class="track"><i style="width:5.660377358490567%;background:#3d6b46"></i><i style="width:11.320754716981133%;background:#d9c06a"></i><i style="width:32.075471698113205%;background:#c98f4a"></i><i style="width:7.547169811320755%;background:#a1281b"></i><i style="width:43.39622641509434%;background:#6d1a12"></i></span>
+    <span class="pc">43.4%</span><span class="nn">53 场</span></div><div class="enlrow"><span class="p">26</span><span class="nm">克莱门汀</span>
+    <span class="track"><i style="width:4.225352112676056%;background:#3d6b46"></i><i style="width:35.2112676056338%;background:#d9c06a"></i><i style="width:18.30985915492958%;background:#c98f4a"></i><i style="width:1.4084507042253522%;background:#a1281b"></i><i style="width:40.845070422535215%;background:#6d1a12"></i></span>
+    <span class="pc">40.8%</span><span class="nn">71 场</span></div><div class="enlrow"><span class="p">27</span><span class="nm">皮克曼</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:13.043478260869565%;background:#d9c06a"></i><i style="width:39.130434782608695%;background:#c98f4a"></i><i style="width:8.695652173913043%;background:#a1281b"></i><i style="width:39.130434782608695%;background:#6d1a12"></i></span>
+    <span class="pc">39.1%</span><span class="nn">23 场</span></div><div class="enlrow"><span class="p">28</span><span class="nm">庞托斯</span>
+    <span class="track"><i style="width:0%;background:#3d6b46"></i><i style="width:34.48275862068966%;background:#d9c06a"></i><i style="width:24.137931034482758%;background:#c98f4a"></i><i style="width:3.4482758620689653%;background:#a1281b"></i><i style="width:37.93103448275862%;background:#6d1a12"></i></span>
+    <span class="pc">37.9%</span><span class="nn">29 场</span></div><div class="enlrow"><span class="p">29</span><span class="nm">潘狄娅</span>
+    <span class="track"><i style="width:23.684210526315788%;background:#3d6b46"></i><i style="width:23.684210526315788%;background:#d9c06a"></i><i style="width:10.526315789473683%;background:#c98f4a"></i><i style="width:5.263157894736842%;background:#a1281b"></i><i style="width:36.84210526315789%;background:#6d1a12"></i></span>
+    <span class="pc">36.8%</span><span class="nn">38 场</span></div><div class="enlrow"><span class="p">30</span><span class="nm">蚀灭·萝坦</span>
+    <span class="track"><i style="width:11.956521739130435%;background:#3d6b46"></i><i style="width:29.891304347826086%;background:#d9c06a"></i><i style="width:20.652173913043477%;background:#c98f4a"></i><i style="width:1.0869565217391304%;background:#a1281b"></i><i style="width:36.41304347826087%;background:#6d1a12"></i></span>
+    <span class="pc">36.4%</span><span class="nn">184 场</span></div><div class="enlrow"><span class="p">31</span><span class="nm">沙耶</span>
+    <span class="track"><i style="width:5.769230769230769%;background:#3d6b46"></i><i style="width:40.38461538461539%;background:#d9c06a"></i><i style="width:19.230769230769234%;background:#c98f4a"></i><i style="width:0.641025641025641%;background:#a1281b"></i><i style="width:33.97435897435898%;background:#6d1a12"></i></span>
+    <span class="pc">34.0%</span><span class="nn">156 场</span></div><div class="enlrow"><span class="p">32</span><span class="nm">弥利亚姆</span>
+    <span class="track"><i style="width:16.3265306122449%;background:#3d6b46"></i><i style="width:24.489795918367346%;background:#d9c06a"></i><i style="width:16.3265306122449%;background:#c98f4a"></i><i style="width:10.204081632653061%;background:#a1281b"></i><i style="width:32.6530612244898%;background:#6d1a12"></i></span>
+    <span class="pc">32.7%</span><span class="nn">49 场</span></div><div class="enlrow"><span class="p">33</span><span class="nm">泰旖丝</span>
+    <span class="track"><i style="width:14.285714285714285%;background:#3d6b46"></i><i style="width:34.285714285714285%;background:#d9c06a"></i><i style="width:14.285714285714285%;background:#c98f4a"></i><i style="width:7.142857142857142%;background:#a1281b"></i><i style="width:30%;background:#6d1a12"></i></span>
+    <span class="pc">30.0%</span><span class="nn">70 场</span></div><div class="enlrow"><span class="p">34</span><span class="nm">克珀珊特</span>
+    <span class="track"><i style="width:8.88888888888889%;background:#3d6b46"></i><i style="width:42.22222222222222%;background:#d9c06a"></i><i style="width:22.22222222222222%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:26.666666666666668%;background:#6d1a12"></i></span>
+    <span class="pc">26.7%</span><span class="nn">45 场</span></div><div class="enlrow"><span class="p">35</span><span class="nm">阿拉克涅</span>
+    <span class="track"><i style="width:5.240174672489083%;background:#3d6b46"></i><i style="width:51.96506550218341%;background:#d9c06a"></i><i style="width:14.41048034934498%;background:#c98f4a"></i><i style="width:3.056768558951965%;background:#a1281b"></i><i style="width:25.327510917030565%;background:#6d1a12"></i></span>
+    <span class="pc">25.3%</span><span class="nn">229 场</span></div><div class="enlrow"><span class="p">36</span><span class="nm">图鲁</span>
+    <span class="track"><i style="width:23.404255319148938%;background:#3d6b46"></i><i style="width:23.404255319148938%;background:#d9c06a"></i><i style="width:17.02127659574468%;background:#c98f4a"></i><i style="width:14.893617021276595%;background:#a1281b"></i><i style="width:21.27659574468085%;background:#6d1a12"></i></span>
+    <span class="pc">21.3%</span><span class="nn">47 场</span></div><div class="enlrow"><span class="p">37</span><span class="nm">萨尔瓦多</span>
+    <span class="track"><i style="width:17.77777777777778%;background:#3d6b46"></i><i style="width:37.77777777777778%;background:#d9c06a"></i><i style="width:17.77777777777778%;background:#c98f4a"></i><i style="width:6.666666666666667%;background:#a1281b"></i><i style="width:20%;background:#6d1a12"></i></span>
+    <span class="pc">20.0%</span><span class="nn">45 场</span></div><div class="enlrow"><span class="p">38</span><span class="nm">徐</span>
+    <span class="track"><i style="width:11.347517730496454%;background:#3d6b46"></i><i style="width:43.262411347517734%;background:#d9c06a"></i><i style="width:24.822695035460992%;background:#c98f4a"></i><i style="width:1.4184397163120568%;background:#a1281b"></i><i style="width:19.148936170212767%;background:#6d1a12"></i></span>
+    <span class="pc">19.1%</span><span class="nn">141 场</span></div><div class="enlrow"><span class="p">39</span><span class="nm">熔毁·朵尔</span>
+    <span class="track"><i style="width:22.282608695652172%;background:#3d6b46"></i><i style="width:8.967391304347826%;background:#d9c06a"></i><i style="width:43.75%;background:#c98f4a"></i><i style="width:6.521739130434782%;background:#a1281b"></i><i style="width:18.478260869565215%;background:#6d1a12"></i></span>
+    <span class="pc">18.5%</span><span class="nn">368 场</span></div><div class="enlrow"><span class="p">40</span><span class="nm">塔薇</span>
+    <span class="track"><i style="width:35.600907029478456%;background:#3d6b46"></i><i style="width:23.356009070294785%;background:#d9c06a"></i><i style="width:17.913832199546487%;background:#c98f4a"></i><i style="width:5.215419501133787%;background:#a1281b"></i><i style="width:17.913832199546487%;background:#6d1a12"></i></span>
+    <span class="pc">17.9%</span><span class="nn">441 场</span></div><div class="enlrow"><span class="p">41</span><span class="nm">"24"</span>
+    <span class="track"><i style="width:22.058823529411764%;background:#3d6b46"></i><i style="width:33.82352941176471%;background:#d9c06a"></i><i style="width:16.176470588235293%;background:#c98f4a"></i><i style="width:10.294117647058822%;background:#a1281b"></i><i style="width:17.647058823529413%;background:#6d1a12"></i></span>
+    <span class="pc">17.6%</span><span class="nn">68 场</span></div><div class="enlrow"><span class="p">42</span><span class="nm">薇薇安</span>
+    <span class="track"><i style="width:20.13422818791946%;background:#3d6b46"></i><i style="width:45.63758389261745%;background:#d9c06a"></i><i style="width:17.449664429530202%;background:#c98f4a"></i><i style="width:0%;background:#a1281b"></i><i style="width:16.778523489932887%;background:#6d1a12"></i></span>
+    <span class="pc">16.8%</span><span class="nn">149 场</span></div><div class="enlrow"><span class="p">43</span><span class="nm">莉莉</span>
+    <span class="track"><i style="width:25.301204819277107%;background:#3d6b46"></i><i style="width:37.34939759036144%;background:#d9c06a"></i><i style="width:19.27710843373494%;background:#c98f4a"></i><i style="width:6.024096385542169%;background:#a1281b"></i><i style="width:12.048192771084338%;background:#6d1a12"></i></span>
+    <span class="pc">12.0%</span><span class="nn">83 场</span></div><div class="enlrow"><span class="p">44</span><span class="nm">墨菲</span>
+    <span class="track"><i style="width:23.52941176470588%;background:#3d6b46"></i><i style="width:21.568627450980394%;background:#d9c06a"></i><i style="width:33.33333333333333%;background:#c98f4a"></i><i style="width:9.803921568627452%;background:#a1281b"></i><i style="width:11.76470588235294%;background:#6d1a12"></i></span>
+    <span class="pc">11.8%</span><span class="nn">51 场</span></div><div class="enlrow"><span class="p">45</span><span class="nm">莱克</span>
+    <span class="track"><i style="width:51.92307692307693%;background:#3d6b46"></i><i style="width:26.923076923076923%;background:#d9c06a"></i><i style="width:7.6923076923076925%;background:#c98f4a"></i><i style="width:5.769230769230769%;background:#a1281b"></i><i style="width:7.6923076923076925%;background:#6d1a12"></i></span>
+    <span class="pc">7.7%</span><span class="nn">52 场</span></div><div class="enlrow"><span class="p">46</span><span class="nm">奥尔拉</span>
+    <span class="track"><i style="width:39.55555555555556%;background:#3d6b46"></i><i style="width:33.33333333333333%;background:#d9c06a"></i><i style="width:15.555555555555555%;background:#c98f4a"></i><i style="width:4.888888888888889%;background:#a1281b"></i><i style="width:6.666666666666667%;background:#6d1a12"></i></span>
+    <span class="pc">6.7%</span><span class="nn">225 场</span></div><div class="enlrow"><span class="p">47</span><span class="nm">哈姆林</span>
+    <span class="track"><i style="width:56.52173913043478%;background:#3d6b46"></i><i style="width:29.64426877470356%;background:#d9c06a"></i><i style="width:6.719367588932807%;background:#c98f4a"></i><i style="width:2.766798418972332%;background:#a1281b"></i><i style="width:4.3478260869565215%;background:#6d1a12"></i></span>
+    <span class="pc">4.3%</span><span class="nn">253 场</span></div>
+</div>
+<div class="pair" style="margin-top:11px">
+  <div><div class="h">各禁区出场的平均启灵 <em>▼ + SSS，红虚线为全样本 9.19</em></div>
+    <div class="zavg"><span>第一禁区</span>
+      <span class="track"><b style="width:56.53333333333334%"></b><i style="left:61.26666666666666%"></i></span>
+      <span class="v">8.48<em> / 1,508</em></span></div><div class="zavg"><span>第二禁区</span>
+      <span class="track"><b style="width:71.00000000000001%"></b><i style="left:61.26666666666666%"></i></span>
+      <span class="v">10.65<em> / 388</em></span></div><div class="zavg"><span>第三禁区</span>
+      <span class="track"><b style="width:59.80000000000001%"></b><i style="left:61.26666666666666%"></i></span>
+      <span class="v">8.97<em> / 2,892</em></span></div><div class="zavg"><span>第四禁区</span>
+      <span class="track"><b style="width:78.8%"></b><i style="left:61.26666666666666%"></i></span>
+      <span class="v">11.82<em> / 244</em></span></div><div class="zavg"><span>第五禁区</span>
+      <span class="track"><b style="width:73.46666666666667%"></b><i style="left:61.26666666666666%"></i></span>
+      <span class="v">11.02<em> / 292</em></span></div>
+  </div>
+  <div><div class="h">▼ 与 SSS 的启灵结构对照 <em>同一套五档配色</em></div>
+    <div class="thcmp">
+      <div class="row"><span>▼</span><span class="bar"><i style="width:15.369261477045908%;background:#3d6b46"></i><i style="width:16.791417165668662%;background:#d9c06a"></i><i style="width:14.296407185628743%;background:#c98f4a"></i><i style="width:5.763473053892216%;background:#a1281b"></i><i style="width:47.77944111776447%;background:#6d1a12"></i></span><span>+12 47.8%<br><em style="font-style:normal;color:#8a7458">4,008 位</em></span></div><div class="row"><span>SSS</span><span class="bar"><i style="width:12.993920972644377%;background:#3d6b46"></i><i style="width:25.91185410334346%;background:#d9c06a"></i><i style="width:17.933130699088146%;background:#c98f4a"></i><i style="width:3.875379939209726%;background:#a1281b"></i><i style="width:39.285714285714285%;background:#6d1a12"></i></span><span>+12 39.3%<br><em style="font-style:normal;color:#8a7458">1,316 位</em></span></div>
+    </div>
+    <div class="note" style="margin-top:2px">▼ 通关队的 +12 比例比 SSS 高 8.5 个百分点：打得动最难的一档，多半靠把启灵堆满；而 SSS 里仍有 512 位（38.9%）是 5 启以下。</div>
+  </div>
+</div>
+<div class="note" style="margin-top:8px;font-size:9.6px;line-height:1.6">
+  <b style="color:#a1281b">满启与低启</b>：全场唯一「全员 +12」的唤醒体是 <b>奥吉尔</b>（126 个出场位，100% 满启）。反面是一批纯机制位——上场不少、却几乎不带启灵：哈姆林 253 场仅 4.3%、奥尔拉 225 场仅 6.7%、莱克 52 场仅 7.7%、墨菲 51 场仅 11.8%、莉莉 83 场仅 12.0%、薇薇安 149 场仅 16.8%。
+  这些角色靠机制（护盾、减伤、控场）站住位置，启灵堆不堆影响很小；主力输出则几乎必然满启。
+  <b style="color:#a1281b">读表提示</b>：横向条是构成，五段之和为 100%，条长不代表强弱；出场位只有二三十场的角色波动极大，一两个满启玩家就能把 +12 占比推到 50% 以上。
+</div>
+<div class="foot">口径：启灵 = 唤醒体的潜能等级（0-15，图中分 0-2 / 3-5 / 6-8 / 9-11 / 12+ 五段，+12 以上为满启）；同一队伍里同一唤醒体只计一次。「全样本」为样本 ≥ 20 场的 47 个唤醒体合计（5,250 位），▼ / SSS 结构对照含样本不足 20 场的唤醒体（5,324 位），故略多于全样本。出场数少的唤醒体波动大，仅供参考。制图：忘忘看报。</div>
+</div></body></html>

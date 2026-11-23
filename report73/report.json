@@ -1,0 +1,7343 @@
+{
+ "current": {
+  "season": 73,
+  "count": 2000,
+  "threshold": 385,
+  "max": 525,
+  "mean": 422.1,
+  "median": 415.0,
+  "dist": {
+   "525": 8,
+   "520": 1,
+   "515": 1,
+   "510": 1,
+   "505": 4,
+   "500": 21,
+   "495": 5,
+   "490": 8,
+   "485": 10,
+   "480": 13,
+   "475": 21,
+   "470": 22,
+   "465": 28,
+   "460": 65,
+   "455": 66,
+   "450": 337,
+   "445": 24,
+   "440": 28,
+   "435": 38,
+   "430": 55,
+   "425": 122,
+   "420": 69,
+   "415": 69,
+   "410": 109,
+   "405": 154,
+   "400": 306,
+   "395": 110,
+   "390": 124,
+   "385": 181
+  },
+  "ge": {
+   "525": 8,
+   "500": 36,
+   "450": 611,
+   "425": 878,
+   "400": 1585
+  },
+  "lines": [
+   {
+    "rank": 1,
+    "score": 525
+   },
+   {
+    "rank": 10,
+    "score": 515
+   },
+   {
+    "rank": 50,
+    "score": 485
+   },
+   {
+    "rank": 100,
+    "score": 470
+   },
+   {
+    "rank": 200,
+    "score": 460
+   },
+   {
+    "rank": 500,
+    "score": 450
+   },
+   {
+    "rank": 1000,
+    "score": 415
+   },
+   {
+    "rank": 2000,
+    "score": 385
+   }
+  ],
+  "perfect": [
+   {
+    "rank": 1,
+    "name": "Uxia",
+    "uid": 100716237,
+    "score": 525
+   },
+   {
+    "rank": 2,
+    "name": "BLG牛笔",
+    "uid": 100759759,
+    "score": 525
+   },
+   {
+    "rank": 3,
+    "name": "火",
+    "uid": 100389537,
+    "score": 525
+   },
+   {
+    "rank": 4,
+    "name": "leah1",
+    "uid": 100074390,
+    "score": 525
+   },
+   {
+    "rank": 5,
+    "name": "可爱",
+    "uid": 100106464,
+    "score": 525
+   },
+   {
+    "rank": 6,
+    "name": "啥也不会",
+    "uid": 100167859,
+    "score": 525
+   },
+   {
+    "rank": 7,
+    "name": "<#7FC>魔龙",
+    "uid": 100109619,
+    "score": 525
+   },
+   {
+    "rank": 8,
+    "name": "魂魄魄",
+    "uid": 100537613,
+    "score": 525
+   }
+  ],
+  "zones": [
+   {
+    "wave": 1,
+    "name": "第一禁区",
+    "teams": 1993,
+    "threats": {
+     "C": 13,
+     "B": 183,
+     "A": 678,
+     "S": 381,
+     "SS": 361,
+     "SSS": 162,
+     "▼": 215
+    },
+    "down": 215,
+    "downRate": 10.8,
+    "downMin": 90,
+    "downFull": 27,
+    "downMax": 95,
+    "downMedian": 90,
+    "best": 95,
+    "worst": 60,
+    "median": 75
+   },
+   {
+    "wave": 2,
+    "name": "第二禁区",
+    "teams": 1990,
+    "threats": {
+     "C": 38,
+     "B": 310,
+     "A": 747,
+     "S": 440,
+     "SS": 358,
+     "SSS": 49,
+     "▼": 48
+    },
+    "down": 48,
+    "downRate": 2.4,
+    "downMin": 95,
+    "downFull": 11,
+    "downMax": 100,
+    "downMedian": 95.0,
+    "best": 100,
+    "worst": 65,
+    "median": 75.0
+   },
+   {
+    "wave": 3,
+    "name": "第三禁区",
+    "teams": 1992,
+    "threats": {
+     "C": 9,
+     "B": 155,
+     "A": 608,
+     "S": 306,
+     "SS": 191,
+     "SSS": 56,
+     "▼": 667
+    },
+    "down": 667,
+    "downRate": 33.5,
+    "downMin": 100,
+    "downFull": 81,
+    "downMax": 105,
+    "downMedian": 100,
+    "best": 105,
+    "worst": 70,
+    "median": 85.0
+   },
+   {
+    "wave": 4,
+    "name": "第四禁区",
+    "teams": 1984,
+    "threats": {
+     "C": 66,
+     "B": 441,
+     "A": 874,
+     "S": 400,
+     "SS": 142,
+     "SSS": 25,
+     "▼": 36
+    },
+    "down": 36,
+    "downRate": 1.8,
+    "downMin": 105,
+    "downFull": 10,
+    "downMax": 110,
+    "downMedian": 105.0,
+    "best": 110,
+    "worst": 75,
+    "median": 85.0
+   },
+   {
+    "wave": 5,
+    "name": "第五禁区",
+    "teams": 1987,
+    "threats": {
+     "C": 61,
+     "B": 332,
+     "A": 814,
+     "S": 439,
+     "SS": 268,
+     "SSS": 37,
+     "▼": 36
+    },
+    "down": 36,
+    "downRate": 1.8,
+    "downMin": 110,
+    "downFull": 9,
+    "downMax": 115,
+    "downMedian": 110.0,
+    "best": 115,
+    "worst": 80,
+    "median": 90
+   }
+  ],
+  "zoneTop": [
+   {
+    "wave": 1,
+    "champion": {
+     "rank": 1,
+     "uid": 100716237,
+     "score": 95,
+     "members": [
+      {
+       "tid": "15602",
+       "zh": "熔毁·朵尔",
+       "en": "Doll: Inferno",
+       "potency": 15
+      },
+      {
+       "tid": "125346",
+       "zh": "徐",
+       "en": "Xu",
+       "potency": 7
+      },
+      {
+       "tid": "15571",
+       "zh": "珈伦",
+       "en": "Karen",
+       "potency": 15
+      },
+      {
+       "tid": "148578",
+       "zh": "负誓·奥吉尔",
+       "en": "Ogier: Oathbound",
+       "potency": 0
+      }
+     ],
+     "token": "125190",
+     "covs": [
+      "18348",
+      "18360",
+      "18360",
+      "18360"
+     ]
+    },
+    "hot": [
+     {
+      "count": 86,
+      "members": [
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 7
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 15
+       }
+      ],
+      "score": 90,
+      "token": "118128"
+     },
+     {
+      "count": 81,
+      "members": [
+       {
+        "tid": "94450",
+        "zh": "茉夏",
+        "en": "Mouchette",
+        "potency": 15
+       },
+       {
+        "tid": "145363",
+        "zh": "蚀灭·萝坦",
+        "en": "Lotan: Cetarchon",
+        "potency": 7
+       },
+       {
+        "tid": "77918",
+        "zh": "阿拉克涅",
+        "en": "Arachne",
+        "potency": 4
+       },
+       {
+        "tid": "15583",
+        "zh": "奥尔拉",
+        "en": "Horla",
+        "potency": 6
+       }
+      ],
+      "score": 95,
+      "token": "120491"
+     },
+     {
+      "count": 69,
+      "members": [
+       {
+        "tid": "94450",
+        "zh": "茉夏",
+        "en": "Mouchette",
+        "potency": 15
+       },
+       {
+        "tid": "151844",
+        "zh": "薇薇安",
+        "en": "Vivian",
+        "potency": 7
+       },
+       {
+        "tid": "77918",
+        "zh": "阿拉克涅",
+        "en": "Arachne",
+        "potency": 4
+       },
+       {
+        "tid": "15583",
+        "zh": "奥尔拉",
+        "en": "Horla",
+        "potency": 3
+       }
+      ],
+      "score": 90,
+      "token": "120491"
+     }
+    ],
+    "fastest": {
+     "rounds": 4,
+     "rank": 90,
+     "name": "萨摩不耶",
+     "uid": 100069034,
+     "members": [
+      {
+       "tid": "94450",
+       "zh": "茉夏",
+       "en": "Mouchette",
+       "potency": 15
+      },
+      {
+       "tid": "15583",
+       "zh": "奥尔拉",
+       "en": "Horla",
+       "potency": 15
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      },
+      {
+       "tid": "151844",
+       "zh": "薇薇安",
+       "en": "Vivian",
+       "potency": 15
+      }
+     ],
+     "token": "120491"
+    },
+    "chars": [
+     {
+      "tid": "94450",
+      "en": "Mouchette",
+      "zh": "茉夏",
+      "n": 608
+     },
+     {
+      "tid": "145363",
+      "en": "Lotan: Cetarchon",
+      "zh": "蚀灭·萝坦",
+      "n": 515
+     },
+     {
+      "tid": "15583",
+      "en": "Horla",
+      "zh": "奥尔拉",
+      "n": 423
+     },
+     {
+      "tid": "77918",
+      "en": "Arachne",
+      "zh": "阿拉克涅",
+      "n": 380
+     },
+     {
+      "tid": "151844",
+      "en": "Vivian",
+      "zh": "薇薇安",
+      "n": 325
+     },
+     {
+      "tid": "15591",
+      "en": "Aigis",
+      "zh": "艾继丝",
+      "n": 317
+     }
+    ],
+    "tokens": [
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 390
+     },
+     {
+      "en": "Cetus-Devouring Storm",
+      "zh": "噬鲸的风暴",
+      "n": 177
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 176
+     },
+     {
+      "en": "Undying Sun",
+      "zh": "不落的太阳",
+      "n": 128
+     },
+     {
+      "en": "Sacred Bleeding Heart",
+      "zh": "泣血的圣心",
+      "n": 111
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 83
+     }
+    ],
+    "creations": [
+     {
+      "en": "Filigree Agate+",
+      "zh": "缠丝玛瑙+",
+      "n": 1993
+     },
+     {
+      "en": "Ultra Ring",
+      "zh": "超维戒指",
+      "n": 1993
+     },
+     {
+      "en": "Dimensional Image: Horla",
+      "zh": "维度影像·奥尔拉",
+      "n": 423
+     },
+     {
+      "en": "Dimensional Image: Arachne",
+      "zh": "维度影像·阿拉克涅",
+      "n": 380
+     },
+     {
+      "en": "Dimensional Image: Castor",
+      "zh": "维度影像·卡斯托尔",
+      "n": 253
+     },
+     {
+      "en": "Dimensional Image: Clementine",
+      "zh": "维度影像·克莱门汀",
+      "n": 240
+     }
+    ]
+   },
+   {
+    "wave": 2,
+    "champion": {
+     "rank": 1,
+     "uid": 100716237,
+     "score": 100,
+     "members": [
+      {
+       "tid": "77913",
+       "zh": "凯蒂古拉",
+       "en": "Kathigu-Ra",
+       "potency": 15
+      },
+      {
+       "tid": "15583",
+       "zh": "奥尔拉",
+       "en": "Horla",
+       "potency": 3
+      },
+      {
+       "tid": "77925",
+       "zh": "克莱门汀",
+       "en": "Clementine",
+       "potency": 15
+      },
+      {
+       "tid": "151844",
+       "zh": "薇薇安",
+       "en": "Vivian",
+       "potency": 3
+      }
+     ],
+     "token": "95548",
+     "covs": [
+      "18357",
+      "18360",
+      "18347",
+      "18344"
+     ]
+    },
+    "hot": [
+     {
+      "count": 234,
+      "members": [
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 9
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       }
+      ],
+      "score": 100,
+      "token": "45302"
+     },
+     {
+      "count": 59,
+      "members": [
+       {
+        "tid": "77913",
+        "zh": "凯蒂古拉",
+        "en": "Kathigu-Ra",
+        "potency": 15
+       },
+       {
+        "tid": "15583",
+        "zh": "奥尔拉",
+        "en": "Horla",
+        "potency": 3
+       },
+       {
+        "tid": "77925",
+        "zh": "克莱门汀",
+        "en": "Clementine",
+        "potency": 15
+       },
+       {
+        "tid": "151844",
+        "zh": "薇薇安",
+        "en": "Vivian",
+        "potency": 3
+       }
+      ],
+      "score": 100,
+      "token": "95548"
+     },
+     {
+      "count": 53,
+      "members": [
+       {
+        "tid": "15567",
+        "zh": "血链·希洛",
+        "en": "Helot: Catena",
+        "potency": 15
+       },
+       {
+        "tid": "15587",
+        "zh": "希洛",
+        "en": "Helot",
+        "potency": 15
+       },
+       {
+        "tid": "77918",
+        "zh": "阿拉克涅",
+        "en": "Arachne",
+        "potency": 8
+       },
+       {
+        "tid": "15596",
+        "zh": "泰旖丝",
+        "en": "Thais",
+        "potency": 15
+       }
+      ],
+      "score": 95,
+      "token": "49204"
+     }
+    ],
+    "fastest": {
+     "rounds": 13,
+     "rank": 26,
+     "name": "麻木似水",
+     "uid": 100655478,
+     "members": [
+      {
+       "tid": "94450",
+       "zh": "茉夏",
+       "en": "Mouchette",
+       "potency": 15
+      },
+      {
+       "tid": "15583",
+       "zh": "奥尔拉",
+       "en": "Horla",
+       "potency": 7
+      },
+      {
+       "tid": "151844",
+       "zh": "薇薇安",
+       "en": "Vivian",
+       "potency": 3
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      }
+     ],
+     "token": "9653"
+    },
+    "chars": [
+     {
+      "tid": "15589",
+      "en": "Murphy: Fauxborn",
+      "zh": "诞妄·墨菲",
+      "n": 344
+     },
+     {
+      "tid": "15596",
+      "en": "Thais",
+      "zh": "泰旖丝",
+      "n": 341
+     },
+     {
+      "tid": "15582",
+      "en": "Miryam",
+      "zh": "弥利亚姆",
+      "n": 311
+     },
+     {
+      "tid": "77923",
+      "en": "Castor",
+      "zh": "卡斯托尔",
+      "n": 310
+     },
+     {
+      "tid": "77918",
+      "en": "Arachne",
+      "zh": "阿拉克涅",
+      "n": 307
+     },
+     {
+      "tid": "15563",
+      "en": "Tulu",
+      "zh": "图鲁",
+      "n": 293
+     }
+    ],
+    "tokens": [
+     {
+      "en": "The Lone Seed",
+      "zh": "唯一的种子",
+      "n": 178
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 169
+     },
+     {
+      "en": "Wayward Ship",
+      "zh": "偏航船",
+      "n": 160
+     },
+     {
+      "en": "Sacred Bleeding Heart",
+      "zh": "泣血的圣心",
+      "n": 142
+     },
+     {
+      "en": "Undying Sun",
+      "zh": "不落的太阳",
+      "n": 135
+     },
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 97
+     }
+    ],
+    "creations": [
+     {
+      "en": "Eerie Hook",
+      "zh": "古怪钩爪",
+      "n": 1990
+     },
+     {
+      "en": "Ultra Ring",
+      "zh": "超维戒指",
+      "n": 1990
+     },
+     {
+      "en": "Rusted Key",
+      "zh": "锈蚀钥匙",
+      "n": 1284
+     },
+     {
+      "en": "Dimensional Image: Castor",
+      "zh": "维度影像·卡斯托尔",
+      "n": 310
+     },
+     {
+      "en": "Dimensional Image: Arachne",
+      "zh": "维度影像·阿拉克涅",
+      "n": 307
+     },
+     {
+      "en": "Dimensional Image: Horla",
+      "zh": "维度影像·奥尔拉",
+      "n": 290
+     }
+    ]
+   },
+   {
+    "wave": 3,
+    "champion": {
+     "rank": 1,
+     "uid": 100716237,
+     "score": 105,
+     "members": [
+      {
+       "tid": "15589",
+       "zh": "诞妄·墨菲",
+       "en": "Murphy: Fauxborn",
+       "potency": 15
+      },
+      {
+       "tid": "15564",
+       "zh": "戈利亚",
+       "en": "Goliath",
+       "potency": 15
+      },
+      {
+       "tid": "15582",
+       "zh": "弥利亚姆",
+       "en": "Miryam",
+       "potency": 6
+      },
+      {
+       "tid": "15563",
+       "zh": "图鲁",
+       "en": "Tulu",
+       "potency": 13
+      }
+     ],
+     "token": "118128",
+     "covs": [
+      "18348",
+      "18360",
+      "18360",
+      "18360"
+     ]
+    },
+    "hot": [
+     {
+      "count": 210,
+      "members": [
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 6
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 13
+       }
+      ],
+      "score": 105,
+      "token": "118128"
+     },
+     {
+      "count": 54,
+      "members": [
+       {
+        "tid": "15569",
+        "zh": "萝坦",
+        "en": "Lotan",
+        "potency": 15
+       },
+       {
+        "tid": "15602",
+        "zh": "熔毁·朵尔",
+        "en": "Doll: Inferno",
+        "potency": 7
+       },
+       {
+        "tid": "54117",
+        "zh": "哈姆林",
+        "en": "Hameln",
+        "potency": 5
+       },
+       {
+        "tid": "54116",
+        "zh": "塔薇",
+        "en": "Tawil",
+        "potency": 2
+       }
+      ],
+      "score": 105,
+      "token": "10065"
+     },
+     {
+      "count": 50,
+      "members": [
+       {
+        "tid": "15569",
+        "zh": "萝坦",
+        "en": "Lotan",
+        "potency": 15
+       },
+       {
+        "tid": "15602",
+        "zh": "熔毁·朵尔",
+        "en": "Doll: Inferno",
+        "potency": 11
+       },
+       {
+        "tid": "125346",
+        "zh": "徐",
+        "en": "Xu",
+        "potency": 8
+       },
+       {
+        "tid": "15577",
+        "zh": "菲茵特",
+        "en": "Faint",
+        "potency": 15
+       }
+      ],
+      "score": 105,
+      "token": "10065"
+     }
+    ],
+    "fastest": {
+     "rounds": 5,
+     "rank": 590,
+     "name": "YANA",
+     "uid": 100202375,
+     "members": [
+      {
+       "tid": "15569",
+       "zh": "萝坦",
+       "en": "Lotan",
+       "potency": 15
+      },
+      {
+       "tid": "54117",
+       "zh": "哈姆林",
+       "en": "Hameln",
+       "potency": 8
+      },
+      {
+       "tid": "54116",
+       "zh": "塔薇",
+       "en": "Tawil",
+       "potency": 15
+      },
+      {
+       "tid": "15602",
+       "zh": "熔毁·朵尔",
+       "en": "Doll: Inferno",
+       "potency": 15
+      }
+     ],
+     "token": "10065"
+    },
+    "chars": [
+     {
+      "tid": "15569",
+      "en": "Lotan",
+      "zh": "萝坦",
+      "n": 666
+     },
+     {
+      "tid": "15602",
+      "en": "Doll: Inferno",
+      "zh": "熔毁·朵尔",
+      "n": 545
+     },
+     {
+      "tid": "54116",
+      "en": "Tawil",
+      "zh": "塔薇",
+      "n": 490
+     },
+     {
+      "tid": "54117",
+      "en": "Hameln",
+      "zh": "哈姆林",
+      "n": 344
+     },
+     {
+      "tid": "125346",
+      "en": "Xu",
+      "zh": "徐",
+      "n": 304
+     },
+     {
+      "tid": "15589",
+      "en": "Murphy: Fauxborn",
+      "zh": "诞妄·墨菲",
+      "n": 303
+     }
+    ],
+    "tokens": [
+     {
+      "en": "Tiny Wish",
+      "zh": "小小心愿",
+      "n": 498
+     },
+     {
+      "en": "All of Her",
+      "zh": "全部的她",
+      "n": 155
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 147
+     },
+     {
+      "en": "Wayward Ship",
+      "zh": "偏航船",
+      "n": 146
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 137
+     },
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 134
+     }
+    ],
+    "creations": [
+     {
+      "en": "Doctor's Case+",
+      "zh": "医生手提箱+",
+      "n": 1992
+     },
+     {
+      "en": "Ultra Ring",
+      "zh": "超维戒指",
+      "n": 1992
+     },
+     {
+      "en": "Dimensional Image: Casiah",
+      "zh": "维度影像·卡茜亚",
+      "n": 115
+     },
+     {
+      "en": "Dimensional Image: Arachne",
+      "zh": "维度影像·阿拉克涅",
+      "n": 97
+     },
+     {
+      "en": "Dimensional Image: Castor",
+      "zh": "维度影像·卡斯托尔",
+      "n": 89
+     },
+     {
+      "en": "Dimensional Image: Horla",
+      "zh": "维度影像·奥尔拉",
+      "n": 86
+     }
+    ]
+   },
+   {
+    "wave": 4,
+    "champion": {
+     "rank": 1,
+     "uid": 100716237,
+     "score": 110,
+     "members": [
+      {
+       "tid": "130226",
+       "zh": "沙耶",
+       "en": "Saya",
+       "potency": 15
+      },
+      {
+       "tid": "130901",
+       "zh": "莫丝",
+       "en": "Vortice",
+       "potency": 15
+      },
+      {
+       "tid": "15576",
+       "zh": "墨菲",
+       "en": "Murphy",
+       "potency": 7
+      },
+      {
+       "tid": "15599",
+       "zh": "萨尔瓦多",
+       "en": "Salvador",
+       "potency": 9
+      }
+     ],
+     "token": "130703",
+     "covs": [
+      "18360",
+      "18338",
+      "18348",
+      "18360"
+     ]
+    },
+    "hot": [
+     {
+      "count": 223,
+      "members": [
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 7
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 7
+       }
+      ],
+      "score": 100,
+      "token": "9653"
+     },
+     {
+      "count": 149,
+      "members": [
+       {
+        "tid": "130226",
+        "zh": "沙耶",
+        "en": "Saya",
+        "potency": 15
+       },
+       {
+        "tid": "130901",
+        "zh": "莫丝",
+        "en": "Vortice",
+        "potency": 15
+       },
+       {
+        "tid": "15576",
+        "zh": "墨菲",
+        "en": "Murphy",
+        "potency": 7
+       },
+       {
+        "tid": "15599",
+        "zh": "萨尔瓦多",
+        "en": "Salvador",
+        "potency": 9
+       }
+      ],
+      "score": 110,
+      "token": "130703"
+     },
+     {
+      "count": 46,
+      "members": [
+       {
+        "tid": "130901",
+        "zh": "莫丝",
+        "en": "Vortice",
+        "potency": 15
+       },
+       {
+        "tid": "15566",
+        "zh": "希莱斯特",
+        "en": "Celeste",
+        "potency": 15
+       },
+       {
+        "tid": "130226",
+        "zh": "沙耶",
+        "en": "Saya",
+        "potency": 15
+       },
+       {
+        "tid": "15576",
+        "zh": "墨菲",
+        "en": "Murphy",
+        "potency": 8
+       }
+      ],
+      "score": 110,
+      "token": "130703"
+     }
+    ],
+    "fastest": {
+     "rounds": 11,
+     "rank": 23,
+     "name": "Anicillia",
+     "uid": 101184755,
+     "members": [
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      },
+      {
+       "tid": "15583",
+       "zh": "奥尔拉",
+       "en": "Horla",
+       "potency": 10
+      },
+      {
+       "tid": "148578",
+       "zh": "负誓·奥吉尔",
+       "en": "Ogier: Oathbound",
+       "potency": 15
+      },
+      {
+       "tid": "94450",
+       "zh": "茉夏",
+       "en": "Mouchette",
+       "potency": 15
+      }
+     ],
+     "token": "120491"
+    },
+    "chars": [
+     {
+      "tid": "130226",
+      "en": "Saya",
+      "zh": "沙耶",
+      "n": 519
+     },
+     {
+      "tid": "15576",
+      "en": "Murphy",
+      "zh": "墨菲",
+      "n": 372
+     },
+     {
+      "tid": "130901",
+      "en": "Vortice",
+      "zh": "莫丝",
+      "n": 357
+     },
+     {
+      "tid": "94450",
+      "en": "Mouchette",
+      "zh": "茉夏",
+      "n": 346
+     },
+     {
+      "tid": "77918",
+      "en": "Arachne",
+      "zh": "阿拉克涅",
+      "n": 324
+     },
+     {
+      "tid": "15589",
+      "en": "Murphy: Fauxborn",
+      "zh": "诞妄·墨菲",
+      "n": 320
+     }
+    ],
+    "tokens": [
+     {
+      "en": "Drowned Innocence",
+      "zh": "溺亡的纯真",
+      "n": 347
+     },
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 213
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 201
+     },
+     {
+      "en": "Wayward Ship",
+      "zh": "偏航船",
+      "n": 152
+     },
+     {
+      "en": "All of Her",
+      "zh": "全部的她",
+      "n": 112
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 99
+     }
+    ],
+    "creations": [
+     {
+      "en": "Malignant Child+",
+      "zh": "恶童+",
+      "n": 1984
+     },
+     {
+      "en": "Ultra Ring",
+      "zh": "超维戒指",
+      "n": 1984
+     },
+     {
+      "en": "Dimensional Image: Arachne",
+      "zh": "维度影像·阿拉克涅",
+      "n": 324
+     },
+     {
+      "en": "Vitality Injection+",
+      "zh": "活性注射器+",
+      "n": 277
+     },
+     {
+      "en": "Dimensional Image: Horla",
+      "zh": "维度影像·奥尔拉",
+      "n": 265
+     },
+     {
+      "en": "Blessed Blood+",
+      "zh": "恩赐之血+",
+      "n": 240
+     }
+    ]
+   },
+   {
+    "wave": 5,
+    "champion": {
+     "rank": 1,
+     "uid": 100716237,
+     "score": 115,
+     "members": [
+      {
+       "tid": "15567",
+       "zh": "血链·希洛",
+       "en": "Helot: Catena",
+       "potency": 8
+      },
+      {
+       "tid": "15596",
+       "zh": "泰旖丝",
+       "en": "Thais",
+       "potency": 7
+      },
+      {
+       "tid": "15587",
+       "zh": "希洛",
+       "en": "Helot",
+       "potency": 15
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      }
+     ],
+     "token": "49204",
+     "covs": [
+      "18335",
+      "18360",
+      "18360",
+      "18360"
+     ]
+    },
+    "hot": [
+     {
+      "count": 94,
+      "members": [
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 3
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 5
+       },
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       }
+      ],
+      "score": 100,
+      "token": "9653"
+     },
+     {
+      "count": 70,
+      "members": [
+       {
+        "tid": "15576",
+        "zh": "墨菲",
+        "en": "Murphy",
+        "potency": 8
+       },
+       {
+        "tid": "130901",
+        "zh": "莫丝",
+        "en": "Vortice",
+        "potency": 15
+       },
+       {
+        "tid": "130226",
+        "zh": "沙耶",
+        "en": "Saya",
+        "potency": 3
+       },
+       {
+        "tid": "15599",
+        "zh": "萨尔瓦多",
+        "en": "Salvador",
+        "potency": 3
+       }
+      ],
+      "score": 110,
+      "token": "130703"
+     },
+     {
+      "count": 42,
+      "members": [
+       {
+        "tid": "77917",
+        "zh": "波吕克斯",
+        "en": "Pollux",
+        "potency": 15
+       },
+       {
+        "tid": "77918",
+        "zh": "阿拉克涅",
+        "en": "Arachne",
+        "potency": 7
+       },
+       {
+        "tid": "77923",
+        "zh": "卡斯托尔",
+        "en": "Castor",
+        "potency": 15
+       },
+       {
+        "tid": "77925",
+        "zh": "克莱门汀",
+        "en": "Clementine",
+        "potency": 15
+       }
+      ],
+      "score": 105,
+      "token": "36849"
+     }
+    ],
+    "fastest": {
+     "rounds": 16,
+     "rank": 7,
+     "name": "<#7FC>魔龙",
+     "uid": 100109619,
+     "members": [
+      {
+       "tid": "15567",
+       "zh": "血链·希洛",
+       "en": "Helot: Catena",
+       "potency": 15
+      },
+      {
+       "tid": "15596",
+       "zh": "泰旖丝",
+       "en": "Thais",
+       "potency": 15
+      },
+      {
+       "tid": "15587",
+       "zh": "希洛",
+       "en": "Helot",
+       "potency": 15
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      }
+     ],
+     "token": "49204"
+    },
+    "chars": [
+     {
+      "tid": "77918",
+      "en": "Arachne",
+      "zh": "阿拉克涅",
+      "n": 408
+     },
+     {
+      "tid": "77923",
+      "en": "Castor",
+      "zh": "卡斯托尔",
+      "n": 390
+     },
+     {
+      "tid": "130226",
+      "en": "Saya",
+      "zh": "沙耶",
+      "n": 375
+     },
+     {
+      "tid": "77917",
+      "en": "Pollux",
+      "zh": "波吕克斯",
+      "n": 350
+     },
+     {
+      "tid": "15594",
+      "en": "Caecus",
+      "zh": "凯刻斯",
+      "n": 316
+     },
+     {
+      "tid": "15576",
+      "en": "Murphy",
+      "zh": "墨菲",
+      "n": 288
+     }
+    ],
+    "tokens": [
+     {
+      "en": "Drowned Innocence",
+      "zh": "溺亡的纯真",
+      "n": 213
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 195
+     },
+     {
+      "en": "Sacred Bleeding Heart",
+      "zh": "泣血的圣心",
+      "n": 177
+     },
+     {
+      "en": "Feast of Decay",
+      "zh": "腐烂盛筵",
+      "n": 132
+     },
+     {
+      "en": "Encounter in Pure White",
+      "zh": "纯白初遇",
+      "n": 114
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 111
+     }
+    ],
+    "creations": [
+     {
+      "en": "Ritual Dagger+",
+      "zh": "遗落的祭祀刀+",
+      "n": 1987
+     },
+     {
+      "en": "Ultra Ring",
+      "zh": "超维戒指",
+      "n": 1987
+     },
+     {
+      "en": "Rusted Key",
+      "zh": "锈蚀钥匙",
+      "n": 1987
+     },
+     {
+      "en": "Dimensional Image: Arachne",
+      "zh": "维度影像·阿拉克涅",
+      "n": 408
+     },
+     {
+      "en": "Dimensional Image: Castor",
+      "zh": "维度影像·卡斯托尔",
+      "n": 390
+     },
+     {
+      "en": "Dimensional Image: Pollux",
+      "zh": "维度影像·波吕克斯",
+      "n": 350
+     }
+    ]
+   }
+  ],
+  "top": {
+   "chars": [
+    {
+     "id": "130226",
+     "en": "Saya",
+     "zh": "沙耶",
+     "n": 1587,
+     "rate": 16.0
+    },
+    {
+     "id": "94450",
+     "en": "Mouchette",
+     "zh": "茉夏",
+     "n": 1587,
+     "rate": 16.0
+    },
+    {
+     "id": "77918",
+     "en": "Arachne",
+     "zh": "阿拉克涅",
+     "n": 1516,
+     "rate": 15.2
+    },
+    {
+     "id": "15583",
+     "en": "Horla",
+     "zh": "奥尔拉",
+     "n": 1346,
+     "rate": 13.5
+    },
+    {
+     "id": "15602",
+     "en": "Doll: Inferno",
+     "zh": "熔毁·朵尔",
+     "n": 1291,
+     "rate": 13.0
+    },
+    {
+     "id": "15589",
+     "en": "Murphy: Fauxborn",
+     "zh": "诞妄·墨菲",
+     "n": 1289,
+     "rate": 13.0
+    },
+    {
+     "id": "77923",
+     "en": "Castor",
+     "zh": "卡斯托尔",
+     "n": 1270,
+     "rate": 12.8
+    },
+    {
+     "id": "15596",
+     "en": "Thais",
+     "zh": "泰旖丝",
+     "n": 1247,
+     "rate": 12.5
+    },
+    {
+     "id": "15582",
+     "en": "Miryam",
+     "zh": "弥利亚姆",
+     "n": 1151,
+     "rate": 11.6
+    },
+    {
+     "id": "145363",
+     "en": "Lotan: Cetarchon",
+     "zh": "蚀灭·萝坦",
+     "n": 1133,
+     "rate": 11.4
+    }
+   ],
+   "wheels": [
+    {
+     "id": "130053",
+     "en": "Fragrant Morphogenesis",
+     "zh": "愿世界化作芬芳",
+     "n": 1620,
+     "rate": 16.3
+    },
+    {
+     "id": "9827",
+     "en": "Blade of the Titan",
+     "zh": "巨人之刃",
+     "n": 1561,
+     "rate": 15.7
+    },
+    {
+     "id": "9516",
+     "en": "Celestial Beast",
+     "zh": "星天之兽",
+     "n": 1515,
+     "rate": 15.2
+    },
+    {
+     "id": "94448",
+     "en": "Doomsday Rampage",
+     "zh": "狂戮至世界尽头",
+     "n": 1482,
+     "rate": 14.9
+    },
+    {
+     "id": "48828",
+     "en": "Dusk and Dawn",
+     "zh": "极夜与破晓",
+     "n": 1476,
+     "rate": 14.8
+    },
+    {
+     "id": "10073",
+     "en": "Elevated Focus",
+     "zh": "专注精神",
+     "n": 1455,
+     "rate": 14.6
+    },
+    {
+     "id": "9881",
+     "en": "Merciful Nurturing",
+     "zh": "慈悲的哺育",
+     "n": 1423,
+     "rate": 14.3
+    },
+    {
+     "id": "77893",
+     "en": "Eternal Weave",
+     "zh": "永世编织之网",
+     "n": 1404,
+     "rate": 14.1
+    }
+   ],
+   "covs": [
+    {
+     "id": "18360",
+     "en": "Burial Ground's Sighs",
+     "zh": "埋骨地絮语",
+     "n": 7233,
+     "rate": 72.7
+    },
+    {
+     "id": "18347",
+     "en": "Life Drain",
+     "zh": "生机榨取",
+     "n": 6031,
+     "rate": 60.6
+    },
+    {
+     "id": "18348",
+     "en": "Dream of Medicine",
+     "zh": "入药之梦",
+     "n": 4803,
+     "rate": 48.3
+    },
+    {
+     "id": "18335",
+     "en": "April Tribute",
+     "zh": "四月礼赞",
+     "n": 3968,
+     "rate": 39.9
+    },
+    {
+     "id": "18338",
+     "en": "Cursed Rabbit",
+     "zh": "诅咒兔",
+     "n": 2194,
+     "rate": 22.1
+    },
+    {
+     "id": "18346",
+     "en": "Re-evolution",
+     "zh": "再衍化",
+     "n": 1878,
+     "rate": 18.9
+    }
+   ],
+   "tokens": [
+    {
+     "id": "120491",
+     "en": "From the Mist Realm",
+     "zh": "来自雾境",
+     "n": 920,
+     "rate": 9.2
+    },
+    {
+     "id": "9653",
+     "en": "A Mouse's Wisdom",
+     "zh": "鼠鼠的智慧",
+     "n": 878,
+     "rate": 8.8
+    },
+    {
+     "id": "130703",
+     "en": "Drowned Innocence",
+     "zh": "溺亡的纯真",
+     "n": 763,
+     "rate": 7.7
+    },
+    {
+     "id": "10065",
+     "en": "Tiny Wish",
+     "zh": "小小心愿",
+     "n": 641,
+     "rate": 6.4
+    },
+    {
+     "id": "118128",
+     "en": "Wayward Ship",
+     "zh": "偏航船",
+     "n": 560,
+     "rate": 5.6
+    },
+    {
+     "id": "125190",
+     "en": "Manor Echoes",
+     "zh": "深宅往事",
+     "n": 532,
+     "rate": 5.3
+    }
+   ],
+   "creations": [
+    {
+     "id": "83511",
+     "en": "Ultra Ring",
+     "zh": "超维戒指",
+     "n": 9946,
+     "rate": 100.0
+    },
+    {
+     "id": "13829",
+     "en": "Rusted Key",
+     "zh": "锈蚀钥匙",
+     "n": 3271,
+     "rate": 32.9
+    },
+    {
+     "id": "70755",
+     "en": "Filigree Agate+",
+     "zh": "缠丝玛瑙+",
+     "n": 2226,
+     "rate": 22.4
+    },
+    {
+     "id": "70725",
+     "en": "Malignant Child+",
+     "zh": "恶童+",
+     "n": 2184,
+     "rate": 22.0
+    },
+    {
+     "id": "70731",
+     "en": "Ritual Dagger+",
+     "zh": "遗落的祭祀刀+",
+     "n": 2104,
+     "rate": 21.2
+    },
+    {
+     "id": "78664",
+     "en": "Eerie Hook",
+     "zh": "古怪钩爪",
+     "n": 2011,
+     "rate": 20.2
+    },
+    {
+     "id": "98427",
+     "en": "Doctor's Case+",
+     "zh": "医生手提箱+",
+     "n": 2004,
+     "rate": 20.1
+    },
+    {
+     "id": "84121",
+     "en": "Dimensional Image: Arachne",
+     "zh": "维度影像·阿拉克涅",
+     "n": 1516,
+     "rate": 15.2
+    }
+   ],
+   "assists": [
+    {
+     "id": "94450",
+     "en": "Mouchette",
+     "zh": "茉夏",
+     "n": 477,
+     "rate": 4.8
+    },
+    {
+     "id": "130901",
+     "en": "Vortice",
+     "zh": "莫丝",
+     "n": 142,
+     "rate": 1.4
+    },
+    {
+     "id": "77918",
+     "en": "Arachne",
+     "zh": "阿拉克涅",
+     "n": 90,
+     "rate": 0.9
+    },
+    {
+     "id": "77917",
+     "en": "Pollux",
+     "zh": "波吕克斯",
+     "n": 89,
+     "rate": 0.9
+    },
+    {
+     "id": "145363",
+     "en": "Lotan: Cetarchon",
+     "zh": "蚀灭·萝坦",
+     "n": 74,
+     "rate": 0.7
+    },
+    {
+     "id": "148578",
+     "en": "Ogier: Oathbound",
+     "zh": "负誓·奥吉尔",
+     "n": 74,
+     "rate": 0.7
+    }
+   ],
+   "perfectChars": [
+    {
+     "id": "15567",
+     "en": "Helot: Catena",
+     "zh": "血链·希洛",
+     "n": 8,
+     "rate": 0.1
+    },
+    {
+     "id": "15596",
+     "en": "Thais",
+     "zh": "泰旖丝",
+     "n": 8,
+     "rate": 0.1
+    },
+    {
+     "id": "15587",
+     "en": "Helot",
+     "zh": "希洛",
+     "n": 8,
+     "rate": 0.1
+    },
+    {
+     "id": "77918",
+     "en": "Arachne",
+     "zh": "阿拉克涅",
+     "n": 8,
+     "rate": 0.1
+    },
+    {
+     "id": "15589",
+     "en": "Murphy: Fauxborn",
+     "zh": "诞妄·墨菲",
+     "n": 7,
+     "rate": 0.1
+    },
+    {
+     "id": "15582",
+     "en": "Miryam",
+     "zh": "弥利亚姆",
+     "n": 7,
+     "rate": 0.1
+    }
+   ],
+   "teamN": 9946
+  },
+  "records": {
+   "maxHit": {
+    "value": 46760126,
+    "rank": 27,
+    "uid": 101182528,
+    "wave": 5,
+    "name": "Helleios",
+    "chars": [
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "卡斯托尔",
+      "en": "Castor"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     }
+    ],
+    "top": {
+     "zh": "负誓·奥吉尔",
+     "en": "Ogier: Oathbound"
+    }
+   },
+   "maxTotal": {
+    "value": 82616083,
+    "rank": 430,
+    "uid": 100723476,
+    "wave": 4,
+    "name": "Jad",
+    "chars": [
+     {
+      "zh": "萨尔瓦多",
+      "en": "Salvador"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo"
+     }
+    ],
+    "top": {
+     "zh": "萨尔瓦多",
+     "en": "Salvador"
+    }
+   },
+   "maxChar": {
+    "value": 79627647,
+    "rank": 27,
+    "uid": 101182528,
+    "name": "Helleios",
+    "wave": 5,
+    "char": {
+     "zh": "负誓·奥吉尔",
+     "en": "Ogier: Oathbound"
+    }
+   },
+   "deathResist": {
+    "value": 9,
+    "rank": 30,
+    "uid": 101094561,
+    "wave": 1,
+    "name": "<#65F>Spooky",
+    "chars": [
+     {
+      "zh": "萝坦",
+      "en": "Lotan"
+     },
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     },
+     {
+      "zh": "艾继丝",
+      "en": "Aigis"
+     },
+     {
+      "zh": "菲茵特",
+      "en": "Faint"
+     }
+    ],
+    "top": {
+     "zh": "萝坦",
+     "en": "Lotan"
+    }
+   },
+   "counter": {
+    "value": 764468,
+    "rank": 96,
+    "uid": 101080826,
+    "wave": 5,
+    "name": "Mogoo",
+    "chars": [
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     },
+     {
+      "zh": "潘狄娅",
+      "en": "Pandia"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "皮克曼",
+      "en": "Pickman"
+     }
+    ],
+    "top": {
+     "zh": "潘狄娅",
+     "en": "Pandia"
+    }
+   },
+   "tentacle": {
+    "value": 14107,
+    "rank": 33,
+    "uid": 100440131,
+    "wave": 2,
+    "name": "岛屿的奇幻漂流",
+    "chars": [
+     {
+      "zh": "诞妄·墨菲",
+      "en": "Murphy: Fauxborn"
+     },
+     {
+      "zh": "图鲁",
+      "en": "Tulu"
+     },
+     {
+      "zh": "弥利亚姆",
+      "en": "Miryam"
+     },
+     {
+      "zh": "戈利亚",
+      "en": "Goliath"
+     }
+    ],
+    "top": {
+     "zh": "诞妄·墨菲",
+     "en": "Murphy: Fauxborn"
+    }
+   },
+   "strength": {
+    "value": 12558,
+    "rank": 37,
+    "uid": 100553277,
+    "wave": 2,
+    "name": "볼빵빵판다곰",
+    "chars": [
+     {
+      "zh": "凯蒂古拉",
+      "en": "Kathigu-Ra"
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     },
+     {
+      "zh": "克莱门汀",
+      "en": "Clementine"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     }
+    ],
+    "top": {
+     "zh": "凯蒂古拉",
+     "en": "Kathigu-Ra"
+    }
+   },
+   "poison": {
+    "value": 443430,
+    "rank": 4,
+    "uid": 100074390,
+    "wave": 5,
+    "name": "leah1",
+    "chars": [
+     {
+      "zh": "徐",
+      "en": "Xu"
+     },
+     {
+      "zh": "熔毁·朵尔",
+      "en": "Doll: Inferno"
+     },
+     {
+      "zh": "珈伦",
+      "en": "Karen"
+     },
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo"
+     }
+    ],
+    "top": {
+     "zh": "徐",
+     "en": "Xu"
+    }
+   },
+   "hp": {
+    "value": 5654,
+    "rank": 332,
+    "uid": 100225305,
+    "wave": 2,
+    "name": "Shunia",
+    "chars": [
+     {
+      "zh": "庞托斯",
+      "en": "Pontos"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo"
+     },
+     {
+      "zh": "萨尔瓦多",
+      "en": "Salvador"
+     }
+    ],
+    "top": {
+     "zh": "庞托斯",
+     "en": "Pontos"
+    }
+   },
+   "totalBattles": 37101
+  },
+  "fastest": [
+   {
+    "wave": 1,
+    "rounds": 4,
+    "rank": 90,
+    "name": "萨摩不耶",
+    "uid": 100069034,
+    "chars": [
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     }
+    ]
+   },
+   {
+    "wave": 2,
+    "rounds": 13,
+    "rank": 26,
+    "name": "麻木似水",
+    "uid": 100655478,
+    "chars": [
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     }
+    ]
+   },
+   {
+    "wave": 3,
+    "rounds": 5,
+    "rank": 590,
+    "name": "YANA",
+    "uid": 100202375,
+    "chars": [
+     {
+      "zh": "萝坦",
+      "en": "Lotan"
+     },
+     {
+      "zh": "哈姆林",
+      "en": "Hameln"
+     },
+     {
+      "zh": "塔薇",
+      "en": "Tawil"
+     },
+     {
+      "zh": "熔毁·朵尔",
+      "en": "Doll: Inferno"
+     }
+    ]
+   },
+   {
+    "wave": 4,
+    "rounds": 11,
+    "rank": 23,
+    "name": "Anicillia",
+    "uid": 101184755,
+    "chars": [
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound"
+     },
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     }
+    ]
+   },
+   {
+    "wave": 5,
+    "rounds": 16,
+    "rank": 7,
+    "name": "<#7FC>魔龙",
+    "uid": 100109619,
+    "chars": [
+     {
+      "zh": "血链·希洛",
+      "en": "Helot: Catena"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "希洛",
+      "en": "Helot"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     }
+    ]
+   }
+  ],
+  "mystery": {
+   "maxRounds": {
+    "value": 73,
+    "rank": 19,
+    "uid": 100372087,
+    "name": "MulaSaki",
+    "wave": 1,
+    "chars": [
+     {
+      "zh": "萝坦",
+      "en": "Lotan"
+     },
+     {
+      "zh": "艾继丝",
+      "en": "Aigis"
+     },
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     },
+     {
+      "zh": "菲茵特",
+      "en": "Faint"
+     }
+    ]
+   },
+   "maxCard": {
+    "value": 1073,
+    "rank": 360,
+    "uid": 101224355,
+    "name": "Swallow",
+    "wave": 2,
+    "chars": [
+     {
+      "zh": "克珀珊特",
+      "en": "Corposant"
+     },
+     {
+      "zh": "庞托斯",
+      "en": "Pontos"
+     },
+     {
+      "zh": "卡茜亚",
+      "en": "Casiah"
+     },
+     {
+      "zh": "希莱斯特",
+      "en": "Celeste"
+     }
+    ]
+   },
+   "maxEnergy": {
+    "value": 708,
+    "rank": 360,
+    "uid": 101224355,
+    "name": "Swallow",
+    "wave": 2,
+    "chars": [
+     {
+      "zh": "克珀珊特",
+      "en": "Corposant"
+     },
+     {
+      "zh": "庞托斯",
+      "en": "Pontos"
+     },
+     {
+      "zh": "卡茜亚",
+      "en": "Casiah"
+     },
+     {
+      "zh": "希莱斯特",
+      "en": "Celeste"
+     }
+    ]
+   },
+   "maxBoutCard": {
+    "value": 42,
+    "rank": 348,
+    "uid": 101106569,
+    "name": "<#CEF>Lens",
+    "wave": 5,
+    "chars": [
+     {
+      "zh": "艾继丝",
+      "en": "Aigis"
+     },
+     {
+      "zh": "波吕克斯",
+      "en": "Pollux"
+     },
+     {
+      "zh": "卡斯托尔",
+      "en": "Castor"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     }
+    ]
+   },
+   "minCardDown": {
+    "value": 26,
+    "rank": 1327,
+    "uid": 100694156,
+    "name": "",
+    "wave": 3,
+    "chars": [
+     {
+      "zh": "克莱门汀",
+      "en": "Clementine"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound"
+     }
+    ]
+   },
+   "firstRound": {
+    "value": 73,
+    "rank": 30,
+    "uid": 101094561,
+    "name": "<#65F>Spooky",
+    "wave": 3,
+    "chars": [
+     {
+      "zh": "奥瑞塔",
+      "en": "Aurita"
+     },
+     {
+      "zh": "戈利亚",
+      "en": "Goliath"
+     },
+     {
+      "zh": "卡茜亚",
+      "en": "Casiah"
+     },
+     {
+      "zh": "希莱斯特",
+      "en": "Celeste"
+     }
+    ]
+   }
+  },
+  "deathAvg": {
+   "all": 1.68,
+   "allBattles": 3291,
+   "chars": [
+    {
+     "zh": "菲茵特",
+     "en": "Faint",
+     "avg": 4.18,
+     "n": 300
+    },
+    {
+     "zh": "茉夏",
+     "en": "Mouchette",
+     "avg": 3.54,
+     "n": 431
+    },
+    {
+     "zh": "艾尔瓦",
+     "en": "Alva",
+     "avg": 3.32,
+     "n": 93
+    },
+    {
+     "zh": "奥尔拉",
+     "en": "Horla",
+     "avg": 3.31,
+     "n": 315
+    },
+    {
+     "zh": "阿拉克涅",
+     "en": "Arachne",
+     "avg": 3.31,
+     "n": 316
+    }
+   ],
+   "players": [
+    {
+     "name": "雅",
+     "rank": 12,
+     "avg": 4.43,
+     "n": 7
+    },
+    {
+     "name": "<#65F>Spooky",
+     "rank": 30,
+     "avg": 4.33,
+     "n": 6
+    },
+    {
+     "name": "<#fe0>瀧Taki",
+     "rank": 58,
+     "avg": 4.0,
+     "n": 5
+    },
+    {
+     "name": "Potatis土豆",
+     "rank": 11,
+     "avg": 3.75,
+     "n": 8
+    },
+    {
+     "name": "灰烬魔女",
+     "rank": 44,
+     "avg": 3.67,
+     "n": 6
+    }
+   ]
+  },
+  "avgRounds": {
+   "hard": 14.92,
+   "all": 14.53,
+   "hardN": 1849,
+   "byZone": [
+    {
+     "wave": 1,
+     "avg": 10.81,
+     "n": 508
+    },
+    {
+     "wave": 2,
+     "avg": 34.28,
+     "n": 105
+    },
+    {
+     "wave": 3,
+     "avg": 12.74,
+     "n": 1095
+    },
+    {
+     "wave": 4,
+     "avg": 25.31,
+     "n": 61
+    },
+    {
+     "wave": 5,
+     "avg": 37.58,
+     "n": 80
+    }
+   ]
+  },
+  "tokenTable": {
+   "9518": "注射守护",
+   "9653": "鼠鼠的智慧",
+   "9685": "纯白初遇",
+   "9991": "不平等交换",
+   "9995": "不朽的葬仪",
+   "10032": "永世执念",
+   "10052": "脑中之音",
+   "10065": "小小心愿",
+   "36801": "奥瑞塔的宝藏",
+   "36813": "咆哮的血与沙",
+   "36814": "最后的誓言",
+   "36815": "短暂的永恒",
+   "36847": "蚀骨的拥抱",
+   "36848": "湖畔回眸",
+   "36849": "跨越回溯之扉",
+   "36850": "腐烂盛筵",
+   "36857": "神迹降临",
+   "36858": "巨人的霸道",
+   "36859": "全部的她",
+   "36860": "玫瑰的胜利",
+   "36861": "灰雾真容",
+   "36862": "仲夏之梦",
+   "45298": "永续新篇",
+   "45299": "黑天鹅的舞步",
+   "45300": "海之祭",
+   "45301": "一声枪响",
+   "45302": "群山的觉悟",
+   "49204": "唯一的种子",
+   "56636": "门扉的答案",
+   "56638": "第四乐章",
+   "56643": "虚无瘟疫",
+   "70919": "群星的庇佑",
+   "72095": "酒馆之门",
+   "80191": "特殊治疗",
+   "81756": "不灭的雷光",
+   "88873": "错位命运",
+   "94559": "猎食决心",
+   "95548": "不落的太阳",
+   "95691": "残忍的致意",
+   "97737": "定格的仲夏留念",
+   "99102": "虚世之彩",
+   "99724": "泣血的圣心",
+   "100577": "美梦一刹",
+   "118128": "偏航船",
+   "119952": "重逢心愿",
+   "120491": "来自雾境",
+   "124899": "罗网轮转",
+   "125190": "深宅往事",
+   "129499": "岁末花火",
+   "130063": "献给新世界",
+   "130703": "溺亡的纯真",
+   "141174": "空心人",
+   "145281": "噬鲸的风暴",
+   "145970": "并非谎言之物",
+   "148671": "永续新篇",
+   "151695": "Nightborn Evil"
+  },
+  "mysteryLineups": [
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 14,
+    "wave": 5,
+    "threat": "▼",
+    "token": "148671",
+    "members": [
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound",
+      "potency": 15
+     },
+     {
+      "zh": "皮克曼",
+      "en": "Pickman",
+      "potency": 15
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais",
+      "potency": 15
+     },
+     {
+      "zh": "莱克",
+      "en": "Ryker",
+      "potency": 4
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 34,
+    "wave": 5,
+    "threat": "▼",
+    "token": "130703",
+    "members": [
+     {
+      "zh": "墨菲",
+      "en": "Murphy",
+      "potency": 3
+     },
+     {
+      "zh": "莫丝",
+      "en": "Vortice",
+      "potency": 7
+     },
+     {
+      "zh": "卡茜亚",
+      "en": "Casiah",
+      "potency": 15
+     },
+     {
+      "zh": "温柯尔",
+      "en": "Winkle",
+      "potency": 15
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 140,
+    "wave": 5,
+    "threat": "▼",
+    "token": "148671",
+    "members": [
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne",
+      "potency": 3
+     },
+     {
+      "zh": "拉蒙娜",
+      "en": "Ramona",
+      "potency": 15
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla",
+      "potency": 3
+     },
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound",
+      "potency": 15
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 208,
+    "wave": 5,
+    "threat": "▼",
+    "token": "9685",
+    "members": [
+     {
+      "zh": "克珀珊特",
+      "en": "Corposant",
+      "potency": 15
+     },
+     {
+      "zh": "卡茜亚",
+      "en": "Casiah",
+      "potency": 15
+     },
+     {
+      "zh": "诞妄·墨菲",
+      "en": "Murphy: Fauxborn",
+      "potency": 15
+     },
+     {
+      "zh": "温柯尔",
+      "en": "Winkle",
+      "potency": 15
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 362,
+    "wave": 5,
+    "threat": "▼",
+    "token": "130703",
+    "members": [
+     {
+      "zh": "雷娅",
+      "en": "Leigh",
+      "potency": 15
+     },
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo",
+      "potency": 15
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais",
+      "potency": 15
+     },
+     {
+      "zh": "莫丝",
+      "en": "Vortice",
+      "potency": 15
+     }
+    ]
+   }
+  ],
+  "enlight": [
+   {
+    "tid": "15585",
+    "zh": "奥吉尔",
+    "en": "Ogier",
+    "n": 126,
+    "p12": 100.0,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 0,
+     "9-11": 0,
+     "12+": 126
+    }
+   },
+   {
+    "tid": "15569",
+    "zh": "萝坦",
+    "en": "Lotan",
+    "n": 606,
+    "p12": 91.9,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 13,
+     "9-11": 36,
+     "12+": 557
+    }
+   },
+   {
+    "tid": "15568",
+    "zh": "环行·拉蒙娜",
+    "en": "Ramona: Timeworn",
+    "n": 23,
+    "p12": 91.3,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 0,
+     "9-11": 2,
+     "12+": 21
+    }
+   },
+   {
+    "tid": "77913",
+    "zh": "凯蒂古拉",
+    "en": "Kathigu-Ra",
+    "n": 42,
+    "p12": 88.1,
+    "dist": {
+     "0-2": 1,
+     "3-5": 1,
+     "6-8": 3,
+     "9-11": 0,
+     "12+": 37
+    }
+   },
+   {
+    "tid": "15570",
+    "zh": "朵尔",
+    "en": "Doll",
+    "n": 108,
+    "p12": 87.0,
+    "dist": {
+     "0-2": 0,
+     "3-5": 2,
+     "6-8": 3,
+     "9-11": 9,
+     "12+": 94
+    }
+   },
+   {
+    "tid": "15564",
+    "zh": "戈利亚",
+    "en": "Goliath",
+    "n": 66,
+    "p12": 84.8,
+    "dist": {
+     "0-2": 0,
+     "3-5": 2,
+     "6-8": 4,
+     "9-11": 4,
+     "12+": 56
+    }
+   },
+   {
+    "tid": "15573",
+    "zh": "奥瑞塔",
+    "en": "Aurita",
+    "n": 74,
+    "p12": 78.4,
+    "dist": {
+     "0-2": 1,
+     "3-5": 4,
+     "6-8": 8,
+     "9-11": 3,
+     "12+": 58
+    }
+   },
+   {
+    "tid": "94450",
+    "zh": "茉夏",
+    "en": "Mouchette",
+    "n": 291,
+    "p12": 77.7,
+    "dist": {
+     "0-2": 4,
+     "3-5": 20,
+     "6-8": 33,
+     "9-11": 8,
+     "12+": 226
+    }
+   },
+   {
+    "tid": "15579",
+    "zh": "温柯尔",
+    "en": "Winkle",
+    "n": 22,
+    "p12": 72.7,
+    "dist": {
+     "0-2": 2,
+     "3-5": 1,
+     "6-8": 2,
+     "9-11": 1,
+     "12+": 16
+    }
+   },
+   {
+    "tid": "77917",
+    "zh": "波吕克斯",
+    "en": "Pollux",
+    "n": 32,
+    "p12": 71.9,
+    "dist": {
+     "0-2": 0,
+     "3-5": 1,
+     "6-8": 6,
+     "9-11": 2,
+     "12+": 23
+    }
+   },
+   {
+    "tid": "15595",
+    "zh": "拉蒙娜",
+    "en": "Ramona",
+    "n": 109,
+    "p12": 71.6,
+    "dist": {
+     "0-2": 0,
+     "3-5": 1,
+     "6-8": 4,
+     "9-11": 26,
+     "12+": 78
+    }
+   },
+   {
+    "tid": "15589",
+    "zh": "诞妄·墨菲",
+    "en": "Murphy: Fauxborn",
+    "n": 52,
+    "p12": 71.2,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 12,
+     "9-11": 3,
+     "12+": 37
+    }
+   },
+   {
+    "tid": "15567",
+    "zh": "血链·希洛",
+    "en": "Helot: Catena",
+    "n": 28,
+    "p12": 67.9,
+    "dist": {
+     "0-2": 0,
+     "3-5": 4,
+     "6-8": 5,
+     "9-11": 0,
+     "12+": 19
+    }
+   },
+   {
+    "tid": "15566",
+    "zh": "希莱斯特",
+    "en": "Celeste",
+    "n": 40,
+    "p12": 65.0,
+    "dist": {
+     "0-2": 1,
+     "3-5": 3,
+     "6-8": 8,
+     "9-11": 2,
+     "12+": 26
+    }
+   },
+   {
+    "tid": "15565",
+    "zh": "诺缔拉",
+    "en": "Nautila",
+    "n": 95,
+    "p12": 64.2,
+    "dist": {
+     "0-2": 4,
+     "3-5": 10,
+     "6-8": 9,
+     "9-11": 11,
+     "12+": 61
+    }
+   },
+   {
+    "tid": "15571",
+    "zh": "珈伦",
+    "en": "Karen",
+    "n": 46,
+    "p12": 63.0,
+    "dist": {
+     "0-2": 2,
+     "3-5": 6,
+     "6-8": 5,
+     "9-11": 4,
+     "12+": 29
+    }
+   },
+   {
+    "tid": "15591",
+    "zh": "艾继丝",
+    "en": "Aigis",
+    "n": 137,
+    "p12": 61.3,
+    "dist": {
+     "0-2": 3,
+     "3-5": 15,
+     "6-8": 26,
+     "9-11": 9,
+     "12+": 84
+    }
+   },
+   {
+    "tid": "77923",
+    "zh": "卡斯托尔",
+    "en": "Castor",
+    "n": 41,
+    "p12": 58.5,
+    "dist": {
+     "0-2": 1,
+     "3-5": 5,
+     "6-8": 11,
+     "9-11": 0,
+     "12+": 24
+    }
+   },
+   {
+    "tid": "15587",
+    "zh": "希洛",
+    "en": "Helot",
+    "n": 52,
+    "p12": 53.8,
+    "dist": {
+     "0-2": 12,
+     "3-5": 3,
+     "6-8": 7,
+     "9-11": 2,
+     "12+": 28
+    }
+   },
+   {
+    "tid": "15572",
+    "zh": "卡茜亚",
+    "en": "Casiah",
+    "n": 62,
+    "p12": 53.2,
+    "dist": {
+     "0-2": 3,
+     "3-5": 12,
+     "6-8": 10,
+     "9-11": 4,
+     "12+": 33
+    }
+   },
+   {
+    "tid": "15577",
+    "zh": "菲茵特",
+    "en": "Faint",
+    "n": 177,
+    "p12": 50.8,
+    "dist": {
+     "0-2": 23,
+     "3-5": 21,
+     "6-8": 23,
+     "9-11": 20,
+     "12+": 90
+    }
+   },
+   {
+    "tid": "148578",
+    "zh": "负誓·奥吉尔",
+    "en": "Ogier: Oathbound",
+    "n": 45,
+    "p12": 46.7,
+    "dist": {
+     "0-2": 19,
+     "3-5": 4,
+     "6-8": 1,
+     "9-11": 0,
+     "12+": 21
+    }
+   },
+   {
+    "tid": "77921",
+    "zh": "卡拉布",
+    "en": "Caraboo",
+    "n": 37,
+    "p12": 45.9,
+    "dist": {
+     "0-2": 2,
+     "3-5": 12,
+     "6-8": 6,
+     "9-11": 0,
+     "12+": 17
+    }
+   },
+   {
+    "tid": "15588",
+    "zh": "艾尔瓦",
+    "en": "Alva",
+    "n": 69,
+    "p12": 44.9,
+    "dist": {
+     "0-2": 9,
+     "3-5": 13,
+     "6-8": 8,
+     "9-11": 8,
+     "12+": 31
+    }
+   },
+   {
+    "tid": "130901",
+    "zh": "莫丝",
+    "en": "Vortice",
+    "n": 53,
+    "p12": 43.4,
+    "dist": {
+     "0-2": 3,
+     "3-5": 6,
+     "6-8": 17,
+     "9-11": 4,
+     "12+": 23
+    }
+   },
+   {
+    "tid": "77925",
+    "zh": "克莱门汀",
+    "en": "Clementine",
+    "n": 71,
+    "p12": 40.8,
+    "dist": {
+     "0-2": 3,
+     "3-5": 25,
+     "6-8": 13,
+     "9-11": 1,
+     "12+": 29
+    }
+   },
+   {
+    "tid": "77926",
+    "zh": "皮克曼",
+    "en": "Pickman",
+    "n": 23,
+    "p12": 39.1,
+    "dist": {
+     "0-2": 0,
+     "3-5": 3,
+     "6-8": 9,
+     "9-11": 2,
+     "12+": 9
+    }
+   },
+   {
+    "tid": "141302",
+    "zh": "庞托斯",
+    "en": "Pontos",
+    "n": 29,
+    "p12": 37.9,
+    "dist": {
+     "0-2": 0,
+     "3-5": 10,
+     "6-8": 7,
+     "9-11": 1,
+     "12+": 11
+    }
+   },
+   {
+    "tid": "15560",
+    "zh": "潘狄娅",
+    "en": "Pandia",
+    "n": 38,
+    "p12": 36.8,
+    "dist": {
+     "0-2": 9,
+     "3-5": 9,
+     "6-8": 4,
+     "9-11": 2,
+     "12+": 14
+    }
+   },
+   {
+    "tid": "145363",
+    "zh": "蚀灭·萝坦",
+    "en": "Lotan: Cetarchon",
+    "n": 184,
+    "p12": 36.4,
+    "dist": {
+     "0-2": 22,
+     "3-5": 55,
+     "6-8": 38,
+     "9-11": 2,
+     "12+": 67
+    }
+   },
+   {
+    "tid": "130226",
+    "zh": "沙耶",
+    "en": "Saya",
+    "n": 156,
+    "p12": 34.0,
+    "dist": {
+     "0-2": 9,
+     "3-5": 63,
+     "6-8": 30,
+     "9-11": 1,
+     "12+": 53
+    }
+   },
+   {
+    "tid": "15582",
+    "zh": "弥利亚姆",
+    "en": "Miryam",
+    "n": 49,
+    "p12": 32.7,
+    "dist": {
+     "0-2": 8,
+     "3-5": 12,
+     "6-8": 8,
+     "9-11": 5,
+     "12+": 16
+    }
+   },
+   {
+    "tid": "15596",
+    "zh": "泰旖丝",
+    "en": "Thais",
+    "n": 70,
+    "p12": 30.0,
+    "dist": {
+     "0-2": 10,
+     "3-5": 24,
+     "6-8": 10,
+     "9-11": 5,
+     "12+": 21
+    }
+   },
+   {
+    "tid": "77922",
+    "zh": "克珀珊特",
+    "en": "Corposant",
+    "n": 45,
+    "p12": 26.7,
+    "dist": {
+     "0-2": 4,
+     "3-5": 19,
+     "6-8": 10,
+     "9-11": 0,
+     "12+": 12
+    }
+   },
+   {
+    "tid": "77918",
+    "zh": "阿拉克涅",
+    "en": "Arachne",
+    "n": 229,
+    "p12": 25.3,
+    "dist": {
+     "0-2": 12,
+     "3-5": 119,
+     "6-8": 33,
+     "9-11": 7,
+     "12+": 58
+    }
+   },
+   {
+    "tid": "15563",
+    "zh": "图鲁",
+    "en": "Tulu",
+    "n": 47,
+    "p12": 21.3,
+    "dist": {
+     "0-2": 11,
+     "3-5": 11,
+     "6-8": 8,
+     "9-11": 7,
+     "12+": 10
+    }
+   },
+   {
+    "tid": "15599",
+    "zh": "萨尔瓦多",
+    "en": "Salvador",
+    "n": 45,
+    "p12": 20.0,
+    "dist": {
+     "0-2": 8,
+     "3-5": 17,
+     "6-8": 8,
+     "9-11": 3,
+     "12+": 9
+    }
+   },
+   {
+    "tid": "125346",
+    "zh": "徐",
+    "en": "Xu",
+    "n": 141,
+    "p12": 19.1,
+    "dist": {
+     "0-2": 16,
+     "3-5": 61,
+     "6-8": 35,
+     "9-11": 2,
+     "12+": 27
+    }
+   },
+   {
+    "tid": "15602",
+    "zh": "熔毁·朵尔",
+    "en": "Doll: Inferno",
+    "n": 368,
+    "p12": 18.5,
+    "dist": {
+     "0-2": 82,
+     "3-5": 33,
+     "6-8": 161,
+     "9-11": 24,
+     "12+": 68
+    }
+   },
+   {
+    "tid": "54116",
+    "zh": "塔薇",
+    "en": "Tawil",
+    "n": 441,
+    "p12": 17.9,
+    "dist": {
+     "0-2": 157,
+     "3-5": 103,
+     "6-8": 79,
+     "9-11": 23,
+     "12+": 79
+    }
+   },
+   {
+    "tid": "15601",
+    "zh": "\"24\"",
+    "en": "\"24\"",
+    "n": 68,
+    "p12": 17.6,
+    "dist": {
+     "0-2": 15,
+     "3-5": 23,
+     "6-8": 11,
+     "9-11": 7,
+     "12+": 12
+    }
+   },
+   {
+    "tid": "151844",
+    "zh": "薇薇安",
+    "en": "Vivian",
+    "n": 149,
+    "p12": 16.8,
+    "dist": {
+     "0-2": 30,
+     "3-5": 68,
+     "6-8": 26,
+     "9-11": 0,
+     "12+": 25
+    }
+   },
+   {
+    "tid": "15581",
+    "zh": "莉莉",
+    "en": "Lily",
+    "n": 83,
+    "p12": 12.0,
+    "dist": {
+     "0-2": 21,
+     "3-5": 31,
+     "6-8": 16,
+     "9-11": 5,
+     "12+": 10
+    }
+   },
+   {
+    "tid": "15576",
+    "zh": "墨菲",
+    "en": "Murphy",
+    "n": 51,
+    "p12": 11.8,
+    "dist": {
+     "0-2": 12,
+     "3-5": 11,
+     "6-8": 17,
+     "9-11": 5,
+     "12+": 6
+    }
+   },
+   {
+    "tid": "15604",
+    "zh": "莱克",
+    "en": "Ryker",
+    "n": 52,
+    "p12": 7.7,
+    "dist": {
+     "0-2": 27,
+     "3-5": 14,
+     "6-8": 4,
+     "9-11": 3,
+     "12+": 4
+    }
+   },
+   {
+    "tid": "15583",
+    "zh": "奥尔拉",
+    "en": "Horla",
+    "n": 225,
+    "p12": 6.7,
+    "dist": {
+     "0-2": 89,
+     "3-5": 75,
+     "6-8": 35,
+     "9-11": 11,
+     "12+": 15
+    }
+   },
+   {
+    "tid": "54117",
+    "zh": "哈姆林",
+    "en": "Hameln",
+    "n": 253,
+    "p12": 4.3,
+    "dist": {
+     "0-2": 143,
+     "3-5": 75,
+     "6-8": 17,
+     "9-11": 7,
+     "12+": 11
+    }
+   }
+  ],
+  "enlightTotal": 5250,
+  "enlight12": 45.4,
+  "enlightSummary": {
+   "dist": {
+    "0-2": 778,
+    "3-5": 1007,
+    "6-8": 803,
+    "9-11": 281,
+    "12+": 2381
+   },
+   "n": 5250,
+   "avgPotency": 9.19,
+   "byZone": [
+    {
+     "wave": 1,
+     "avg": 8.48,
+     "n": 1508
+    },
+    {
+     "wave": 2,
+     "avg": 10.65,
+     "n": 388
+    },
+    {
+     "wave": 3,
+     "avg": 8.97,
+     "n": 2892
+    },
+    {
+     "wave": 4,
+     "avg": 11.82,
+     "n": 244
+    },
+    {
+     "wave": 5,
+     "avg": 11.02,
+     "n": 292
+    }
+   ],
+   "full": [
+    "奥吉尔"
+   ],
+   "fullN": 1,
+   "low": [
+    {
+     "zh": "哈姆林",
+     "p12": 4.3,
+     "n": 253
+    },
+    {
+     "zh": "奥尔拉",
+     "p12": 6.7,
+     "n": 225
+    },
+    {
+     "zh": "莱克",
+     "p12": 7.7,
+     "n": 52
+    },
+    {
+     "zh": "墨菲",
+     "p12": 11.8,
+     "n": 51
+    },
+    {
+     "zh": "莉莉",
+     "p12": 12.0,
+     "n": 83
+    },
+    {
+     "zh": "薇薇安",
+     "p12": 16.8,
+     "n": 149
+    }
+   ],
+   "roundsByBucket": [
+    {
+     "label": "0-2",
+     "avg": 13.0,
+     "n": 2
+    },
+    {
+     "label": "3-5",
+     "avg": 13.36,
+     "n": 146
+    },
+    {
+     "label": "6-8",
+     "avg": 12.95,
+     "n": 405
+    },
+    {
+     "label": "9-11",
+     "avg": 16.07,
+     "n": 366
+    },
+    {
+     "label": "12+",
+     "avg": 20.04,
+     "n": 412
+    }
+   ],
+   "roundN": 1331,
+   "byThreat": {
+    "▼": {
+     "dist": {
+      "0-2": 616,
+      "3-5": 673,
+      "6-8": 573,
+      "9-11": 231,
+      "12+": 1915
+     },
+     "n": 4008,
+     "p12": 47.8
+    },
+    "SSS": {
+     "dist": {
+      "0-2": 171,
+      "3-5": 341,
+      "6-8": 236,
+      "9-11": 51,
+      "12+": 517
+     },
+     "n": 1316,
+     "p12": 39.3
+    }
+   }
+  },
+  "niche": {
+   "zeroDown": [
+    {
+     "zh": "凯刻斯",
+     "en": "Caecus"
+    },
+    {
+     "zh": "汀克特",
+     "en": "Tinct"
+    }
+   ],
+   "zeroBoth": [
+    {
+     "zh": "汀克特",
+     "en": "Tinct"
+    }
+   ],
+   "leastDown": [
+    {
+     "zh": "凯刻斯",
+     "en": "Caecus",
+     "n": 0,
+     "all": 544
+    },
+    {
+     "zh": "汀克特",
+     "en": "Tinct",
+     "n": 0,
+     "all": 121
+    },
+    {
+     "zh": "法洛思",
+     "en": "Faros",
+     "n": 1,
+     "all": 173
+    },
+    {
+     "zh": "莉兹",
+     "en": "Liz",
+     "n": 1,
+     "all": 73
+    },
+    {
+     "zh": "达芙黛尔",
+     "en": "Daffodil",
+     "n": 2,
+     "all": 109
+    },
+    {
+     "zh": "尤乌哈希",
+     "en": "Uvhash",
+     "n": 2,
+     "all": 41
+    },
+    {
+     "zh": "珊",
+     "en": "Sanga",
+     "n": 3,
+     "all": 273
+    },
+    {
+     "zh": "旺达",
+     "en": "Wanda",
+     "n": 3,
+     "all": 255
+    }
+   ],
+   "leastBoth": [
+    {
+     "zh": "汀克特",
+     "en": "Tinct",
+     "n": 0,
+     "all": 121
+    },
+    {
+     "zh": "法洛思",
+     "en": "Faros",
+     "n": 2,
+     "all": 173
+    },
+    {
+     "zh": "达芙黛尔",
+     "en": "Daffodil",
+     "n": 2,
+     "all": 109
+    },
+    {
+     "zh": "詹金",
+     "en": "Jenkin",
+     "n": 3,
+     "all": 132
+    },
+    {
+     "zh": "莉兹",
+     "en": "Liz",
+     "n": 3,
+     "all": 73
+    },
+    {
+     "zh": "尤乌哈希",
+     "en": "Uvhash",
+     "n": 3,
+     "all": 41
+    },
+    {
+     "zh": "阿格里帕",
+     "en": "Agrippa",
+     "n": 4,
+     "all": 189
+    },
+    {
+     "zh": "索蕾尔",
+     "en": "Sorel",
+     "n": 4,
+     "all": 63
+    }
+   ]
+  }
+ },
+ "previous": {
+  "season": 72,
+  "count": 2000,
+  "threshold": 400,
+  "max": 525,
+  "mean": 430.3,
+  "median": 425.0,
+  "dist": {
+   "525": 6,
+   "520": 1,
+   "515": 2,
+   "510": 3,
+   "505": 5,
+   "500": 25,
+   "495": 6,
+   "490": 18,
+   "485": 17,
+   "480": 18,
+   "475": 34,
+   "470": 38,
+   "465": 28,
+   "460": 72,
+   "455": 70,
+   "450": 351,
+   "445": 15,
+   "440": 43,
+   "435": 50,
+   "430": 73,
+   "425": 211,
+   "420": 86,
+   "415": 130,
+   "410": 195,
+   "405": 226,
+   "400": 277
+  },
+  "ge": {
+   "525": 6,
+   "500": 42,
+   "450": 694,
+   "425": 1086,
+   "400": 2000
+  },
+  "lines": [
+   {
+    "rank": 1,
+    "score": 525
+   },
+   {
+    "rank": 10,
+    "score": 510
+   },
+   {
+    "rank": 50,
+    "score": 490
+   },
+   {
+    "rank": 100,
+    "score": 480
+   },
+   {
+    "rank": 200,
+    "score": 465
+   },
+   {
+    "rank": 500,
+    "score": 450
+   },
+   {
+    "rank": 1000,
+    "score": 425
+   },
+   {
+    "rank": 2000,
+    "score": 400
+   }
+  ],
+  "perfect": [
+   {
+    "rank": 1,
+    "name": "曲终...人散...",
+    "uid": 100068321,
+    "score": 525
+   },
+   {
+    "rank": 2,
+    "name": "Uxia",
+    "uid": 100716237,
+    "score": 525
+   },
+   {
+    "rank": 3,
+    "name": "缘结奶蝉",
+    "uid": 100167859,
+    "score": 525
+   },
+   {
+    "rank": 4,
+    "name": "爱丽丝丨型",
+    "uid": 100034764,
+    "score": 525
+   },
+   {
+    "rank": 5,
+    "name": "魂魄魄",
+    "uid": 100537613,
+    "score": 525
+   },
+   {
+    "rank": 6,
+    "name": "<#f8a>A9zz",
+    "uid": 100759759,
+    "score": 525
+   }
+  ],
+  "zones": [
+   {
+    "wave": 1,
+    "name": "第一禁区",
+    "teams": 1996,
+    "threats": {
+     "C": 5,
+     "B": 34,
+     "A": 577,
+     "S": 578,
+     "SS": 519,
+     "SSS": 153,
+     "▼": 130
+    },
+    "down": 130,
+    "downRate": 6.5,
+    "downMin": 90,
+    "downFull": 14,
+    "downMax": 95,
+    "downMedian": 90.0,
+    "best": 95,
+    "worst": 60,
+    "median": 75.0
+   },
+   {
+    "wave": 2,
+    "name": "第二禁区",
+    "teams": 1998,
+    "threats": {
+     "C": 7,
+     "B": 70,
+     "A": 714,
+     "S": 593,
+     "SS": 468,
+     "SSS": 85,
+     "▼": 61
+    },
+    "down": 61,
+    "downRate": 3.1,
+    "downMin": 95,
+    "downFull": 9,
+    "downMax": 100,
+    "downMedian": 95,
+    "best": 100,
+    "worst": 65,
+    "median": 80.0
+   },
+   {
+    "wave": 3,
+    "name": "第三禁区",
+    "teams": 1995,
+    "threats": {
+     "C": 4,
+     "B": 52,
+     "A": 565,
+     "S": 528,
+     "SS": 350,
+     "SSS": 68,
+     "▼": 428
+    },
+    "down": 428,
+    "downRate": 21.5,
+    "downMin": 100,
+    "downFull": 29,
+    "downMax": 105,
+    "downMedian": 100.0,
+    "best": 105,
+    "worst": 70,
+    "median": 85
+   },
+   {
+    "wave": 4,
+    "name": "第四禁区",
+    "teams": 1994,
+    "threats": {
+     "C": 6,
+     "B": 120,
+     "A": 822,
+     "S": 526,
+     "SS": 389,
+     "SSS": 79,
+     "▼": 52
+    },
+    "down": 52,
+    "downRate": 2.6,
+    "downMin": 105,
+    "downFull": 8,
+    "downMax": 110,
+    "downMedian": 105.0,
+    "best": 110,
+    "worst": 75,
+    "median": 90.0
+   },
+   {
+    "wave": 5,
+    "name": "第五禁区",
+    "teams": 1997,
+    "threats": {
+     "C": 16,
+     "B": 131,
+     "A": 787,
+     "S": 555,
+     "SS": 379,
+     "SSS": 76,
+     "▼": 53
+    },
+    "down": 53,
+    "downRate": 2.7,
+    "downMin": 110,
+    "downFull": 10,
+    "downMax": 115,
+    "downMedian": 110,
+    "best": 115,
+    "worst": 80,
+    "median": 95
+   }
+  ],
+  "zoneTop": [
+   {
+    "wave": 1,
+    "champion": {
+     "rank": 1,
+     "uid": 100068321,
+     "score": 95,
+     "members": [
+      {
+       "tid": "94450",
+       "zh": "茉夏",
+       "en": "Mouchette",
+       "potency": 15
+      },
+      {
+       "tid": "148578",
+       "zh": "负誓·奥吉尔",
+       "en": "Ogier: Oathbound",
+       "potency": 15
+      },
+      {
+       "tid": "141302",
+       "zh": "庞托斯",
+       "en": "Pontos",
+       "potency": 15
+      },
+      {
+       "tid": "15566",
+       "zh": "希莱斯特",
+       "en": "Celeste",
+       "potency": 15
+      }
+     ],
+     "token": "10052",
+     "covs": [
+      "18335",
+      "18357",
+      "18360",
+      "18360"
+     ]
+    },
+    "hot": [
+     {
+      "count": 110,
+      "members": [
+       {
+        "tid": "77913",
+        "zh": "凯蒂古拉",
+        "en": "Kathigu-Ra",
+        "potency": 15
+       },
+       {
+        "tid": "15583",
+        "zh": "奥尔拉",
+        "en": "Horla",
+        "potency": 15
+       },
+       {
+        "tid": "77925",
+        "zh": "克莱门汀",
+        "en": "Clementine",
+        "potency": 15
+       },
+       {
+        "tid": "151844",
+        "zh": "薇薇安",
+        "en": "Vivian",
+        "potency": 15
+       }
+      ],
+      "score": 95,
+      "token": "95548"
+     },
+     {
+      "count": 78,
+      "members": [
+       {
+        "tid": "15583",
+        "zh": "奥尔拉",
+        "en": "Horla",
+        "potency": 2
+       },
+       {
+        "tid": "77918",
+        "zh": "阿拉克涅",
+        "en": "Arachne",
+        "potency": 4
+       },
+       {
+        "tid": "145363",
+        "zh": "蚀灭·萝坦",
+        "en": "Lotan: Cetarchon",
+        "potency": 3
+       },
+       {
+        "tid": "94450",
+        "zh": "茉夏",
+        "en": "Mouchette",
+        "potency": 3
+       }
+      ],
+      "score": 95,
+      "token": "124899"
+     },
+     {
+      "count": 68,
+      "members": [
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 15
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 9
+       }
+      ],
+      "score": 95,
+      "token": "118128"
+     }
+    ],
+    "fastest": {
+     "rounds": 5,
+     "rank": 447,
+     "name": "<#ffb214>BAPHO",
+     "uid": 101824400,
+     "members": [
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 3
+      },
+      {
+       "tid": "77923",
+       "zh": "卡斯托尔",
+       "en": "Castor",
+       "potency": 0
+      },
+      {
+       "tid": "148578",
+       "zh": "负誓·奥吉尔",
+       "en": "Ogier: Oathbound",
+       "potency": 3
+      },
+      {
+       "tid": "94450",
+       "zh": "茉夏",
+       "en": "Mouchette",
+       "potency": 15
+      }
+     ],
+     "token": "45301"
+    },
+    "chars": [
+     {
+      "tid": "94450",
+      "en": "Mouchette",
+      "zh": "茉夏",
+      "n": 522
+     },
+     {
+      "tid": "15583",
+      "en": "Horla",
+      "zh": "奥尔拉",
+      "n": 472
+     },
+     {
+      "tid": "125346",
+      "en": "Xu",
+      "zh": "徐",
+      "n": 414
+     },
+     {
+      "tid": "145363",
+      "en": "Lotan: Cetarchon",
+      "zh": "蚀灭·萝坦",
+      "n": 370
+     },
+     {
+      "tid": "151844",
+      "en": "Vivian",
+      "zh": "薇薇安",
+      "n": 361
+     },
+     {
+      "tid": "15602",
+      "en": "Doll: Inferno",
+      "zh": "熔毁·朵尔",
+      "n": 325
+     }
+    ],
+    "tokens": [
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 309
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 256
+     },
+     {
+      "en": "Undying Sun",
+      "zh": "不落的太阳",
+      "n": 239
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 155
+     },
+     {
+      "en": "Plague of Illusions",
+      "zh": "虚无瘟疫",
+      "n": 78
+     },
+     {
+      "en": "Festival of Tides",
+      "zh": "海之祭",
+      "n": 74
+     }
+    ],
+    "creations": [
+     {
+      "en": "Caro Ring",
+      "zh": "血肉戒指",
+      "n": 1996
+     },
+     {
+      "en": "Rusted Key",
+      "zh": "锈蚀钥匙",
+      "n": 1996
+     },
+     {
+      "en": "Hierophant's Staff+",
+      "zh": "祭司权杖+",
+      "n": 1888
+     },
+     {
+      "en": "Dimensional Image: Xu",
+      "zh": "维度影像·徐",
+      "n": 414
+     },
+     {
+      "en": "Dimensional Image: Thais",
+      "zh": "维度影像·泰旖丝",
+      "n": 246
+     },
+     {
+      "en": "Dimensional Image: Saya",
+      "zh": "维度影像·沙耶",
+      "n": 212
+     }
+    ]
+   },
+   {
+    "wave": 2,
+    "champion": {
+     "rank": 1,
+     "uid": 100068321,
+     "score": 100,
+     "members": [
+      {
+       "tid": "77917",
+       "zh": "波吕克斯",
+       "en": "Pollux",
+       "potency": 15
+      },
+      {
+       "tid": "77923",
+       "zh": "卡斯托尔",
+       "en": "Castor",
+       "potency": 15
+      },
+      {
+       "tid": "15603",
+       "zh": "艾瑞卡",
+       "en": "Erica",
+       "potency": 15
+      },
+      {
+       "tid": "130226",
+       "zh": "沙耶",
+       "en": "Saya",
+       "potency": 15
+      }
+     ],
+     "token": "88873",
+     "covs": [
+      "18353",
+      "18345",
+      "18347",
+      "18348"
+     ]
+    },
+    "hot": [
+     {
+      "count": 207,
+      "members": [
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 3
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 3
+       }
+      ],
+      "score": 95,
+      "token": "45302"
+     },
+     {
+      "count": 66,
+      "members": [
+       {
+        "tid": "125346",
+        "zh": "徐",
+        "en": "Xu",
+        "potency": 15
+       },
+       {
+        "tid": "15571",
+        "zh": "珈伦",
+        "en": "Karen",
+        "potency": 15
+       },
+       {
+        "tid": "15602",
+        "zh": "熔毁·朵尔",
+        "en": "Doll: Inferno",
+        "potency": 15
+       },
+       {
+        "tid": "77921",
+        "zh": "卡拉布",
+        "en": "Caraboo",
+        "potency": 15
+       }
+      ],
+      "score": 95,
+      "token": "94559"
+     },
+     {
+      "count": 41,
+      "members": [
+       {
+        "tid": "130901",
+        "zh": "莫丝",
+        "en": "Vortice",
+        "potency": 15
+       },
+       {
+        "tid": "15599",
+        "zh": "萨尔瓦多",
+        "en": "Salvador",
+        "potency": 15
+       },
+       {
+        "tid": "130226",
+        "zh": "沙耶",
+        "en": "Saya",
+        "potency": 15
+       },
+       {
+        "tid": "15576",
+        "zh": "墨菲",
+        "en": "Murphy",
+        "potency": 15
+       }
+      ],
+      "score": 95,
+      "token": "130703"
+     }
+    ],
+    "fastest": {
+     "rounds": 21,
+     "rank": 62,
+     "name": "LuffyOMG",
+     "uid": 101097358,
+     "members": [
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 5
+      },
+      {
+       "tid": "15596",
+       "zh": "泰旖丝",
+       "en": "Thais",
+       "potency": 4
+      },
+      {
+       "tid": "15587",
+       "zh": "希洛",
+       "en": "Helot",
+       "potency": 0
+      },
+      {
+       "tid": "15567",
+       "zh": "血链·希洛",
+       "en": "Helot: Catena",
+       "potency": 15
+      }
+     ],
+     "token": "49204"
+    },
+    "chars": [
+     {
+      "tid": "77923",
+      "en": "Castor",
+      "zh": "卡斯托尔",
+      "n": 346
+     },
+     {
+      "tid": "130226",
+      "en": "Saya",
+      "zh": "沙耶",
+      "n": 320
+     },
+     {
+      "tid": "15589",
+      "en": "Murphy: Fauxborn",
+      "zh": "诞妄·墨菲",
+      "n": 311
+     },
+     {
+      "tid": "15591",
+      "en": "Aigis",
+      "zh": "艾继丝",
+      "n": 307
+     },
+     {
+      "tid": "77918",
+      "en": "Arachne",
+      "zh": "阿拉克涅",
+      "n": 306
+     },
+     {
+      "tid": "77917",
+      "en": "Pollux",
+      "zh": "波吕克斯",
+      "n": 302
+     }
+    ],
+    "tokens": [
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 184
+     },
+     {
+      "en": "Drowned Innocence",
+      "zh": "溺亡的纯真",
+      "n": 173
+     },
+     {
+      "en": "Sacred Bleeding Heart",
+      "zh": "泣血的圣心",
+      "n": 152
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 134
+     },
+     {
+      "en": "Wayward Ship",
+      "zh": "偏航船",
+      "n": 128
+     },
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 119
+     }
+    ],
+    "creations": [
+     {
+      "en": "Celestial Astrolabe+",
+      "zh": "秘典星象仪+",
+      "n": 1998
+     },
+     {
+      "en": "Caro Ring",
+      "zh": "血肉戒指",
+      "n": 1998
+     },
+     {
+      "en": "Rusted Key",
+      "zh": "锈蚀钥匙",
+      "n": 1998
+     },
+     {
+      "en": "Dimensional Image: Saya",
+      "zh": "维度影像·沙耶",
+      "n": 320
+     },
+     {
+      "en": "Dimensional Image: Aigis",
+      "zh": "维度影像·艾继丝",
+      "n": 307
+     },
+     {
+      "en": "Dimensional Image: Caraboo",
+      "zh": "维度影像·卡拉布",
+      "n": 273
+     }
+    ]
+   },
+   {
+    "wave": 3,
+    "champion": {
+     "rank": 1,
+     "uid": 100068321,
+     "score": 105,
+     "members": [
+      {
+       "tid": "77926",
+       "zh": "皮克曼",
+       "en": "Pickman",
+       "potency": 15
+      },
+      {
+       "tid": "15591",
+       "zh": "艾继丝",
+       "en": "Aigis",
+       "potency": 15
+      },
+      {
+       "tid": "95786",
+       "zh": "杜勒赛因",
+       "en": "Doresain",
+       "potency": 15
+      },
+      {
+       "tid": "145363",
+       "zh": "蚀灭·萝坦",
+       "en": "Lotan: Cetarchon",
+       "potency": 15
+      }
+     ],
+     "token": "145281",
+     "covs": [
+      "18348",
+      "18360",
+      "18360",
+      "18335"
+     ]
+    },
+    "hot": [
+     {
+      "count": 359,
+      "members": [
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 2
+       },
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       }
+      ],
+      "score": 105,
+      "token": "118128"
+     },
+     {
+      "count": 102,
+      "members": [
+       {
+        "tid": "15602",
+        "zh": "熔毁·朵尔",
+        "en": "Doll: Inferno",
+        "potency": 15
+       },
+       {
+        "tid": "15569",
+        "zh": "萝坦",
+        "en": "Lotan",
+        "potency": 15
+       },
+       {
+        "tid": "125346",
+        "zh": "徐",
+        "en": "Xu",
+        "potency": 3
+       },
+       {
+        "tid": "15577",
+        "zh": "菲茵特",
+        "en": "Faint",
+        "potency": 15
+       }
+      ],
+      "score": 105,
+      "token": "10065"
+     },
+     {
+      "count": 45,
+      "members": [
+       {
+        "tid": "54116",
+        "zh": "塔薇",
+        "en": "Tawil",
+        "potency": 7
+       },
+       {
+        "tid": "54117",
+        "zh": "哈姆林",
+        "en": "Hameln",
+        "potency": 4
+       },
+       {
+        "tid": "15602",
+        "zh": "熔毁·朵尔",
+        "en": "Doll: Inferno",
+        "potency": 7
+       },
+       {
+        "tid": "15569",
+        "zh": "萝坦",
+        "en": "Lotan",
+        "potency": 15
+       }
+      ],
+      "score": 100,
+      "token": "36859"
+     }
+    ],
+    "fastest": {
+     "rounds": 5,
+     "rank": 53,
+     "name": "大王X",
+     "uid": 101214107,
+     "members": [
+      {
+       "tid": "94450",
+       "zh": "茉夏",
+       "en": "Mouchette",
+       "potency": 15
+      },
+      {
+       "tid": "145363",
+       "zh": "蚀灭·萝坦",
+       "en": "Lotan: Cetarchon",
+       "potency": 15
+      },
+      {
+       "tid": "15579",
+       "zh": "温柯尔",
+       "en": "Winkle",
+       "potency": 15
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      }
+     ],
+     "token": "10052"
+    },
+    "chars": [
+     {
+      "tid": "15602",
+      "en": "Doll: Inferno",
+      "zh": "熔毁·朵尔",
+      "n": 586
+     },
+     {
+      "tid": "15569",
+      "en": "Lotan",
+      "zh": "萝坦",
+      "n": 512
+     },
+     {
+      "tid": "15589",
+      "en": "Murphy: Fauxborn",
+      "zh": "诞妄·墨菲",
+      "n": 448
+     },
+     {
+      "tid": "15582",
+      "en": "Miryam",
+      "zh": "弥利亚姆",
+      "n": 429
+     },
+     {
+      "tid": "15563",
+      "en": "Tulu",
+      "zh": "图鲁",
+      "n": 415
+     },
+     {
+      "tid": "125346",
+      "en": "Xu",
+      "zh": "徐",
+      "n": 413
+     }
+    ],
+    "tokens": [
+     {
+      "en": "Tiny Wish",
+      "zh": "小小心愿",
+      "n": 290
+     },
+     {
+      "en": "Wayward Ship",
+      "zh": "偏航船",
+      "n": 258
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 210
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 183
+     },
+     {
+      "en": "All of Her",
+      "zh": "全部的她",
+      "n": 153
+     },
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 138
+     }
+    ],
+    "creations": [
+     {
+      "en": "Trickster's Hat",
+      "zh": "诡术礼帽",
+      "n": 1995
+     },
+     {
+      "en": "Caro Ring",
+      "zh": "血肉戒指",
+      "n": 1995
+     },
+     {
+      "en": "Dimensional Image: Xu",
+      "zh": "维度影像·徐",
+      "n": 413
+     },
+     {
+      "en": "Dimensional Image: Faint",
+      "zh": "维度影像·菲茵特",
+      "n": 316
+     },
+     {
+      "en": "Dimensional Image: Thais",
+      "zh": "维度影像·泰旖丝",
+      "n": 183
+     },
+     {
+      "en": "Dimensional Image: Saya",
+      "zh": "维度影像·沙耶",
+      "n": 162
+     }
+    ]
+   },
+   {
+    "wave": 4,
+    "champion": {
+     "rank": 1,
+     "uid": 100068321,
+     "score": 110,
+     "members": [
+      {
+       "tid": "15567",
+       "zh": "血链·希洛",
+       "en": "Helot: Catena",
+       "potency": 15
+      },
+      {
+       "tid": "15596",
+       "zh": "泰旖丝",
+       "en": "Thais",
+       "potency": 15
+      },
+      {
+       "tid": "15587",
+       "zh": "希洛",
+       "en": "Helot",
+       "potency": 15
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      }
+     ],
+     "token": "49204",
+     "covs": [
+      "18335",
+      "18344",
+      "18360",
+      "18360"
+     ]
+    },
+    "hot": [
+     {
+      "count": 191,
+      "members": [
+       {
+        "tid": "130901",
+        "zh": "莫丝",
+        "en": "Vortice",
+        "potency": 15
+       },
+       {
+        "tid": "130226",
+        "zh": "沙耶",
+        "en": "Saya",
+        "potency": 8
+       },
+       {
+        "tid": "15576",
+        "zh": "墨菲",
+        "en": "Murphy",
+        "potency": 9
+       },
+       {
+        "tid": "15599",
+        "zh": "萨尔瓦多",
+        "en": "Salvador",
+        "potency": 5
+       }
+      ],
+      "score": 105,
+      "token": "130703"
+     },
+     {
+      "count": 191,
+      "members": [
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 3
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 4
+       },
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       }
+      ],
+      "score": 95,
+      "token": "9653"
+     },
+     {
+      "count": 52,
+      "members": [
+       {
+        "tid": "130901",
+        "zh": "莫丝",
+        "en": "Vortice",
+        "potency": 15
+       },
+       {
+        "tid": "130226",
+        "zh": "沙耶",
+        "en": "Saya",
+        "potency": 15
+       },
+       {
+        "tid": "15566",
+        "zh": "希莱斯特",
+        "en": "Celeste",
+        "potency": 15
+       },
+       {
+        "tid": "15576",
+        "zh": "墨菲",
+        "en": "Murphy",
+        "potency": 15
+       }
+      ],
+      "score": 110,
+      "token": "130703"
+     }
+    ],
+    "fastest": {
+     "rounds": 20,
+     "rank": 1,
+     "name": "曲终...人散...",
+     "uid": 100068321,
+     "members": [
+      {
+       "tid": "15567",
+       "zh": "血链·希洛",
+       "en": "Helot: Catena",
+       "potency": 15
+      },
+      {
+       "tid": "15596",
+       "zh": "泰旖丝",
+       "en": "Thais",
+       "potency": 15
+      },
+      {
+       "tid": "15587",
+       "zh": "希洛",
+       "en": "Helot",
+       "potency": 15
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 15
+      }
+     ],
+     "token": "49204"
+    },
+    "chars": [
+     {
+      "tid": "130226",
+      "en": "Saya",
+      "zh": "沙耶",
+      "n": 533
+     },
+     {
+      "tid": "15576",
+      "en": "Murphy",
+      "zh": "墨菲",
+      "n": 478
+     },
+     {
+      "tid": "15596",
+      "en": "Thais",
+      "zh": "泰旖丝",
+      "n": 424
+     },
+     {
+      "tid": "130901",
+      "en": "Vortice",
+      "zh": "莫丝",
+      "n": 401
+     },
+     {
+      "tid": "15599",
+      "en": "Salvador",
+      "zh": "萨尔瓦多",
+      "n": 312
+     },
+     {
+      "tid": "15589",
+      "en": "Murphy: Fauxborn",
+      "zh": "诞妄·墨菲",
+      "n": 298
+     }
+    ],
+    "tokens": [
+     {
+      "en": "Drowned Innocence",
+      "zh": "溺亡的纯真",
+      "n": 388
+     },
+     {
+      "en": "Cruel Homage",
+      "zh": "残忍的致意",
+      "n": 175
+     },
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 156
+     },
+     {
+      "en": "Wayward Ship",
+      "zh": "偏航船",
+      "n": 124
+     },
+     {
+      "en": "Undying Sun",
+      "zh": "不落的太阳",
+      "n": 123
+     },
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 103
+     }
+    ],
+    "creations": [
+     {
+      "en": "Our Home+",
+      "zh": "我们的家+",
+      "n": 1994
+     },
+     {
+      "en": "Caro Ring",
+      "zh": "血肉戒指",
+      "n": 1994
+     },
+     {
+      "en": "Dimensional Image: Saya",
+      "zh": "维度影像·沙耶",
+      "n": 533
+     },
+     {
+      "en": "Dimensional Image: Thais",
+      "zh": "维度影像·泰旖丝",
+      "n": 424
+     },
+     {
+      "en": "Dimensional Image: Salvador",
+      "zh": "维度影像·萨尔瓦多",
+      "n": 312
+     },
+     {
+      "en": "Vitality Injection+",
+      "zh": "活性注射器+",
+      "n": 292
+     }
+    ]
+   },
+   {
+    "wave": 5,
+    "champion": {
+     "rank": 1,
+     "uid": 100068321,
+     "score": 115,
+     "members": [
+      {
+       "tid": "15581",
+       "zh": "莉莉",
+       "en": "Lily",
+       "potency": 15
+      },
+      {
+       "tid": "15601",
+       "zh": "\"24\"",
+       "en": "\"24\"",
+       "potency": 15
+      },
+      {
+       "tid": "15565",
+       "zh": "诺缔拉",
+       "en": "Nautila",
+       "potency": 15
+      },
+      {
+       "tid": "54116",
+       "zh": "塔薇",
+       "en": "Tawil",
+       "potency": 15
+      }
+     ],
+     "token": "36859",
+     "covs": [
+      "18355",
+      "18356",
+      "18360",
+      "18348"
+     ]
+    },
+    "hot": [
+     {
+      "count": 85,
+      "members": [
+       {
+        "tid": "15589",
+        "zh": "诞妄·墨菲",
+        "en": "Murphy: Fauxborn",
+        "potency": 15
+       },
+       {
+        "tid": "15582",
+        "zh": "弥利亚姆",
+        "en": "Miryam",
+        "potency": 15
+       },
+       {
+        "tid": "15563",
+        "zh": "图鲁",
+        "en": "Tulu",
+        "potency": 15
+       },
+       {
+        "tid": "15564",
+        "zh": "戈利亚",
+        "en": "Goliath",
+        "potency": 15
+       }
+      ],
+      "score": 100,
+      "token": "9653"
+     },
+     {
+      "count": 71,
+      "members": [
+       {
+        "tid": "130901",
+        "zh": "莫丝",
+        "en": "Vortice",
+        "potency": 7
+       },
+       {
+        "tid": "15576",
+        "zh": "墨菲",
+        "en": "Murphy",
+        "potency": 1
+       },
+       {
+        "tid": "130226",
+        "zh": "沙耶",
+        "en": "Saya",
+        "potency": 15
+       },
+       {
+        "tid": "15599",
+        "zh": "萨尔瓦多",
+        "en": "Salvador",
+        "potency": 2
+       }
+      ],
+      "score": 105,
+      "token": "130703"
+     },
+     {
+      "count": 68,
+      "members": [
+       {
+        "tid": "15567",
+        "zh": "血链·希洛",
+        "en": "Helot: Catena",
+        "potency": 8
+       },
+       {
+        "tid": "15596",
+        "zh": "泰旖丝",
+        "en": "Thais",
+        "potency": 7
+       },
+       {
+        "tid": "15587",
+        "zh": "希洛",
+        "en": "Helot",
+        "potency": 15
+       },
+       {
+        "tid": "77918",
+        "zh": "阿拉克涅",
+        "en": "Arachne",
+        "potency": 15
+       }
+      ],
+      "score": 115,
+      "token": "49204"
+     }
+    ],
+    "fastest": {
+     "rounds": 15,
+     "rank": 33,
+     "name": "Angbak",
+     "uid": 101143204,
+     "members": [
+      {
+       "tid": "145363",
+       "zh": "蚀灭·萝坦",
+       "en": "Lotan: Cetarchon",
+       "potency": 15
+      },
+      {
+       "tid": "94450",
+       "zh": "茉夏",
+       "en": "Mouchette",
+       "potency": 15
+      },
+      {
+       "tid": "15583",
+       "zh": "奥尔拉",
+       "en": "Horla",
+       "potency": 4
+      },
+      {
+       "tid": "77918",
+       "zh": "阿拉克涅",
+       "en": "Arachne",
+       "potency": 3
+      }
+     ],
+     "token": "120491"
+    },
+    "chars": [
+     {
+      "tid": "130226",
+      "en": "Saya",
+      "zh": "沙耶",
+      "n": 495
+     },
+     {
+      "tid": "15596",
+      "en": "Thais",
+      "zh": "泰旖丝",
+      "n": 459
+     },
+     {
+      "tid": "77918",
+      "en": "Arachne",
+      "zh": "阿拉克涅",
+      "n": 368
+     },
+     {
+      "tid": "94450",
+      "en": "Mouchette",
+      "zh": "茉夏",
+      "n": 310
+     },
+     {
+      "tid": "145363",
+      "en": "Lotan: Cetarchon",
+      "zh": "蚀灭·萝坦",
+      "n": 272
+     },
+     {
+      "tid": "15591",
+      "en": "Aigis",
+      "zh": "艾继丝",
+      "n": 271
+     }
+    ],
+    "tokens": [
+     {
+      "en": "A Mouse's Wisdom",
+      "zh": "鼠鼠的智慧",
+      "n": 199
+     },
+     {
+      "en": "The Lone Seed",
+      "zh": "唯一的种子",
+      "n": 182
+     },
+     {
+      "en": "All of Her",
+      "zh": "全部的她",
+      "n": 181
+     },
+     {
+      "en": "Drowned Innocence",
+      "zh": "溺亡的纯真",
+      "n": 170
+     },
+     {
+      "en": "From the Mist Realm",
+      "zh": "来自雾境",
+      "n": 161
+     },
+     {
+      "en": "Manor Echoes",
+      "zh": "深宅往事",
+      "n": 101
+     }
+    ],
+    "creations": [
+     {
+      "en": "In Twilight+",
+      "zh": "在夕光里+",
+      "n": 1997
+     },
+     {
+      "en": "Caro Ring",
+      "zh": "血肉戒指",
+      "n": 1997
+     },
+     {
+      "en": "Dimensional Image: Saya",
+      "zh": "维度影像·沙耶",
+      "n": 495
+     },
+     {
+      "en": "Dimensional Image: Thais",
+      "zh": "维度影像·泰旖丝",
+      "n": 459
+     },
+     {
+      "en": "Mythag Insignia",
+      "zh": "弥萨格徽章",
+      "n": 297
+     },
+     {
+      "en": "Vitality Injection",
+      "zh": "活性注射器",
+      "n": 296
+     }
+    ]
+   }
+  ],
+  "top": {
+   "chars": [
+    {
+     "id": "130226",
+     "en": "Saya",
+     "zh": "沙耶",
+     "n": 1728,
+     "rate": 17.3
+    },
+    {
+     "id": "15596",
+     "en": "Thais",
+     "zh": "泰旖丝",
+     "n": 1558,
+     "rate": 15.6
+    },
+    {
+     "id": "94450",
+     "en": "Mouchette",
+     "zh": "茉夏",
+     "n": 1489,
+     "rate": 14.9
+    },
+    {
+     "id": "15602",
+     "en": "Doll: Inferno",
+     "zh": "熔毁·朵尔",
+     "n": 1488,
+     "rate": 14.9
+    },
+    {
+     "id": "125346",
+     "en": "Xu",
+     "zh": "徐",
+     "n": 1367,
+     "rate": 13.7
+    },
+    {
+     "id": "77918",
+     "en": "Arachne",
+     "zh": "阿拉克涅",
+     "n": 1331,
+     "rate": 13.3
+    },
+    {
+     "id": "15589",
+     "en": "Murphy: Fauxborn",
+     "zh": "诞妄·墨菲",
+     "n": 1326,
+     "rate": 13.3
+    },
+    {
+     "id": "15583",
+     "en": "Horla",
+     "zh": "奥尔拉",
+     "n": 1265,
+     "rate": 12.7
+    },
+    {
+     "id": "15582",
+     "en": "Miryam",
+     "zh": "弥利亚姆",
+     "n": 1221,
+     "rate": 12.2
+    },
+    {
+     "id": "15563",
+     "en": "Tulu",
+     "zh": "图鲁",
+     "n": 1120,
+     "rate": 11.2
+    }
+   ],
+   "wheels": [
+    {
+     "id": "130053",
+     "en": "Fragrant Morphogenesis",
+     "zh": "愿世界化作芬芳",
+     "n": 1749,
+     "rate": 17.5
+    },
+    {
+     "id": "9881",
+     "en": "Merciful Nurturing",
+     "zh": "慈悲的哺育",
+     "n": 1638,
+     "rate": 16.4
+    },
+    {
+     "id": "48828",
+     "en": "Dusk and Dawn",
+     "zh": "极夜与破晓",
+     "n": 1508,
+     "rate": 15.1
+    },
+    {
+     "id": "9516",
+     "en": "Celestial Beast",
+     "zh": "星天之兽",
+     "n": 1504,
+     "rate": 15.1
+    },
+    {
+     "id": "9827",
+     "en": "Blade of the Titan",
+     "zh": "巨人之刃",
+     "n": 1482,
+     "rate": 14.8
+    },
+    {
+     "id": "9817",
+     "en": "Rewinding Time",
+     "zh": "溯洄时计",
+     "n": 1414,
+     "rate": 14.2
+    },
+    {
+     "id": "94448",
+     "en": "Doomsday Rampage",
+     "zh": "狂戮至世界尽头",
+     "n": 1411,
+     "rate": 14.1
+    },
+    {
+     "id": "10073",
+     "en": "Elevated Focus",
+     "zh": "专注精神",
+     "n": 1380,
+     "rate": 13.8
+    }
+   ],
+   "covs": [
+    {
+     "id": "18360",
+     "en": "Burial Ground's Sighs",
+     "zh": "埋骨地絮语",
+     "n": 7227,
+     "rate": 72.4
+    },
+    {
+     "id": "18347",
+     "en": "Life Drain",
+     "zh": "生机榨取",
+     "n": 6301,
+     "rate": 63.1
+    },
+    {
+     "id": "18348",
+     "en": "Dream of Medicine",
+     "zh": "入药之梦",
+     "n": 5203,
+     "rate": 52.1
+    },
+    {
+     "id": "18335",
+     "en": "April Tribute",
+     "zh": "四月礼赞",
+     "n": 3610,
+     "rate": 36.2
+    },
+    {
+     "id": "18338",
+     "en": "Cursed Rabbit",
+     "zh": "诅咒兔",
+     "n": 2341,
+     "rate": 23.5
+    },
+    {
+     "id": "18346",
+     "en": "Re-evolution",
+     "zh": "再衍化",
+     "n": 1958,
+     "rate": 19.6
+    }
+   ],
+   "tokens": [
+    {
+     "id": "9653",
+     "en": "A Mouse's Wisdom",
+     "zh": "鼠鼠的智慧",
+     "n": 877,
+     "rate": 8.8
+    },
+    {
+     "id": "130703",
+     "en": "Drowned Innocence",
+     "zh": "溺亡的纯真",
+     "n": 861,
+     "rate": 8.6
+    },
+    {
+     "id": "120491",
+     "en": "From the Mist Realm",
+     "zh": "来自雾境",
+     "n": 830,
+     "rate": 8.3
+    },
+    {
+     "id": "125190",
+     "en": "Manor Echoes",
+     "zh": "深宅往事",
+     "n": 758,
+     "rate": 7.6
+    },
+    {
+     "id": "118128",
+     "en": "Wayward Ship",
+     "zh": "偏航船",
+     "n": 612,
+     "rate": 6.1
+    },
+    {
+     "id": "95548",
+     "en": "Undying Sun",
+     "zh": "不落的太阳",
+     "n": 500,
+     "rate": 5.0
+    }
+   ],
+   "creations": [
+    {
+     "id": "83510",
+     "en": "Caro Ring",
+     "zh": "血肉戒指",
+     "n": 9980,
+     "rate": 100.0
+    },
+    {
+     "id": "13829",
+     "en": "Rusted Key",
+     "zh": "锈蚀钥匙",
+     "n": 3994,
+     "rate": 40.0
+    },
+    {
+     "id": "70740",
+     "en": "Celestial Astrolabe+",
+     "zh": "秘典星象仪+",
+     "n": 2276,
+     "rate": 22.8
+    },
+    {
+     "id": "70722",
+     "en": "Our Home+",
+     "zh": "我们的家+",
+     "n": 2117,
+     "rate": 21.2
+    },
+    {
+     "id": "78667",
+     "en": "Trickster's Hat",
+     "zh": "诡术礼帽",
+     "n": 2053,
+     "rate": 20.6
+    },
+    {
+     "id": "98375",
+     "en": "In Twilight+",
+     "zh": "在夕光里+",
+     "n": 2046,
+     "rate": 20.5
+    },
+    {
+     "id": "98395",
+     "en": "Hierophant's Staff+",
+     "zh": "祭司权杖+",
+     "n": 1898,
+     "rate": 19.0
+    },
+    {
+     "id": "139929",
+     "en": "Dimensional Image: Saya",
+     "zh": "维度影像·沙耶",
+     "n": 1722,
+     "rate": 17.3
+    }
+   ],
+   "assists": [
+    {
+     "id": "94450",
+     "en": "Mouchette",
+     "zh": "茉夏",
+     "n": 405,
+     "rate": 4.1
+    },
+    {
+     "id": "130901",
+     "en": "Vortice",
+     "zh": "莫丝",
+     "n": 171,
+     "rate": 1.7
+    },
+    {
+     "id": "148578",
+     "en": "Ogier: Oathbound",
+     "zh": "负誓·奥吉尔",
+     "n": 118,
+     "rate": 1.2
+    },
+    {
+     "id": "95786",
+     "en": "Doresain",
+     "zh": "杜勒赛因",
+     "n": 96,
+     "rate": 1.0
+    },
+    {
+     "id": "130226",
+     "en": "Saya",
+     "zh": "沙耶",
+     "n": 88,
+     "rate": 0.9
+    },
+    {
+     "id": "15602",
+     "en": "Doll: Inferno",
+     "zh": "熔毁·朵尔",
+     "n": 69,
+     "rate": 0.7
+    }
+   ],
+   "perfectChars": [
+    {
+     "id": "130226",
+     "en": "Saya",
+     "zh": "沙耶",
+     "n": 6,
+     "rate": 0.1
+    },
+    {
+     "id": "15566",
+     "en": "Celeste",
+     "zh": "希莱斯特",
+     "n": 5,
+     "rate": 0.1
+    },
+    {
+     "id": "130901",
+     "en": "Vortice",
+     "zh": "莫丝",
+     "n": 5,
+     "rate": 0.1
+    },
+    {
+     "id": "15576",
+     "en": "Murphy",
+     "zh": "墨菲",
+     "n": 4,
+     "rate": 0.0
+    },
+    {
+     "id": "148578",
+     "en": "Ogier: Oathbound",
+     "zh": "负誓·奥吉尔",
+     "n": 3,
+     "rate": 0.0
+    },
+    {
+     "id": "77917",
+     "en": "Pollux",
+     "zh": "波吕克斯",
+     "n": 3,
+     "rate": 0.0
+    }
+   ],
+   "teamN": 9980
+  },
+  "records": {
+   "maxHit": {
+    "value": 41009121,
+    "rank": 12,
+    "uid": 101725009,
+    "wave": 1,
+    "name": "已区化",
+    "chars": [
+     {
+      "zh": "凯蒂古拉",
+      "en": "Kathigu-Ra"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "克莱门汀",
+      "en": "Clementine"
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     }
+    ],
+    "top": {
+     "zh": "凯蒂古拉",
+     "en": "Kathigu-Ra"
+    }
+   },
+   "maxTotal": {
+    "value": 55558818,
+    "rank": 42,
+    "uid": 100274628,
+    "wave": 5,
+    "name": "莫莱",
+    "chars": [
+     {
+      "zh": "凯蒂古拉",
+      "en": "Kathigu-Ra"
+     },
+     {
+      "zh": "克莱门汀",
+      "en": "Clementine"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     }
+    ],
+    "top": {
+     "zh": "凯蒂古拉",
+     "en": "Kathigu-Ra"
+    }
+   },
+   "maxChar": {
+    "value": 53132094,
+    "rank": 42,
+    "uid": 100274628,
+    "name": "莫莱",
+    "wave": 5,
+    "char": {
+     "zh": "凯蒂古拉",
+     "en": "Kathigu-Ra"
+    }
+   },
+   "deathResist": {
+    "value": 9,
+    "rank": 34,
+    "uid": 100610863,
+    "wave": 3,
+    "name": "<#CCC>酷酷kuku",
+    "chars": [
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "萝坦",
+      "en": "Lotan"
+     },
+     {
+      "zh": "菲茵特",
+      "en": "Faint"
+     },
+     {
+      "zh": "哈姆林",
+      "en": "Hameln"
+     }
+    ],
+    "top": {
+     "zh": "萝坦",
+     "en": "Lotan"
+    }
+   },
+   "counter": {
+    "value": 1033501,
+    "rank": 487,
+    "uid": 101093141,
+    "wave": 2,
+    "name": "防己",
+    "chars": [
+     {
+      "zh": "达芙黛尔",
+      "en": "Daffodil"
+     },
+     {
+      "zh": "诺缔拉",
+      "en": "Nautila"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "熔毁·朵尔",
+      "en": "Doll: Inferno"
+     }
+    ],
+    "top": {
+     "zh": "达芙黛尔",
+     "en": "Daffodil"
+    }
+   },
+   "tentacle": {
+    "value": 16255,
+    "rank": 172,
+    "uid": 100662824,
+    "wave": 4,
+    "name": "Corn",
+    "chars": [
+     {
+      "zh": "珊",
+      "en": "Sanga"
+     },
+     {
+      "zh": "莫丝",
+      "en": "Vortice"
+     },
+     {
+      "zh": "墨菲",
+      "en": "Murphy"
+     },
+     {
+      "zh": "诞妄·墨菲",
+      "en": "Murphy: Fauxborn"
+     }
+    ],
+    "top": {
+     "zh": "莫丝",
+     "en": "Vortice"
+    }
+   },
+   "strength": {
+    "value": 9927,
+    "rank": 29,
+    "uid": 100787681,
+    "wave": 5,
+    "name": "루니안",
+    "chars": [
+     {
+      "zh": "蚀灭·萝坦",
+      "en": "Lotan: Cetarchon"
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian"
+     },
+     {
+      "zh": "莱克",
+      "en": "Ryker"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     }
+    ],
+    "top": {
+     "zh": "蚀灭·萝坦",
+     "en": "Lotan: Cetarchon"
+    }
+   },
+   "poison": {
+    "value": 453420,
+    "rank": 34,
+    "uid": 100610863,
+    "wave": 2,
+    "name": "<#CCC>酷酷kuku",
+    "chars": [
+     {
+      "zh": "珈伦",
+      "en": "Karen"
+     },
+     {
+      "zh": "徐",
+      "en": "Xu"
+     },
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo"
+     },
+     {
+      "zh": "熔毁·朵尔",
+      "en": "Doll: Inferno"
+     }
+    ],
+    "top": {
+     "zh": "徐",
+     "en": "Xu"
+    }
+   },
+   "hp": {
+    "value": 6362,
+    "rank": 509,
+    "uid": 100723476,
+    "wave": 5,
+    "name": "Jad",
+    "chars": [
+     {
+      "zh": "萨尔瓦多",
+      "en": "Salvador"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo"
+     }
+    ],
+    "top": {
+     "zh": "萨尔瓦多",
+     "en": "Salvador"
+    }
+   },
+   "totalBattles": 37845
+  },
+  "fastest": [
+   {
+    "wave": 1,
+    "rounds": 5,
+    "rank": 447,
+    "name": "<#ffb214>BAPHO",
+    "uid": 101824400,
+    "chars": [
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "卡斯托尔",
+      "en": "Castor"
+     },
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound"
+     },
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     }
+    ]
+   },
+   {
+    "wave": 2,
+    "rounds": 21,
+    "rank": 62,
+    "name": "LuffyOMG",
+    "uid": 101097358,
+    "chars": [
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "希洛",
+      "en": "Helot"
+     },
+     {
+      "zh": "血链·希洛",
+      "en": "Helot: Catena"
+     }
+    ]
+   },
+   {
+    "wave": 3,
+    "rounds": 5,
+    "rank": 53,
+    "name": "大王X",
+    "uid": 101214107,
+    "chars": [
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     },
+     {
+      "zh": "蚀灭·萝坦",
+      "en": "Lotan: Cetarchon"
+     },
+     {
+      "zh": "温柯尔",
+      "en": "Winkle"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     }
+    ]
+   },
+   {
+    "wave": 4,
+    "rounds": 20,
+    "rank": 1,
+    "name": "曲终...人散...",
+    "uid": 100068321,
+    "chars": [
+     {
+      "zh": "血链·希洛",
+      "en": "Helot: Catena"
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais"
+     },
+     {
+      "zh": "希洛",
+      "en": "Helot"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     }
+    ]
+   },
+   {
+    "wave": 5,
+    "rounds": 15,
+    "rank": 33,
+    "name": "Angbak",
+    "uid": 101143204,
+    "chars": [
+     {
+      "zh": "蚀灭·萝坦",
+      "en": "Lotan: Cetarchon"
+     },
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     },
+     {
+      "zh": "奥尔拉",
+      "en": "Horla"
+     },
+     {
+      "zh": "阿拉克涅",
+      "en": "Arachne"
+     }
+    ]
+   }
+  ],
+  "mystery": {
+   "maxRounds": {
+    "value": 78,
+    "rank": 74,
+    "uid": 101851555,
+    "name": "<#E57>Kizuno",
+    "wave": 2,
+    "chars": [
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo"
+     },
+     {
+      "zh": "弥利亚姆",
+      "en": "Miryam"
+     },
+     {
+      "zh": "戈利亚",
+      "en": "Goliath"
+     },
+     {
+      "zh": "诞妄·墨菲",
+      "en": "Murphy: Fauxborn"
+     }
+    ]
+   },
+   "maxCard": {
+    "value": 1036,
+    "rank": 655,
+    "uid": 100728374,
+    "name": "Echo",
+    "wave": 5,
+    "chars": [
+     {
+      "zh": "哈姆林",
+      "en": "Hameln"
+     },
+     {
+      "zh": "奥吉尔",
+      "en": "Ogier"
+     },
+     {
+      "zh": "朵尔",
+      "en": "Doll"
+     },
+     {
+      "zh": "环行·拉蒙娜",
+      "en": "Ramona: Timeworn"
+     }
+    ]
+   },
+   "maxEnergy": {
+    "value": 696,
+    "rank": 655,
+    "uid": 100728374,
+    "name": "Echo",
+    "wave": 5,
+    "chars": [
+     {
+      "zh": "哈姆林",
+      "en": "Hameln"
+     },
+     {
+      "zh": "奥吉尔",
+      "en": "Ogier"
+     },
+     {
+      "zh": "朵尔",
+      "en": "Doll"
+     },
+     {
+      "zh": "环行·拉蒙娜",
+      "en": "Ramona: Timeworn"
+     }
+    ]
+   },
+   "maxBoutCard": {
+    "value": 53,
+    "rank": 1998,
+    "uid": 100558603,
+    "name": "哀嚎",
+    "wave": 5,
+    "chars": [
+     {
+      "zh": "塔薇",
+      "en": "Tawil"
+     },
+     {
+      "zh": "珈伦",
+      "en": "Karen"
+     },
+     {
+      "zh": "哈姆林",
+      "en": "Hameln"
+     },
+     {
+      "zh": "莱克",
+      "en": "Ryker"
+     }
+    ]
+   },
+   "minCardDown": {
+    "value": 32,
+    "rank": 94,
+    "uid": 100214259,
+    "name": "Kieren",
+    "wave": 3,
+    "chars": [
+     {
+      "zh": "塔薇",
+      "en": "Tawil"
+     },
+     {
+      "zh": "熔毁·朵尔",
+      "en": "Doll: Inferno"
+     },
+     {
+      "zh": "茉夏",
+      "en": "Mouchette"
+     },
+     {
+      "zh": "萝坦",
+      "en": "Lotan"
+     }
+    ]
+   },
+   "firstRound": {
+    "value": 34,
+    "rank": 11,
+    "uid": 100559441,
+    "name": "dlshan",
+    "wave": 4,
+    "chars": [
+     {
+      "zh": "莫丝",
+      "en": "Vortice"
+     },
+     {
+      "zh": "沙耶",
+      "en": "Saya"
+     },
+     {
+      "zh": "墨菲",
+      "en": "Murphy"
+     },
+     {
+      "zh": "萨尔瓦多",
+      "en": "Salvador"
+     }
+    ]
+   }
+  },
+  "deathAvg": {
+   "all": 1.77,
+   "allBattles": 2051,
+   "chars": [
+    {
+     "zh": "菲茵特",
+     "en": "Faint",
+     "avg": 4.72,
+     "n": 198
+    },
+    {
+     "zh": "蚀灭·萝坦",
+     "en": "Lotan: Cetarchon",
+     "avg": 3.61,
+     "n": 138
+    },
+    {
+     "zh": "茉夏",
+     "en": "Mouchette",
+     "avg": 3.57,
+     "n": 228
+    },
+    {
+     "zh": "艾尔瓦",
+     "en": "Alva",
+     "avg": 3.35,
+     "n": 20
+    },
+    {
+     "zh": "希洛",
+     "en": "Helot",
+     "avg": 3.23,
+     "n": 74
+    }
+   ],
+   "players": [
+    {
+     "name": "雅",
+     "rank": 26,
+     "avg": 4.67,
+     "n": 6
+    },
+    {
+     "name": "<#E9E>忒伊亚",
+     "rank": 67,
+     "avg": 3.6,
+     "n": 5
+    },
+    {
+     "name": "已区化",
+     "rank": 12,
+     "avg": 3.57,
+     "n": 7
+    },
+    {
+     "name": "莫莱",
+     "rank": 42,
+     "avg": 3.57,
+     "n": 7
+    },
+    {
+     "name": "Angbak",
+     "rank": 33,
+     "avg": 3.4,
+     "n": 5
+    }
+   ]
+  },
+  "avgRounds": {
+   "hard": 20.46,
+   "all": 16.32,
+   "hardN": 1353,
+   "byZone": [
+    {
+     "wave": 1,
+     "avg": 13.26,
+     "n": 336
+    },
+    {
+     "wave": 2,
+     "avg": 42.5,
+     "n": 156
+    },
+    {
+     "wave": 3,
+     "avg": 11.37,
+     "n": 590
+    },
+    {
+     "wave": 4,
+     "avg": 34.83,
+     "n": 137
+    },
+    {
+     "wave": 5,
+     "avg": 38.17,
+     "n": 134
+    }
+   ]
+  },
+  "tokenTable": {
+   "9518": "注射守护",
+   "9653": "鼠鼠的智慧",
+   "9685": "纯白初遇",
+   "9991": "不平等交换",
+   "9995": "不朽的葬仪",
+   "10032": "永世执念",
+   "10052": "脑中之音",
+   "10065": "小小心愿",
+   "36801": "奥瑞塔的宝藏",
+   "36813": "咆哮的血与沙",
+   "36814": "最后的誓言",
+   "36815": "短暂的永恒",
+   "36847": "蚀骨的拥抱",
+   "36848": "湖畔回眸",
+   "36849": "跨越回溯之扉",
+   "36850": "腐烂盛筵",
+   "36857": "神迹降临",
+   "36858": "巨人的霸道",
+   "36859": "全部的她",
+   "36860": "玫瑰的胜利",
+   "36861": "灰雾真容",
+   "36862": "仲夏之梦",
+   "45298": "永续新篇",
+   "45299": "黑天鹅的舞步",
+   "45300": "海之祭",
+   "45301": "一声枪响",
+   "45302": "群山的觉悟",
+   "49204": "唯一的种子",
+   "56636": "门扉的答案",
+   "56638": "第四乐章",
+   "56643": "虚无瘟疫",
+   "70919": "群星的庇佑",
+   "72095": "酒馆之门",
+   "80191": "特殊治疗",
+   "81756": "不灭的雷光",
+   "88873": "错位命运",
+   "94559": "猎食决心",
+   "95548": "不落的太阳",
+   "95691": "残忍的致意",
+   "97737": "定格的仲夏留念",
+   "99102": "虚世之彩",
+   "99724": "泣血的圣心",
+   "100577": "美梦一刹",
+   "118128": "偏航船",
+   "119952": "重逢心愿",
+   "120491": "来自雾境",
+   "124899": "罗网轮转",
+   "125190": "深宅往事",
+   "129499": "岁末花火",
+   "130063": "献给新世界",
+   "130703": "溺亡的纯真",
+   "141174": "空心人",
+   "145281": "噬鲸的风暴",
+   "145970": "并非谎言之物",
+   "148671": "永续新篇",
+   "151695": "Nightborn Evil"
+  },
+  "mysteryLineups": [
+   {
+    "count": 1,
+    "score": 115,
+    "rank": 8,
+    "wave": 5,
+    "threat": "▼",
+    "token": "145970",
+    "members": [
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo",
+      "potency": 15
+     },
+     {
+      "zh": "拉蒙娜",
+      "en": "Ramona",
+      "potency": 15
+     },
+     {
+      "zh": "熔毁·朵尔",
+      "en": "Doll: Inferno",
+      "potency": 15
+     },
+     {
+      "zh": "徐",
+      "en": "Xu",
+      "potency": 15
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 29,
+    "wave": 5,
+    "threat": "▼",
+    "token": "45300",
+    "members": [
+     {
+      "zh": "蚀灭·萝坦",
+      "en": "Lotan: Cetarchon",
+      "potency": 15
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian",
+      "potency": 15
+     },
+     {
+      "zh": "莱克",
+      "en": "Ryker",
+      "potency": 7
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais",
+      "potency": 13
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 32,
+    "wave": 5,
+    "threat": "▼",
+    "token": "148671",
+    "members": [
+     {
+      "zh": "沙耶",
+      "en": "Saya",
+      "potency": 3
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais",
+      "potency": 3
+     },
+     {
+      "zh": "拉蒙娜",
+      "en": "Ramona",
+      "potency": 15
+     },
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound",
+      "potency": 15
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 52,
+    "wave": 5,
+    "threat": "▼",
+    "token": "125190",
+    "members": [
+     {
+      "zh": "徐",
+      "en": "Xu",
+      "potency": 15
+     },
+     {
+      "zh": "卡拉布",
+      "en": "Caraboo",
+      "potency": 15
+     },
+     {
+      "zh": "莉莉",
+      "en": "Lily",
+      "potency": 15
+     },
+     {
+      "zh": "宁菲亚",
+      "en": "Nymphaea",
+      "potency": 15
+     }
+    ]
+   },
+   {
+    "count": 1,
+    "score": 110,
+    "rank": 129,
+    "wave": 5,
+    "threat": "▼",
+    "token": "148671",
+    "members": [
+     {
+      "zh": "沙耶",
+      "en": "Saya",
+      "potency": 4
+     },
+     {
+      "zh": "泰旖丝",
+      "en": "Thais",
+      "potency": 10
+     },
+     {
+      "zh": "负誓·奥吉尔",
+      "en": "Ogier: Oathbound",
+      "potency": 15
+     },
+     {
+      "zh": "薇薇安",
+      "en": "Vivian",
+      "potency": 3
+     }
+    ]
+   }
+  ],
+  "enlight": [
+   {
+    "tid": "15585",
+    "zh": "奥吉尔",
+    "en": "Ogier",
+    "n": 68,
+    "p12": 100.0,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 0,
+     "9-11": 0,
+     "12+": 68
+    }
+   },
+   {
+    "tid": "15570",
+    "zh": "朵尔",
+    "en": "Doll",
+    "n": 91,
+    "p12": 97.8,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 0,
+     "9-11": 2,
+     "12+": 89
+    }
+   },
+   {
+    "tid": "15569",
+    "zh": "萝坦",
+    "en": "Lotan",
+    "n": 403,
+    "p12": 95.3,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 4,
+     "9-11": 15,
+     "12+": 384
+    }
+   },
+   {
+    "tid": "15568",
+    "zh": "环行·拉蒙娜",
+    "en": "Ramona: Timeworn",
+    "n": 28,
+    "p12": 92.9,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 0,
+     "9-11": 2,
+     "12+": 26
+    }
+   },
+   {
+    "tid": "77913",
+    "zh": "凯蒂古拉",
+    "en": "Kathigu-Ra",
+    "n": 70,
+    "p12": 88.6,
+    "dist": {
+     "0-2": 0,
+     "3-5": 3,
+     "6-8": 5,
+     "9-11": 0,
+     "12+": 62
+    }
+   },
+   {
+    "tid": "15564",
+    "zh": "戈利亚",
+    "en": "Goliath",
+    "n": 58,
+    "p12": 87.9,
+    "dist": {
+     "0-2": 0,
+     "3-5": 1,
+     "6-8": 4,
+     "9-11": 2,
+     "12+": 51
+    }
+   },
+   {
+    "tid": "15565",
+    "zh": "诺缔拉",
+    "en": "Nautila",
+    "n": 46,
+    "p12": 87.0,
+    "dist": {
+     "0-2": 0,
+     "3-5": 1,
+     "6-8": 2,
+     "9-11": 3,
+     "12+": 40
+    }
+   },
+   {
+    "tid": "15595",
+    "zh": "拉蒙娜",
+    "en": "Ramona",
+    "n": 90,
+    "p12": 85.6,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 2,
+     "9-11": 11,
+     "12+": 77
+    }
+   },
+   {
+    "tid": "94450",
+    "zh": "茉夏",
+    "en": "Mouchette",
+    "n": 185,
+    "p12": 83.8,
+    "dist": {
+     "0-2": 1,
+     "3-5": 6,
+     "6-8": 19,
+     "9-11": 4,
+     "12+": 155
+    }
+   },
+   {
+    "tid": "15580",
+    "zh": "宁菲亚",
+    "en": "Nymphaea",
+    "n": 23,
+    "p12": 82.6,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 2,
+     "9-11": 2,
+     "12+": 19
+    }
+   },
+   {
+    "tid": "15597",
+    "zh": "雷娅",
+    "en": "Leigh",
+    "n": 21,
+    "p12": 81.0,
+    "dist": {
+     "0-2": 0,
+     "3-5": 1,
+     "6-8": 2,
+     "9-11": 1,
+     "12+": 17
+    }
+   },
+   {
+    "tid": "15571",
+    "zh": "珈伦",
+    "en": "Karen",
+    "n": 77,
+    "p12": 80.5,
+    "dist": {
+     "0-2": 1,
+     "3-5": 3,
+     "6-8": 6,
+     "9-11": 5,
+     "12+": 62
+    }
+   },
+   {
+    "tid": "15566",
+    "zh": "希莱斯特",
+    "en": "Celeste",
+    "n": 46,
+    "p12": 78.3,
+    "dist": {
+     "0-2": 0,
+     "3-5": 1,
+     "6-8": 1,
+     "9-11": 8,
+     "12+": 36
+    }
+   },
+   {
+    "tid": "15591",
+    "zh": "艾继丝",
+    "en": "Aigis",
+    "n": 48,
+    "p12": 72.9,
+    "dist": {
+     "0-2": 2,
+     "3-5": 3,
+     "6-8": 4,
+     "9-11": 4,
+     "12+": 35
+    }
+   },
+   {
+    "tid": "148578",
+    "zh": "负誓·奥吉尔",
+    "en": "Ogier: Oathbound",
+    "n": 72,
+    "p12": 66.7,
+    "dist": {
+     "0-2": 16,
+     "3-5": 6,
+     "6-8": 2,
+     "9-11": 0,
+     "12+": 48
+    }
+   },
+   {
+    "tid": "15589",
+    "zh": "诞妄·墨菲",
+    "en": "Murphy: Fauxborn",
+    "n": 63,
+    "p12": 66.7,
+    "dist": {
+     "0-2": 0,
+     "3-5": 0,
+     "6-8": 20,
+     "9-11": 1,
+     "12+": 42
+    }
+   },
+   {
+    "tid": "77923",
+    "zh": "卡斯托尔",
+    "en": "Castor",
+    "n": 23,
+    "p12": 60.9,
+    "dist": {
+     "0-2": 1,
+     "3-5": 2,
+     "6-8": 6,
+     "9-11": 0,
+     "12+": 14
+    }
+   },
+   {
+    "tid": "15587",
+    "zh": "希洛",
+    "en": "Helot",
+    "n": 57,
+    "p12": 57.9,
+    "dist": {
+     "0-2": 9,
+     "3-5": 6,
+     "6-8": 7,
+     "9-11": 2,
+     "12+": 33
+    }
+   },
+   {
+    "tid": "15577",
+    "zh": "菲茵特",
+    "en": "Faint",
+    "n": 154,
+    "p12": 54.5,
+    "dist": {
+     "0-2": 14,
+     "3-5": 16,
+     "6-8": 18,
+     "9-11": 22,
+     "12+": 84
+    }
+   },
+   {
+    "tid": "15567",
+    "zh": "血链·希洛",
+    "en": "Helot: Catena",
+    "n": 34,
+    "p12": 52.9,
+    "dist": {
+     "0-2": 0,
+     "3-5": 7,
+     "6-8": 8,
+     "9-11": 1,
+     "12+": 18
+    }
+   },
+   {
+    "tid": "130226",
+    "zh": "沙耶",
+    "en": "Saya",
+    "n": 175,
+    "p12": 46.9,
+    "dist": {
+     "0-2": 3,
+     "3-5": 61,
+     "6-8": 28,
+     "9-11": 1,
+     "12+": 82
+    }
+   },
+   {
+    "tid": "130901",
+    "zh": "莫丝",
+    "en": "Vortice",
+    "n": 126,
+    "p12": 41.3,
+    "dist": {
+     "0-2": 1,
+     "3-5": 13,
+     "6-8": 54,
+     "9-11": 6,
+     "12+": 52
+    }
+   },
+   {
+    "tid": "125346",
+    "zh": "徐",
+    "en": "Xu",
+    "n": 256,
+    "p12": 39.1,
+    "dist": {
+     "0-2": 12,
+     "3-5": 80,
+     "6-8": 60,
+     "9-11": 4,
+     "12+": 100
+    }
+   },
+   {
+    "tid": "77925",
+    "zh": "克莱门汀",
+    "en": "Clementine",
+    "n": 90,
+    "p12": 38.9,
+    "dist": {
+     "0-2": 2,
+     "3-5": 30,
+     "6-8": 20,
+     "9-11": 3,
+     "12+": 35
+    }
+   },
+   {
+    "tid": "77921",
+    "zh": "卡拉布",
+    "en": "Caraboo",
+    "n": 128,
+    "p12": 38.3,
+    "dist": {
+     "0-2": 1,
+     "3-5": 58,
+     "6-8": 20,
+     "9-11": 0,
+     "12+": 49
+    }
+   },
+   {
+    "tid": "77926",
+    "zh": "皮克曼",
+    "en": "Pickman",
+    "n": 41,
+    "p12": 36.6,
+    "dist": {
+     "0-2": 1,
+     "3-5": 4,
+     "6-8": 19,
+     "9-11": 2,
+     "12+": 15
+    }
+   },
+   {
+    "tid": "15602",
+    "zh": "熔毁·朵尔",
+    "en": "Doll: Inferno",
+    "n": 396,
+    "p12": 30.8,
+    "dist": {
+     "0-2": 42,
+     "3-5": 25,
+     "6-8": 177,
+     "9-11": 30,
+     "12+": 122
+    }
+   },
+   {
+    "tid": "15582",
+    "zh": "弥利亚姆",
+    "en": "Miryam",
+    "n": 59,
+    "p12": 27.1,
+    "dist": {
+     "0-2": 6,
+     "3-5": 22,
+     "6-8": 13,
+     "9-11": 2,
+     "12+": 16
+    }
+   },
+   {
+    "tid": "145363",
+    "zh": "蚀灭·萝坦",
+    "en": "Lotan: Cetarchon",
+    "n": 108,
+    "p12": 26.9,
+    "dist": {
+     "0-2": 18,
+     "3-5": 37,
+     "6-8": 19,
+     "9-11": 5,
+     "12+": 29
+    }
+   },
+   {
+    "tid": "15601",
+    "zh": "\"24\"",
+    "en": "\"24\"",
+    "n": 75,
+    "p12": 26.7,
+    "dist": {
+     "0-2": 4,
+     "3-5": 32,
+     "6-8": 14,
+     "9-11": 5,
+     "12+": 20
+    }
+   },
+   {
+    "tid": "77918",
+    "zh": "阿拉克涅",
+    "en": "Arachne",
+    "n": 174,
+    "p12": 25.3,
+    "dist": {
+     "0-2": 4,
+     "3-5": 88,
+     "6-8": 26,
+     "9-11": 12,
+     "12+": 44
+    }
+   },
+   {
+    "tid": "151844",
+    "zh": "薇薇安",
+    "en": "Vivian",
+    "n": 117,
+    "p12": 24.8,
+    "dist": {
+     "0-2": 16,
+     "3-5": 46,
+     "6-8": 24,
+     "9-11": 2,
+     "12+": 29
+    }
+   },
+   {
+    "tid": "15596",
+    "zh": "泰旖丝",
+    "en": "Thais",
+    "n": 131,
+    "p12": 24.4,
+    "dist": {
+     "0-2": 19,
+     "3-5": 54,
+     "6-8": 17,
+     "9-11": 9,
+     "12+": 32
+    }
+   },
+   {
+    "tid": "54116",
+    "zh": "塔薇",
+    "en": "Tawil",
+    "n": 312,
+    "p12": 23.1,
+    "dist": {
+     "0-2": 59,
+     "3-5": 74,
+     "6-8": 87,
+     "9-11": 20,
+     "12+": 72
+    }
+   },
+   {
+    "tid": "15604",
+    "zh": "莱克",
+    "en": "Ryker",
+    "n": 35,
+    "p12": 17.1,
+    "dist": {
+     "0-2": 11,
+     "3-5": 11,
+     "6-8": 6,
+     "9-11": 1,
+     "12+": 6
+    }
+   },
+   {
+    "tid": "15599",
+    "zh": "萨尔瓦多",
+    "en": "Salvador",
+    "n": 93,
+    "p12": 16.1,
+    "dist": {
+     "0-2": 19,
+     "3-5": 40,
+     "6-8": 15,
+     "9-11": 4,
+     "12+": 15
+    }
+   },
+   {
+    "tid": "15576",
+    "zh": "墨菲",
+    "en": "Murphy",
+    "n": 133,
+    "p12": 14.3,
+    "dist": {
+     "0-2": 26,
+     "3-5": 43,
+     "6-8": 33,
+     "9-11": 12,
+     "12+": 19
+    }
+   },
+   {
+    "tid": "15563",
+    "zh": "图鲁",
+    "en": "Tulu",
+    "n": 51,
+    "p12": 13.7,
+    "dist": {
+     "0-2": 16,
+     "3-5": 13,
+     "6-8": 9,
+     "9-11": 6,
+     "12+": 7
+    }
+   },
+   {
+    "tid": "15581",
+    "zh": "莉莉",
+    "en": "Lily",
+    "n": 85,
+    "p12": 10.6,
+    "dist": {
+     "0-2": 7,
+     "3-5": 43,
+     "6-8": 21,
+     "9-11": 5,
+     "12+": 9
+    }
+   },
+   {
+    "tid": "15583",
+    "zh": "奥尔拉",
+    "en": "Horla",
+    "n": 205,
+    "p12": 8.3,
+    "dist": {
+     "0-2": 62,
+     "3-5": 72,
+     "6-8": 43,
+     "9-11": 11,
+     "12+": 17
+    }
+   },
+   {
+    "tid": "54117",
+    "zh": "哈姆林",
+    "en": "Hameln",
+    "n": 140,
+    "p12": 7.1,
+    "dist": {
+     "0-2": 64,
+     "3-5": 36,
+     "6-8": 22,
+     "9-11": 8,
+     "12+": 10
+    }
+   }
+  ],
+  "enlightTotal": 4587,
+  "enlight12": 46.7,
+  "enlightSummary": {
+   "dist": {
+    "0-2": 437,
+    "3-5": 938,
+    "6-8": 839,
+    "9-11": 233,
+    "12+": 2140
+   },
+   "n": 4587,
+   "avgPotency": 9.69,
+   "byZone": [
+    {
+     "wave": 1,
+     "avg": 8.61,
+     "n": 1132
+    },
+    {
+     "wave": 2,
+     "avg": 9.94,
+     "n": 584
+    },
+    {
+     "wave": 3,
+     "avg": 9.83,
+     "n": 1984
+    },
+    {
+     "wave": 4,
+     "avg": 9.59,
+     "n": 524
+    },
+    {
+     "wave": 5,
+     "avg": 11.32,
+     "n": 516
+    }
+   ],
+   "full": [
+    "奥吉尔"
+   ],
+   "fullN": 1,
+   "low": [
+    {
+     "zh": "哈姆林",
+     "p12": 7.1,
+     "n": 140
+    },
+    {
+     "zh": "奥尔拉",
+     "p12": 8.3,
+     "n": 205
+    },
+    {
+     "zh": "莉莉",
+     "p12": 10.6,
+     "n": 85
+    },
+    {
+     "zh": "图鲁",
+     "p12": 13.7,
+     "n": 51
+    },
+    {
+     "zh": "墨菲",
+     "p12": 14.3,
+     "n": 133
+    },
+    {
+     "zh": "萨尔瓦多",
+     "p12": 16.1,
+     "n": 93
+    }
+   ],
+   "roundsByBucket": [
+    {
+     "label": "0-2",
+     "avg": 41.33,
+     "n": 3
+    },
+    {
+     "label": "3-5",
+     "avg": 16.83,
+     "n": 83
+    },
+    {
+     "label": "6-8",
+     "avg": 19.68,
+     "n": 312
+    },
+    {
+     "label": "9-11",
+     "avg": 20.33,
+     "n": 368
+    },
+    {
+     "label": "12+",
+     "avg": 24.26,
+     "n": 419
+    }
+   ],
+   "roundN": 1185,
+   "byThreat": {
+    "▼": {
+     "dist": {
+      "0-2": 248,
+      "3-5": 463,
+      "6-8": 481,
+      "9-11": 158,
+      "12+": 1546
+     },
+     "n": 2896,
+     "p12": 53.4
+    },
+    "SSS": {
+     "dist": {
+      "0-2": 194,
+      "3-5": 487,
+      "6-8": 367,
+      "9-11": 81,
+      "12+": 715
+     },
+     "n": 1844,
+     "p12": 38.8
+    }
+   }
+  },
+  "niche": {
+   "zeroDown": [
+    {
+     "zh": "旺达",
+     "en": "Wanda"
+    },
+    {
+     "zh": "汀克特",
+     "en": "Tinct"
+    },
+    {
+     "zh": "达芙黛尔",
+     "en": "Daffodil"
+    },
+    {
+     "zh": "莉兹",
+     "en": "Liz"
+    },
+    {
+     "zh": "詹金",
+     "en": "Jenkin"
+    }
+   ],
+   "zeroBoth": [
+    {
+     "zh": "达芙黛尔",
+     "en": "Daffodil"
+    },
+    {
+     "zh": "詹金",
+     "en": "Jenkin"
+    }
+   ],
+   "leastDown": [
+    {
+     "zh": "旺达",
+     "en": "Wanda",
+     "n": 0,
+     "all": 131
+    },
+    {
+     "zh": "汀克特",
+     "en": "Tinct",
+     "n": 0,
+     "all": 68
+    },
+    {
+     "zh": "詹金",
+     "en": "Jenkin",
+     "n": 0,
+     "all": 59
+    },
+    {
+     "zh": "达芙黛尔",
+     "en": "Daffodil",
+     "n": 0,
+     "all": 53
+    },
+    {
+     "zh": "莉兹",
+     "en": "Liz",
+     "n": 0,
+     "all": 36
+    },
+    {
+     "zh": "索蕾尔",
+     "en": "Sorel",
+     "n": 1,
+     "all": 83
+    },
+    {
+     "zh": "宁菲亚",
+     "en": "Nymphaea",
+     "n": 2,
+     "all": 531
+    },
+    {
+     "zh": "凯刻斯",
+     "en": "Caecus",
+     "n": 2,
+     "all": 429
+    }
+   ],
+   "leastBoth": [
+    {
+     "zh": "詹金",
+     "en": "Jenkin",
+     "n": 0,
+     "all": 59
+    },
+    {
+     "zh": "达芙黛尔",
+     "en": "Daffodil",
+     "n": 0,
+     "all": 53
+    },
+    {
+     "zh": "旺达",
+     "en": "Wanda",
+     "n": 1,
+     "all": 131
+    },
+    {
+     "zh": "莉兹",
+     "en": "Liz",
+     "n": 1,
+     "all": 36
+    },
+    {
+     "zh": "索蕾尔",
+     "en": "Sorel",
+     "n": 2,
+     "all": 83
+    },
+    {
+     "zh": "汀克特",
+     "en": "Tinct",
+     "n": 2,
+     "all": 68
+    },
+    {
+     "zh": "潘狄娅",
+     "en": "Pandia",
+     "n": 2,
+     "all": 66
+    },
+    {
+     "zh": "阿格里帕",
+     "en": "Agrippa",
+     "n": 4,
+     "all": 258
+    }
+   ]
+  }
+ }
+}
