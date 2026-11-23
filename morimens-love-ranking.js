@@ -113,7 +113,9 @@
   const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'Misag School Cat',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
   // Vivian was added before her release; the vote id stays so that the votes already cast keep counting (the real SKeyDB record awakener-0062 is filtered out above)
   const vivian={id:'special-upcoming-vivian',name:'薇薇安',englishName:'Vivian',image:'assets/morimens/portraits/vivian.webp'};
-  const specials=[schoolCat,vivian];
+  // V2.7.0 (三周年特典《神国诞临》) awakener, releases 2026-11-30; SKeyDB has no record yet, so he gets his own vote id
+  const tuluGodking={id:'special-upcoming-tulu-godking',name:'神王·图鲁',englishName:'Tulu: Godking',image:'assets/morimens/portraits/tulu.webp'};
+  const specials=[schoolCat,vivian,tuluGodking];
   const specialOf=id=>specials.find(x=>x.id===id);
 
   function ensureControls(){
