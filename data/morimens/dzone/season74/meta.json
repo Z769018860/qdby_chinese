@@ -1,0 +1,100 @@
+{
+  "season": 74,
+  "activityTid": 83305,
+  "name": "第74期 融灾 · 深海戒指",
+  "date": "11.23-12.6",
+  "updatedAt": "2026-11-24 03:38",
+  "source": "official live Rank.QueryRank response",
+  "sourceRetrievedAt": "2026-11-24T03:38:58.527271+08:00",
+  "rankRange": [
+    1,
+    2000
+  ],
+  "teamRowsBySource": {
+    "teams_latest.jsonl": 7118
+  },
+  "skippedTailLines": 0,
+  "duplicateRankRowsDropped": [
+    {
+      "uid": 102309688,
+      "rank": 971,
+      "score": 285
+    },
+    {
+      "uid": 100450896,
+      "rank": 1691,
+      "score": 175
+    },
+    {
+      "uid": 100814922,
+      "rank": 1741,
+      "score": 170
+    }
+  ],
+  "recordCount": 1997,
+  "playersWithTeamDetail": 1997,
+  "teamRows": 7118,
+  "stageGroupIds": [
+    83414,
+    83415,
+    83416,
+    83417,
+    83418
+  ],
+  "files": {
+    "ranking": "ranking.json.gz",
+    "rankingPrevious": "ranking-previous.json.gz",
+    "battleSummary": "battle-summary.jsonl.gz",
+    "rawTeams": [
+      {
+        "file": "raw-teams/teams-000.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-001.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-002.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-003.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-004.jsonl.gz",
+        "lines": 1200
+      },
+      {
+        "file": "raw-teams/teams-005.jsonl.gz",
+        "lines": 1118
+      }
+    ],
+    "uids": "uids.csv",
+    "teamErrors": "team-errors.jsonl",
+    "pendingQueries": "pending-queries.jsonl.gz",
+    "idNames": "id-names.json",
+    "scores": "scores.json",
+    "statistics": "statistics.json"
+  },
+  "battleFields": [
+    "stageRoundCount",
+    "bossBattleRoundCount",
+    "deathResistCount",
+    "respawnedNum",
+    "totalUseCard",
+    "totalEnergyCost",
+    "maxBoutUseCard",
+    "maxBoutEnergyCost",
+    "maxBoutDamage",
+    "maxCounterAtt",
+    "maxTentacleDamage",
+    "maxStrength",
+    "maxPosion",
+    "maxHp",
+    "leftHp",
+    "playerLevel",
+    "recordTime"
+  ]
+}

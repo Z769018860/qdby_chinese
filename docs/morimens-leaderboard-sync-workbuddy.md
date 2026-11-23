@@ -217,3 +217,29 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
 - **v2 的成员没有 `skeydbId`**：只有 `tid`（`chars[i][0]`）+ `ingameId` + 名字。脚本用 `data/morimens/skeydb/awakeners.json` 的 `ingameId → id` 反查补齐，否则页面按 `skeydbId` 找不到角色、头像会掉。补完后 71–73 的 `tids` 映射有 62 条（v1 那几期是 0，因为 v1 成员的 `id` 不是数字）。
 - 自检：`node scripts/build_assist_index.mjs` 每期打印一行 `key format records N -> M pool P`；71/72/73 的 providers 应在 1637~1653 之间（70 是 1646）。
 - 端到端验证：`python -m http.server 4200`（**别用仓库里的 `server.mjs`，它限流 240/min，页面一次要几百个模块会全 429**）→ 无头 Edge 打开 `http://127.0.0.1:4200/morimens-tools.html#assist` → 等 9 秒后调 `window.MorimensAssistList.open()`（hash 触发时模块还没 import 完）→ 看 `#assistSeason` 是否出现 71/72/73、`performance.getEntriesByType('resource')` 里是否出现 `assist/73.json`（出现即走的是瘦身路径）。
+
+## 12. 第 74 期（深海戒指）首日快照的实际参数（2026-11-24）
+
+```
+--season 74 --allow-missing --no-fallback --updated-at "2026-11-24 03:38"
+捕获：C:/Users/Administrator/AppData/Local/MorimensCollector/season_83305（已解压目录）
+      rankRange [1,2000]，retrievedAt 2026-11-24T03:38:58+08:00，activityTid 83305
+结果：2000 条名次里 3 个 uid 重复占相邻两名 → 1997 位玩家，7,118 队伍行，13,135 逐场战斗，
+      usage v2 两片 648,554 gzip 字节 + 战斗明细 503,118 字节，未命名 id：造物 98420（榜上 #98420）
+周期：2026-11-23 – 2026-12-06（第 73 期 11-22 结束）；榜单口径 official-rank-top2000（非 final）
+```
+
+要点（新赛季第一次同步必看）：
+
+- **`GROUP_WAVE` 必须从 `ranking.json` 的 `raw.abyssChallenge.activityId2Data['<activityTid>'].stageGroups` 反推**：
+  每个 stageGroupId 下的 `stageId` 去客户端配置表查 `CnID`（`data/morimens/local-config/stages.json.gz`，形如 `关卡@融蚀深渊74期G2`），
+  字母后面的数字就是禁区号。第 74 期是 `{83416:1, 83414:2, 83415:3, 83417:4, 83418:5}`——**看着不像顺序的，别按数字大小猜**。
+- **A–E 三档的关卡 id 每期都换**（81xxx–83xxx），只有 F(SSS)/G(▼) 保持在 153xxx 段。所以 `id-names.json` 的 `stages`
+  必须按本期 35 个 stageId 重建（`madness` = 客户端 `StageLevel`，与旧期同难度同禁区的值一致），不能沿用上一期。
+- **`--no-fallback` 是必须的**：上一期的 `raw-teams` 里是第 73 期的 `stageTid`，本期名称表里没有这些 id，
+  兜底行会在 `stages[str(stageTid)]` 直接 KeyError。同一赛季内的后续抓取才可以传 fallback。
+- `availableSeasons[].complete` 由脚本**不会**改写（只改 counts / coverageMode），新期条目要自己先写进 manifest；
+  `rankIndex.seasonId / path / activityTid` 与 `usageIndex.seasonId / path / statsPath` 同理，脚本只 update counts 与 revision。
+- 本期 2000 名次里有 3 个 uid 占了两行，`rank-index/74.json` 的 `complete` 会是 `false`（`len(rows) >= 2000` 不成立），
+  但榜单下拉的「完整」标记读的是 `availableSeasons[].complete`，两者含义不同，别被吓到。
+- 首日榜的分数形态与结算期差很远：本期最高 500（一人）、≥450 只有 121 人、中位 285，别拿第 73 期终榜的数字做对比文案。
