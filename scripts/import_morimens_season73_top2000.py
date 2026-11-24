@@ -324,7 +324,7 @@ def main():
             "seasonId": SEASON, "waves": waves, "sourceTransport": SOURCE_TRANSPORT,
         })
     season_doc = {
-        "seasonId": SEASON, "period": "2026-11-09 – 2026-11-23", "leaderboardEntryCount": len(rows),
+        "seasonId": SEASON, "period": "2026-11-09 – 2026-11-22", "leaderboardEntryCount": len(rows),
         "recordCount": len(records), "complete": len(records) == len(rows), "coverageMode": "official-rank-top2000",
         "source": {"site": "Morimens official", "activityTid": ACTIVITY, "syncedAt": args.updated_at_iso},
         "failures": [str(r["uid"]) for r in rows if r["uid"] not in site_teams], "records": records,

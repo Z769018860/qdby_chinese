@@ -149,3 +149,97 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
 ## 玩家近期排名 (recent players)
 
 `scripts/build_recent_players.py` 由 `sync_morimens_leaderboard.py` 在低配榜单之后自动运行，读取 manifest 中带 `lowspecPath` 的最近至多 10 期，且只统计第 70 期起（第 69 期及更早不计，脚本里 `MIN_SEASON`），写出 `data/morimens/eremora/recent/index.json`（玩家 UID、当前ID、每期排名/分数）。队伍详情不重复存放，页面展开时才读取对应期的 `lowspec/<期>.json`。新增期次后若要手动重建：`python3 scripts/build_recent_players.py`；第 69 期的低配文件用 `python3 scripts/build_lowspec_rank.py 69-postbug 70 71` 生成。
+
+## 10. 本次（第 73 期结算）的实际参数，供对照
+
+```
+--season 73 --final --allow-missing --updated-at "2026-11-23 09:18"
+捕获：C:/Users/Administrator/AppData/Local/MorimensCollector/season_83326（已解压目录，直接当参数传）
+      rankRange [1,2000]，retrievedAt 2026-11-23T09:18+08:00
+结果：2000 人在榜（无重复名次），队伍行 19138（新抓取 9873 + 旧捕获兜底 9265），逐场战斗 37101，
+      旧快照存为 ranking-20261115-0057.json.gz，未命名 id：造物 98420（榜上显示 #98420）
+命轮 id 推断：155077 = Next Time It Rains / 下一个雨天（SKeyDB wheel-0184，紧跟 wheel-0183 伊玛戈的诊室）
+```
+
+要点：
+
+- **抓取包可以直接传目录**。`sync_morimens_leaderboard.py` 现在会识别「单个参数且是目录」，跳过解压直接用（`--parts` 的 help 已同步改）。采集器把分卷解压到 `season_<activityTid>/` 时省一步。
+- 结算期（本期已结束）的 `build_recent_players.py` 不要再标 `complete:false`：判定已改为「`coverageMode` 含 `final` 或 `seasonId != currentSeason`」。
+- `latestLocalImport` 已改为按本次 `n` 从 `ranking.json` / `statistics.json` / manifest 重写，不再是写死的上一季信息。
+- 周期以官方公告为准：第 73 期实际是 **2026-11-09 – 2026-11-22**（导入脚本里的 `period` 不要按「两周一整天」推成 11-23）。
+
+## 11. 特刊（融灾报纸长图）
+
+`report73/` 是第 73 期特刊的生成链，三期复用可直接改 `SEASON` 相关路径：
+
+1. `python report73/build_data.py` → `report73/report.json`（当期 + 上一期的全部指标）
+2. `node report73/gen.mjs` → `report73/pages/s1..6.html`（1000×1800 的报纸版式）
+3. `node report73/shot.mjs` → `exports/season73-report/融灾第73期特刊-第N版.png`（dpr 2，2000×3600）
+4. `node report73/measure.mjs` → 打印每版「版面流内容底部 / 剩余留白」，用来判断有没有大片空白（目标留白 < 150，溢出会直接标 `over:true`）
+
+坑：分卷/整包无关，但**禁区判定一定按关卡名 `Zone N`**（`GROUP_WAVE` 的 stageGroupId 顺序与禁区号不对应）；造物统计要按队伍去重，并把「人人必备」的环造物（携带率 ≥ 99%）滤掉，否则五区清一色 100%。
+
+### 排版自检（2026-11-23 加）
+
+- `node report73/check.mjs` —— 逐版量「正文最深元素的底边」与页脚 `.foot` 的顶边，直接打印 `overlap`。
+  **`overlap > 0` 就是文字压住了页脚**，交付前必须全为负值（留 10px 以上）。该检查抓出过第 3/4/5 版各压 9~12px 的问题，肉眼在缩略图上完全看不出来。
+- `node report73/crop.mjs <版号> <css选择器> <放大倍数> <输出路径>` —— 用 CDP 把某个元素单独截图放大，用来核对小字（头像旁的加成、百分比、钥令名）有没有被截断。
+  选择器加 `@@下标` 可取同名元素的第 N 个（如 `.bband@@2` 取第三张分数段卡片）——`querySelector` 只能拿第一个，之前想核对后排卡片只能整版缩略图瞎猜。
+- `node report73/measure.mjs [版号]` —— 版面流内容底部与剩余留白（`gap`），用来判断是不是大片空白。
+
+### 内容口径的两个坑
+
+- **难度名**：▼ 档在中文里是「癫狂」，不是「狂癫」。站点 UI 只写「危险等级 ▼」，所以从代码里搜不到中文名，容易凭印象写错。
+- **"上一期"的数字一律从 `report.json` 取**，不要凭上一版文字里的数字手写：第 73 期起 72 期终榜重算过（平均分 430.3、中位 425、≥450 分 694 人），与早期草稿里的 413.3 / 405 / 649 完全不同，手写就会自相矛盾。
+- **启灵版必须覆盖全部唤醒体**：`build_data.py` 的 `enlight` 不再按「样本 ≥ 20 场」过滤，61 个全部输出；`small` 标记的（<20 场）在版面上另起一段排在末尾，序号接着排。
+
+### 第 7 版「低配榜」的口径（2026-11-23 加，同日按反馈重做）
+
+- 成本统一用「启灵总和」= 队伍四人 `potencyLevel` 之和（0-60，满配 60）。全服 1002 支 ▼ 队伍中位 37、≤25 的 204 支、最低 7；329 支 SSS 里最低只要 4。
+- **上半段：各禁区 × ▼/SSS 的最低配三套**（`lowcost.zones[].down` / `.sss`）——按启灵总和升序、同阵容（tid 集合，不计站位）去重取 3 套，`picks[]` 附玩家排名、总分、该场回合数与该区得分。
+  小样本要有心理准备：第二/四/五禁区的 ▼ 队伍只有 48/36/36 支，第三名常常比最低配高出一大截（第四禁区 22 → 24 → 46），版面按真实顺序照列，不要为了好看把高成本的删掉或补位。
+- **下半段：三档分数段里「最省玩家」的全部队伍**（`lowcost.bands[].best`）——分档 500–525 / 475–500 / 450–475；排序键 = 该玩家全部队伍的启灵总和 ÷ 队伍数（**平均启灵，不设队伍数门槛**：按总和排会让只交三四支的队伍天然占便宜，比出来的是「交得少」而不是「配得省」），取最小；`bands[].best.top3` 存前三名、`bands[].teamSpread` 存该档玩家提交队伍数的分布；`items[]` 是他提交的每一支队伍（禁区、难度、阵容、启灵总和、回合数、该区得分）。**别把 `total`（玩家总分）当该区得分写进卡片右上**，那里用 `zoneScore`。
+- 版面：上半每格两列（▼ 癫狂 / SSS），行 = 四名唤醒体（头像 + 名字 + `+启灵`）+ 右对齐「启灵总和 /60 · 第 N 名 · 总分 · 回合」；下半每档一张卡、五列（玩家五支队伍）。`node report73/measure.mjs 7` 的 `gap` 控制在 40~70px，`check.mjs` 的 overlap 为负即可。
+
+### 图标与头像（2026-11-23 加）
+
+- `data/morimens/game/tier-pool.json` 的 `kinds` 同时给了 awakener / wheel / relic / posse / covenant 的图，`gen.mjs` 里 `iconOf.*` + `ic(kind,en,size)` 统一取图，`awico(en,size)` 是唤醒体专用。
+- **造物名带 `+1/+2` 后缀**（缠丝玛瑙+），SKeyDB 目录只有基名，取图前必须 `stripPlus()`。
+- **唤醒体 `"24"` 带引号**，tier-pool 里是 `24`，取图要剥引号；否则会渲染成灰块。
+- **钥令图标是灰色剪影**（`posse/Icon/KeyToken_*.webp`）：用 `filter:brightness(.42)` 压暗才看得清，而且**不能给 img 元素加背景色**——filter 会把背景一起压黑，看起来是个黑方块。
+- 造物榜一律排除 `超维戒指 / 血肉戒指 / 混沌戒指 / 锈蚀钥匙`（`CREATION_SKIP`）：前者人人必备，后者是货币类道具、不属于配装选择。
+
+### 助战索引（`scripts/build_assist_index.mjs`，2026-11-23 修）
+
+- 目标：把每期 usage 数据里「借用的助战成员」单独抽成 `data/morimens/eremora/assist/<key>.json`，页面「互助助战列表」优先读它，读不到才回退整包（几十 MB）。
+- **第 71 期起 usage 换成了 `gzip-base64-chunked-v2`（表池压缩）**，脚本原先只认 v1，抛 `unsupported format` 后 `index.json` 是最后才写的，于是 71/72/73 三期一个都没登记，页面只能回退整包（体感就是切期特别慢）。
+- `loadDataset()` 现在两种格式都吃：v2 解 gzip 后交给 `expandV2()`（`decode_records()` 的 JS 移植，与 `pack_morimens_usage_v2.py`、`morimens-dtide-loader.js` 的 expandV2 三处保持同步），还原成和 v1 一样的 `records[].waves[].teams[].members[]`。
+- **v2 的成员没有 `skeydbId`**：只有 `tid`（`chars[i][0]`）+ `ingameId` + 名字。脚本用 `data/morimens/skeydb/awakeners.json` 的 `ingameId → id` 反查补齐，否则页面按 `skeydbId` 找不到角色、头像会掉。补完后 71–73 的 `tids` 映射有 62 条（v1 那几期是 0，因为 v1 成员的 `id` 不是数字）。
+- 自检：`node scripts/build_assist_index.mjs` 每期打印一行 `key format records N -> M pool P`；71/72/73 的 providers 应在 1637~1653 之间（70 是 1646）。
+- 端到端验证：`python -m http.server 4200`（**别用仓库里的 `server.mjs`，它限流 240/min，页面一次要几百个模块会全 429**）→ 无头 Edge 打开 `http://127.0.0.1:4200/morimens-tools.html#assist` → 等 9 秒后调 `window.MorimensAssistList.open()`（hash 触发时模块还没 import 完）→ 看 `#assistSeason` 是否出现 71/72/73、`performance.getEntriesByType('resource')` 里是否出现 `assist/73.json`（出现即走的是瘦身路径）。
+
+## 12. 第 74 期（深海戒指）首日快照的实际参数（2026-11-24）
+
+```
+--season 74 --allow-missing --no-fallback --updated-at "2026-11-24 03:38"
+捕获：C:/Users/Administrator/AppData/Local/MorimensCollector/season_83305（已解压目录）
+      rankRange [1,2000]，retrievedAt 2026-11-24T03:38:58+08:00，activityTid 83305
+结果：2000 条名次里 3 个 uid 重复占相邻两名 → 1997 位玩家，7,118 队伍行，13,135 逐场战斗，
+      usage v2 两片 648,554 gzip 字节 + 战斗明细 503,118 字节，未命名 id：造物 98420（榜上 #98420）
+周期：2026-11-23 – 2026-12-06（第 73 期 11-22 结束）；榜单口径 official-rank-top2000（非 final）
+```
+
+要点（新赛季第一次同步必看）：
+
+- **`GROUP_WAVE` 必须从 `ranking.json` 的 `raw.abyssChallenge.activityId2Data['<activityTid>'].stageGroups` 反推**：
+  每个 stageGroupId 下的 `stageId` 去客户端配置表查 `CnID`（`data/morimens/local-config/stages.json.gz`，形如 `关卡@融蚀深渊74期G2`），
+  字母后面的数字就是禁区号。第 74 期是 `{83416:1, 83414:2, 83415:3, 83417:4, 83418:5}`——**看着不像顺序的，别按数字大小猜**。
+- **A–E 三档的关卡 id 每期都换**（81xxx–83xxx），只有 F(SSS)/G(▼) 保持在 153xxx 段。所以 `id-names.json` 的 `stages`
+  必须按本期 35 个 stageId 重建（`madness` = 客户端 `StageLevel`，与旧期同难度同禁区的值一致），不能沿用上一期。
+- **`--no-fallback` 是必须的**：上一期的 `raw-teams` 里是第 73 期的 `stageTid`，本期名称表里没有这些 id，
+  兜底行会在 `stages[str(stageTid)]` 直接 KeyError。同一赛季内的后续抓取才可以传 fallback。
+- `availableSeasons[].complete` 由脚本**不会**改写（只改 counts / coverageMode），新期条目要自己先写进 manifest；
+  `rankIndex.seasonId / path / activityTid` 与 `usageIndex.seasonId / path / statsPath` 同理，脚本只 update counts 与 revision。
+- 本期 2000 名次里有 3 个 uid 占了两行，`rank-index/74.json` 的 `complete` 会是 `false`（`len(rows) >= 2000` 不成立），
+  但榜单下拉的「完整」标记读的是 `availableSeasons[].complete`，两者含义不同，别被吓到。
+- 首日榜的分数形态与结算期差很远：本期最高 500（一人）、≥450 只有 121 人、中位 285，别拿第 73 期终榜的数字做对比文案。

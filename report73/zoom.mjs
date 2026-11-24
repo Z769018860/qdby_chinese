@@ -1,0 +1,26 @@
+import { spawn } from 'node:child_process';
+import fs from 'node:fs';
+const EDGE='C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+const PORT=9371; const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const profile='H:/Temp/edgeprof-zoom-'+Date.now();
+const p=spawn(EDGE,['--headless=new','--disable-gpu','--allow-file-access-from-files','--hide-scrollbars',`--remote-debugging-port=${PORT}`,`--user-data-dir=${profile}`,'about:blank'],{stdio:'ignore'});
+async function gj(x){for(let i=0;i<80;i++){try{const r=await fetch(`http://127.0.0.1:${PORT}${x}`);if(r.ok)return r.json()}catch{}await sleep(300)}throw new Error('no devtools')}
+const v=await gj('/json/version');
+const ws=new WebSocket(v.webSocketDebuggerUrl); let id=0; const pend=new Map();
+ws.addEventListener('message',e=>{const m=JSON.parse(e.data);if(m.id&&pend.has(m.id)){pend.get(m.id)(m);pend.delete(m.id)}});
+await new Promise(r=>ws.addEventListener('open',r));
+const send=(me,pa,sid)=>new Promise(res=>{const i=++id;pend.set(i,res);ws.send(JSON.stringify({id:i,method:me,params:pa,...(sid?{sessionId:sid}:{})}))});
+const {result:{targetId}}=await send('Target.createTarget',{url:'about:blank'});
+const {result:{sessionId}}=await send('Target.attachToTarget',{targetId,flatten:true});
+const S=(m,pp)=>send(m,pp,sessionId);
+await S('Page.enable');await S('Runtime.enable');
+await S('Emulation.setDeviceMetricsOverride',{width:1000,height:1800,deviceScaleFactor:2,mobile:false});
+await S('Page.navigate',{url:'file:///H:/work/tmp/s73/report73/pages/s2.html'});
+await sleep(2500);
+const box=await S('Runtime.evaluate',{expression:`(()=>{const im=document.querySelector('.mem img');if(!im)return 'no img';const r=im.getBoundingClientRect();return JSON.stringify({x:r.x,y:r.y,w:r.width,h:r.height,nw:im.naturalWidth,src:im.src.slice(-60)})})()`,returnByValue:true});
+console.log(box.result.result.value);
+const b=JSON.parse(box.result.result.value);
+const shot=await S('Page.captureScreenshot',{format:'png',clip:{x:b.x-20,y:b.y-20,width:220,height:80,scale:4}});
+fs.writeFileSync('H:/work/tmp/zoom.png',Buffer.from(shot.result.data,'base64'));
+console.log('saved zoom');
+ws.close();p.kill();

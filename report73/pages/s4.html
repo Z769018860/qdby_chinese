@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>融灾第73期特刊-第4版</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1000px;height:1800px;overflow:hidden}
+body{background:#f5efdf;color:#2b2118;font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.page{position:relative;width:1000px;height:1800px;padding:26px 34px 20px;}
+.serif{font-family:"Source Han Serif SC","Noto Serif SC","SimSun",serif}
+.head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#5d4b34;
+  border-bottom:1px solid #b9a884;padding-bottom:7px;letter-spacing:.5px}
+.head b{font-weight:700;color:#3c2c1c}
+.mast{margin:14px 0 0;text-align:center}
+.mast .latin{font-size:11.5px;letter-spacing:3.6px;color:#7c6444}
+.mast h1{font-family:"Source Han Serif SC","SimSun",serif;font-size:74px;font-weight:900;letter-spacing:8px;
+  line-height:1.05;color:#211a12;margin-top:2px;text-shadow:0 1px 0 #fff}
+.mast .rule{height:3px;background:#3c2c1c;margin:9px 62px 6px;position:relative}
+.mast .rule:after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:#3c2c1c}
+.kicker{font-size:14px;letter-spacing:1px;color:#4b3a28;padding:7px 0 0}
+h2.lead{font-family:"Source Han Serif SC","SimSun",serif;font-size:44px;line-height:1.22;font-weight:900;
+  color:#a1281b;text-align:center;margin:24px 0 10px;letter-spacing:1px}
+h2.lead small{display:block;font-size:44px}
+.sub{text-align:center;font-size:13px;color:#4c3b29;line-height:1.6;margin-bottom:16px}
+.sub b{color:#a1281b}
+.hr{height:1px;background:#c3b393;margin:12px 0}
+.hr2{height:2px;background:#3c2c1c;margin:10px 0 8px}
+.grid-stats{display:grid;grid-template-columns:repeat(6,1fr);border-top:2px solid #3c2c1c;border-bottom:2px solid #3c2c1c}
+.stat{padding:10px 8px;text-align:center;border-right:1px solid #c3b393}
+.stat:last-child{border-right:0}
+.stat span{display:block;font-size:10.5px;color:#6a5740;letter-spacing:.5px;margin-bottom:3px}
+.stat b{font-size:26px;font-weight:800;font-family:"Source Han Serif SC","SimSun",serif}
+.stat.hot b{color:#a1281b}
+.stat i{display:block;font-size:10px;color:#8b765c;font-style:normal}
+.cols3{display:grid;grid-template-columns:1.05fr .95fr 1fr;gap:0}
+.col{padding:0 12px}
+.col+.col{border-left:1px solid #c3b393}
+.h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
+  padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
+.h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
+.bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
+.bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
+.ladder td:nth-child(2){width:70px}
+.ladder .track{height:9px;background:#e6dcc6;position:relative;border-radius:1px}
+.ladder .track b{position:absolute;left:0;top:0;bottom:0;background:#3a2c1d}
+.ladder td.n{font-weight:700;font-size:11px;white-space:nowrap}
+.hall{font-size:12px}
+.hall td{none}
+.hall .item{display:flex;justify-content:space-between;padding:3.5px 0;border-bottom:1px dotted #cfc0a4;font-size:11.5px}
+.hall .item b{color:#a1281b}
+.zone{margin-top:4px}
+.zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
+  padding:6.5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+.zonerow .nm{font-weight:800;font-size:12.5px}
+.zonerow .num b{color:#a1281b;font-size:13px}
+.zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
+.zonerow .track i{display:block;height:100%}
+.zonerow .legend{font-size:9.5px;color:#6a5740;display:flex;gap:7px;justify-content:flex-end}
+.tag{display:inline-block;padding:0 4px;border-radius:2px;font-size:9px;color:#fff;margin-right:2px}
+.two{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+.note{font-size:9.5px;color:#6d5a43;line-height:1.55;margin-top:6px}
+.foot{position:absolute;left:34px;right:34px;bottom:14px;border-top:1px solid #b9a884;padding-top:6px;
+  font-size:9px;color:#6d5a43;line-height:1.5}
+.obs{font-size:12px;line-height:1.85}
+.obs li{margin-left:15px;margin-bottom:2px}
+.obs b{color:#a1281b}
+.guide{font-size:11.5px;line-height:1.75}
+.guide div{margin-bottom:3px}
+.guide b{color:#3c2c1c}
+/* spread 2 */
+.zblock{border:1px solid #c3b393;margin-bottom:9px;background:#f8f3e6}
+.zblock .zt{display:flex;align-items:center;gap:10px;padding:5px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.zblock .zt h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:19px;color:#a1281b;font-weight:900}
+.zblock .zt span{font-size:10.5px;color:#5f4c36}
+.zbody{display:grid;grid-template-columns:1.35fr 1.2fr 1.25fr .95fr .95fr;gap:9px;padding:7px 9px}
+.zbody .ttl{font-size:10.5px;font-weight:700;color:#4b3a28;margin-bottom:4px;border-bottom:1px solid #d6c8ac;padding-bottom:2px}
+.mem{display:flex;gap:3px}
+.mem .m{text-align:center;width:38px}
+.mem .m img{width:36px;height:36px;border-radius:3px;object-fit:cover;border:1px solid #b7a685;background:#ddd}
+.mem .m small{display:block;font-size:7.5px;line-height:1.15;color:#3a2c1d;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mem .m u{display:block;font-size:7px;color:#8a6a3a;text-decoration:none}
+.hotline{display:flex;align-items:center;gap:5px;margin-bottom:3px;font-size:10px}
+.hotline .rk{width:12px;font-weight:800;color:#a1281b}
+.hotline .cnt{font-size:9px;color:#5f4c36;white-space:nowrap}
+.mini{font-size:9.5px;line-height:1.5;color:#3a2c1d}
+.mini b{color:#a1281b}
+.rank1{font-size:10px;line-height:1.45}
+.rank1 li{list-style:none;display:flex;justify-content:space-between;gap:4px;padding:1.5px 0;border-bottom:1px dotted #d3c4a6}
+.rank1 li span:last-child{color:#a1281b;font-weight:700}
+/* spread 3/4 */
+.recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec:nth-child(3n){border-right:0}
+.rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
+.rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
+.rec .d{font-size:10px;color:#4b3a28;line-height:1.45}
+.rec .mem{margin-top:4px}
+.tbl-people td{font-size:10.5px}
+.ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rankbox .h{margin-bottom:6px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.1px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
+.rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
+.rankrow .track b{position:absolute;left:0;top:0;bottom:0;background:#2c2318}
+.rankrow .v{width:48px;text-align:right;font-weight:700;font-size:10.5px}
+.rankrow .v em{font-style:normal;font-size:8.5px;color:#8a7458}
+/* enlight */
+.enl{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.enlrow{display:grid;grid-template-columns:18px 132px 1fr 44px;align-items:center;gap:5px;font-size:10.5px;padding:2.6px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlrow .p{font-weight:800;color:#a1281b;text-align:right}
+.enlrow .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.enlrow .nm em{font-style:normal;color:#8a7458;font-size:9px}
+.enlrow .track{display:flex;height:12px;background:#e9dfc8;overflow:hidden}
+.enlrow .track i{display:block;height:100%}
+.enlrow .pc{text-align:right;font-weight:700}
+.enl1 .enlrow{grid-template-columns:20px 146px 1fr 66px 46px;gap:6px;font-size:10.6px;padding:1.9px 0}
+.enl1 .enlrow .track{height:12.5px}
+.enl1 .enlrow .pc{font-size:11.5px}
+.enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:20px 26px 104px 1fr 50px;gap:7px;font-size:12.5px;padding:6.65px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:10.5px;white-space:nowrap;
+  border-left:1px solid #c3b393;padding-left:16px}
+.myinfo span{color:#7b6750}
+.myinfo b{color:#a1281b}
+.myinfo i{font-style:normal;color:#c3b393;margin:0 3px}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
+.ovw{margin-bottom:10px}
+.ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
+.ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
+  font-size:11px;font-weight:700;letter-spacing:.5px;overflow:hidden}
+.ovwnums{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1.5px solid #3c2c1c}
+.ovwnums div{text-align:center;padding:5px 2px;border-right:1px dotted #c3b393}
+.ovwnums div:last-child{border-right:0}
+.ovwnums b{display:block;font-size:15px;font-family:"Source Han Serif SC","SimSun",serif}
+.ovwnums span{font-size:9.5px;color:#6a5740}
+.zavg{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:7px;font-size:11px;
+  padding:4px 0;border-bottom:1px dotted #d3c4a6}
+.zavg .track{height:13px;background:#e9dfc8;position:relative}
+.zavg .track b{position:absolute;left:0;top:0;bottom:0;background:#2c2318}
+.zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
+.zavg .v{text-align:right;font-weight:700;font-size:11.5px}
+.zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
+.thcmp{margin-top:4px}
+.thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
+.thcmp .bar{display:flex;height:15px;background:#e9dfc8}
+.thcmp .bar i{display:block;height:100%}
+.thcmp .row>span:first-child{font-weight:800;color:#a1281b;font-size:12px}
+.thcmp .row>span:last-child{text-align:right;font-size:10.5px;color:#4b3a28}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(6,1fr);border-top:2px solid #3c2c1c;border-bottom:2px solid #3c2c1c}
+.cmp .c{padding:8px 6px;text-align:center;border-right:1px solid #c3b393}
+.cmp .c:last-child{border-right:0}
+.cmp .c span{display:block;font-size:10px;color:#6a5740}
+.cmp .c b{display:block;font-size:15px;font-weight:800;font-family:"Source Han Serif SC","SimSun",serif;line-height:1.5}
+.cmp .c b u{text-decoration:none;color:#2c2318}
+.cmp .c b s{text-decoration:none;color:#a1281b}
+.cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
+.up{color:#a1281b}.down{color:#3d6b46}
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
+  border-bottom:1px solid #ddd0b6}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.hz .dl.down{color:#3d6b46}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
+.close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
+.close>div{padding:8px 12px;border-right:1px solid #c3b393}
+.close>div:last-child{border-right:0}
+.close .k{font-size:10.5px;color:#6a5740;letter-spacing:.3px}
+.close .v{font-size:17px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900;line-height:1.35}
+.close .v b{color:#a1281b}
+.close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
+/* icons inside rank rows and lists */
+.ico{object-fit:cover;border-radius:2px;border:1px solid #b7a685;background:#e6dcc6;vertical-align:-2px;margin-right:4px;flex:none}
+.ico-token{background:transparent;filter:brightness(.42) contrast(1.3)}
+.ico-relic,.ico-cov{background:#f0e8d4}
+.rankrow .n{display:flex;align-items:center;gap:4px;min-width:0}
+.rankrow .n i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank1 li span:first-child{display:flex;align-items:center;gap:4px;min-width:0}
+.rank1 li span:first-child i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nmico{display:inline-flex;align-items:center;gap:4px;vertical-align:-3px}
+/* spread 7 low-cost */
+.zblk{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:8px}
+.zh{display:flex;align-items:baseline;gap:10px;padding:4px 9px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.zh b{font-family:"Source Han Serif SC","SimSun",serif;font-size:14px;letter-spacing:.6px;color:#3c2c1c}
+.zh em{font-style:normal;font-size:9px;color:#6a5740}
+.zh .rt{margin-left:auto;font-size:9px;color:#4b3a28}
+.zh .rt b{color:#a1281b}
+.zcols{display:grid;grid-template-columns:1fr 1fr}
+.zcol{padding:2px 9px 3px;border-right:1px solid #d6c8ac;min-width:0}
+.zcol:last-child{border-right:0}
+.zt{display:flex;align-items:baseline;gap:6px;font-size:9px;font-weight:800;letter-spacing:.4px;color:#4b3a28;padding-bottom:1px;border-bottom:1px solid #ddd0b4}
+.zt b{color:#a1281b;font-size:11px;font-family:"Source Han Serif SC","SimSun",serif}
+.zt em{font-style:normal;font-weight:400;font-size:8.6px;color:#7b6750;margin-left:auto}
+.lrow{display:flex;align-items:center;gap:5px;padding:2.9px 0;border-bottom:1px dotted #d6c8ac;min-width:0}
+.lrow:last-child{border-bottom:0}
+.mb{display:inline-flex;align-items:center;gap:2px;font-size:9px;white-space:nowrap}
+.mb img{width:15px;height:15px;border-radius:2px;border:1px solid #b7a685;object-fit:cover;flex:none}
+.mb span{max-width:52px;overflow:hidden;text-overflow:ellipsis}
+.mb i{font-style:normal;font-size:8px;font-weight:700;color:#a1281b}
+.lrow .lm{margin-left:auto;font-size:8.6px;color:#6a5740;white-space:nowrap}
+.lrow .lm b{color:#a1281b;font-size:12.5px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.bband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:7px}
+.bhead{display:flex;align-items:baseline;gap:10px;padding:3px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.bhead h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:15px;color:#a1281b;font-weight:900;letter-spacing:.6px}
+.bhead em{font-style:normal;font-size:9px;color:#5f4c36}
+.bhead .rt{margin-left:auto;font-size:9px;color:#4b3a28}
+.bhead .rt b{color:#a1281b}
+.bwho{display:flex;align-items:baseline;gap:10px;padding:3px 10px;font-size:10px;color:#3c2c1c;border-bottom:1px solid #e2d7bd;background:#fbf7ec}
+.bwho .rt{margin-left:auto;white-space:nowrap;font-size:9px;color:#6a5740}
+.bwho .rt i{font-style:normal;color:#a1281b;font-weight:800}
+.bwho b{font-size:12px;font-family:"Source Han Serif SC","SimSun",serif}
+.bwho i{font-style:normal;color:#a1281b;font-weight:800}
+.bwho em{font-style:normal;font-size:9px;color:#7b6750}
+.bcols{display:grid;grid-template-columns:repeat(5,1fr)}
+.bcol{padding:3px 8px 4px;border-right:1px solid #d6c8ac;min-width:0}
+.bcol:last-child{border-right:0}
+.bch{font-size:9px;font-weight:800;color:#3c2c1c;border-bottom:1px solid #ddd0b4;padding-bottom:1px;margin-bottom:2px}
+.bch b{color:#a1281b}
+.bch span{float:right;font-weight:400;color:#7b6750;font-size:8.4px}
+.bm{display:flex;align-items:center;gap:3px;font-size:8.8px;line-height:1.5;white-space:nowrap;min-width:0}
+.bm img{width:14px;height:14px;border-radius:2px;border:1px solid #b7a685;object-fit:cover;flex:none}
+.bm span{overflow:hidden;text-overflow:ellipsis}
+.bm i{font-style:normal;font-size:8px;font-weight:700;color:#a1281b;margin-left:auto}
+.bcf{font-size:8.6px;color:#6a5740;margin-top:1px;border-top:1px dotted #d6c8ac;padding-top:2px}
+.bcf b{color:#a1281b;font-size:12px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.btot{display:flex;gap:14px;align-items:baseline;font-size:9px;color:#4b3a28;margin:0 0 6px}
+.btot b{color:#a1281b}
+</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 4 版 / 共 7 版</div><div>融灾快报 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
+  <h1>忘忘看报</h1><div class="rule"></div><div class="kicker">融灾第 73 期 ·「超维戒指」· 2026 年 11 月 9 日 — 11 月 22 日 · 终核特刊</div></div>
+<h2 class="lead">癫狂难度里，2 位唤醒体<br><small>一次都没出场</small></h2>
+<div class="sub">本版统计「癫狂」（▼）与 SSS 难度的队伍（含通关队与额外队）：共 <b>1,002</b> 队 ▼、<b>329</b> 队 SSS 通关队。全部 62 个出场过的唤醒体里，只有 61 个在 ▼ / SSS 露过面，其中又有 <b>2</b> 个一次 ▼ 都没打。</div>
+<div class="hr2"></div>
+<div class="h">癫狂（▼）零出场 <em>本期有出场但 ▼ 队里一次未出现</em></div>
+<div style="display:flex;align-items:center;gap:16px;margin:6px 0 12px">
+  <div class="mem"><div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/caecus.webp"><small>凯刻斯</small></div><div class="m" style="width:52px"><img style="width:50px;height:50px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/tinct.webp"><small>汀克特</small></div></div>
+  <div class="mini" style="flex:1;border-left:1px solid #c3b393;padding-left:14px">
+    <b>凯刻斯</b>：全部 544 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打癫狂。<br><b>汀克特</b>：全部 121 支队伍里，▼ 队 0 支——它在 SSS 及以下都有人用，唯独没人拿它打癫狂。
+    <br><b>汀克特</b>更极端：▼ 与 SSS 两档加起来一次都没出现，只出现在 SS 及以下。
+  </div>
+</div>
+<div class="h">癫狂（▼）出场最少 Top 8 <em>括号内为全部禁区的出场队伍数</em></div>
+<table class="ftbl" style="margin-bottom:12px"><thead><tr><th>唤醒体</th><th>▼ 出场队伍</th><th>全部出场</th><th>▼ 占比</th></tr></thead><tbody>
+<tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/caecus.webp" style="width:18px;height:18px">凯刻斯</span></td><td>0</td><td>544</td><td>0.0%</td></tr><tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/tinct.webp" style="width:18px;height:18px">汀克特</span></td><td>0</td><td>121</td><td>0.0%</td></tr><tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/faros.webp" style="width:18px;height:18px">法洛思</span></td><td>1</td><td>173</td><td>0.6%</td></tr><tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/liz.webp" style="width:18px;height:18px">莉兹</span></td><td>1</td><td>73</td><td>1.4%</td></tr><tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/daffodil.webp" style="width:18px;height:18px">达芙黛尔</span></td><td>2</td><td>109</td><td>1.8%</td></tr><tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/uvhash.webp" style="width:18px;height:18px">尤乌哈希</span></td><td>2</td><td>41</td><td>4.9%</td></tr><tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/sanga.webp" style="width:18px;height:18px">珊</span></td><td>3</td><td>273</td><td>1.1%</td></tr><tr><td><span class="nmico"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/wanda.webp" style="width:18px;height:18px">旺达</span></td><td>3</td><td>255</td><td>1.2%</td></tr>
+</tbody></table>
+<div class="h">神秘配队 Top 5 <em>▼ + SSS 难度里只有一队使用的阵容</em></div>
+<div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">1. 负誓·奥吉尔 队</h3><span>第 14 名 · 110 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:4px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier-oathbound.webp">
+      <small>负誓·奥吉尔</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pickman.webp">
+      <small>皮克曼</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp">
+      <small>泰旖丝</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ryker.webp">
+      <small>莱克</small><u>+4</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第五禁区</b><i>|</i>
+    <span>难度</span><b>▼ 通关</b><i>|</i>
+    <span>钥令</span><b><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_57.webp" style="width:15px;height:15px">永续新篇</span></b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">2. 奥瑞塔 队</h3><span>第 7 名 · 105 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:4px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/aurita.webp">
+      <small>奥瑞塔</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/goliath.webp">
+      <small>戈利亚</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp">
+      <small>弥利亚姆</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp">
+      <small>诞妄·墨菲</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第三禁区</b><i>|</i>
+    <span>难度</span><b>▼ 通关</b><i>|</i>
+    <span>钥令</span><b><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_10.webp" style="width:15px;height:15px">奥瑞塔的宝藏</span></b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">3. 凯蒂古拉 队</h3><span>第 3 名 · 100 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:4px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/kathigu-ra.webp">
+      <small>凯蒂古拉</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/erica.webp">
+      <small>艾瑞卡</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/clementine.webp">
+      <small>克莱门汀</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第二禁区</b><i>|</i>
+    <span>难度</span><b>▼ 通关</b><i>|</i>
+    <span>钥令</span><b><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_40.webp" style="width:15px;height:15px">不落的太阳</span></b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">4. 波吕克斯 队</h3><span>第 5 名 · 95 分 · 全服仅 1 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:4px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/pollux.webp">
+      <small>波吕克斯</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp">
+      <small>卡斯托尔</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/faint.webp">
+      <small>菲茵特</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/erica.webp">
+      <small>艾瑞卡</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第一禁区</b><i>|</i>
+    <span>难度</span><b>▼ 通关</b><i>|</i>
+    <span>钥令</span><b><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_12.webp" style="width:15px;height:15px">短暂的永恒</span></b>
+  </div>
+</div></div></div><div class="zblock" style="margin-bottom:4px"><div class="zt" style="padding:3px 10px"><h3 style="font-size:14px">5. 阿拉克涅 队</h3><span>第 53 名 · 100 分 · 全服仅 2 队</span></div><div class="zbody" style="grid-template-columns:1fr;padding:4px 10px"><div style="display:flex;align-items:center;gap:18px">
+  <div class="mem"><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp">
+      <small>阿拉克涅</small><u>+3</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/vivian.webp">
+      <small>薇薇安</small><u>+0</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/ogier.webp">
+      <small>奥吉尔</small><u>+15</u></div><div class="m" style="width:42px"><img style="width:42px;height:42px" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp">
+      <small>茉夏</small><u>+15</u></div></div>
+  <div class="myinfo">
+    <span>禁区</span><b>第四禁区</b><i>|</i>
+    <span>难度</span><b>SSS 通关</b><i>|</i>
+    <span>钥令</span><b><span class="nmico"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_48.webp" style="width:15px;height:15px">来自雾境</span></b>
+  </div>
+</div></div></div>
+<div class="hr2" style="margin-top:8px"></div>
+<div class="h">神秘数据 <em>▼ + SSS 通关战斗之最</em></div>
+<div class="recs" style="grid-template-columns:repeat(4,1fr)">
+  <div class="rec"><div class="k">最长鏖战</div><div class="v">73 回合</div><div class="d">第 19 名 · MulaSaki</div></div>
+  <div class="rec"><div class="k">出牌最多</div><div class="v">1,073</div><div class="d">第 360 名 · Swallow</div></div>
+  <div class="rec"><div class="k">耗能最多</div><div class="v">708</div><div class="d">第 360 名 · Swallow</div></div>
+  <div class="rec"><div class="k">单回合出牌最多</div><div class="v">42</div><div class="d">第 348 名 · &lt;#CEF&gt;Lens</div></div>
+  <div class="rec"><div class="k">最少出牌通关（▼）</div><div class="v">26</div><div class="d">第 1327 名 · </div></div>
+  <div class="rec"><div class="k">首领战最长</div><div class="v">73 回合</div><div class="d">第 30 名 · &lt;#65F&gt;Spooky</div></div>
+  <div class="rec"><div class="k">全局战斗场次</div><div class="v">37,101</div><div class="d">通关 + 额外队，逐场归档</div></div>
+  <div class="rec"><div class="k">平均死扛（▼+SSS）</div><div class="v">1.68 次</div><div class="d">共 3,291 场 ▼+SSS 战斗的均值</div></div>
+</div>
+<div class="pair" style="margin-top:10px">
+  <div class="rankbox"><div class="h">平均死扛最高的唤醒体 Top 5 <em>▼+SSS，至少 15 场</em></div>
+    <div class="rankrow"><span class="p">1</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/faint.webp" style="width:16px;height:16px"><i>菲茵特</i></span><span class="track"><b style="width:100%"></b></span><span class="v">4.18<em> 300 场</em></span></div><div class="rankrow"><span class="p">2</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:16px;height:16px"><i>茉夏</i></span><span class="track"><b style="width:84.68899521531101%"></b></span><span class="v">3.54<em> 431 场</em></span></div><div class="rankrow"><span class="p">3</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/alva.webp" style="width:16px;height:16px"><i>艾尔瓦</i></span><span class="track"><b style="width:79.42583732057416%"></b></span><span class="v">3.32<em> 93 场</em></span></div><div class="rankrow"><span class="p">4</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp" style="width:16px;height:16px"><i>奥尔拉</i></span><span class="track"><b style="width:79.1866028708134%"></b></span><span class="v">3.31<em> 315 场</em></span></div><div class="rankrow"><span class="p">5</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:16px;height:16px"><i>阿拉克涅</i></span><span class="track"><b style="width:79.1866028708134%"></b></span><span class="v">3.31<em> 316 场</em></span></div>
+  </div>
+  <div class="rankbox"><div class="h">平均死扛最高的玩家 Top 5 <em>▼+SSS，至少 5 场</em></div>
+    <div class="rankrow"><span class="p">1</span><span class="n">雅</span><span class="track"><b style="width:100%"></b></span><span class="v">4.43<em> #12</em></span></div><div class="rankrow"><span class="p">2</span><span class="n">&lt;#65F&gt;Spooky</span><span class="track"><b style="width:97.74266365688489%"></b></span><span class="v">4.33<em> #30</em></span></div><div class="rankrow"><span class="p">3</span><span class="n">&lt;#fe0&gt;瀧Taki</span><span class="track"><b style="width:90.29345372460497%"></b></span><span class="v">4<em> #58</em></span></div><div class="rankrow"><span class="p">4</span><span class="n">Potatis土豆</span><span class="track"><b style="width:84.65011286681717%"></b></span><span class="v">3.75<em> #11</em></span></div><div class="rankrow"><span class="p">5</span><span class="n">灰烬魔女</span><span class="track"><b style="width:82.84424379232506%"></b></span><span class="v">3.67<em> #44</em></span></div>
+  </div>
+</div>
+<div class="foot">口径：「出场」按队伍去重，一支队伍带两名同名唤醒体的只算一次；▼ 与 SSS 分别统计该难度的通关队。平均死扛 = 该唤醒体 / 玩家在 ▼+SSS 战斗里的死扛触发次数均值。制图：忘忘看报。</div>
+</div></body></html>

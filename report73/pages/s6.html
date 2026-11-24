@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>融灾第73期特刊-第6版</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1000px;height:1800px;overflow:hidden}
+body{background:#f5efdf;color:#2b2118;font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.page{position:relative;width:1000px;height:1800px;padding:26px 34px 20px;}
+.serif{font-family:"Source Han Serif SC","Noto Serif SC","SimSun",serif}
+.head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#5d4b34;
+  border-bottom:1px solid #b9a884;padding-bottom:7px;letter-spacing:.5px}
+.head b{font-weight:700;color:#3c2c1c}
+.mast{margin:14px 0 0;text-align:center}
+.mast .latin{font-size:11.5px;letter-spacing:3.6px;color:#7c6444}
+.mast h1{font-family:"Source Han Serif SC","SimSun",serif;font-size:74px;font-weight:900;letter-spacing:8px;
+  line-height:1.05;color:#211a12;margin-top:2px;text-shadow:0 1px 0 #fff}
+.mast .rule{height:3px;background:#3c2c1c;margin:9px 62px 6px;position:relative}
+.mast .rule:after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:#3c2c1c}
+.kicker{font-size:14px;letter-spacing:1px;color:#4b3a28;padding:7px 0 0}
+h2.lead{font-family:"Source Han Serif SC","SimSun",serif;font-size:44px;line-height:1.22;font-weight:900;
+  color:#a1281b;text-align:center;margin:24px 0 10px;letter-spacing:1px}
+h2.lead small{display:block;font-size:44px}
+.sub{text-align:center;font-size:13px;color:#4c3b29;line-height:1.6;margin-bottom:16px}
+.sub b{color:#a1281b}
+.hr{height:1px;background:#c3b393;margin:12px 0}
+.hr2{height:2px;background:#3c2c1c;margin:10px 0 8px}
+.grid-stats{display:grid;grid-template-columns:repeat(6,1fr);border-top:2px solid #3c2c1c;border-bottom:2px solid #3c2c1c}
+.stat{padding:10px 8px;text-align:center;border-right:1px solid #c3b393}
+.stat:last-child{border-right:0}
+.stat span{display:block;font-size:10.5px;color:#6a5740;letter-spacing:.5px;margin-bottom:3px}
+.stat b{font-size:26px;font-weight:800;font-family:"Source Han Serif SC","SimSun",serif}
+.stat.hot b{color:#a1281b}
+.stat i{display:block;font-size:10px;color:#8b765c;font-style:normal}
+.cols3{display:grid;grid-template-columns:1.05fr .95fr 1fr;gap:0}
+.col{padding:0 12px}
+.col+.col{border-left:1px solid #c3b393}
+.h{font-size:15px;font-weight:800;letter-spacing:.6px;margin-bottom:8px;border-bottom:2px solid #3c2c1c;
+  padding-bottom:4px;display:flex;justify-content:space-between;align-items:flex-end}
+.h em{font-style:normal;font-size:10px;color:#7b6750;font-weight:400}
+.bars{display:flex;align-items:flex-end;gap:2.5px;height:392px;padding-top:10px}
+.bars .b{flex:1;background:#2c2318;position:relative;min-height:1px}
+.axis{display:flex;gap:2.5px;margin-top:3px;border-top:1px solid #c3b393;padding-top:2px}
+.axis span{flex:1;text-align:center;font-size:7.5px;color:#6f5c45;line-height:1.1}
+.bars .b em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;color:#4b3a28}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th,td{padding:4px 3px;text-align:right;border-bottom:1px solid #d8ccb4}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:10.5px;color:#6a5740;font-weight:600;background:#eee5d2}
+.ladder td:nth-child(2){width:70px}
+.ladder .track{height:9px;background:#e6dcc6;position:relative;border-radius:1px}
+.ladder .track b{position:absolute;left:0;top:0;bottom:0;background:#3a2c1d}
+.ladder td.n{font-weight:700;font-size:11px;white-space:nowrap}
+.hall{font-size:12px}
+.hall td{none}
+.hall .item{display:flex;justify-content:space-between;padding:3.5px 0;border-bottom:1px dotted #cfc0a4;font-size:11.5px}
+.hall .item b{color:#a1281b}
+.zone{margin-top:4px}
+.zonerow{display:grid;grid-template-columns:64px 150px 1fr 210px;align-items:center;gap:8px;
+  padding:6.5px 0;border-bottom:1px solid #ddd0b6;font-size:11px}
+.zonerow .nm{font-weight:800;font-size:12.5px}
+.zonerow .num b{color:#a1281b;font-size:13px}
+.zonerow .track{height:14px;background:#e9dfc8;display:flex;overflow:hidden}
+.zonerow .track i{display:block;height:100%}
+.zonerow .legend{font-size:9.5px;color:#6a5740;display:flex;gap:7px;justify-content:flex-end}
+.tag{display:inline-block;padding:0 4px;border-radius:2px;font-size:9px;color:#fff;margin-right:2px}
+.two{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+.note{font-size:9.5px;color:#6d5a43;line-height:1.55;margin-top:6px}
+.foot{position:absolute;left:34px;right:34px;bottom:14px;border-top:1px solid #b9a884;padding-top:6px;
+  font-size:9px;color:#6d5a43;line-height:1.5}
+.obs{font-size:12px;line-height:1.85}
+.obs li{margin-left:15px;margin-bottom:2px}
+.obs b{color:#a1281b}
+.guide{font-size:11.5px;line-height:1.75}
+.guide div{margin-bottom:3px}
+.guide b{color:#3c2c1c}
+/* spread 2 */
+.zblock{border:1px solid #c3b393;margin-bottom:9px;background:#f8f3e6}
+.zblock .zt{display:flex;align-items:center;gap:10px;padding:5px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.zblock .zt h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:19px;color:#a1281b;font-weight:900}
+.zblock .zt span{font-size:10.5px;color:#5f4c36}
+.zbody{display:grid;grid-template-columns:1.35fr 1.2fr 1.25fr .95fr .95fr;gap:9px;padding:7px 9px}
+.zbody .ttl{font-size:10.5px;font-weight:700;color:#4b3a28;margin-bottom:4px;border-bottom:1px solid #d6c8ac;padding-bottom:2px}
+.mem{display:flex;gap:3px}
+.mem .m{text-align:center;width:38px}
+.mem .m img{width:36px;height:36px;border-radius:3px;object-fit:cover;border:1px solid #b7a685;background:#ddd}
+.mem .m small{display:block;font-size:7.5px;line-height:1.15;color:#3a2c1d;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mem .m u{display:block;font-size:7px;color:#8a6a3a;text-decoration:none}
+.hotline{display:flex;align-items:center;gap:5px;margin-bottom:3px;font-size:10px}
+.hotline .rk{width:12px;font-weight:800;color:#a1281b}
+.hotline .cnt{font-size:9px;color:#5f4c36;white-space:nowrap}
+.mini{font-size:9.5px;line-height:1.5;color:#3a2c1d}
+.mini b{color:#a1281b}
+.rank1{font-size:10px;line-height:1.45}
+.rank1 li{list-style:none;display:flex;justify-content:space-between;gap:4px;padding:1.5px 0;border-bottom:1px dotted #d3c4a6}
+.rank1 li span:last-child{color:#a1281b;font-weight:700}
+/* spread 3/4 */
+.recs{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.rec{padding:8px 12px;border-right:1px solid #c3b393;border-bottom:1px solid #c3b393}
+.rec:nth-child(3n){border-right:0}
+.rec .k{font-size:11px;color:#6a5740;letter-spacing:.4px}
+.rec .v{font-family:"Source Han Serif SC","SimSun",serif;font-size:29px;font-weight:900;color:#a1281b;line-height:1.15}
+.rec .d{font-size:10px;color:#4b3a28;line-height:1.45}
+.rec .mem{margin-top:4px}
+.tbl-people td{font-size:10.5px}
+.ftbl th,.ftbl td{font-size:10.5px;padding:3.5px 3px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rankbox .h{margin-bottom:6px}
+.rankrow{display:flex;align-items:center;gap:6px;padding:2.1px 0;border-bottom:1px dotted #d3c4a6;font-size:11px}
+.rankrow .p{width:16px;font-weight:800;color:#a1281b;font-size:11px}
+.rankrow .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rankrow .track{width:92px;height:10px;background:#e9dfc8;position:relative}
+.rankrow .track b{position:absolute;left:0;top:0;bottom:0;background:#2c2318}
+.rankrow .v{width:48px;text-align:right;font-weight:700;font-size:10.5px}
+.rankrow .v em{font-style:normal;font-size:8.5px;color:#8a7458}
+/* enlight */
+.enl{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.enlrow{display:grid;grid-template-columns:18px 132px 1fr 44px;align-items:center;gap:5px;font-size:10.5px;padding:2.6px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlrow .p{font-weight:800;color:#a1281b;text-align:right}
+.enlrow .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.enlrow .nm em{font-style:normal;color:#8a7458;font-size:9px}
+.enlrow .track{display:flex;height:12px;background:#e9dfc8;overflow:hidden}
+.enlrow .track i{display:block;height:100%}
+.enlrow .pc{text-align:right;font-weight:700}
+.enl1 .enlrow{grid-template-columns:20px 146px 1fr 66px 46px;gap:6px;font-size:10.6px;padding:1.9px 0}
+.enl1 .enlrow .track{height:12.5px}
+.enl1 .enlrow .pc{font-size:11.5px}
+.enl1 .enlrow .nn{text-align:right;font-size:9.5px;color:#7b6750}
+.legend5{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10.5px;color:#4b3a28;padding:2px 0 8px}
+.legend5 span{display:inline-flex;align-items:center;gap:4px}
+.legend5 i{width:11px;height:11px;display:inline-block}
+.legend5 .rt{margin-left:auto;color:#7b6750;font-size:9.5px}
+.enlw{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.enlw .enlrow{grid-template-columns:20px 26px 104px 1fr 50px;gap:7px;font-size:12.5px;padding:6.65px 0;
+  border-bottom:1px dotted #d6c8ac}
+.enlw .enlrow .p{font-size:12px}
+.enlw .enlrow .nm{white-space:normal;line-height:1.15;overflow:visible}
+.enlw .enlrow .nm em{display:block;font-size:9.5px;color:#8a7458;font-style:normal}
+.enlw .enlrow .track{height:17px}
+.enlw .enlrow .pc{font-size:13px}
+.myinfo{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:10.5px;white-space:nowrap;
+  border-left:1px solid #c3b393;padding-left:16px}
+.myinfo span{color:#7b6750}
+.myinfo b{color:#a1281b}
+.myinfo i{font-style:normal;color:#c3b393;margin:0 3px}
+.subh{display:flex;align-items:baseline;gap:8px;font-size:11.5px;font-weight:800;color:#3c2c1c;
+  border-bottom:2px solid #3c2c1c;padding:9px 0 3px;margin-bottom:2px}
+.subh em{font-style:normal;font-size:9.5px;font-weight:400;color:#7b6750}
+.ovw{margin-bottom:10px}
+.ovwbar{display:flex;height:38px;border:1.5px solid #3c2c1c;background:#e9dfc8}
+.ovwbar i{display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;
+  font-size:11px;font-weight:700;letter-spacing:.5px;overflow:hidden}
+.ovwnums{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1.5px solid #3c2c1c}
+.ovwnums div{text-align:center;padding:5px 2px;border-right:1px dotted #c3b393}
+.ovwnums div:last-child{border-right:0}
+.ovwnums b{display:block;font-size:15px;font-family:"Source Han Serif SC","SimSun",serif}
+.ovwnums span{font-size:9.5px;color:#6a5740}
+.zavg{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:7px;font-size:11px;
+  padding:4px 0;border-bottom:1px dotted #d3c4a6}
+.zavg .track{height:13px;background:#e9dfc8;position:relative}
+.zavg .track b{position:absolute;left:0;top:0;bottom:0;background:#2c2318}
+.zavg .track i{position:absolute;top:-2px;bottom:-2px;width:1px;background:#a1281b}
+.zavg .v{text-align:right;font-weight:700;font-size:11.5px}
+.zavg .v em{font-style:normal;font-size:9px;color:#8a7458}
+.zavg.zv2{grid-template-columns:74px 1fr 122px;padding:8px 0}
+.thcmp{margin-top:4px}
+.thcmp .row{display:grid;grid-template-columns:38px 1fr 74px;align-items:center;gap:6px;font-size:11px;margin-bottom:5px}
+.thcmp .bar{display:flex;height:15px;background:#e9dfc8}
+.thcmp .bar i{display:block;height:100%}
+.thcmp .row>span:first-child{font-weight:800;color:#a1281b;font-size:12px}
+.thcmp .row>span:last-child{text-align:right;font-size:10.5px;color:#4b3a28}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(6,1fr);border-top:2px solid #3c2c1c;border-bottom:2px solid #3c2c1c}
+.cmp .c{padding:8px 6px;text-align:center;border-right:1px solid #c3b393}
+.cmp .c:last-child{border-right:0}
+.cmp .c span{display:block;font-size:10px;color:#6a5740}
+.cmp .c b{display:block;font-size:15px;font-weight:800;font-family:"Source Han Serif SC","SimSun",serif;line-height:1.5}
+.cmp .c b u{text-decoration:none;color:#2c2318}
+.cmp .c b s{text-decoration:none;color:#a1281b}
+.cmp .c i{font-style:normal;font-size:9.5px;color:#7b6750}
+.up{color:#a1281b}.down{color:#3d6b46}
+.hz{display:grid;grid-template-columns:66px 1fr 46px;align-items:center;gap:8px;font-size:11px;padding:6px 0;
+  border-bottom:1px solid #ddd0b6}
+.hz .zl{font-weight:700}
+.hz .vstack{display:flex;flex-direction:column;gap:3px}
+.hz .line{display:grid;grid-template-columns:1fr 34px;align-items:center;gap:5px}
+.hz .line i{display:block;height:10px}
+.hz .line em{font-style:normal;font-size:9.5px;color:#6a5740;text-align:right}
+.hz .bar{background:#3d6b46}
+.hz .bar2{background:#a1281b}
+.hz .dl{text-align:right;font-size:10.5px;color:#a1281b;font-weight:700}
+.hz .dl.down{color:#3d6b46}
+.assist{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 10px;font-size:10.5px}
+.assist span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assist b{color:#a1281b;margin-right:2px}
+.assist em{font-style:normal;color:#7b6750;font-size:9.5px}
+.close{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #3c2c1c;margin-top:12px}
+.close>div{padding:8px 12px;border-right:1px solid #c3b393}
+.close>div:last-child{border-right:0}
+.close .k{font-size:10.5px;color:#6a5740;letter-spacing:.3px}
+.close .v{font-size:17px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900;line-height:1.35}
+.close .v b{color:#a1281b}
+.close .d{font-size:9.6px;color:#4b3a28;line-height:1.55;margin-top:3px}
+/* icons inside rank rows and lists */
+.ico{object-fit:cover;border-radius:2px;border:1px solid #b7a685;background:#e6dcc6;vertical-align:-2px;margin-right:4px;flex:none}
+.ico-token{background:transparent;filter:brightness(.42) contrast(1.3)}
+.ico-relic,.ico-cov{background:#f0e8d4}
+.rankrow .n{display:flex;align-items:center;gap:4px;min-width:0}
+.rankrow .n i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank1 li span:first-child{display:flex;align-items:center;gap:4px;min-width:0}
+.rank1 li span:first-child i{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nmico{display:inline-flex;align-items:center;gap:4px;vertical-align:-3px}
+/* spread 7 low-cost */
+.zblk{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:8px}
+.zh{display:flex;align-items:baseline;gap:10px;padding:4px 9px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.zh b{font-family:"Source Han Serif SC","SimSun",serif;font-size:14px;letter-spacing:.6px;color:#3c2c1c}
+.zh em{font-style:normal;font-size:9px;color:#6a5740}
+.zh .rt{margin-left:auto;font-size:9px;color:#4b3a28}
+.zh .rt b{color:#a1281b}
+.zcols{display:grid;grid-template-columns:1fr 1fr}
+.zcol{padding:2px 9px 3px;border-right:1px solid #d6c8ac;min-width:0}
+.zcol:last-child{border-right:0}
+.zt{display:flex;align-items:baseline;gap:6px;font-size:9px;font-weight:800;letter-spacing:.4px;color:#4b3a28;padding-bottom:1px;border-bottom:1px solid #ddd0b4}
+.zt b{color:#a1281b;font-size:11px;font-family:"Source Han Serif SC","SimSun",serif}
+.zt em{font-style:normal;font-weight:400;font-size:8.6px;color:#7b6750;margin-left:auto}
+.lrow{display:flex;align-items:center;gap:5px;padding:2.9px 0;border-bottom:1px dotted #d6c8ac;min-width:0}
+.lrow:last-child{border-bottom:0}
+.mb{display:inline-flex;align-items:center;gap:2px;font-size:9px;white-space:nowrap}
+.mb img{width:15px;height:15px;border-radius:2px;border:1px solid #b7a685;object-fit:cover;flex:none}
+.mb span{max-width:52px;overflow:hidden;text-overflow:ellipsis}
+.mb i{font-style:normal;font-size:8px;font-weight:700;color:#a1281b}
+.lrow .lm{margin-left:auto;font-size:8.6px;color:#6a5740;white-space:nowrap}
+.lrow .lm b{color:#a1281b;font-size:12.5px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.bband{border:1px solid #c3b393;background:#f8f3e6;margin-bottom:7px}
+.bhead{display:flex;align-items:baseline;gap:10px;padding:3px 10px;background:#ece2cc;border-bottom:1px solid #c3b393}
+.bhead h3{font-family:"Source Han Serif SC","SimSun",serif;font-size:15px;color:#a1281b;font-weight:900;letter-spacing:.6px}
+.bhead em{font-style:normal;font-size:9px;color:#5f4c36}
+.bhead .rt{margin-left:auto;font-size:9px;color:#4b3a28}
+.bhead .rt b{color:#a1281b}
+.bwho{display:flex;align-items:baseline;gap:10px;padding:3px 10px;font-size:10px;color:#3c2c1c;border-bottom:1px solid #e2d7bd;background:#fbf7ec}
+.bwho .rt{margin-left:auto;white-space:nowrap;font-size:9px;color:#6a5740}
+.bwho .rt i{font-style:normal;color:#a1281b;font-weight:800}
+.bwho b{font-size:12px;font-family:"Source Han Serif SC","SimSun",serif}
+.bwho i{font-style:normal;color:#a1281b;font-weight:800}
+.bwho em{font-style:normal;font-size:9px;color:#7b6750}
+.bcols{display:grid;grid-template-columns:repeat(5,1fr)}
+.bcol{padding:3px 8px 4px;border-right:1px solid #d6c8ac;min-width:0}
+.bcol:last-child{border-right:0}
+.bch{font-size:9px;font-weight:800;color:#3c2c1c;border-bottom:1px solid #ddd0b4;padding-bottom:1px;margin-bottom:2px}
+.bch b{color:#a1281b}
+.bch span{float:right;font-weight:400;color:#7b6750;font-size:8.4px}
+.bm{display:flex;align-items:center;gap:3px;font-size:8.8px;line-height:1.5;white-space:nowrap;min-width:0}
+.bm img{width:14px;height:14px;border-radius:2px;border:1px solid #b7a685;object-fit:cover;flex:none}
+.bm span{overflow:hidden;text-overflow:ellipsis}
+.bm i{font-style:normal;font-size:8px;font-weight:700;color:#a1281b;margin-left:auto}
+.bcf{font-size:8.6px;color:#6a5740;margin-top:1px;border-top:1px dotted #d6c8ac;padding-top:2px}
+.bcf b{color:#a1281b;font-size:12px;font-family:"Source Han Serif SC","SimSun",serif;font-weight:900}
+.btot{display:flex;gap:14px;align-items:baseline;font-size:9px;color:#4b3a28;margin:0 0 6px}
+.btot b{color:#a1281b}
+</style></head><body><div class="page"><div class="head"><div>忘忘看报 · 融灾特刊</div><div>第 6 版 / 共 7 版</div><div>融灾快报 2026-11-23 09:18（北京时间）</div></div><div class="mast"><div class="latin">T H E &nbsp; M O R I M E N S &nbsp; D A I L Y &nbsp; · &nbsp; D I S S O L U T E D &nbsp; A B Y S S &nbsp; S P E C I A L</div>
+  <h1>忘忘看报</h1><div class="rule"></div><div class="kicker">融灾第 73 期 ·「超维戒指」· 2026 年 11 月 9 日 — 11 月 22 日 · 终核特刊</div></div>
+<h2 class="lead">超维戒指对比血肉戒指：<br><small>▼ 通关 724 → 1002（+38%）</small></h2>
+<div class="sub">同样统计终榜 Top 2000：第 73 期上榜门槛 385 分（上期 400），满分人数 6 人变为 8 人，各禁区的 ▼ 通关总数合计 724 → 1002，▼+SSS 战斗的平均回合从 20.46 回合降到 <b>14.92</b> 回合（-27%）。</div>
+<div class="cmp">
+  <div class="c"><span>525 满分</span><b>8</b><b style="font-size:13px;color:#6a5740">6</b><i class="up">+2</i></div>
+  <div class="c"><span>≥ 500 分</span><b>36</b><b style="font-size:13px;color:#6a5740">42</b><i class="down">-6</i></div>
+  <div class="c"><span>≥ 450 分</span><b>611</b><b style="font-size:13px;color:#6a5740">694</b><i class="down">-83</i></div>
+  <div class="c"><span>平均分</span><b>422.1</b><b style="font-size:13px;color:#6a5740">430.3</b><i class="down">-8.2</i></div>
+  <div class="c"><span>中位分</span><b>415</b><b style="font-size:13px;color:#6a5740">425</b><i class="down">-10</i></div>
+  <div class="c"><span>▼ 通关总数</span><b>1002</b><b style="font-size:13px;color:#6a5740">724</b><i class="up">+38%</i></div>
+</div>
+<div class="hr2" style="margin-top:12px"></div>
+<div class="pair">
+  <div><div class="h">排名分数线 <em>同一名次的两期分数</em></div>
+    <table class="ftbl"><thead><tr><th>名次</th><th>第 73 期</th><th>第 72 期</th><th>变化</th></tr></thead><tbody>
+    <tr><td>第 1 名</td><td><b>525</b></td><td>525</td><td class="">0</td></tr><tr><td>第 10 名</td><td><b>515</b></td><td>510</td><td class="up">+5</td></tr><tr><td>第 50 名</td><td><b>485</b></td><td>490</td><td class="down">-5</td></tr><tr><td>第 100 名</td><td><b>470</b></td><td>480</td><td class="down">-10</td></tr><tr><td>第 200 名</td><td><b>460</b></td><td>465</td><td class="down">-5</td></tr><tr><td>第 500 名</td><td><b>450</b></td><td>450</td><td class="">0</td></tr><tr><td>第 1,000 名</td><td><b>415</b></td><td>425</td><td class="down">-10</td></tr><tr><td>第 2,000 名</td><td><b>385</b></td><td>400</td><td class="down">-15</td></tr>
+    </tbody></table>
+  </div>
+  <div><div class="h">分数阶梯 <em>累计人数</em></div>
+    <table class="ftbl"><thead><tr><th>分数线</th><th>第 73 期</th><th>第 72 期</th><th>变化</th></tr></thead><tbody>
+    <tr><td>≥ 525</td><td><b>8</b></td><td>6</td><td class="up">+2</td></tr><tr><td>≥ 510</td><td><b>11</b></td><td>12</td><td class="down">-1</td></tr><tr><td>≥ 500</td><td><b>36</b></td><td>42</td><td class="down">-6</td></tr><tr><td>≥ 490</td><td><b>49</b></td><td>66</td><td class="down">-17</td></tr><tr><td>≥ 480</td><td><b>72</b></td><td>101</td><td class="down">-29</td></tr><tr><td>≥ 470</td><td><b>115</b></td><td>173</td><td class="down">-58</td></tr><tr><td>≥ 460</td><td><b>208</b></td><td>273</td><td class="down">-65</td></tr><tr><td>≥ 450</td><td><b>611</b></td><td>694</td><td class="down">-83</td></tr><tr><td>≥ 425</td><td><b>878</b></td><td>1,086</td><td class="down">-208</td></tr><tr><td>≥ 400</td><td><b>1,585</b></td><td>2,000</td><td class="down">-415</td></tr>
+    </tbody></table>
+  </div>
+</div>
+<div class="hr" style="margin-top:10px"></div>
+<div class="two">
+  <div><div class="h">各禁区 ▼ 通关人数 <em>73 期（红）对 72 期（绿）</em></div>
+    <div class="hz"><span class="zl">第一禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:32.23388305847077%"></i><em>215</em></span>
+        <span class="line"><i class="bar" style="width:19.490254872563717%"></i><em>130</em></span>
+      </span><span class="dl up">+65%</span></div><div class="hz"><span class="zl">第二禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:7.19640179910045%"></i><em>48</em></span>
+        <span class="line"><i class="bar" style="width:9.145427286356822%"></i><em>61</em></span>
+      </span><span class="dl down">-21%</span></div><div class="hz"><span class="zl">第三禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:100%"></i><em>667</em></span>
+        <span class="line"><i class="bar" style="width:64.16791604197901%"></i><em>428</em></span>
+      </span><span class="dl up">+56%</span></div><div class="hz"><span class="zl">第四禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:5.397301349325337%"></i><em>36</em></span>
+        <span class="line"><i class="bar" style="width:7.796101949025487%"></i><em>52</em></span>
+      </span><span class="dl down">-31%</span></div><div class="hz"><span class="zl">第五禁区</span><span class="vstack">
+        <span class="line"><i class="bar2" style="width:5.397301349325337%"></i><em>36</em></span>
+        <span class="line"><i class="bar" style="width:7.946026986506746%"></i><em>53</em></span>
+      </span><span class="dl down">-32%</span></div>
+  </div>
+  <div><div class="h">最快 ▼ 通关 <em>回合数</em></div>
+    <table class="ftbl"><thead><tr><th>禁区</th><th>73 期</th><th>72 期</th></tr></thead><tbody>
+    <tr><td>第一禁区</td><td><b>4</b></td><td>5</td></tr><tr><td>第二禁区</td><td><b>13</b></td><td>21</td></tr><tr><td>第三禁区</td><td><b>5</b></td><td>5</td></tr><tr><td>第四禁区</td><td><b>11</b></td><td>20</td></tr><tr><td>第五禁区</td><td><b>16</b></td><td>15</td></tr>
+    </tbody></table>
+    <div class="h" style="margin-top:10px">极限数据对照</div>
+    <table class="ftbl"><thead><tr><th>项目</th><th>73 期</th><th>72 期</th></tr></thead><tbody>
+      <tr><td>单回合最高伤害</td><td>46,760,126</td><td>41,009,121</td></tr>
+      <tr><td>单场总伤害</td><td>82,616,083</td><td>55,558,818</td></tr>
+      <tr><td>单场死扛最多</td><td>9</td><td>9</td></tr>
+    </tbody></table>
+  </div>
+</div>
+<div class="hr" style="margin-top:8px"></div>
+<div class="pair">
+  <div><div class="h">唤醒体出场 Top 8 <em>73 期，括号内为上期</em></div>
+    <div class="rankrow"><span class="p">1</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp" style="width:16px;height:16px"><i>沙耶</i></span><span class="track"><b style="width:100%"></b></span><span class="v">16.0%<em> (17.3)</em></span></div><div class="rankrow"><span class="p">2</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:16px;height:16px"><i>茉夏</i></span><span class="track"><b style="width:100%"></b></span><span class="v">16.0%<em> (14.9)</em></span></div><div class="rankrow"><span class="p">3</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:16px;height:16px"><i>阿拉克涅</i></span><span class="track"><b style="width:95%"></b></span><span class="v">15.2%<em> (13.3)</em></span></div><div class="rankrow"><span class="p">4</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/horla.webp" style="width:16px;height:16px"><i>奥尔拉</i></span><span class="track"><b style="width:84.375%"></b></span><span class="v">13.5%<em> (12.7)</em></span></div><div class="rankrow"><span class="p">5</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp" style="width:16px;height:16px"><i>熔毁·朵尔</i></span><span class="track"><b style="width:81.25%"></b></span><span class="v">13.0%<em> (14.9)</em></span></div><div class="rankrow"><span class="p">6</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/murphy-fauxborn.webp" style="width:16px;height:16px"><i>诞妄·墨菲</i></span><span class="track"><b style="width:81.25%"></b></span><span class="v">13.0%<em> (13.3)</em></span></div><div class="rankrow"><span class="p">7</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp" style="width:16px;height:16px"><i>卡斯托尔</i></span><span class="track"><b style="width:80%"></b></span><span class="v">12.8%<em> (0.0)</em></span></div><div class="rankrow"><span class="p">8</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp" style="width:16px;height:16px"><i>泰旖丝</i></span><span class="track"><b style="width:78.125%"></b></span><span class="v">12.5%<em> (15.6)</em></span></div>
+  </div>
+  <div><div class="h">出场率上升最多 <em>百分点</em></div>
+    <div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/castor.webp" style="width:16px;height:16px"><i>卡斯托尔</i></span><span class="v" style="width:auto">+12.8</span></div><div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/lotan-cetarchon.webp" style="width:16px;height:16px"><i>蚀灭·萝坦</i></span><span class="v" style="width:auto">+11.4</span></div><div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/arachne.webp" style="width:16px;height:16px"><i>阿拉克涅</i></span><span class="v" style="width:auto">+1.9</span></div><div class="rankrow"><span class="p">▲</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/mouchette.webp" style="width:16px;height:16px"><i>茉夏</i></span><span class="v" style="width:auto">+1.1</span></div>
+    <div class="h" style="margin-top:8px">出场率下降最多</div>
+    <div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/thais.webp" style="width:16px;height:16px"><i>泰旖丝</i></span><span class="v" style="width:auto">-3.1</span></div><div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/doll-inferno.webp" style="width:16px;height:16px"><i>熔毁·朵尔</i></span><span class="v" style="width:auto">-1.9</span></div><div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/saya.webp" style="width:16px;height:16px"><i>沙耶</i></span><span class="v" style="width:auto">-1.3</span></div><div class="rankrow"><span class="p">▼</span><span class="n"><img class="ico ico-char" src="file:///H:/work/tmp/s73/assets/morimens/portraits/miryam.webp" style="width:16px;height:16px"><i>弥利亚姆</i></span><span class="v" style="width:auto">-0.6</span></div>
+  </div>
+</div>
+<div class="pair" style="margin-top:8px">
+  <div><div class="h">钥令 Top 4</div><div class="rankrow"><span class="p">1</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_48.webp" style="width:17px;height:17px"><i>来自雾境</i></span><span class="v" style="width:auto">9.2%<em> (8.3)</em></span></div><div class="rankrow"><span class="p">2</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_04.webp" style="width:17px;height:17px"><i>鼠鼠的智慧</i></span><span class="v" style="width:auto">8.8%<em> (8.8)</em></span></div><div class="rankrow"><span class="p">3</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_51.webp" style="width:17px;height:17px"><i>溺亡的纯真</i></span><span class="v" style="width:auto">7.7%<em> (8.6)</em></span></div><div class="rankrow"><span class="p">4</span><span class="n"><img class="ico ico-token" src="file:///H:/work/tmp/s73/assets/morimens/posse/Icon/KeyToken_Skill_05.webp" style="width:17px;height:17px"><i>小小心愿</i></span><span class="v" style="width:auto">6.4%<em> (0.0)</em></span></div></div>
+  <div><div class="h">命轮 Top 4</div><div class="rankrow"><span class="p">1</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_B15.webp" style="width:15px;height:15px"><i>愿世界化作芬芳</i></span><span class="v" style="width:auto">16.3%<em> (17.5)</em></div><div class="rankrow"><span class="p">2</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_O06.webp" style="width:15px;height:15px"><i>巨人之刃</i></span><span class="v" style="width:auto">15.7%<em> (14.8)</em></div><div class="rankrow"><span class="p">3</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_C04.webp" style="width:15px;height:15px"><i>星天之兽</i></span><span class="v" style="width:auto">15.2%<em> (15.1)</em></div><div class="rankrow"><span class="p">4</span><span class="n"><img class="ico ico-wheel" src="file:///H:/work/tmp/s73/assets/morimens/wheels/Weapon_Full_C17.webp" style="width:15px;height:15px"><i>狂戮至世界尽头</i></span><span class="v" style="width:auto">14.9%<em> (14.1)</em></div></div>
+</div>
+<div class="h" style="margin-top:8px">装备变化速记 <em>括号内为该装备上期的携带率</em></div>
+<div class="mini" style="font-size:9.8px;line-height:1.85">
+  造物：<img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_039.webp" style="width:14px;height:14px">缠丝玛瑙+ 22.4%（0.0%）　<img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_066.webp" style="width:14px;height:14px">恶童+ 22.0%（0.0%）　<img class="ico ico-relic" src="file:///H:/work/tmp/s73/assets/morimens/relics/Icon_Creation_032.webp" style="width:14px;height:14px">遗落的祭祀刀+ 21.2%（0.0%）<br>
+  密契：<img class="ico ico-cov" src="file:///H:/work/tmp/s73/assets/morimens/covenants/Icon/Icon_Trinket_008.webp" style="width:14px;height:14px">埋骨地絮语 72.7%（72.4%）　<img class="ico ico-cov" src="file:///H:/work/tmp/s73/assets/morimens/covenants/Icon/Icon_Trinket_015.webp" style="width:14px;height:14px">生机榨取 60.6%（63.1%）　<img class="ico ico-cov" src="file:///H:/work/tmp/s73/assets/morimens/covenants/Icon/Icon_Trinket_019.webp" style="width:14px;height:14px">入药之梦 48.3%（52.1%）
+</div>
+<div class="close">
+  <div><div class="k">涨得最猛</div><div class="v">第一禁区 <b>+65%</b></div>
+    <div class="d">▼ 通关 130 → 215 人；第三禁区同样从 428 涨到 667（+56%）。反过来第二、四、五禁区各退了 21% / 31% / 32%，五区合计 724 → 1002。</div></div>
+  <div><div class="k">分数线整体下移，顶端更集中</div><div class="v">中位 <b>425 → 415</b></div>
+    <div class="d">平均 430.3 → 422.1，≥450 分从 694 掉到 611；但 525 满分反从 6 人增到 8 人，500 分以上却从 42 降到 36。</div></div>
+  <div><div class="k">极限被抬高</div><div class="v">单场 <b>5,556 万 → 8,262 万</b></div>
+    <div class="d">单回合最高伤害 4,101 万 → 4,676 万（+14%），单场总伤害 +49%；死扛纪录仍是 9 次。</div></div>
+</div>
+<div class="foot">口径：两期均按各自终榜 Top 2000 统计；▼ 通关数为五个禁区 ▼ 难度通关队伍之和；出场率括号内为第 72 期同口径数据。制图：忘忘看报。</div>
+</div></body></html>

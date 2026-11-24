@@ -2,15 +2,15 @@
   "format": "gzip-base64-chunked-v2",
   "seasonId": 73,
   "recordCount": 0,
-  "battleCount": 10841,
+  "battleCount": 11275,
   "source": "season_83331 per-battle statistics (death resist, rounds, damage split ...)",
-  "revision": "acfc390dca723e446cad8cbb64cc8efe2b813fc424a0ee891cfdad7f090009c5",
-  "generatedAt": "2026-11-18T02:40:00+08:00",
+  "revision": "cc03ac34b22a53fde12bf277e0877a6634db3379dd9458e68326539bb19ced7f",
+  "generatedAt": "2026-11-23T09:18:00+08:00",
   "chunks": [
     "data/morimens/eremora/usage/73-battle-gzip/chunk-000.b64",
     "data/morimens/eremora/usage/73-battle-gzip/chunk-001.b64"
   ],
   "chunkSize": 600000,
-  "compressedBytes": 738389,
-  "rawBytes": 1797540
+  "compressedBytes": 777198,
+  "rawBytes": 1885470
 }
