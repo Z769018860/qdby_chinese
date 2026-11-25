@@ -121,10 +121,18 @@
 
   function open(){
     if(window.MorimensTabs)window.MorimensTabs.activate('summon');
-    setTimeout(()=>{
-      mount();
-      document.getElementById('awakenCard')?.scrollIntoView({block:'start',behavior:'smooth'});
-    },150);
+    // 卡片内容与卡池数据都是异步渲染的，滚两次（首次定位 + 布局稳定后校正），
+    // 并让出吸顶页签栏的高度，避免卡片标题被压在导航下面。
+    const jump=()=>{
+      const c=document.getElementById('awakenCard');if(!c)return;
+      // 页签栏是吸顶的，而且窄屏会折成两行，所以按它当前的实际底边留白
+      const nav=document.getElementById('morimensTabs');
+      const clear=(nav?nav.getBoundingClientRect().bottom:0)+14;
+      const y=c.getBoundingClientRect().top+window.scrollY-clear;
+      window.scrollTo({top:Math.max(0,y),behavior:'auto'});
+    };
+    setTimeout(()=>{mount();jump()},150);
+    setTimeout(jump,800);
   }
 
   window.MorimensAwakenCalendar={mount,open};
