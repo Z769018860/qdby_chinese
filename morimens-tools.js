@@ -80,7 +80,7 @@ function setupMorimensReplayShell(){
 
 (async()=>{
   try{
-  const assetVersion="20261126.1";
+  const assetVersion="20261126.2";
   /* 页签系统初始化时会把 hash 改写成 #<当前页签>，所以深链（#awaken 之类）必须在这里先记下来，
      否则晚加载的模块读到的 location.hash 早就被冲掉了。 */
   window.MorimensInitialHash=location.hash;

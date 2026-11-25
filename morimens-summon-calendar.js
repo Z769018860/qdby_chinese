@@ -350,6 +350,7 @@
     const gp=gAll.filter(e=>!q||nk(e.ref.en+e.ref.zh).includes(q)).filter(e=>state.showNext||!e.next);
     const shown=list.slice(0,state.limit);
     host.innerHTML=`<div class="scWrap">
+      <div id="awakenCalSlot"></div>
       <div class="scBar">${CATS.map(([k,cn,en])=>`<button type="button" class="scChip" data-sccat="${k}" aria-pressed="${state.cat===k}">${ui(cn,en)}</button>`).join('')}<input type="search" id="scQuery" value="${esc(state.query)}" placeholder="${esc(ui('搜索角色 / 命轮 / 活动','Search Awakener / wheel / event'))}"><button type="button" class="scChip" data-scdir>${state.dir==='desc'?ui('最新在前 ↓','Newest first ↓'):ui('最早在前 ↑','Oldest first ↑')}</button></div>
       ${live.length?`<div class="scSec">${ui('进行中','Live now')}</div>${live.map(x=>row(x,now)).join('')}`:''}
       ${soon.length?`<div class="scSec">${ui('即将开始','Coming up')}</div>${soon.map(x=>row(x,now)).join('')}`:''}
@@ -362,6 +363,8 @@
       <div class="scBar"><button type="button" class="scChip" data-scgap="awakener" aria-pressed="${state.gapKind==='awakener'}">${ui('唤醒体','Awakeners')}</button><button type="button" class="scChip" data-scgap="wheel" aria-pressed="${state.gapKind==='wheel'}">${ui('命轮','Wheels')}</button><button type="button" class="scChip" data-scgap="event" aria-pressed="${state.gapKind==='event'}">${ui('角色活动（剧情活动）复刻空窗榜','Character event rerun gap')}</button><button type="button" class="scChip" data-scgap="pair" aria-pressed="${state.gapKind==='pair'}">${ui('首发活动唤醒组合（角色 + 命轮）','Launch pairs (Awakener + wheel)')}</button><label class="scNote"><input type="checkbox" data-scnext${state.showNext?' checked':''}> ${ui('显示已公布的未来复刻','Show announced reruns')}</label><span class="scNote">${gp.length} ${ui('项','items')}</span></div>
       <div style="overflow:auto"><table class="scTable"><thead><tr><th>${ui('排名','#')}</th><th>${ui('名称','Name')}</th><th>${ui('首次出现','First')}</th><th>${ui('已复刻次数','Reruns')}</th><th>${ui('最近一次','Latest')}</th><th>${ui('空白期','Gap')}</th><th>${ui('平均间隔','Avg. gap')}</th><th>${ui('状态','Status')}</th></tr></thead><tbody>${gp.map(e=>gapRow(e,rank.get(e.ref.id+(e.ref.w||'')),now)).join('')}</tbody></table></div>
     </div>`;
+    // 顶部「限时唤醒逐日换池」卡片由 morimens-awaken-calendar.js 提供，每次重绘都要重新挂载
+    window.MorimensAwakenCalendar?.mount?.();
   }
   async function load(){
     if(state.data||state.loading)return;
