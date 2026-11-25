@@ -80,9 +80,12 @@ function setupMorimensReplayShell(){
 
 (async()=>{
   try{
-  const assetVersion="20261125.4";
+  const assetVersion="20261126.2";
+  /* 页签系统初始化时会把 hash 改写成 #<当前页签>，所以深链（#awaken 之类）必须在这里先记下来，
+     否则晚加载的模块读到的 location.hash 早就被冲掉了。 */
+  window.MorimensInitialHash=location.hash;
   // fetch every module in parallel up front; the sequential imports below then only evaluate them
-  for(const m of ["morimens-dtide-loader","morimens-dtide-battle","morimens-dtide-battle-ui","morimens-dtide-zones","morimens-tierlist","morimens-summon-calendar","morimens-birthday-calendar","morimens-dtide","morimens-catlog","morimens-replay-scoring","morimens-replay-timeline","morimens-data","morimens-skeydb","morimens-love-ranking","morimens-i18n","morimens-calculator-formulas","morimens-calculator-skeydb","morimens-calculator-stats","morimens-calculator-realms","morimens-calculator-combat","morimens-calculator-export","morimens-replay-score-enhancer","morimens-replay-export-v2","morimens-dtide-usage","morimens-dtide-team-ui","morimens-dtide-progression-fix","morimens-assist-list"]){const l=document.createElement("link");l.rel="modulepreload";l.href=`./${m}.js?v=${assetVersion}`;document.head.appendChild(l)}
+  for(const m of ["morimens-dtide-loader","morimens-dtide-battle","morimens-dtide-battle-ui","morimens-dtide-zones","morimens-tierlist","morimens-summon-calendar","morimens-birthday-calendar","morimens-dtide","morimens-awaken-calendar","morimens-catlog","morimens-replay-scoring","morimens-replay-timeline","morimens-data","morimens-skeydb","morimens-love-ranking","morimens-i18n","morimens-calculator-formulas","morimens-calculator-skeydb","morimens-calculator-stats","morimens-calculator-realms","morimens-calculator-combat","morimens-calculator-export","morimens-replay-score-enhancer","morimens-replay-export-v2","morimens-dtide-usage","morimens-dtide-team-ui","morimens-dtide-progression-fix","morimens-assist-list"]){const l=document.createElement("link");l.rel="modulepreload";l.href=`./${m}.js?v=${assetVersion}`;document.head.appendChild(l)}
     window.MorimensDtideRenderer="legacy";
     const urls=[
       "morimens-v03/part1.b64",
@@ -112,6 +115,7 @@ function setupMorimensReplayShell(){
     try{await import(`./morimens-main-hard.js?v=${assetVersion}`)}catch(mainHardError){console.error('Hard main-story module failed to load',mainHardError)}
     try{await import(`./morimens-catlog.js?v=${assetVersion}`)}catch(catlogError){console.error('Catlog module failed to load',catlogError)}
     await import(`./morimens-dtide.js?v=${assetVersion}`);
+    try{await import(`./morimens-awaken-calendar.js?v=${assetVersion}`)}catch(awakenCalError){console.error('Awaken calendar module failed to load',awakenCalError)}
     await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
     setupMorimensReplayShell();
     await import(`./morimens-replay-scoring.js?v=${assetVersion}`);
