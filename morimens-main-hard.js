@@ -35,7 +35,7 @@ function style(){
   .mh .mhCardHd button,.mh .mhLink{padding:4px 9px;border:1px solid rgba(215,168,91,.4);border-radius:7px;background:rgba(215,168,91,.08);color:#e8ca91;font-size:11px;text-decoration:none;cursor:pointer}
   .mh .mhMems{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:8px}.mh .mhMem{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:8px;border:1px solid rgba(148,163,184,.12);border-radius:9px;background:rgba(255,255,255,.02)}
   .mh .mhMem>img{width:44px;height:44px;border-radius:8px;object-fit:cover;background:#0b1220}.mh .mhMem b{display:block;font-size:12px;color:#edf2f7}.mh .mhMem small{display:block;color:#8ea0b6;font-size:11px;line-height:1.55}
-  .mh .mhMem ul{margin:4px 0 0;padding:0;list-style:none;font-size:11px;color:#b9c5d4}.mh .mhMem li{display:flex;align-items:center;gap:4px;line-height:1.5}.mh .mhMem li img{width:16px;height:16px;border-radius:4px;background:#0b1220}.mh .mhMem li b{display:inline;font-size:11px;color:#f1d69f}
+  .mh .mhMem ul{margin:4px 0 0;padding:0;list-style:none;font-size:11px;color:#b9c5d4}.mh .mhMem li{display:flex;align-items:center;gap:4px;line-height:1.5}.mh .mhMem li img{width:16px;height:16px;border-radius:4px;background:#0b1220;object-fit:cover;object-position:50% 18%;flex:0 0 auto}.mh .mhMem li b{display:inline;font-size:11px;color:#f1d69f}
   .mh .mhSrc{font-size:10px;color:#71809a;line-height:1.6;margin-top:8px}
   .mh .mhSubHd{display:flex;align-items:baseline;gap:8px;margin:16px 0 4px}.mh .mhSubHd b{font-size:13px;color:#e6d3ae}.mh .mhSubHd small{font-size:10px;color:#7f8da1}
   .mh .mhPot{color:#8fd6a8;font-weight:700}.mh .mhNa{color:#6d7c90}
@@ -88,7 +88,7 @@ function detailHtml(st,r){
   const d=state.data,p=d.players[r[0]],tk=r[4]>=0?d.tk[r[4]]:null,g=state.gear&&state.gear.map;
   const mems=r[5].map(m=>{
     const a=d.aw[m[0]],gid=a[4],rec=g&&g[p[0]+'|'+gid];
-    const wh=rec?rec[1].map(w=>{const ww=state.gear.wh[w[0]]||['',''];return `<li><img src="${esc(ww[2])}" alt="" loading="lazy" onerror="this.hidden=true">${esc(ww[1])} <b>${w[1]}</b></li>`}).join(''):'';
+    const wh=rec?rec[1].map(w=>{const ww=state.gear.wh[w[0]]||['',''];return `<li><img src="${esc(ww[2])}" alt="" loading="lazy" onerror="this.hidden=true">${esc(ww[1])} <b>${ui('叠','x')}${w[1]}</b></li>`}).join(''):'';
     const cv=rec?rec[2].map(c=>{const cc=state.gear.cv[c[0]]||['',''];return `${esc(cc[1])}×${c[1]}`}).join(' · '):'';
     const pot=m[2]==null?ui('启灵未公开','Enl. n/a'):ui('启灵 ','Enl. ')+(m[2]>0?'+'+m[2]:'0');
     return `<div class="mhMem"><img src="${esc(a[3])}" alt="" loading="lazy"><div><b>${esc(nameOf(a))}</b><small>Lv ${m[1]||'—'} · ${pot}${m[3]!=null?ui(' · 灵塑 '+m[3],' · Soulforge '+m[3]):''}</small>${wh?`<ul>${wh}</ul>`:''}${cv?`<small>${ui('密契','Covenant')}：${cv}</small>`:''}${!rec?`<small class="mhNa">${ui('命轮 / 密契未公开','Wheels / Covenants not published')}</small>`:''}</div></div>`}).join('');
