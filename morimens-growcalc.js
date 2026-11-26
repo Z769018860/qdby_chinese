@@ -1,7 +1,7 @@
 /* 忘忘看报 · 角色培养计算器
-   页面本体是独立文件 morimens-growcalc.html（自带浅色主题、样式与全量数据），
+   页面本体是独立文件 morimens-growcalc.html（深色主题、样式与全量数据），
    这里只负责注册一个标签页、用 iframe 嵌进去：
-   它的 body/table 重置与浅色底一旦直接并进忘忘看报，会把深色界面整体带偏；
+   它的 body/table 重置一旦直接并进忘忘看报，会把深色界面整体带偏；
    iframe 里还能保留它自己的三条子页签（角色计算 / 密契转录 / 数据表）和框内滚动。
    首次点开标签才真正加载 iframe，省一次 ~280KB 的请求。 */
 (() => {
@@ -16,8 +16,8 @@
     s.textContent = `
       .growBar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
       .growBar a.ghostBtn{display:inline-flex;align-items:center;text-decoration:none}
-      .growFrameWrap{margin-top:12px;border:1px solid rgba(197,211,229,.2);border-radius:16px;overflow:hidden;background:#f6f7fb;box-shadow:0 16px 40px rgba(0,0,0,.3)}
-      .growFrame{display:block;width:100%;height:calc(100vh - 268px);min-height:620px;border:0;background:#f6f7fb}
+      .growFrameWrap{margin-top:12px;border:1px solid rgba(197,211,229,.2);border-radius:16px;overflow:hidden;background:#0a0e15;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+      .growFrame{display:block;width:100%;height:calc(100vh - 268px);min-height:620px;border:0;background:#0a0e15}
       .growTip{margin:10px 2px 0;font-size:11.5px;line-height:1.7;color:#8b98ad}
       .growTip b{color:#e0bd82;font-weight:700}
       @media(max-width:900px){.growFrame{height:calc(100vh - 210px);min-height:560px}}
