@@ -2,28 +2,28 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "6d5773b851cd01a60611c7691ffd73cc50070f72",
-    "syncedAt": "2026-11-25T13:15:03.766Z",
+    "commit": "a46267ae9063c577aed5f681840668c0d451b0a5",
+    "syncedAt": "2026-11-26T12:53:38.657Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "counts": {
-    "awakeners": 62,
-    "portraits": 62,
-    "cards": 62,
-    "publicV3Records": 2048
+    "awakeners": 63,
+    "portraits": 64,
+    "cards": 64,
+    "publicV3Records": 2072
   },
   "scopes": {
     "awakeners": {
       "kind": "awakener",
       "catalog": "catalogs/awakeners.json",
       "recordPattern": "records/awakeners/{id}.json",
-      "count": 62
+      "count": 63
     },
     "wheels": {
       "kind": "wheel",
       "catalog": "catalogs/wheels.json",
       "recordPattern": "records/wheels/{id}.json",
-      "count": 150
+      "count": 153
     },
     "relics": {
       "kind": "relic",
@@ -47,13 +47,13 @@
       "kind": "posse",
       "catalog": "catalogs/posses.json",
       "recordPattern": "records/posses/{id}.json",
-      "count": 64
+      "count": 65
     },
     "skills": {
       "kind": "skill",
       "catalog": "catalogs/skills.json",
       "recordPattern": "records/skills/{id}.json",
-      "count": 434
+      "count": 441
     },
     "derived-skills": {
       "kind": "derivedSkill",
@@ -65,19 +65,19 @@
       "kind": "talent",
       "catalog": "catalogs/talents.json",
       "recordPattern": "records/talents/{id}.json",
-      "count": 234
+      "count": 237
     },
     "enlightens": {
       "kind": "enlighten",
       "catalog": "catalogs/enlightens.json",
       "recordPattern": "records/enlightens/{id}.json",
-      "count": 310
+      "count": 315
     },
     "overlays": {
       "kind": "overlay",
       "catalog": "catalogs/overlays.json",
       "recordPattern": "records/overlays/{id}.json",
-      "count": 165
+      "count": 169
     },
     "awakener-builds": {
       "kind": "awakenerBuild",
