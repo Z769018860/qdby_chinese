@@ -2,11 +2,11 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "6d5773b851cd01a60611c7691ffd73cc50070f72",
-    "syncedAt": "2026-11-25T13:15:03.766Z",
+    "commit": "a46267ae9063c577aed5f681840668c0d451b0a5",
+    "syncedAt": "2026-11-26T12:53:38.657Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
-  "count": 62,
+  "count": 63,
   "records": [
     {
       "id": "awakener-0001",
@@ -33565,6 +33565,185 @@
       "assets": {
         "portrait": "assets/morimens/portraits/vivian.webp",
         "card": "assets/morimens/cards/vivian.webp"
+      }
+    },
+    {
+      "id": "awakener-0063",
+      "numericId": 63,
+      "ingameId": "O01EX01",
+      "name": "Tulu: Godking",
+      "slug": "tulu-godking",
+      "assetSlug": "tulu-godking",
+      "aliases": [],
+      "realm": "AEQUOR",
+      "rarity": "SSR",
+      "type": "ASSAULT",
+      "faction": "Lemuria",
+      "releaseDate": "2026-11-30",
+      "availabilityType": "LIMITED_ASTRAL_REIGN",
+      "lineupToken": "xt",
+      "searchTags": [
+        "Divine Realm"
+      ],
+      "primaryScalingBase": 20,
+      "baseStatsLv1": {
+        "CON": 39,
+        "ATK": 46,
+        "DEF": 26
+      },
+      "substatsLv1": {
+        "CritRate": 5,
+        "CritDamage": 50,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 15,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "statScaling": {
+        "CON": 1.85,
+        "ATK": 2.15,
+        "DEF": 1.2
+      },
+      "substatScaling": {
+        "CritRate": 0,
+        "CritDamage": 0,
+        "AliemusRegen": 0.8,
+        "KeyflareRegen": 0,
+        "RealmMastery": 0,
+        "SigilYield": 0.6,
+        "DamageAmplification": 0,
+        "DeathResistance": 0
+      },
+      "profile": {
+        "title": "Tulu: Godking",
+        "birthday": "",
+        "voiceActor": "",
+        "gender": "",
+        "height": "",
+        "weight": "",
+        "gnosticIndex": "",
+        "storySections": [],
+        "voiceLines": []
+      },
+      "skills": [
+        {
+          "kind": "skill",
+          "id": "skill.tulu-godking.axis-mundi",
+          "name": "Axis Mundis",
+          "route": {
+            "slug": "axis-mundis",
+            "canonicalPath": "/database/awakeners/tulu-godking/skills/axis-mundis"
+          },
+          "cardFamily": "rouse",
+          "cardTypes": [
+            "rouse"
+          ],
+          "ownerAwakenerId": "awakener-0063",
+          "ownerAwakenerName": "Tulu: Godking",
+          "slot": "Rouse"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.tulu-godking.defense",
+          "name": "Defense",
+          "route": {
+            "slug": "defense",
+            "canonicalPath": "/database/awakeners/tulu-godking/skills/defense"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "defense"
+          ],
+          "ownerAwakenerId": "awakener-0063",
+          "ownerAwakenerName": "Tulu: Godking",
+          "slot": "Defense"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.tulu-godking.great-old-decree",
+          "name": "Great Old Decree",
+          "route": {
+            "slug": "great-old-decree",
+            "canonicalPath": "/database/awakeners/tulu-godking/skills/great-old-decree"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "skill"
+          ],
+          "ownerAwakenerId": "awakener-0063",
+          "ownerAwakenerName": "Tulu: Godking",
+          "slot": "Skill2"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.tulu-godking.lex-divina",
+          "name": "Lex Divina",
+          "route": {
+            "slug": "lex-divina",
+            "canonicalPath": "/database/awakeners/tulu-godking/skills/lex-divina"
+          },
+          "cardFamily": "exalt",
+          "cardTypes": [
+            "over_exalt"
+          ],
+          "ownerAwakenerId": "awakener-0063",
+          "ownerAwakenerName": "Tulu: Godking",
+          "slot": "OverExalt"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.tulu-godking.strike",
+          "name": "Strike",
+          "route": {
+            "slug": "strike",
+            "canonicalPath": "/database/awakeners/tulu-godking/skills/strike"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "strike"
+          ],
+          "ownerAwakenerId": "awakener-0063",
+          "ownerAwakenerName": "Tulu: Godking",
+          "slot": "Strike"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.tulu-godking.undying-epitaph",
+          "name": "Undying Epitaph",
+          "route": {
+            "slug": "undying-epitaph",
+            "canonicalPath": "/database/awakeners/tulu-godking/skills/undying-epitaph"
+          },
+          "cardFamily": "command",
+          "cardTypes": [
+            "skill"
+          ],
+          "ownerAwakenerId": "awakener-0063",
+          "ownerAwakenerName": "Tulu: Godking",
+          "slot": "Skill1"
+        },
+        {
+          "kind": "skill",
+          "id": "skill.tulu-godking.world-drowning-tide",
+          "name": "World-Drowning Tide",
+          "route": {
+            "slug": "world-drowning-tide",
+            "canonicalPath": "/database/awakeners/tulu-godking/skills/world-drowning-tide"
+          },
+          "cardFamily": "exalt",
+          "cardTypes": [
+            "exalt"
+          ],
+          "ownerAwakenerId": "awakener-0063",
+          "ownerAwakenerName": "Tulu: Godking",
+          "slot": "Exalt"
+        }
+      ],
+      "assets": {
+        "portrait": "assets/morimens/portraits/tulu-godking.webp",
+        "card": "assets/morimens/cards/tulu-godking.webp"
       }
     }
   ]
