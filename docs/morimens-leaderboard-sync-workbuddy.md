@@ -243,3 +243,28 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
 - 本期 2000 名次里有 3 个 uid 占了两行，`rank-index/74.json` 的 `complete` 会是 `false`（`len(rows) >= 2000` 不成立），
   但榜单下拉的「完整」标记读的是 `availableSeasons[].complete`，两者含义不同，别被吓到。
 - 首日榜的分数形态与结算期差很远：本期最高 500（一人）、≥450 只有 121 人、中位 285，别拿第 73 期终榜的数字做对比文案。
+
+## 13. 主线困难榜单（`morimens-main-hard.js`，2026-11-25 改版）
+
+数据来自「关卡公开展示的通关回顾」（`CopyReview.QueryStageReview`），采集器在 `MorimensCollector_Mainline/`，
+落盘 `%LOCALAPPDATA%\MorimensMainlineCollector\stages\*.json`。目前只有 11 个关卡有人公开回顾，其余关卡列表是空的，不是漏抓。
+
+三段拼起来才是完整配置，缺一段就会「有等级没装备」：
+
+| 数据 | 来源 | 产出 |
+|---|---|---|
+| 回合数 / 4 名唤醒体 / 钥令 / 回放码 / 守密人等级（facades） | 回顾列表 | `scripts/build_main_hard.py` → `index.json` |
+| 每名角色的启灵、灵塑、守密人等级（战斗时） | 回放对象 `BattleReplay_<uuid>.json` | `scripts/fetch_main_hard_detail.py` → JSONL 缓存，再由 `build_main_hard.py --detail` 合并 |
+| 命轮 / 密契 | **回放里没有**；取该玩家在融灾里同一角色的装备 | `scripts/build_main_hard_gear.py` → `gear.json` |
+
+几个坑：
+
+- **回顾列表只有 `awakerOutlineList`（tid + level）和 `teamData.keeperSkill`**，启灵、灵塑、命轮、密契、守密人战斗时等级都不在里面，也没有"队伍详情"接口可取。
+- **回放对象同样不含装备**：`roleData` 只有 `tid/level/potencyLevel/breakLevel/curSkin`，`battleDat.relics` 是造物。所以命轮只能从融灾队伍记录（`weaponSlots` + `items[uid].suitId`）按 `(uid, 唤醒体 tid)` 反查，覆盖率约 50%，页面上注明"非本场装备、融灾是 2 命轮规则"。
+- **回放会过期**：`BattleReplay_<uuid>.json` 对较早的通关直接 404（约 35~45% 命中不了），且 404 是永久性的，重试没用。抓取脚本对 403/404/410 立即失败，其它错误才退避重试；**必须绕开环境里的 HTTP 代理**（`build_opener(ProxyHandler({}))`），走代理时并发几个连接就会被 reset。
+- 抓取顺序会集中在同一关卡的连续 uuid 上，某一关整批 404 时会把 12 个线程全占住（每个超时 25s×2 次），所以要按 uuid 哈希打散再提交。
+- 拼数据时**按 tid 匹配成员**，不要按下标：回放 `roleData` 的顺序和回顾列表的站位不保证一致。
+- 前端「低配阵容」按启灵总和升序（同分看等级合计、回合），只统计回放能读到启灵的队伍；切到「按等级合计」时不再过滤，缺启灵的显示 `—`。展开行按 `uid|唤醒体 tid` 查 `gear.json` 的 `map`，没记录就写「命轮 / 密契未公开」。
+- 回放抓取结果（`{s,u,k,ks,m}` 四个字段一行）已压缩存进 `data/morimens/mainhard/replay-cache.jsonl.gz`，重放版式时直接 `py scripts/build_main_hard.py <stages 目录> --detail data/morimens/mainhard/replay-cache.jsonl.gz` 即可，不必重下（回放过期后也下不回来）。本次 6090 条通关命中 3910 条（64.2%），其余在页面上显示「—」。
+- **改完 `morimens-tools.js` 记得同步 `morimens-tools.html` 里的 `?v=`**：入口脚本的缓存戳写死在 html 第 194 行（`<script src="morimens-tools.js?v=20261125.4">`），与 `assetVersion` 是两个独立的值。只改 `assetVersion` 而不动 html，回访用户可能命中磁盘缓存里旧的 tools.js，进而按旧版号去加载旧模块（症状是「页面还是老样子」）。
+- 页面没渲染出内容时不要急着怀疑数据：`#morimensMainHardTab` 存在不代表模块已求值，点了没反应是点击早于绑定。验收脚本 `H:/work/tmp/mhlive.mjs` 会轮询点这个 tab 直到出现 `[data-mh-view]` 再判断，线上/本地都通用（`node mhlive.mjs [BASE]`，`LOOP=1` 逐个展开找有融灾记录的行，`SHOT=` 存图）。

@@ -1,0 +1,652 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+PRODID:-//qingdengbuyi//morimens galaxy awaken//CN
+X-WR-CALNAME:银河闪耀时 · 限时唤醒日程
+X-WR-TIMEZONE:Asia/Shanghai
+X-WR-CALDESC:限时唤醒「银河闪耀时」2026/11/30 09:00 - 2027/1/4 0
+ 9:00，共 35 期，每日 09:00 轮换。来自忘忘看报 qingdengbuyi.
+ top
+X-WR-RELCALID:galaxy-awaken-2026@qingdengbuyi.top
+BEGIN:VTIMEZONE
+TZID:Asia/Shanghai
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0800
+TZOFFSETTO:+0800
+TZNAME:CST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-01@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261130T090000
+DTEND;TZID=Asia/Shanghai:20261201T090000
+SUMMARY:11/30 图鲁「神王的颂歌」
+DESCRIPTION:深海界域·伤害型 唤醒体「图鲁」，专属 SSR 命
+ 轮「神王的颂歌」。第 1/35 期，11/30 09:00 — 12/1 09:00（UTC
+ +8），当期 24 小时。海报第 1 行第 1 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 达芙黛尔「至为珍贵的藏品」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-02@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261201T090000
+DTEND;TZID=Asia/Shanghai:20261202T090000
+SUMMARY:12/1 达芙黛尔「至为珍贵的藏品」
+DESCRIPTION:超维界域·伤害型 唤醒体「达芙黛尔」，专属 S
+ SR 命轮「至为珍贵的藏品」。第 2/35 期，12/1 09:00 — 12/2 
+ 09:00（UTC+8），当期 24 小时。海报第 1 行第 2 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 索蕾尔「以蔷薇之名」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-03@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261202T090000
+DTEND;TZID=Asia/Shanghai:20261203T090000
+SUMMARY:12/2 索蕾尔「以蔷薇之名」
+DESCRIPTION:血肉界域·伤害型 唤醒体「索蕾尔」，专属 SSR 
+ 命轮「以蔷薇之名」。第 3/35 期，12/2 09:00 — 12/3 09:00（U
+ TC+8），当期 24 小时。海报第 1 行第 3 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 莉莉「跨越疼痛」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-04@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261203T090000
+DTEND;TZID=Asia/Shanghai:20261204T090000
+SUMMARY:12/3 莉莉「跨越疼痛」
+DESCRIPTION:混沌界域·防御型 唤醒体「莉莉」，专属 SSR 命
+ 轮「跨越疼痛」。第 4/35 期，12/3 09:00 — 12/4 09:00（UTC+8
+ ），当期 24 小时。海报第 1 行第 4 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 墨菲「隐秘的诞生」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-05@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261204T090000
+DTEND;TZID=Asia/Shanghai:20261205T090000
+SUMMARY:12/4 墨菲「隐秘的诞生」
+DESCRIPTION:深海界域·防御型 唤醒体「墨菲」，专属 SSR 命
+ 轮「隐秘的诞生」。第 5/35 期，12/4 09:00 — 12/5 09:00（UTC+
+ 8），当期 24 小时。海报第 1 行第 5 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 旺达「女王的戒律」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-06@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261205T090000
+DTEND;TZID=Asia/Shanghai:20261206T090000
+SUMMARY:12/5 旺达「女王的戒律」
+DESCRIPTION:超维界域·防御型 唤醒体「旺达」，专属 SSR 命
+ 轮「女王的戒律」。第 6/35 期，12/5 09:00 — 12/6 09:00（UTC+
+ 8），当期 24 小时。海报第 1 行第 6 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 萨尔瓦多「神言石板」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-07@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261206T090000
+DTEND;TZID=Asia/Shanghai:20261207T090000
+SUMMARY:12/6 萨尔瓦多「神言石板」
+DESCRIPTION:血肉界域·防御型 唤醒体「萨尔瓦多」，专属 S
+ SR 命轮「神言石板」。第 7/35 期，12/6 09:00 — 12/7 09:00（U
+ TC+8），当期 24 小时。海报第 1 行第 7 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 「24」「畸体回噬」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-08@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261207T090000
+DTEND;TZID=Asia/Shanghai:20261208T090000
+SUMMARY:12/7 「24」「畸体回噬」
+DESCRIPTION:混沌界域·伤害型 唤醒体「「24」」，专属 SSR 
+ 命轮「畸体回噬」。第 8/35 期，12/7 09:00 — 12/8 09:00（UTC+
+ 8），当期 24 小时。海报第 2 行第 1 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 泰旖丝「慈悲的哺育」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-09@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261208T090000
+DTEND;TZID=Asia/Shanghai:20261209T090000
+SUMMARY:12/8 泰旖丝「慈悲的哺育」
+DESCRIPTION:血肉界域·辅助型 唤醒体「泰旖丝」，专属 SSR 
+ 命轮「慈悲的哺育」。第 9/35 期，12/8 09:00 — 12/9 09:00（U
+ TC+8），当期 24 小时。海报第 2 行第 2 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 弥利亚姆「虔诚的伟力」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-10@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261209T090000
+DTEND;TZID=Asia/Shanghai:20261210T090000
+SUMMARY:12/9 弥利亚姆「虔诚的伟力」
+DESCRIPTION:深海界域·辅助型 唤醒体「弥利亚姆」，专属 S
+ SR 命轮「虔诚的伟力」。第 10/35 期，12/9 09:00 — 12/10 09:0
+ 0（UTC+8），当期 24 小时。海报第 2 行第 3 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 奥尔拉「诗笺的句尾」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-11@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261210T090000
+DTEND;TZID=Asia/Shanghai:20261211T090000
+SUMMARY:12/10 奥尔拉「诗笺的句尾」
+DESCRIPTION:超维界域·辅助型 唤醒体「奥尔拉」，专属 SSR 
+ 命轮「诗笺的句尾」。第 11/35 期，12/10 09:00 — 12/11 09:00
+ （UTC+8），当期 24 小时。海报第 2 行第 4 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 莱克「好运时间」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-12@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261211T090000
+DTEND;TZID=Asia/Shanghai:20261212T090000
+SUMMARY:12/11 莱克「好运时间」
+DESCRIPTION:混沌界域·辅助型 唤醒体「莱克」，专属 SSR 命
+ 轮「好运时间」。第 12/35 期，12/11 09:00 — 12/12 09:00（UTC+
+ 8），当期 24 小时。海报第 2 行第 5 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 哈姆林「永恒安魂曲」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-13@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261212T090000
+DTEND;TZID=Asia/Shanghai:20261213T090000
+SUMMARY:12/12 哈姆林「永恒安魂曲」
+DESCRIPTION:混沌界域·辅助型 唤醒体「哈姆林」，专属 SSR 
+ 命轮「永恒安魂曲」。第 13/35 期，12/12 09:00 — 12/13 09:00
+ （UTC+8），当期 24 小时。海报第 2 行第 6 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 血链·希洛「沉入殷红」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-14@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261213T090000
+DTEND;TZID=Asia/Shanghai:20261214T090000
+SUMMARY:12/13 血链·希洛「沉入殷红」
+DESCRIPTION:血肉界域·伤害型 唤醒体「血链·希洛」，专属
+  SSR 命轮「沉入殷红」。第 14/35 期，12/13 09:00 — 12/14 09:0
+ 0（UTC+8），当期 24 小时。海报第 2 行第 7 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 塔薇「隐世的转轮」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-15@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261214T090000
+DTEND;TZID=Asia/Shanghai:20261215T090000
+SUMMARY:12/14 塔薇「隐世的转轮」
+DESCRIPTION:混沌界域·辅助型 唤醒体「塔薇」，专属 SSR 命
+ 轮「隐世的转轮」。第 15/35 期，12/14 09:00 — 12/15 09:00（U
+ TC+8），当期 24 小时。海报第 3 行第 1 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 熔毁·朵尔「坠入虚无的人偶
+ 」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-16@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261215T090000
+DTEND;TZID=Asia/Shanghai:20261216T090000
+SUMMARY:12/15 熔毁·朵尔「坠入虚无的人偶」
+DESCRIPTION:混沌界域·辅助型 唤醒体「熔毁·朵尔」，专属
+  SSR 命轮「坠入虚无的人偶」。第 16/35 期，12/15 09:00 — 1
+ 2/16 09:00（UTC+8），当期 24 小时。海报第 3 行第 2 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 克莱门汀「隐没的痛楚」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-17@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261216T090000
+DTEND;TZID=Asia/Shanghai:20261217T090000
+SUMMARY:12/16 克莱门汀「隐没的痛楚」
+DESCRIPTION:超维界域·辅助型 唤醒体「克莱门汀」，专属 S
+ SR 命轮「隐没的痛楚」。第 17/35 期，12/16 09:00 — 12/17 09:
+ 00（UTC+8），当期 24 小时。海报第 3 行第 3 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 克珀珊特「圣火中的指引」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-18@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261217T090000
+DTEND;TZID=Asia/Shanghai:20261218T090000
+SUMMARY:12/17 克珀珊特「圣火中的指引」
+DESCRIPTION:深海界域·防御型 唤醒体「克珀珊特」，专属 S
+ SR 命轮「圣火中的指引」。第 18/35 期，12/17 09:00 — 12/18 
+ 09:00（UTC+8），当期 24 小时。海报第 3 行第 4 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 卡斯托尔「不可承受的自由」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-19@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261218T090000
+DTEND;TZID=Asia/Shanghai:20261219T090000
+SUMMARY:12/18 卡斯托尔「不可承受的自由」
+DESCRIPTION:超维界域·防御型 唤醒体「卡斯托尔」，专属 S
+ SR 命轮「不可承受的自由」。第 19/35 期，12/18 09:00 — 12/
+ 19 09:00（UTC+8），当期 24 小时。海报第 3 行第 5 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 杜勒赛因「安息之吻」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-20@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261219T090000
+DTEND;TZID=Asia/Shanghai:20261220T090000
+SUMMARY:12/19 杜勒赛因「安息之吻」
+DESCRIPTION:血肉界域·伤害型 唤醒体「杜勒赛因」，专属 S
+ SR 命轮「安息之吻」。第 20/35 期，12/19 09:00 — 12/20 09:00
+ （UTC+8），当期 24 小时。海报第 3 行第 6 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 凯蒂古拉「琥珀色的死亡」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-21@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261220T090000
+DTEND;TZID=Asia/Shanghai:20261221T090000
+SUMMARY:12/20 凯蒂古拉「琥珀色的死亡」
+DESCRIPTION:混沌界域·伤害型 唤醒体「凯蒂古拉」，专属 S
+ SR 命轮「琥珀色的死亡」。第 21/35 期，12/20 09:00 — 12/21 
+ 09:00（UTC+8），当期 24 小时。海报第 3 行第 7 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 皮克曼「写实主义悖谬」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-22@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261221T090000
+DTEND;TZID=Asia/Shanghai:20261222T090000
+SUMMARY:12/21 皮克曼「写实主义悖谬」
+DESCRIPTION:血肉界域·辅助型 唤醒体「皮克曼」，专属 SSR 
+ 命轮「写实主义悖谬」。第 22/35 期，12/21 09:00 — 12/22 09:
+ 00（UTC+8），当期 24 小时。海报第 4 行第 1 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 波吕克斯「扭曲的骑士诗」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-23@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261222T090000
+DTEND;TZID=Asia/Shanghai:20261223T090000
+SUMMARY:12/22 波吕克斯「扭曲的骑士诗」
+DESCRIPTION:超维界域·伤害型 唤醒体「波吕克斯」，专属 S
+ SR 命轮「扭曲的骑士诗」。第 23/35 期，12/22 09:00 — 12/23 
+ 09:00（UTC+8），当期 24 小时。海报第 4 行第 2 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 诞妄·墨菲「黑暗中的安眠」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-24@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261223T090000
+DTEND;TZID=Asia/Shanghai:20261224T090000
+SUMMARY:12/23 诞妄·墨菲「黑暗中的安眠」
+DESCRIPTION:深海界域·辅助型 唤醒体「诞妄·墨菲」，专属
+  SSR 命轮「黑暗中的安眠」。第 24/35 期，12/23 09:00 — 12/2
+ 4 09:00（UTC+8），当期 24 小时。海报第 4 行第 3 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 茉夏「狂戮至世界尽头」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-25@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261224T090000
+DTEND;TZID=Asia/Shanghai:20261225T090000
+SUMMARY:12/24 茉夏「狂戮至世界尽头」
+DESCRIPTION:混沌界域·伤害型 唤醒体「茉夏」，专属 SSR 命
+ 轮「狂戮至世界尽头」。第 25/35 期，12/24 09:00 — 12/25 09:
+ 00（UTC+8），当期 24 小时。海报第 4 行第 4 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 徐「枉蹙眉」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-26@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261225T090000
+DTEND;TZID=Asia/Shanghai:20261226T090000
+SUMMARY:12/25 徐「枉蹙眉」
+DESCRIPTION:血肉界域·辅助型 唤醒体「徐」，专属 SSR 命轮
+ 「枉蹙眉」。第 26/35 期，12/25 09:00 — 12/26 09:00（UTC+8）
+ ，当期 24 小时。海报第 4 行第 5 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 莫丝「渺远的伊甸园」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-27@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261226T090000
+DTEND;TZID=Asia/Shanghai:20261227T090000
+SUMMARY:12/26 莫丝「渺远的伊甸园」
+DESCRIPTION:深海界域·伤害型 唤醒体「莫丝」，专属 SSR 命
+ 轮「渺远的伊甸园」。第 27/35 期，12/26 09:00 — 12/27 09:00
+ （UTC+8），当期 24 小时。海报第 4 行第 6 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 阿拉克涅「永世编织之网」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-28@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261227T090000
+DTEND;TZID=Asia/Shanghai:20261228T090000
+SUMMARY:12/27 阿拉克涅「永世编织之网」
+DESCRIPTION:超维界域·辅助型 唤醒体「阿拉克涅」，专属 S
+ SR 命轮「永世编织之网」。第 28/35 期，12/27 09:00 — 12/28 
+ 09:00（UTC+8），当期 24 小时。海报第 4 行第 7 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 沙耶「愿世界化作芬芳」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-29@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261228T090000
+DTEND;TZID=Asia/Shanghai:20261229T090000
+SUMMARY:12/28 沙耶「愿世界化作芬芳」
+DESCRIPTION:血肉界域·辅助型 唤醒体「沙耶」，专属 SSR 命
+ 轮「愿世界化作芬芳」。第 29/35 期，12/28 09:00 — 12/29 09:
+ 00（UTC+8），当期 24 小时。海报第 5 行第 1 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 庞托斯「活囚笼」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-30@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261229T090000
+DTEND;TZID=Asia/Shanghai:20261230T090000
+SUMMARY:12/29 庞托斯「活囚笼」
+DESCRIPTION:深海界域·防御型 唤醒体「庞托斯」，专属 SSR 
+ 命轮「活囚笼」。第 30/35 期，12/29 09:00 — 12/30 09:00（UTC+
+ 8），当期 24 小时。海报第 5 行第 2 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 蚀灭·萝坦「天之陨」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-31@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261230T090000
+DTEND;TZID=Asia/Shanghai:20261231T090000
+SUMMARY:12/30 蚀灭·萝坦「天之陨」
+DESCRIPTION:混沌界域·伤害型 唤醒体「蚀灭·萝坦」，专属
+  SSR 命轮「天之陨」。第 31/35 期，12/30 09:00 — 12/31 09:00
+ （UTC+8），当期 24 小时。海报第 5 行第 3 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 卡拉布「蜜果的谎言」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-32@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20261231T090000
+DTEND;TZID=Asia/Shanghai:20270101T090000
+SUMMARY:12/31 卡拉布「蜜果的谎言」
+DESCRIPTION:血肉界域·防御型 唤醒体「卡拉布」，专属 SSR 
+ 命轮「蜜果的谎言」。第 32/35 期，12/31 09:00 — 1/1 09:00（
+ UTC+8），当期 24 小时。海报第 5 行第 4 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 负誓·奥吉尔「向阳而生」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-33@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20270101T090000
+DTEND;TZID=Asia/Shanghai:20270102T090000
+SUMMARY:1/1 负誓·奥吉尔「向阳而生」
+DESCRIPTION:混沌界域·防御型 唤醒体「负誓·奥吉尔」，专
+ 属 SSR 命轮「向阳而生」。第 33/35 期，1/1 09:00 — 1/2 09:00
+ （UTC+8），当期 24 小时。海报第 5 行第 5 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 薇薇安「先知的难题」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-34@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20270102T090000
+DTEND;TZID=Asia/Shanghai:20270103T090000
+SUMMARY:1/2 薇薇安「先知的难题」
+DESCRIPTION:混沌界域·辅助型 唤醒体「薇薇安」，专属 SSR 
+ 命轮「先知的难题」。第 34/35 期，1/2 09:00 — 1/3 09:00（UT
+ C+8），当期 24 小时。海报第 5 行第 6 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后换池 → 图鲁「神王的颂歌」
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:galaxy-awaken-2026-35@qingdengbuyi.top
+DTSTAMP:20261125T175703Z
+DTSTART;TZID=Asia/Shanghai:20270103T090000
+DTEND;TZID=Asia/Shanghai:20270104T090000
+SUMMARY:1/3 图鲁「神王的颂歌」
+DESCRIPTION:深海界域·伤害型 唤醒体「图鲁」，专属 SSR 命
+ 轮「神王的颂歌」。第 35/35 期，1/3 09:00 — 1/4 09:00（UTC+8
+ ），当期 24 小时。海报第 5 行第 7 格。
+URL:https://qingdengbuyi.top/morimens-tools.html#awaken
+CATEGORIES:游戏日程
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:10 分钟后活动结束 → 银河闪耀时收尾
+END:VALARM
+END:VEVENT
+END:VCALENDAR
