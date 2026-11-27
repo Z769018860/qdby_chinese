@@ -53,9 +53,9 @@ EdgeOne Blob（与点赞、云端档案、题库同一份存储）
 | `PUT/DELETE /waline/user` | 改资料 / 注销 | — |
 | `POST /waline/import`（`X-Import-Token`） | 一次性迁移入口，导完删 env | 全部 |
 
-Waline 客户端会把 `serverURL` 拼成 `${serverURL}/api/comment`，所以实际请求多一层 `/api`；`handleWaline` 里统一剥掉。
+Waline 客户端会把 `serverURL` 拼成 `${serverURL}/api/comment`，而 `serverURL` 本身已经是 `.../api/waline`，所以实际到达的路径是 `/api/waline/api/comment`——**多出来的那层 `/api` 在最外层，不在 `/waline` 后面**。`handleWaline` 里按「先剥 `/api`(前视 `/waline`) → 再剥 `/waline` → 最后剥可能的 `/api`」三步归一。
 
-## 两个必须知道的实现细节
+## 三个必须知道的实现细节
 
 **1. 密码是 phpass，不是 bcrypt。**
 Waline 的 `hashPassword` 走 `phpass` 的 Portable 模式（形如 `$P$B<8 位 salt><22 位 hash>`），底层是 `md5(salt+password)` 再迭代 `2^log2` 次。WebCrypto 不提供 MD5，所以 `_lib/waline.js` 里手写了一份 MD5（已用 RFC 1321 的四组向量对齐 `node:crypto`）和 phpass 的 base64（字母表 `./0-9A-Za-z`，不是标准 base64）。
@@ -64,6 +64,12 @@ Waline 的 `hashPassword` 走 `phpass` 的 Portable 模式（形如 `$P$B<8 位 
 
 **2. 机器提交的 payload 藏在 HTML 注释里。**
 融灾/互助提交把结构化数据塞在 `<!--MORIMENS_DZONE_V1:...-->` 里，前端要从 DOM 读回来。`renderComment()` 先把注释段挖出来、转义其余部分、再把注释原样放回，否则 payload 会被转义成可见文本。`MORIMENS_ASSIST_V1:base64` 这种纯文本形式的 payload 则原样保留。
+
+**3. 时间字段：`createdAt/insertedAt` 必须是 ISO 字符串，并且要额外给一个 `time`。**
+
+客户端的相对时间逻辑对字符串才做 `new Date(str)`，拿到数字会直接当 Date 对象用，结果渲染成 `NaN-NaN-NaN`；所以库里的 `createdAt/insertedAt` 一律存 `new Date(ms).toISOString()`，内部排序时用 `Date.parse()`、失败再回退 `objectId`（本身就是毫秒戳）。
+
+另外客户端真正读的渲染字段是 `comment.time`（毫秒），只给 `createdAt` 不够——提交、历史导入、`wcr` 最新索引三处都要同时写 `time`。
 
 ## 迁移步骤
 
@@ -88,7 +94,7 @@ curl -s https://morimens.qingdengbuyi.top/api/waline
 # 计数（应返回数组，且能读到旧赞数）
 curl -s 'https://morimens.qingdengbuyi.top/api/waline/api/article?path=%2F__morimens_love_rank__%2Fawakener-0001&type=reaction0,reaction1'
 
-# 评论分页
+# 评论分页（顺带确认每条都带 ISO 的 insertedAt 和毫秒的 time，否则前端时间是 NaN）
 curl -s 'https://morimens.qingdengbuyi.top/api/waline/api/comment?path=%2F&page=1&pageSize=5'
 ```
 
