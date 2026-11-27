@@ -55,12 +55,32 @@ EdgeOne Blob（与点赞、云端档案、题库同一份存储）
 
 Waline 客户端会把 `serverURL` 拼成 `${serverURL}/api/comment`，而 `serverURL` 本身已经是 `.../api/waline`，所以实际到达的路径是 `/api/waline/api/comment`——**多出来的那层 `/api` 在最外层，不在 `/waline` 后面**。`handleWaline` 里按「先剥 `/api`(前视 `/waline`) → 再剥 `/waline` → 最后剥可能的 `/api`」三步归一。
 
+## 2026-11-27 实际导入结果
+
+数据库是 **Neon**（`ep-icy-bird-avtnlf5z`，us-east-1），旧的 Vercel 部署只是前端。
+
+| 表 | 行数 | 说明 |
+|---|---|---|
+| `wl_comment` | 72 | 60 approved + **12 spam**（spam 不导） |
+| `wl_counter` | 160 | 访问量 + reaction0..8 |
+| `wl_users` | 195 | 165 有邮箱（163 个 `@zjtt.local` 小游戏站玩家）、30 个游客无邮箱 |
+
+最终导入：**评论 60 / 计数 160 / 用户 165**。重跑幂等（评论按 id 判重、计数取 `Math.max`、用户按 email 判重），
+所以中途失败可以原样再跑。踩到的坑：
+- 一批 80 个用户＝240 次 PUT 会被 Blob 后端回 **502**，降批到 25 个 / 计数 20 个才稳
+- 遇到 5xx 必须退避重试，原代码直接 `raise SystemExit` 会卡在中间
+- `WALINE_DATABASE_URL` 被误填成 Waline 后台的免密登录链接（`/ui?token=`）时，psycopg 报
+  `invalid connection option`；脚本现在会先 `clean_dsn()` 再连，并打印不含内容的形态诊断
+
 ## 三个必须知道的实现细节
 
-**1. 密码是 phpass，不是 bcrypt。**
-Waline 的 `hashPassword` 走 `phpass` 的 Portable 模式（形如 `$P$B<8 位 salt><22 位 hash>`），底层是 `md5(salt+password)` 再迭代 `2^log2` 次。WebCrypto 不提供 MD5，所以 `_lib/waline.js` 里手写了一份 MD5（已用 RFC 1321 的四组向量对齐 `node:crypto`）和 phpass 的 base64（字母表 `./0-9A-Za-z`，不是标准 base64）。
+**1. 密码实际是 bcrypt，不是 phpass（原先猜错了）。**
+一开始按 Waline 的 `hashPassword` 走 phpass Portable（`$P$B<8 位 salt><22 位 hash>`）来做，单测全过；等真正连上旧库才发现 **195 个账号全是 `$2a$08$`（bcrypt）**，`$P$` 一个都没有——所以 `verifyPassword()` 两种都必须认：
 
-迭代次数有个坑：PHP 的 `do {} while (--$count)` 实际跑 `2^log2` 次**额外**迭代，不同移植对边界理解不一。所以 `phpVerify()` 两种都试（`delta 0` 与 `delta -1`），老库里的哈希不会因为差一轮就全员登不上。单次验证 15–20ms。
+- `$2` 开头 → `bcryptVerify()`：Blowfish/EksBlowfish，核心常量与 `_encipher` 取自 bcryptjs 2.4.3（MIT，原样保留，只裁掉异步分片与随机盐）。cost=8 约 13–21ms，cost=10 约 50ms。`$2a$/$2b$/$2y$` 都要在密码尾部补 `\x00`，这是 bcrypt 的历史包袱。
+- `$P$` 开头 → `phpassCrypt()`：`md5(salt+password)` 再迭代 `2^log2` 次。WebCrypto 没有 MD5，所以手写了一份（已用 RFC 1321 四组向量对齐 `node:crypto`）。迭代边界不同移植理解不一，`delta 0` 与 `delta -1` 两种都试。
+
+新注册仍然写 phpass（省算力），老账号保留原哈希，两条路验的是同一个 `verifyPassword()`。
 
 **2. 机器提交的 payload 藏在 HTML 注释里。**
 融灾/互助提交把结构化数据塞在 `<!--MORIMENS_DZONE_V1:...-->` 里，前端要从 DOM 读回来。`renderComment()` 先把注释段挖出来、转义其余部分、再把注释原样放回，否则 payload 会被转义成可见文本。`MORIMENS_ASSIST_V1:base64` 这种纯文本形式的 payload 则原样保留。
