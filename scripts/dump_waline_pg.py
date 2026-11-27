@@ -37,9 +37,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_OUT = Path("data/morimens/community/waline-dump.json.gz")
-BATCH_COMMENTS = 150
-BATCH_COUNTERS = 200
-BATCH_USERS = 80
+BATCH_COMMENTS = 60
+BATCH_COUNTERS = 20
+# 每个用户要写 3 个键（wu_ / wu_id_ / wu_seq），一批 80 个就是 240 次 PUT，
+# EdgeOne Blob 后端会 502 限流，降到 25 明显稳
+BATCH_USERS = 25
 COMMENT_TEXT_MAX = 20000
 
 # 验收阶段写进线上的临时数据，正式导入前顺手清掉（见 push()）
@@ -246,7 +248,7 @@ def push(doc: dict, endpoint: str, token: str) -> None:
     def post(payload: dict) -> dict:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         last = None
-        for attempt in range(4):
+        for attempt in range(8):
             req = urllib.request.Request(
                 endpoint,
                 data=body,
@@ -258,9 +260,18 @@ def push(doc: dict, endpoint: str, token: str) -> None:
             )
             try:
                 with opener.open(req, timeout=60) as resp:
-                    return json.loads(resp.read().decode("utf-8"))
+                    data = json.loads(resp.read().decode("utf-8"))
+                    # 每批之间歇一下，Blob 后端连续 PUT 会 502
+                    time.sleep(0.4)
+                    return data
             except urllib.error.HTTPError as exc:  # 4xx/5xx 也把 body 读出来
                 detail = exc.read().decode("utf-8", "replace")[:300]
+                # 5xx 多半是 Blob 后端瞬时 502 限流，退避重试；导入本身是幂等的
+                if exc.code >= 500 and attempt < 7:
+                    last = f"HTTP {exc.code}"
+                    # Blob 后端偶发 502，退避到 ~30 秒仍然失败才算真挂
+                    time.sleep(2 + attempt * 4)
+                    continue
                 raise SystemExit(f"import failed: HTTP {exc.code} {detail}")
             except Exception as exc:  # 网络抖动，退避重试
                 last = exc
@@ -351,7 +362,9 @@ def main() -> int:
             print("WALINE_IMPORT_TOKEN is required for --push", file=sys.stderr)
             return 2
         # 哈希格式门禁：兼容层只实现了 phpass（$P$），别的算法导过去用户就登不上。
-        odd = sorted({(u["password"] or "")[:4] or "(empty)" for u in data["users"]} - {"$P$"})
+        heads = {(u["password"] or "")[:4] or "(empty)" for u in data["users"]}
+        # 兼容层现在两种都验：bcrypt（历史库的 $2a$）与 phpass（新注册的 $P$）
+        odd = sorted(h for h in heads if not (h.startswith("$P$") or h.startswith("$2")))
         if odd:
             print(
                 "拒绝导入：用户密码哈希里出现非 phpass 前缀 " + json.dumps(odd, ensure_ascii=False)
