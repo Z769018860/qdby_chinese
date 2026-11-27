@@ -244,6 +244,25 @@ python3 -m http.server 8777 &        # 仓库根目录起静态服务
   但榜单下拉的「完整」标记读的是 `availableSeasons[].complete`，两者含义不同，别被吓到。
 - 首日榜的分数形态与结算期差很远：本期最高 500（一人）、≥450 只有 121 人、中位 285，别拿第 73 期终榜的数字做对比文案。
 
+### 第 74 期中段补抓（2026-11-27 01:53，同赛季第二次同步）
+
+```
+--season 74 --allow-missing --updated-at "2026-11-27 01:53"
+捕获：C:/Users/Administrator/AppData/Local/MorimensCollector/season_83305（同名目录被采集器重新写满）
+结果：2000 名次（无重复 uid）→ 2000 位玩家 / 12,430 队伍行 / 10,128 场战斗；
+      usage v2 两片 875,454 gzip 字节、战斗明细 690,221；最高分 525、统计队伍 10,128
+```
+
+- **同赛季第二次同步不要传 `--no-fallback`**：本次 `teams_latest.jsonl` 有 13,426 行、实际入库 9,444 行，
+  另外 2,986 行来自上一次抓取的兜底（`meta.json` 的 `teamRowsBySource` 会写清来源分布）。
+  `--no-fallback` 只适合「新赛季第一次抓取」，否则会把上一次的行当成上期数据一起清掉。
+- 本次仍只有 `creation 98420` 无名称（`RelicConfig` 里 98419/98420 是空壳，`Icon_Creation_040` 对应的
+  `群星之酒Pro` 是别的 id），**别猜名字**，继续 `--allow-missing` 让它显示成 `#98420`。
+- 同步脚本会**同时**改 `morimens-tools.html` 里所有 `?v=` 与 `morimens-tools.js` 的 `assetVersion`
+  （本次两者一起到 `20261127.1`），手动改 js 时不用再单独补 html，但手动改完不跑脚本时仍要自己对一下。
+- 提交顺序：数据提交 → `merge origin/preview` → 推 preview → 推 main。**两边都有自动化在写**
+  （`chore: rebuild assist list index`、网盘巡检、SKeyDB 刷新），一次 push 被拒是常态，fetch 后 merge 再推即可。
+
 ## 13. 主线困难榜单（`morimens-main-hard.js`，2026-11-25 改版）
 
 数据来自「关卡公开展示的通关回顾」（`CopyReview.QueryStageReview`），采集器在 `MorimensCollector_Mainline/`，

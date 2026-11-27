@@ -3,7 +3,7 @@
     "site": "Eremora",
     "url": "https://eremora.com/leaderboard/abyss",
     "detailEndpointTemplate": "https://eremora.com/u/{uid}/challenges/dzone/{season}/__data.json",
-    "syncedAt": "2026-11-24T03:38:00+08:00",
+    "syncedAt": "2026-11-27T01:53:00+08:00",
     "transport": "Eremora SvelteKit __data.json (server-load stream) via Jina Reader; leaderboard index via public rendered page"
   },
   "currentSeason": 74,
@@ -12,13 +12,13 @@
       "seasonId": 74,
       "labelEn": "Season 74 · Aequor Ring",
       "period": "2026-11-23 – 2026-12-06",
-      "recordCount": 1997,
-      "leaderboardEntryCount": 1997,
+      "recordCount": 2000,
+      "leaderboardEntryCount": 2000,
       "complete": true,
       "coverageMode": "official-rank-top2000",
       "path": "data/morimens/eremora/usage/74-local-gzip/index.json",
       "statsPath": "data/morimens/eremora/stats/74.json",
-      "dataUpdatedAt": "2026-11-24T03:38:00+08:00",
+      "dataUpdatedAt": "2026-11-27T01:53:00+08:00",
       "labelZh": "第74期 融灾 · 深海戒指",
       "periodShort": "11.23–12.6",
       "ringRealm": "Aequor",
@@ -28,9 +28,9 @@
       "battleDetailPath": "data/morimens/eremora/usage/74-battle-gzip/index.json",
       "lowspecPath": "data/morimens/eremora/lowspec/74.json",
       "payloadEncoding": "table-pool-v2",
-      "teamDetailRevision": "e7215fccf8d6f5e8fc84fe8630aea23fe6bfdb6bf26f6f8e921a03c1b1b5d4fc",
-      "battleDetailRevision": "a94fd72e9889e740cd16f87e69c7ad9402393e9369abd913568ef4308193f52a",
-      "revision": "e7215fccf8d6f5e8fc84fe8630aea23fe6bfdb6bf26f6f8e921a03c1b1b5d4fc"
+      "teamDetailRevision": "bec6da52c2a59d1cff32d78f509de2e97f0dc1aa31aca2bfac6702ae920ca4b4",
+      "battleDetailRevision": "63ad5b80e422772b285dd6073da3fcde46f08e26d11c1633b0d3966fca673625",
+      "revision": "bec6da52c2a59d1cff32d78f509de2e97f0dc1aa31aca2bfac6702ae920ca4b4"
     },
     {
       "seasonId": 73,
@@ -268,8 +268,8 @@
     63
   ],
   "current": {
-    "leaderboardEntries": 1997,
-    "records": 1997,
+    "leaderboardEntries": 2000,
+    "records": 2000,
     "complete": true,
     "failures": 0
   },
@@ -372,11 +372,11 @@
   "rankIndex": {
     "seasonId": 74,
     "path": "data/morimens/eremora/rank-index/74.json",
-    "target": 1997,
-    "count": 1997,
+    "target": 2000,
+    "count": 2000,
     "complete": true,
-    "syncedAt": "2026-11-24T03:38:00+08:00",
-    "revision": "s74-top2000-20261124-0338",
+    "syncedAt": "2026-11-27T01:53:00+08:00",
+    "revision": "s74-top2000-20261127-0130",
     "scorePolicy": "official-rank-score",
     "source": "official live Rank.QueryRank response",
     "activityTid": 83305
@@ -385,22 +385,22 @@
     "seasonId": 74,
     "path": "data/morimens/eremora/usage/74-local-gzip/index.json",
     "statsPath": "data/morimens/eremora/stats/74.json",
-    "target": 1997,
-    "rankIndexCount": 1997,
-    "recordCount": 1997,
+    "target": 2000,
+    "rankIndexCount": 2000,
+    "recordCount": 2000,
     "coverage": {
-      "expected": 1997,
-      "covered": 1997,
+      "expected": 2000,
+      "covered": 2000,
       "coveragePct": 100.0,
       "complete": true
     },
-    "syncedAt": "2026-11-24T03:38:00+08:00",
-    "revision": "e7215fccf8d6f5e8fc84fe8630aea23fe6bfdb6bf26f6f8e921a03c1b1b5d4fc",
+    "syncedAt": "2026-11-27T01:53:00+08:00",
+    "revision": "bec6da52c2a59d1cff32d78f509de2e97f0dc1aa31aca2bfac6702ae920ca4b4",
     "format": "gzip-base64-chunked-v2",
     "chunks": 2,
     "chunkSize": 600000,
-    "chunkBytes": 648554,
-    "rawBytes": 2840106,
+    "chunkBytes": 875454,
+    "rawBytes": 3892059,
     "encoding": "table-pool-v2"
   },
   "rawTop1000Import": {
@@ -433,20 +433,21 @@
       1,
       2000
     ],
-    "rankedPlayers": 1997,
-    "parsedRecords": 1997,
-    "teamRows": 7118,
-    "battleRows": 13135,
+    "rankedPlayers": 2000,
+    "parsedRecords": 2000,
+    "teamRows": 12430,
+    "battleRows": 23281,
     "ringRealm": "Aequor",
     "ringRealmZh": "深海",
     "stageNaming": "Zone 1-5",
-    "updatedAt": "2026-11-24T03:38:00+08:00",
-    "revision": "e7215fccf8d6f5e8fc84fe8630aea23fe6bfdb6bf26f6f8e921a03c1b1b5d4fc",
+    "updatedAt": "2026-11-27T01:53:00+08:00",
+    "revision": "bec6da52c2a59d1cff32d78f509de2e97f0dc1aa31aca2bfac6702ae920ca4b4",
     "battleArchive": "data/morimens/dzone/season74/meta.json",
     "battleDetail": "data/morimens/eremora/usage/74-battle-gzip/index.json",
-    "note": "Season 74 snapshot: Top 2000 rank snapshot 2026-11-24 03:38 + teams_latest.jsonl of the same capture; rows the capture lacks come from the older captures (--fallback-raw).",
+    "note": "Season 74 snapshot: Top 2000 rank snapshot 2026-11-27 01:53 + teams_latest.jsonl of the same capture; rows the capture lacks come from the older captures (--fallback-raw).",
     "teamRowsBySource": {
-      "teams_latest.jsonl": 7118
+      "teams_latest.jsonl": 9444,
+      "previous-capture": 2986
     },
     "payloadEncoding": "table-pool-v2"
   },

@@ -16,3 +16,24 @@
 {"uid": 100884280, "stageGroupId": 83415, "reason": "response did not contain expected abyssChallenge stage group"}
 {"uid": 100007347, "stageGroupId": 83417, "reason": "详情与最新榜单不一致：stageTid"}
 {"uid": 100293675, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid,team.missing"}
+{"uid": 100825191, "stageGroupId": 83416, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 101930655, "stageGroupId": 83416, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100765824, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 101263116, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 101582248, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid,score,team.wid"}
+{"uid": 101363467, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 101289821, "stageGroupId": 83415, "reason": "详情与最新榜单不一致：stageTid,score,team.wid"}
+{"uid": 101506286, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100594952, "stageGroupId": 83415, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100477374, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100707300, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100349269, "stageGroupId": 83416, "reason": "详情与最新榜单不一致：stageTid,team.missing"}
+{"uid": 100018665, "stageGroupId": 83417, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100408358, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 101326443, "stageGroupId": 83416, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100409135, "stageGroupId": 83415, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 101382013, "stageGroupId": 83416, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100718158, "stageGroupId": 83417, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100654976, "stageGroupId": 83417, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 101807981, "stageGroupId": 83415, "reason": "详情与最新榜单不一致：stageTid"}
+{"uid": 100775582, "stageGroupId": 83414, "reason": "详情与最新榜单不一致：stageTid"}
