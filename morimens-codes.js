@@ -13,6 +13,7 @@
   const REFETCH_MS = 10 * 60000; // 打开状态下 10 分钟重新拉一次数据
   const BTN_ID = 'morimensCodesBtn';
   const MASK_ID = 'morimensCodesMask';
+  const TOP_BAR_ID = 'morimensTopActions'; // dtide 注入的右上角固定操作栏（爱发电 / 公告 / 生日日历 …）
 
   const isEnglish = () => localStorage.getItem('morimens.language') === 'en';
   const ui = (zh, en) => (isEnglish() ? en : zh);
@@ -20,6 +21,7 @@
   const $ = id => document.getElementById(id);
 
   const state = { data: null, loading: false, err: '', lastFetch: 0, open: false };
+  let watchTimer = 0;
 
   /* ---------------------------------------------------------------- 时间 */
 
@@ -108,9 +110,39 @@
   }
 
   function ensureButton() {
-    if ($(BTN_ID)) return;
-    const topbar = document.querySelector('header.topbar') || document.querySelector('.topbar');
-    if (!topbar) return;
+    if (mountButton()) return;
+    watchTopActions();
+  }
+
+  /* 按钮默认挂在顶栏右侧；但 dtide 会在数据加载完后注入一个 position:fixed 的右上角操作栏
+     （z-index 10020）和语言开关，两者正好压在顶栏右端，宽屏下按钮会整块被盖住。
+     所以操作栏一出现就把按钮搬进去，跟着那排按钮一起排。 */
+  function mountButton() {
+    let btn = $(BTN_ID);
+    if (!btn) {
+      const topbar = document.querySelector('header.topbar') || document.querySelector('.topbar');
+      if (!topbar) return false;
+      btn = buildButton();
+      topbar.appendChild(btn);
+    }
+    const bar = $(TOP_BAR_ID);
+    if (bar) {
+      if (btn.parentElement !== bar) bar.appendChild(btn);
+      return true;
+    }
+    return false;
+  }
+
+  function watchTopActions() {
+    if (watchTimer || $(TOP_BAR_ID)) return;
+    let tries = 0;
+    watchTimer = setInterval(() => {
+      tries++;
+      if (mountButton() || tries > 150) { clearInterval(watchTimer); watchTimer = 0; } // 最多等 60 秒
+    }, 400);
+  }
+
+  function buildButton() {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.id = BTN_ID;
@@ -121,7 +153,12 @@
       + `<span class="mcodeTopBadge" id="morimensCodesBadge" hidden>0</span>`;
     btn.querySelector('.mcodeTopLabel').textContent = ui('兑换码', 'Codes');
     btn.addEventListener('click', open);
-    topbar.appendChild(btn);
+    return btn;
+  }
+
+  function syncLabel() {
+    const label = $(BTN_ID)?.querySelector('.mcodeTopLabel');
+    if (label) label.textContent = ui('兑换码', 'Codes');
   }
 
   /* ---------------------------------------------------------------- 弹窗 */
@@ -302,6 +339,7 @@
   function boot() {
     ensureButton();
     fetchCodes(true);
+    window.addEventListener('morimens-language-change', syncLabel);
     // 支持直达链接：…/morimens-tools.html#codes 打开即弹出清单
     if (location.hash === '#codes') setTimeout(open, 60);
     // 倒计时与过期清理：弹窗打开时每 30 秒重绘一次
