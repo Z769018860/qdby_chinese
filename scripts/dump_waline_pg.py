@@ -42,6 +42,10 @@ BATCH_COUNTERS = 200
 BATCH_USERS = 80
 COMMENT_TEXT_MAX = 20000
 
+# 验收阶段写进线上的临时数据，正式导入前顺手清掉（见 push()）
+PURGE_PATHS = ["/__probe__"]
+PURGE_USERS = ["probebot@zjtt.local"]
+
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -226,6 +230,13 @@ def push(doc: dict, endpoint: str, token: str) -> None:
     comments = doc["comments"]
     counters = doc["counters"]
     users = doc["users"]
+
+    # 正式导入前先清掉验收阶段写进去的临时数据：
+    #   /__probe__ 的评论会顶在首页「最新留言」第一条（留言板是按全站最新列的）；
+    #   probebot 占掉了 id=1，而旧库里的真实用户（通常就是管理员）也是 1 号，不清会撞号。
+    if PURGE_PATHS or PURGE_USERS:
+        r = post({"purge": PURGE_PATHS, "purgeUsers": PURGE_USERS})
+        print("purge:", json.dumps(r.get("data") or {}, ensure_ascii=False))
 
     total_in = total_skip = 0
     for start in range(0, len(users), BATCH_USERS):

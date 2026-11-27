@@ -75,7 +75,8 @@ Waline 的 `hashPassword` 走 `phpass` 的 Portable 模式（形如 `$P$B<8 位 
 
 1. **部署**：小游戏 EdgeOne 项目重新部署（`edge-functions/` 不会随 git push 自动更新，必须在控制台重部署）。
 2. **配环境变量**（小游戏项目）：
-   - `WALINE_IMPORT_TOKEN` = 随机长串（迁移用，导完可删）
+   - `WALINE_IMPORT_TOKEN` = 随机长串（迁移用，导完可删）。**这个省不掉**：没配时 `/api/waline/import` 直接 503，
+     因为那是唯一能批量改写全部评论和账号的入口，不能留无鉴权的口子
    - `ALLOWED_ORIGINS` **可以不配**：`qingdengbuyi.top` 及其子域已写成后缀放行（含 http），不会被这个变量顶掉。要配就照常配其他来源
    - `WALINE_JWT_SECRET` 可选，不配会首次自动生成并存进 Blob
 3. **验证**：`curl https://morimens.qingdengbuyi.top/api/waline` 应返回 `{"errno":0,...,"service":"waline-edge"}`。
@@ -83,6 +84,9 @@ Waline 的 `hashPassword` 走 `phpass` 的 Portable 模式（形如 `$P$B<8 位 
    - 第一次 `dry_run: true`，只读库打印统计（评论数、用户数、**密码哈希前缀分布**）
    - 确认无误后 `dry_run: false`，分批 POST 到 `/api/waline/import`
    - 数据不落地仓库：用户密码哈希只在 CI 内存里过一趟
+   - 脚本开跑前会先发一条 `{"purge":["/__probe__"],"purgeUsers":["probebot@zjtt.local"]}`，
+     把验收阶段写进去的探针评论和测试账号清掉（探针会顶在首页「最新留言」第一条，
+     测试账号占着 id=1 会和旧库里的管理员撞号）
 5. **收尾**：迁移完成后删掉两个 `WALINE_IMPORT_TOKEN`（EdgeOne env + GitHub secret），避免留一条能改写全部数据的后门。
 
 ## 验收
