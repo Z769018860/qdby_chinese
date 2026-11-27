@@ -76,6 +76,46 @@ def pick(cols: set[str], *candidates: str):
     return None
 
 
+def clean_dsn(raw: str) -> str:
+    """把 secret 里混进来的空白、引号、KEY= 前缀、前后杂物摘掉。
+
+    GitHub Actions 的 secret 贴进带换行的值时很常见：psycopg 看到前导空白就不会
+    按 URI 解析，转而当成 key=value 走，报 `missing "=" after "..."`。这个错
+    看起来像连接串坏了，实际只是多了个 \n。
+    """
+    s = (raw or "").strip()
+    # 整行复制进来的 KEY= 前缀
+    upper = s.upper()
+    for key in ("WALINE_DATABASE_URL=", "DATABASE_URL=", "PG_DSN=", "DSN=", "URL="):
+        if upper.startswith(key):
+            s = s[len(key):].strip()
+            break
+    # 首尾引号（从 .env 复制）
+    if len(s) >= 2 and s[0] == s[-1] and s[0] in "'\"":
+        s = s[1:-1].strip()
+    # 前后还混着别的东西时，从第一个 URI scheme 起截断
+    for scheme in ("postgresql://", "postgres://"):
+        i = s.find(scheme)
+        if i >= 0:
+            # URI 里不会出现裸空白，截到第一段，避免多行片段的后半截被带进来
+            s = s[i:].split()[0] if s[i:].split() else ""
+            break
+    return s
+
+
+def dsn_shape(raw: str, cleaned: str) -> str:
+    """只报形态，不报内容 —— 打印部分值会让 GitHub 的 secret 脱敏失效。"""
+    raw = raw or ""
+    return " ".join([
+        f"raw_len={len(raw)}",
+        f"clean_len={len(cleaned)}",
+        f"lines={len(raw.splitlines())}",
+        f"changed={str(cleaned != raw.strip()).lower()}",
+        "scheme=" + str(cleaned.startswith(("postgres://", "postgresql://"))).lower(),
+        "has_at=" + str("@" in cleaned).lower(),
+    ])
+
+
 def read_db(dsn: str) -> dict:
     import psycopg
 
@@ -270,11 +310,23 @@ def main() -> int:
     ap.add_argument("--pretty", action="store_true")
     ap.add_argument("--push", default="", help="POST to this /api/waline/import endpoint")
     ap.add_argument("--token", default=os.environ.get("WALINE_IMPORT_TOKEN", ""))
+    ap.add_argument("--allow-hash", action="store_true", help="即使密码哈希不是 phpass 也照导")
     args = ap.parse_args()
 
-    dsn = os.environ.get("WALINE_DATABASE_URL") or os.environ.get("DATABASE_URL")
-    if not dsn:
+    dsn_raw = os.environ.get("WALINE_DATABASE_URL") or os.environ.get("DATABASE_URL") or ""
+    if not dsn_raw.strip():
         print("WALINE_DATABASE_URL is not set", file=sys.stderr)
+        return 2
+    dsn = clean_dsn(dsn_raw)
+    print("dsn shape:", dsn_shape(dsn_raw, dsn))
+    if not dsn.startswith(("postgres://", "postgresql://")) and "=" not in dsn:
+        print(
+            "DSN 既不是 postgres:// URI 也不是 key=value 形式 —— secret 的值本身不对。"
+            "去 GitHub 仓库 Settings → Secrets and variables → Actions，"
+            "把 WALINE_DATABASE_URL 重新粘成完整的一条 postgresql://... 连接串"
+            "（首尾不要带换行，也不要带 DATABASE_URL= 前缀）。",
+            file=sys.stderr,
+        )
         return 2
 
     try:
@@ -298,6 +350,16 @@ def main() -> int:
         if not args.token:
             print("WALINE_IMPORT_TOKEN is required for --push", file=sys.stderr)
             return 2
+        # 哈希格式门禁：兼容层只实现了 phpass（$P$），别的算法导过去用户就登不上。
+        odd = sorted({(u["password"] or "")[:4] or "(empty)" for u in data["users"]} - {"$P$"})
+        if odd:
+            print(
+                "拒绝导入：用户密码哈希里出现非 phpass 前缀 " + json.dumps(odd, ensure_ascii=False)
+                + "，兼容层验不了这些账号。确认要导就加 --allow-hash 重跑。",
+                file=sys.stderr,
+            )
+            if not args.allow_hash:
+                return 3
         push(data, args.push, args.token)
         return 0
 
