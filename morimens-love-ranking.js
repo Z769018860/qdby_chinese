@@ -244,20 +244,30 @@
     }
   }
 
+  // 等角色数据挂上 window.MorimensData。数据模块是串行 import 的，EdgeOne 冷启动时
+  // 光 awakeners.json 就要 7 秒上下，老代码只等 3.5 秒就超时 → load() 拿到空数组直接抛错，
+  // 而且不会再重试，页面就永远停在「等待载入角色数据」。
+  function waitForData(budget){
+    if(window.MorimensData?.db?.records?.length)return Promise.resolve(true);
+    return new Promise(resolve=>{
+      let timer=0;
+      const done=()=>{clearTimeout(timer);window.removeEventListener('morimens-data-ready',done);resolve(Boolean(window.MorimensData?.db?.records?.length))};
+      timer=setTimeout(done,budget);
+      window.addEventListener('morimens-data-ready',done,{once:true});
+    });
+  }
+
   async function open(){
     injectStyle();ensureControls();bind();
     if(initialized){render();return}
-    if(!window.MorimensData?.db?.records?.length){
-      await new Promise(resolve=>{
-        const timer=setTimeout(resolve,3500);
-        window.addEventListener('morimens-data-ready',()=>{clearTimeout(timer);resolve()},{once:true});
-      });
-    }
+    await waitForData(30000);
     await load();
   }
 
   votes=loadVotes();
   window.MorimensLoveRanking={open,refresh:load};
+  // 兜底：数据晚于等待窗口才到（或用户在数据没就绪时点过一次），就绪后自动补一次，不必刷新页面
+  window.addEventListener('morimens-data-ready',()=>{if(!initialized)load()});
   window.addEventListener('morimens-language-change',()=>{
     if(initialized){
       const names=new Map(resolveCharacters().map(x=>[x.id,x]));
