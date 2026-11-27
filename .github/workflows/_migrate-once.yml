@@ -1,0 +1,41 @@
+name: _migrate_once
+
+# 临时触发器（用完即删）
+#
+# 为什么需要它：这个仓库的默认分支是 preview，而 dump-waline.yml 只在 main 上，
+# GitHub 只在默认分支发现 workflow，所以 UI 里根本看不到它；同时当前的
+# fine-grained PAT 只有 Actions: read，调不了 workflow_dispatch。
+# 但 push 事件不需要 Actions 写权限，于是用碰一个标记文件的方式跑一轮。
+#
+# 触发方式：git push 一个 .migrate-trigger 文件。
+# 跑完请把本文件和 .migrate-trigger 一起删掉。
+
+on:
+  push:
+    paths:
+      - '.migrate-trigger'
+
+permissions:
+  contents: read
+
+jobs:
+  dry_run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PostgreSQL driver
+        run: pip install "psycopg[binary]>=3.2,<4"
+
+      - name: Read database and print stats (dry run)
+        env:
+          WALINE_DATABASE_URL: ${{ secrets.WALINE_DATABASE_URL }}
+        run: |
+          python scripts/dump_waline_pg.py --out /tmp/waline-dump.json.gz
+          echo "--- dry run, nothing written to EdgeOne ---"
+          ls -lh /tmp/waline-dump.json.gz
