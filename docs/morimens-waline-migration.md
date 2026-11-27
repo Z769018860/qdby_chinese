@@ -76,7 +76,7 @@ Waline 的 `hashPassword` 走 `phpass` 的 Portable 模式（形如 `$P$B<8 位 
 1. **部署**：小游戏 EdgeOne 项目重新部署（`edge-functions/` 不会随 git push 自动更新，必须在控制台重部署）。
 2. **配环境变量**（小游戏项目）：
    - `WALINE_IMPORT_TOKEN` = 随机长串（迁移用，导完可删）
-   - `ALLOWED_ORIGINS` 若已显式配置，确认包含 `https://qingdengbuyi.top`（不配就用代码里的 `DEFAULT_ORIGINS`，也已包含）
+   - `ALLOWED_ORIGINS` **可以不配**：`qingdengbuyi.top` 及其子域已写成后缀放行（含 http），不会被这个变量顶掉。要配就照常配其他来源
    - `WALINE_JWT_SECRET` 可选，不配会首次自动生成并存进 Blob
 3. **验证**：`curl https://morimens.qingdengbuyi.top/api/waline` 应返回 `{"errno":0,...,"service":"waline-edge"}`。
 4. **导数据**：GitHub 仓库 Secrets 加同名 `WALINE_IMPORT_TOKEN`，然后手动跑 `Migrate legacy Waline data to EdgeOne`：
