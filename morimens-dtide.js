@@ -298,7 +298,7 @@
     </section>
   `}
   async function resolveGuestbookPath(){
-    const server='https://textbox.qingdengbuyi.top';
+    const server='https://morimens.qingdengbuyi.top/api/waline';
     try{
       const response=await fetch(server+'/api/comment?type=recent&count=50',{cache:'no-store'});
       if(!response.ok)throw new Error('HTTP '+response.status);
@@ -327,12 +327,12 @@
         const link=document.createElement('link');link.rel='stylesheet';link.href='https://unpkg.com/@waline/client@v3/dist/waline.css';link.dataset.morimensWaline='true';document.head.appendChild(link);
       }
       const [{init},{MORIMENS_EMOJI_PRESET},guestbookPath]=await Promise.all([import('https://unpkg.com/@waline/client@v3/dist/waline.js'),import('./waline-morimens-emoji.js?v=20260920.2'),resolveGuestbookPath()]);
-      commentsApp=init({el:'#morimensWaline',serverURL:'https://textbox.qingdengbuyi.top',path:guestbookPath,lang:zh()?'zh-CN':'en-US',emoji:[MORIMENS_EMOJI_PRESET],meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
+      commentsApp=init({el:'#morimensWaline',serverURL:'https://morimens.qingdengbuyi.top/api/waline',path:guestbookPath,lang:zh()?'zh-CN':'en-US',emoji:[MORIMENS_EMOJI_PRESET],meta:['nick','mail','link'],requiredMeta:[],login:'disable',wordLimit:300,pageSize:10,commentSorting:'latest'});
       commentsLoaded=true;
       if(status)status.remove();
     }catch(error){
       console.error('Waline load failed',error);
-      if(status){status.innerHTML=zh()?'留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>':'Guestbook connection failed. <a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">Open the original guestbook</a>';status.classList.remove('loading');status.classList.add('error')}
+      if(status){status.innerHTML=zh()?'留言板连接失败。（评论服务未响应）':'Guestbook connection failed. (comment service unreachable)';status.classList.remove('loading');status.classList.add('error')}
     }finally{commentsLoading=false}
   }
 
@@ -405,7 +405,7 @@
     try{
       const marker='MORIMENS_ASSIST_V1:',rows=[];let page=1;
       while(page<=5){
-        const response=await fetch('https://textbox.qingdengbuyi.top/api/comment?path='+encodeURIComponent('/__morimens_assist_submissions__/')+'&page='+page+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN',{cache:'no-store'});
+        const response=await fetch('https://morimens.qingdengbuyi.top/api/waline/api/comment?path='+encodeURIComponent('/__morimens_assist_submissions__/')+'&page='+page+'&pageSize=100&sortBy=insertedAt_desc&lang=zh-CN',{cache:'no-store'});
         if(!response.ok)throw new Error('Waline HTTP '+response.status);
         const payload=await response.json();if(payload?.errno)throw new Error(payload.errmsg||('Waline errno '+payload.errno));
         const items=Array.isArray(payload?.data)?payload.data:Array.isArray(payload?.data?.data)?payload.data.data:[];

@@ -1,5 +1,5 @@
 (()=>{
-  const SERVER='https://textbox.qingdengbuyi.top';
+  const SERVER='https://morimens.qingdengbuyi.top/api/waline';
   const PATH_PREFIX='/__morimens_love_rank__/';
   const STORAGE_KEY='morimens.love-ranking.votes.v1';
   const CHUNK_SIZE=30;

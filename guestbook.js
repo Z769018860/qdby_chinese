@@ -1,5 +1,5 @@
 // 通用留言板挂载（Waline）：汉化站内联区与视频站弹窗共用同一套逻辑
-export const WALINE_SERVER = 'https://textbox.qingdengbuyi.top';
+export const WALINE_SERVER = 'https://morimens.qingdengbuyi.top/api/waline';
 
 export async function resolveGuestbookPath(){
   try{
@@ -51,7 +51,7 @@ export async function mountGuestbook({ el, fallbackEl } = {}){
     console.error('Waline load failed:', error);
     root.hidden = true;
     if(fallbackEl){
-      fallbackEl.innerHTML = '留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>';
+      fallbackEl.innerHTML = '留言板连接失败。（评论服务未响应）';
       fallbackEl.classList.add('warn');
       fallbackEl.hidden = false;
     }

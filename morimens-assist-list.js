@@ -7,7 +7,7 @@
   function decodeMojibake(value){const text=String(value??'');if(!/[ÃÂæåçèéêëìíîïðñòóôõö÷øùúûüýþã]/.test(text)||typeof TextDecoder==='undefined')return text;try{const bytes=Uint8Array.from([...text].map(ch=>ch.charCodeAt(0)&255));const fixed=new TextDecoder('utf-8',{fatal:true}).decode(bytes);return /�/.test(fixed)?text:fixed}catch{return text}}
   function cleanPlayerName(value){return decodeMojibake(value).replace(/^<#[^>]+>\s*/,'').trim()}
   const PAGE_SIZE=100;
-  const WALINE_SERVER='https://textbox.qingdengbuyi.top';
+  const WALINE_SERVER='https://morimens.qingdengbuyi.top/api/waline';
   const SUBMISSION_PATH='/__morimens_assist_submissions__/';
   const SUBMISSION_MARKER='MORIMENS_ASSIST_V1';
   let manifest=null,openUids=new Set(),initialized=false,loading=false,activeSeason='all',rows=[],page=1,manualRows=[],importDelegatesBound=false;

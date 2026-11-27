@@ -758,7 +758,7 @@ function mountGuestbookDialog(){
         console.error("guestbook load failed:", err);
         loading.hidden = true;
         if(fallback){
-          fallback.innerHTML = '留言板连接失败。<a href="https://textbox.qingdengbuyi.top/" target="_blank" rel="noopener noreferrer">打开原留言板</a>';
+          fallback.innerHTML = '留言板连接失败。（评论服务未响应）';
           fallback.classList.add("warn");
           fallback.hidden = false;
         }

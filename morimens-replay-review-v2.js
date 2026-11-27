@@ -3321,7 +3321,7 @@
   function dangerName(name,stage){if(!/禁区$/.test(name)||/融灾|危险|警报|癫狂|噩梦|困难/.test(name))return name;const g=(String(stage?.CnID||'').match(/期([A-G])\d+$/)||[])[1];if(!g)return name;
     return `${name}·危险等级${DANGER[g]||g}`}
   // ---- feedback buttons: a Waline comment queue (same transport as the D-Zone / Assist submissions) that the archive workflow copies into data/morimens/community/replay-feedback.json ----
-  const FB_SERVER='https://textbox.qingdengbuyi.top',FB_PATH='/__morimens_replay_feedback__/',FB_MARK='MORIMENS_REPLAY_FB_V1:';
+  const FB_SERVER='https://morimens.qingdengbuyi.top/api/waline',FB_PATH='/__morimens_replay_feedback__/',FB_MARK='MORIMENS_REPLAY_FB_V1:';
   const fbKey=id=>'mr2fb:'+id,fbRead=id=>{try{return JSON.parse(localStorage.getItem(fbKey(id))||'{}')}catch{return {}}},fbWrite=(id,v)=>{try{localStorage.setItem(fbKey(id),JSON.stringify(v))}catch{}};
   const fbB64=o=>{const b=new TextEncoder().encode(JSON.stringify(o));let t='';for(let i=0;i<b.length;i+=0x8000)t+=String.fromCharCode(...b.subarray(i,i+0x8000));return btoa(t).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
   async function fbSend(full,kind,note){

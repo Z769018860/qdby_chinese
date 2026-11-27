@@ -1,5 +1,5 @@
 (() => {
-  const SERVER_URL = 'https://textbox.qingdengbuyi.top';
+  const SERVER_URL = 'https://morimens.qingdengbuyi.top/api/waline';
   const TOTAL_PATH = '/__qdby_site_views__/total';
 
   function shanghaiDateKey() {
