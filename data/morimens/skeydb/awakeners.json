@@ -2,8 +2,8 @@
   "source": {
     "repository": "dansa/SKeyDB",
     "ref": "main",
-    "commit": "a46267ae9063c577aed5f681840668c0d451b0a5",
-    "syncedAt": "2026-11-26T12:53:38.657Z",
+    "commit": "c1aa61dbe5f206306b9e5c83e0bc02f6ef350165",
+    "syncedAt": "2026-11-27T08:51:44.162Z",
     "license": "CC-BY-NC-SA-4.0 for SKeyDB-original data; game-owned art/text excluded"
   },
   "count": 63,
@@ -33574,16 +33574,20 @@
       "name": "Tulu: Godking",
       "slug": "tulu-godking",
       "assetSlug": "tulu-godking",
-      "aliases": [],
+      "aliases": [
+        "gtulu",
+        "g-tulu"
+      ],
       "realm": "AEQUOR",
-      "rarity": "SSR",
+      "rarity": "Genesis",
       "type": "ASSAULT",
       "faction": "Lemuria",
       "releaseDate": "2026-11-30",
       "availabilityType": "LIMITED_ASTRAL_REIGN",
       "lineupToken": "xt",
       "searchTags": [
-        "Divine Realm"
+        "Divine Realm",
+        "Lemurian"
       ],
       "primaryScalingBase": 20,
       "baseStatsLv1": {
