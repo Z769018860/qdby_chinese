@@ -1,0 +1,73 @@
+name: Migrate legacy Waline data to EdgeOne
+
+# 一次性任务：把 Vercel 上那套 Waline 的 PostgreSQL 全量搬进 EdgeOne Blob。
+#
+# 背景见 docs/morimens-waline-migration.md：2026-11-27 那个 Vercel 部署因免费额度
+# 超额被平台暂停（402 DEPLOYMENT_DISABLED），API 进不去，但库还活着（每日归档任务仍在跑）。
+#
+# 数据直接 POST 到小游戏站的 /api/waline/import（受 X-Import-Token 保护），
+# 全程不落地仓库 —— 用户密码哈希（phpass $P$）只在内存里过一趟。
+#
+# 前置条件（缺一不可）：
+#   1. 小游戏的 EdgeOne 项目已重新部署，/api/waline/* 已上线（GET /api/waline 能回 JSON）
+#   2. EdgeOne 环境变量配了 WALINE_IMPORT_TOKEN
+#   3. 本仓库 Secrets 配了同名 WALINE_IMPORT_TOKEN（值必须一样）
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "只读库并打印统计，不写入"
+        required: false
+        type: boolean
+        default: true
+      endpoint:
+        description: "导入端点"
+        required: false
+        type: string
+        default: "https://morimens.qingdengbuyi.top/api/waline/import"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: migrate-legacy-waline
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PostgreSQL driver
+        run: pip install "psycopg[binary]>=3.2,<4"
+
+      - name: Read database and print stats
+        env:
+          WALINE_DATABASE_URL: ${{ secrets.WALINE_DATABASE_URL }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/dump_waline_pg.py --out /tmp/waline-dump.json.gz
+            echo "--- dry run, nothing written to EdgeOne ---"
+            ls -lh /tmp/waline-dump.json.gz
+          else
+            echo "skipped (will read again during push)"
+          fi
+
+      - name: Push into EdgeOne Blob
+        if: ${{ inputs.dry_run == false }}
+        env:
+          WALINE_DATABASE_URL: ${{ secrets.WALINE_DATABASE_URL }}
+          WALINE_IMPORT_TOKEN: ${{ secrets.WALINE_IMPORT_TOKEN }}
+        run: |
+          if [ -z "$WALINE_IMPORT_TOKEN" ]; then
+            echo "::error::Secret WALINE_IMPORT_TOKEN is missing"
+            exit 1
+          fi
+          python scripts/dump_waline_pg.py --push "${{ inputs.endpoint }}"

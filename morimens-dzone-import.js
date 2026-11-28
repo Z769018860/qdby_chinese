@@ -1,7 +1,7 @@
 (()=>{
   if(window.MorimensDzoneImport)return;
   const $=id=>document.getElementById(id);
-  const WALINE_SERVER='https://textbox.qingdengbuyi.top';
+  const WALINE_SERVER='https://morimens.qingdengbuyi.top/api/waline';
   const SUBMISSION_PATH='/__morimens_dzone_submissions__/';
   const SUBMISSION_MARKER='MORIMENS_DZONE_V1';
   const MAX_PASTE_BYTES=6*1024*1024;

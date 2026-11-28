@@ -1,12 +1,12 @@
 import { mountToolbox } from "./toolbox.js";
-import { mountGuestbookWhenIdle } from "./guestbook.js";
+import { mountGuestbookWhenIdle } from "./guestbook.js?v=20261127.2";
 // app.js (ESM)
 // Data source: ./data.json
 
 const LIKE_VOTE_STORAGE_KEY = "qdby.like-votes.v2";
 const MESSAGE_STORAGE_KEY = "qdby.messages.v1";
 const API_BASE = "/api";
-const WALINE_SERVER = "https://textbox.qingdengbuyi.top";
+const WALINE_SERVER = "https://morimens.qingdengbuyi.top/api/waline";
 const WALINE_LIKE_PREFIX = "/__qdby_home_likes__/";
 const state = { data: [], netdisk: { games: {} }, autofill: { games: {} }, likes: {}, liked: new Set(), messages: [], storageOK: true, onlineOK: false };
 

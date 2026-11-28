@@ -1,5 +1,5 @@
 (()=>{
-  const SERVER='https://textbox.qingdengbuyi.top';
+  const SERVER='https://morimens.qingdengbuyi.top/api/waline';
   const PATH_PREFIX='/__morimens_love_rank__/';
   const STORAGE_KEY='morimens.love-ranking.votes.v1';
   const CHUNK_SIZE=30;
@@ -113,9 +113,9 @@
   const schoolCat={id:'special-misag-school-cat',name:'弥萨格校猫',englishName:'Misag School Cat',image:'assets/waline-avatars/160px-剧情角色-莱特头像.png'};
   // Vivian was added before her release; the vote id stays so that the votes already cast keep counting (the real SKeyDB record awakener-0062 is filtered out above)
   const vivian={id:'special-upcoming-vivian',name:'薇薇安',englishName:'Vivian',image:'assets/morimens/portraits/vivian.webp'};
-  // V2.7.0 (三周年特典《神国诞临》) awakener, releases 2026-11-30; SKeyDB has no record yet, so he gets his own vote id
-  const tuluGodking={id:'special-upcoming-tulu-godking',name:'神王·图鲁',englishName:'Tulu: Godking',image:'assets/morimens/portraits/tulu.webp'};
-  const specials=[schoolCat,vivian,tuluGodking];
+  // 神王·图鲁（V2.7.0 三周年特典）以前靠占位条目投票；SKeyDB 现在有正式记录 awakener-0063，
+  // 占位条目（头像用的还是普通图鲁）已删除，中文名改由 data/morimens/huiji/identity.zh-CN.json 提供。
+  const specials=[schoolCat,vivian];
   const specialOf=id=>specials.find(x=>x.id===id);
 
   function ensureControls(){
@@ -244,20 +244,30 @@
     }
   }
 
+  // 等角色数据挂上 window.MorimensData。数据模块是串行 import 的，EdgeOne 冷启动时
+  // 光 awakeners.json 就要 7 秒上下，老代码只等 3.5 秒就超时 → load() 拿到空数组直接抛错，
+  // 而且不会再重试，页面就永远停在「等待载入角色数据」。
+  function waitForData(budget){
+    if(window.MorimensData?.db?.records?.length)return Promise.resolve(true);
+    return new Promise(resolve=>{
+      let timer=0;
+      const done=()=>{clearTimeout(timer);window.removeEventListener('morimens-data-ready',done);resolve(Boolean(window.MorimensData?.db?.records?.length))};
+      timer=setTimeout(done,budget);
+      window.addEventListener('morimens-data-ready',done,{once:true});
+    });
+  }
+
   async function open(){
     injectStyle();ensureControls();bind();
     if(initialized){render();return}
-    if(!window.MorimensData?.db?.records?.length){
-      await new Promise(resolve=>{
-        const timer=setTimeout(resolve,3500);
-        window.addEventListener('morimens-data-ready',()=>{clearTimeout(timer);resolve()},{once:true});
-      });
-    }
+    await waitForData(30000);
     await load();
   }
 
   votes=loadVotes();
   window.MorimensLoveRanking={open,refresh:load};
+  // 兜底：数据晚于等待窗口才到（或用户在数据没就绪时点过一次），就绪后自动补一次，不必刷新页面
+  window.addEventListener('morimens-data-ready',()=>{if(!initialized)load()});
   window.addEventListener('morimens-language-change',()=>{
     if(initialized){
       const names=new Map(resolveCharacters().map(x=>[x.id,x]));

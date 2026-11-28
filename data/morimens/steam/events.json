@@ -1,7 +1,12 @@
 {
  "source": "Steam community announcements (ISteamNews GetNewsForApp, app 3052450); times are UTC+8 as stated in the announcements",
- "fetchedAt": "2026-11-26T12:54:03.278Z",
+ "fetchedAt": "2026-11-27T12:47:33.052Z",
  "posts": [
+  {
+   "title": "⌛ Astral Reign Finale Countdown: 3 DAYS",
+   "date": "2026-11-27",
+   "url": "https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1850460852988385"
+  },
   {
    "title": "📜 V2.7.0 Version Outlook - Part Ⅲ",
    "date": "2026-11-26",

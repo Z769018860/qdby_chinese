@@ -48,6 +48,32 @@
   100% { box-shadow: 0 0 0 12px rgba(224, 189, 130, 0); }
 }
 
+/* 宽屏下顶栏右端被 dtide 注入的固定操作栏（爱发电 / 公告 / 生日日历 …）和语言开关压住，
+   按钮会被搬进那根操作栏里，这里收敛成栏内普通按钮的规格，免得撑宽或盖住相邻项。 */
+.morimensTopActions .mcodeTopBtn {
+  margin-left: 0;
+  padding: 7px 11px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(213, 177, 118, .16);
+  color: #f4dfb9;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+.morimensTopActions .mcodeTopBtn:hover {
+  background: rgba(213, 177, 118, .28);
+  transform: none;
+  box-shadow: none;
+}
+.morimensTopActions .mcodeTopBtn:active { transform: none; }
+.morimensTopActions .mcodeTopBtn svg { width: 15px; height: 15px; }
+/* 手机上操作栏默认折成「菜单 ▼」，兑换码保持常驻，免得又找不到 */
+.morimensTopActions.isCollapsed > .mcodeTopBtn { display: inline-flex !important; }
+
 /* ---------------------------------------------------------------- 弹窗 */
 
 .mcodeMask {
